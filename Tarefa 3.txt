@@ -1,0 +1,1 @@
+Durante o processo de desenvolvimento decisões são tomadas e informações precisam ser documentadas e atualizadas. Manter o controle de versão é então fundamental para que os integrantes do projeto possam se manter atualizados e cientes das decisões tomadas durante o processo de desenvolvimento.

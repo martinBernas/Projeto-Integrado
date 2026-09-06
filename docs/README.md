@@ -5,6 +5,7 @@ Aplicação web para registrar pontuações pessoais de GeoGuessr, administrar t
 ## Documentação
 
 - [Plano de ação](plano-de-acao.md)
+- [Documentação funcional](documentacao-funcional.md)
 - [Requisitos](requisitos.md)
 - [Regras de pontuação](regras-de-pontuacao.md)
 - [Plano de testes](plano-de-testes.md)
