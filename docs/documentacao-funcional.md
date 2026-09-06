@@ -42,7 +42,7 @@ Qualquer usuário pode criar e organizar torneios. O organizador define particip
 
 1. O usuário cria um torneio e se torna seu organizador.
 2. Informa nome, início, fim e fuso horário.
-3. Escolhe o calendário: segunda a sexta ou segunda a sexta mais domingos.
+3. Escolhe o calendário: segunda a sexta ou semana completa.
 4. Opcionalmente exclui datas, como feriados.
 5. Escolhe o modo absoluto ou relativo ao menor resultado positivo do dia.
 6. Define a penalidade por ausência.
