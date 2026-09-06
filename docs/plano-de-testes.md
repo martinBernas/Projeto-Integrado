@@ -21,6 +21,9 @@ Os testes seguem a lógica de verificação e validação: requisitos são valid
 | CT11 | RF08 | Jogador tenta alterar lançamento de outro jogador | Operação é negada |
 | CT12 | RF09/RN08 | Regra é alterada após resultado consolidado | Resultado existente e regra aplicada permanecem auditáveis |
 | CT13 | RF10 | Usuário participa de dois torneios e não participa de um terceiro | A lista exibe somente os dois torneios participantes, com acesso aos detalhes de cada um |
+| CT14 | RF11/RN09 | Torneio configurado de segunda a sexta e lançamento feito no domingo | Domingo não é considerado dia de jogo nem gera resultado |
+| CT15 | RF11/RN09 | Torneio configurado de segunda a sexta mais domingos | Domingo é considerado dia de jogo e pode receber pontuação ou penalidade |
+| CT16 | RF12/RN09 | Organizador exclui uma segunda-feira por feriado | A data excluída não gera pontuação nem penalidade |
 
 ## Evidências
 

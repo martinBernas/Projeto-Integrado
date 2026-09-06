@@ -16,6 +16,7 @@ classDiagram
     +string fusoHorario
     +decimal penalidadeAusencia
     +ModoPontuacao modoPontuacao
+    +CalendarioSemanal calendarioSemanal
     +Status status
   }
   class Participacao {
@@ -35,10 +36,16 @@ classDiagram
     +decimal pontosAplicados
     +decimal impacto
   }
+  class DataExcluida {
+    +UUID id
+    +date data
+    +string motivo
+  }
   Usuario "1" --> "*" Participacao
   Torneio "1" --> "*" Participacao
   Usuario "1" --> "*" PontuacaoPessoal
   Torneio "1" --> "*" ResultadoTorneio
+  Torneio "1" --> "*" DataExcluida
   Participacao "1" --> "*" ResultadoTorneio
   PontuacaoPessoal "1" --> "*" ResultadoTorneio
 ```

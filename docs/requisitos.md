@@ -19,6 +19,8 @@
 | RF08 | O organizador deve aprovar, corrigir ou invalidar lançamentos associados ao seu torneio. |
 | RF09 | O sistema deve guardar o histórico da pontuação bruta, do resultado e da regra aplicada. |
 | RF10 | O usuário deve visualizar a lista de todos os torneios dos quais participa e acessar os respectivos detalhes e rankings. |
+| RF11 | O organizador deve configurar os dias da semana em que o torneio ocorre, com as opções padrão de segunda a sexta ou segunda a sexta mais domingos. |
+| RF12 | O organizador deve excluir datas específicas do calendário do torneio, como feriados. |
 
 ## Requisitos não funcionais
 
@@ -41,6 +43,7 @@
 - **RN06:** Período, fuso horário e regra de penalidade do torneio determinam quando uma ausência pode ser penalizada.
 - **RN07:** O ranking classifica a maior pontuação total em primeiro lugar.
 - **RN08:** Uma alteração de regra não pode alterar silenciosamente resultados já consolidados; a regra aplicada deve permanecer registrada.
+- **RN09:** Data fora dos dias semanais configurados ou excluída explicitamente não é dia de jogo e não gera pontuação nem penalidade.
 
 ## Pendências de validação
 
