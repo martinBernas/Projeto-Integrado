@@ -13,7 +13,7 @@ Usaremos sprints curtas, backlog versionado no GitHub e revisão por pull reques
 | Sprint | Objetivo | Entregas |
 | --- | --- | --- |
 | 1 — Descoberta | Documentar o MVP e definir o escopo | Wiki, requisitos, regras, diagrama e plano de testes |
-| 2 — Fundação | Criar a base técnica e o acesso de usuários | Projeto Next.js, banco, autenticação e perfis |
+| 2 — Fundação | Criar a base técnica e o acesso de usuários | Next.js/TypeScript, Supabase (PostgreSQL e Auth), políticas RLS, perfis, GitHub → Vercel e ambientes de implantação |
 | 3 — Torneios | Administrar campeonatos | Torneio, participantes, período, fuso horário e regras versionadas |
 | 4 — Pontuação | Registrar e calcular resultados | Lançamento, validação, cálculo, penalidade e histórico |
 | 5 — Ranking | Exibir resultados e finalizar qualidade | Rankings por torneio e período, testes e publicação |

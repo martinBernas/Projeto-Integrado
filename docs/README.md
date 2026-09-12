@@ -6,6 +6,8 @@ Aplicação web para registrar pontuações pessoais de GeoGuessr, administrar t
 
 - [Plano de ação](plano-de-acao.md)
 - [Documentação funcional](documentacao-funcional.md)
+- [Arquitetura e implantação](arquitetura.md)
+- [Decisão técnica: Vercel e Supabase](decisoes/adr-001-vercel-e-supabase.md)
 - [Requisitos](requisitos.md)
 - [Regras de pontuação](regras-de-pontuacao.md)
 - [Plano de testes](plano-de-testes.md)
@@ -15,6 +17,6 @@ Aplicação web para registrar pontuações pessoais de GeoGuessr, administrar t
 
 O arquivo `GeoGuaras.xlsx` é a referência inicial do domínio. Ele contém a aba `Diario`, com as pontuações brutas, e a aba `geral`, com os pontos aplicados, resultados mensais e acumulado.
 
-## Stack proposta
+## Stack definida
 
-TypeScript, Next.js, PostgreSQL/Supabase e Tailwind CSS. Essa combinação permite uma aplicação web responsiva, autenticação, persistência relacional e regras de acesso por usuário.
+TypeScript, Next.js, Tailwind CSS e Vercel para a aplicação web. Supabase fornece PostgreSQL, autenticação e autorização via RLS.
