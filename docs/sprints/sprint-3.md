@@ -1,6 +1,14 @@
 # Sprint 3 — MVP utilizável
 
-Data do planejamento e execução: 20/09/2026, conforme informado pelo Dono do produto. Meta: primeira versão ao fim da execução de hoje. Situação: planejamento revisado; desenvolvimento pendente. Capacidade em horas da equipe: não informada.
+Data do planejamento e execução: 20/09/2026, conforme informado pelo Dono do produto. Meta: primeira versão ao fim da execução de hoje. Situação: implementação local em validação; implantação e dados reais pendentes. Capacidade em horas da equipe: não informada.
+
+## Progresso da implementação
+
+S3-02 a S3-05 possuem implementação local: migrações incrementais, políticas sem recursão, funções administrativas, lançamento próprio, motor relativo, revisões dos dados/resultados e painel com ranking. S3-06 passou em testes locais de banco/ranking, lint e build; o aceite remoto permanece pendente. As duas migrações e o seed foram aplicados pelo Dono do produto no Supabase real; o resultado da consulta confirmou a configuração do torneio. Publicação da aplicação, vínculos dos jogadores e carga do Excel permanecem pendentes. Consulte [operação e evidências](sprint-3-operacao.md).
+
+Durante a execução, o Dono do produto esclareceu que fornecerá um Excel depois do cadastro das contas, para carga direta na base. Não desenvolver importador pela interface. A preparação histórica permanece aberta, sem penalidades e com resultados provisórios, até conclusão administrativa explícita da carga. Essa etapa evita classificar dados ainda não carregados como ausências.
+
+Critérios operacionais adotados na implementação: fuso `America/Sao_Paulo`, inteiros de 0 a 25.000 no lançamento bruto, zero tratado como ausência e envio/correção próprios no dia atual. A faixa limita o dado bruto, não muda a regra relativa do torneio. O esclarecimento do Dono do produto foi sobre essa distinção; esses parâmetros devem ser conferidos na homologação. Elegibilidade inicial desde 01/09 e penalidades liberadas somente após conferência/conclusão da carga histórica.
 
 ## Objetivo e demonstração final
 
@@ -49,8 +57,8 @@ Em dia encerrado sem nenhum positivo, aplicar a penalidade de setembro aos parti
 2. Período confirmado: 01/09/2026 a 30/09/2026, inclusive. A carga manual deve respeitar esse intervalo e não incluir datas futuras como resultados já jogados.
 3. Organizador responsável, participantes e contas correspondentes; confirmar fuso. Calendário e exclusão de 07/09/2026 já estão definidos.
 4. Reproduzir a regra confirmada de setembro também em dia encerrado sem positivos: aplicar a penalidade sem calcular diferença ou exibir ranking diário de diferenças.
-5. Limites da pontuação e tratamento de zero. A fórmula trata valores não positivos como ausência; o formulário não deve confundir ausência com resultado válido.
-6. Confirmar prazo: proposta de envio e correção próprios até a virada do dia no fuso do torneio, sem lançamento tardio pela interface do jogador nesta entrega. A carga administrativa de histórico é uma operação separada e permitida. O Excel não comprova esse prazo de envio.
+5. Conferir em homologação os critérios implementados: bruto inteiro 0–25.000, zero como ausência; pontos do torneio continuam relativos ao menor positivo.
+6. Conferir em homologação o prazo implementado: envio e correção próprios até a virada do dia no fuso do torneio. Carga administrativa de histórico é separada e permite datas anteriores. Esse prazo operacional não foi extraído das fórmulas do Excel.
 7. Associar manualmente as contas cadastradas aos participantes do torneio. O histórico dentro do período deve contar mesmo quando anterior ao cadastro/vínculo. Confirmar se todos participam desde o início ou se há datas individuais de elegibilidade para penalidades; a data de cadastro não define automaticamente essa elegibilidade.
 
 ## Execução e aceite por entrega

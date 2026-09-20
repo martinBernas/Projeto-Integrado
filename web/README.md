@@ -4,7 +4,7 @@
 
 1. Copie `.env.local.example` para `.env.local`.
 2. Crie um projeto no Supabase e preencha URL e chave pública.
-3. Execute a migração em `supabase/migrations/202609120001_initial_schema.sql` no SQL Editor do Supabase.
+3. Execute as migrações de `supabase/migrations/` em ordem, uma única vez por ambiente. Se a migração da Sprint 2 já estiver aplicada, execute somente as duas de `20260920`.
 4. Em Authentication > URL Configuration, inclua `http://localhost:3000/auth/callback` como URL de redirecionamento.
 5. Execute `pnpm dev` nesta pasta e acesse `http://localhost:3000`.
 
@@ -13,6 +13,14 @@
 Conecte este repositório à Vercel, selecionando a pasta `web` como diretório raiz. Cadastre as mesmas variáveis de ambiente para Preview e Production e ajuste `NEXT_PUBLIC_SITE_URL` para a URL publicada.
 
 Nunca registre `.env.local` ou `SUPABASE_SERVICE_ROLE_KEY` no Git.
+
+## Sprint 3
+
+O painel oferece lançamento bruto pessoal, histórico, torneio de setembro, cálculo relativo e ranking. Consulte [implantação e carga histórica](../docs/sprints/sprint-3-operacao.md) para provisionar o organizador, vincular contas e carregar o Excel pelo SQL Editor. O script `supabase/seeds/september.sql` exige UUID real antes de executar.
+
+Histórico incompleto mantém o ranking provisório e não gera penalidades. Após a conferência pelo Dono do produto, `private.complete_september_history()` habilita o cálculo de faltas nos dias encerrados. A aplicação usa somente a chave pública e a sessão do usuário; não requer chave de serviço.
+
+Validação local: `pnpm test` (Node.js 24, testes de banco com PGlite e ranking), `pnpm lint` e `pnpm build`. Os testes não acessam o banco remoto nem substituem a validação com Supabase Auth em ambiente publicado.
 
 ## Getting Started
 

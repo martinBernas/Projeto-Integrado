@@ -22,7 +22,7 @@ Usaremos sprints curtas, backlog versionado no GitHub e revisão por pull reques
 
 ## Situação e revisão de escopo — 20/09/2026
 
-A Sprint 2 entregou cadastro e login concluídos e validados, conforme confirmado pelo Dono do produto e registrado no commit `3f8c614` (autenticação validada). A base Next.js/Supabase e a migração inicial também estão implementadas. Cadastro e login não serão reimplementados nem reabertos como entregas da Sprint 3. Nesta sprint, sua verificação será apenas de regressão e integração com o torneio no ambiente publicado. A Sprint 3 está em planejamento; as novas entregas abaixo não estão implementadas.
+A Sprint 2 entregou cadastro e login concluídos e validados, conforme confirmado pelo Dono do produto e registrado no commit `3f8c614` (autenticação validada). A base Next.js/Supabase e a migração inicial também estão implementadas. Cadastro e login não serão reimplementados nem reabertos como entregas da Sprint 3. Nesta sprint, sua verificação será apenas de regressão e integração com o torneio no ambiente publicado. A Sprint 3 está em execução, com implementação local e validações descritas no backlog abaixo; implantação e aceite remoto ainda pendentes.
 
 Por solicitação dos clientes, a primeira versão utilizável passa a ser a entrega da Sprint 3. Antecipamos o fluxo essencial de pontuação e ranking e adiamos a criação de torneios e a configuração de regras pela interface. As regras de setembro estão confirmadas; o cadastro será disponibilizado e o Dono do produto inserirá manualmente o histórico após o cadastro das contas. Não haverá importador automático nesta sprint. A mudança de escopo está definida; os parâmetros operacionais pendentes estão listados no [plano da Sprint 3](sprints/sprint-3.md).
 
@@ -41,11 +41,11 @@ Para atender à solicitação dos clientes de uma versão utilizável ao final d
 | ID | Entrega obrigatória | Dependência | Situação |
 | --- | --- | --- | --- |
 | S3-01 | Fechar regras do MVP, período, participantes e critérios de aceite | Decisões operacionais do plano detalhado | Em planejamento |
-| S3-02 | Ajustar banco/RLS, provisionar o torneio único e documentar carga manual do histórico | S3-01 | A fazer |
-| S3-03 | Registrar e consultar pontuação própria por dia | S3-02 | A fazer |
-| S3-04 | Calcular diferença diária, ausência e total com rastreabilidade | S3-01, S3-02 | A fazer |
-| S3-05 | Exibir torneio, regras, resultados diários e ranking acumulado | S3-03, S3-04 | A fazer |
-| S3-06 | Validar com exemplos do Excel, testar acesso e publicar | S3-02 a S3-05 | A fazer |
+| S3-02 | Ajustar banco/RLS, provisionar o torneio único e documentar carga manual do histórico | S3-01 | Migrações e torneio aplicados no Supabase; configuração confirmada pelo Dono do produto |
+| S3-03 | Registrar e consultar pontuação própria por dia | S3-02 | Implementado localmente; homologação remota pendente |
+| S3-04 | Calcular diferença diária, ausência e total com rastreabilidade | S3-01, S3-02 | Testes locais aprovados; Excel real ainda será fornecido |
+| S3-05 | Exibir torneio, regras, resultados diários e ranking acumulado | S3-03, S3-04 | Implementado; inspeção visual local em celular/desktop |
+| S3-06 | Validar com exemplos do Excel, testar acesso e publicar | S3-02 a S3-05 | Testes/lint/build locais aprovados; publicação e aceite remoto pendentes |
 
 Detalhamento, limites e encerramento: [Sprint 3 — MVP utilizável](sprints/sprint-3.md).
 

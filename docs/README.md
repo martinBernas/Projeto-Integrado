@@ -6,6 +6,7 @@ Aplicação web para registrar pontuações pessoais de GeoGuessr, administrar t
 
 - [Plano de ação](plano-de-acao.md)
 - [Sprint 3 — MVP utilizável](sprints/sprint-3.md)
+- [Sprint 3 — implantação e carga histórica](sprints/sprint-3-operacao.md)
 - [Histórico da documentação](historico.md)
 - [Auditoria de pontuações — Sprint 6](auditoria-de-pontuacoes.md)
 - [Documentação funcional](documentacao-funcional.md)

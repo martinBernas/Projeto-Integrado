@@ -27,6 +27,18 @@ Os testes seguem a lógica de verificação e validação: requisitos são valid
 
 ## Evidências
 
+### Confirmação do provisionamento remoto pelo Dono do produto
+
+As migrações `202609200001_september_mvp.sql` (com RLS nas tabelas internas de histórico), `202609200002_score_entry.sql` e o seed retornaram `Success. No rows returned`, conforme informado pelo Dono do produto. A consulta posterior retornou: `GeoGuaras — Setembro 2026`, início `2026-09-01`, fim `2026-09-30`, modo `relative_to_lowest`, penalidade `-2500`, calendário `monday_to_friday`, `history_ready = false` e exclusão `2026-09-07`. Evidência fornecida na conversa pelo executor; não equivale à homologação ponta a ponta nem à carga histórica concluída.
+
+### Execução local da Sprint 3 — 20/09/2026
+
+Responsável pela execução: agente de desenvolvimento. Base do trabalho: commit `7887c29`; implementação ainda local. `pnpm test`: sete testes aprovados, sendo seis de PostgreSQL embarcado/PGlite e um de ranking. Cobertura: provisionamento repetível, 21 dias elegíveis em setembro, exclusão de 07/09/fins de semana, diferenças e empate no menor, ausência, dia aberto, snapshots/revisões, RLS sem recursão, isolamento, escrita direta negada, lançamento autenticado e limites, correção sem duplicidade, carga histórica e sua conclusão. Amostra: 20.002 − 16.668 = 3.334; empate em 12.000 = zero para ambos.
+
+`pnpm lint` e `pnpm build` aprovados. Componentes reais de formulário/torneio renderizados com dados fictícios e inspecionados em navegador headless nas larguras 390 e 1.280 pixels; sem overflow horizontal, detalhes diários abrindo corretamente. Essa inspeção visual não é um teste ponta a ponta de login/salvamento: autenticação no PGlite é simulada. O provisionamento no Supabase foi posteriormente confirmado pelo Dono do produto; login/lançamento/ranking ponta a ponta e publicação na Vercel permanecem pendentes.
+
+Carga histórica incompleta: sem penalidades, resultados provisórios. Carga repetida: sem duplicidade. Conclusão administrativa: habilita penalidades de dias encerrados. Requer conciliação do Excel real quando fornecido pelo Dono do produto. CT01 e S3-CT08 no ambiente publicado continuam pendentes, assim como a evidência de publicação e o commit final de implementação.
+
 ### Recorte de aceite da Sprint 3
 
 Cadastro e login já foram concluídos e validados na Sprint 2. A execução de CT01 e do acesso no fluxo S3-CT08 é uma verificação de regressão e integração com o torneio, não uma nova implementação nem reabertura da entrega anterior. Os novos resultados de teste devem ser registrados como evidências da integração da Sprint 3.

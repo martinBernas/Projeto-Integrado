@@ -29,6 +29,8 @@ Exemplo: se as pontuações forem 10.000, 12.000 e 15.500, os pontos aplicados s
 
 ## Ausência e período
 
+Na carga inicial da Sprint 3, o Dono do produto fornecerá um Excel após o cadastro das contas. Enquanto a preparação histórica estiver aberta, dados ausentes ficam pendentes e o ranking é provisório, sem penalidades. Após conferir e concluir a carga diretamente na base, as ausências dos dias elegíveis encerrados passam a gerar −2.500. Ver [procedimento operacional](sprints/sprint-3-operacao.md). A aplicação do resultado relativo aos lançamentos positivos permanece independente dessa faixa de pontuação bruta.
+
 O valor da penalidade por não jogar é uma configuração do torneio. O MVP usa −2.500 no bloco de setembro, mas a aplicação não deve fixar esse número. A ausência só pode ser avaliada dentro do período do torneio e conforme o fuso horário configurado.
 
 ## Calendário de jogo
