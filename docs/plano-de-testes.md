@@ -27,9 +27,54 @@ Os testes seguem a lógica de verificação e validação: requisitos são valid
 
 ## Evidências
 
+### Recorte de aceite da Sprint 3
+
+Cadastro e login já foram concluídos e validados na Sprint 2. A execução de CT01 e do acesso no fluxo S3-CT08 é uma verificação de regressão e integração com o torneio, não uma nova implementação nem reabertura da entrega anterior. Os novos resultados de teste devem ser registrados como evidências da integração da Sprint 3.
+
+Executar CT01, CT03, CT06–CT09 e CT11 no fluxo entregue. CT07 passa a seguir o menor positivo observado no Excel. Adaptar CT10 ao total do torneio único. CT14–CT16 verificam calendário provisionado, sem exigir editor. CT02 será substituído nesta entrega pela verificação de provisionamento abaixo. CT05, CT12 e CT13 completos permanecem para as funções futuras; a identificação da regra fixa é validada separadamente nesta sprint.
+
+| ID | Cenário adicional | Resultado esperado |
+| --- | --- | --- |
+| S3-CT01 | Executar provisionamento duas vezes | Um único torneio e vínculos sem duplicidade |
+| S3-CT02 | Não participante consulta torneio; jogador tenta configurar regra pela API | Acesso negado, sem erro de recursão de RLS |
+| S3-CT03 | Mesmo jogador envia duas vezes para a mesma data | Sem duplicidade; alteração somente no prazo autorizado |
+| S3-CT04 | Dia corrente, dia encerrado, futuro e data excluída | Penalidade apenas no dia encerrado elegível; repetição de cálculo não duplica valor |
+| S3-CT05 | Pontuações de `Diario!C2:C14` | Menor positivo 16.668; para 20.002, resultado 3.334, como `geral!C2` |
+| S3-CT06 | Dia sem positivos | Sem erro nem diferenças inválidas; ausência conforme decisão registrada em S3-01 |
+| S3-CT07 | Consultar resultado e sua origem | Pontuação bruta ou ausência, data e identificação da regra recuperáveis |
+| S3-CT08 | Fluxo publicado com duas contas participantes e uma externa | Login, lançamento e ranking funcionam; escrita de terceiros e leitura externa negadas |
+| S3-CT09 | Alteração própria após encerramento; pontuação fora do limite | Operações negadas conforme prazo e limites definidos em S3-01 |
+| S3-CT10 | 07/09/2026 com pontuação histórica e sem lançamento, após encerramento | Em ambos os casos, nenhum ponto aplicado ou penalidade; data excluída do ranking do torneio |
+| S3-CT11 | Sábado 05/09 e domingo 06/09 com e sem lançamento; terça 08/09 com resultado válido | Fim de semana ignorado; 08/09 calculado normalmente, sem estender a exclusão do feriado |
+| S3-CT12 | Executar duas vezes o provisionamento da exclusão de 07/09/2026 | Uma única exclusão persistida para o torneio |
+
+CT04 será adaptado à carga manual: cadastrar uma conta, vinculá-la ao torneio e carregar pontuações anteriores ao cadastro, mas dentro do período. Elas devem compor o ranking. Repetir uma carga não pode duplicar jogador/data; preservar autoria, origem e regra. Validar ausência antes da data de cadastro segundo a elegibilidade definida, e não segundo a idade da conta.
+
+Estes casos são planejados, não executados. Fixar a data de referência nos testes da penalidade, pois os valores salvos no Excel podem refletir outro dia de cálculo.
+
+Período confirmado do torneio: 01/09/2026 a 30/09/2026, inclusive. Testar os limites: 31/08 e 01/10 não entram no ranking nem geram penalidade neste torneio; 01/09 e 30/09 entram conforme calendário e encerramento do dia. Em uma execução com data de referência 20/09, não aplicar antecipadamente penalidades aos dias restantes de setembro.
+
 Para cada execução, registrar identificador do caso, data, responsável, dados usados, resultado obtido, resultado esperado e evidência (captura de tela ou saída do teste automatizado).
 
 ## Automação planejada
+
+### Auditoria por votação — casos futuros da Sprint 6
+
+Casos planejados, não executados e fora do aceite da Sprint 3. Refinar as políticas abertas em [Auditoria de pontuações](auditoria-de-pontuacoes.md) antes de implementar.
+
+| ID | Requisito | Cenário | Resultado esperado |
+| --- | --- | --- | --- |
+| CT17 | RF13/RF15 | Organizador tenta abrir/encerrar auditoria de outro torneio ou encerrar antes do prazo | Operação negada |
+| CT18 | RF14 | Votos pela manutenção e pela invalidação durante o período | Votos registrados segundo elegibilidade e unicidade; voto após prazo negado |
+| CT19 | RF15/RF16 | Maioria pela invalidez; organizador escolhe desconsiderar | Contribuição removida no torneio denunciante, sem penalidade automática |
+| CT20 | RF15/RF16 | Maioria pela invalidez; organizador escolhe penalidade do dia | Contribuição substituída pela penalidade; reapuração não duplica punição |
+| CT21 | RN10 | Mesma pontuação usada nos torneios A e B; decisão de invalidez em A | Somente A afetado; pontuação bruta e resultado em B preservados |
+| CT22 | RN11 | Maioria pela manutenção | Pontuação permanece válida |
+| CT23 | RN13 | Consultar auditoria encerrada | Votos, apuração, responsável, decisão, punição e alterações rastreáveis conforme acesso autorizado |
+| CT24 | RF15 | Empate, nenhum voto ou quórum insuficiente | Resultado conforme política a definir; não presumir invalidação |
+| CT25 | RN04/RN10 | Pontuação invalidada era o menor positivo | Recálculo conforme política a definir, restrito ao torneio denunciante e com histórico preservado |
+
+### Ferramentas previstas
 
 - Testes unitários do motor de pontuação com Vitest.
 - Testes de integração do banco e das permissões.

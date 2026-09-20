@@ -5,6 +5,9 @@ Aplicação web para registrar pontuações pessoais de GeoGuessr, administrar t
 ## Documentação
 
 - [Plano de ação](plano-de-acao.md)
+- [Sprint 3 — MVP utilizável](sprints/sprint-3.md)
+- [Histórico da documentação](historico.md)
+- [Auditoria de pontuações — Sprint 6](auditoria-de-pontuacoes.md)
 - [Documentação funcional](documentacao-funcional.md)
 - [Arquitetura e implantação](arquitetura.md)
 - [Decisão técnica: Vercel e Supabase](decisoes/adr-001-vercel-e-supabase.md)
@@ -14,6 +17,8 @@ Aplicação web para registrar pontuações pessoais de GeoGuessr, administrar t
 - [Diagrama de classes](diagramas/classes.md)
 
 ## Fonte do MVP
+
+A entrega atual é um único torneio pré-instanciado, com lançamento, cálculo e ranking. Criação de torneios e configuração de regras pela interface ficam para sprints futuras. Consulte o plano da Sprint 3 para decisões pendentes e critérios de aceite.
 
 O arquivo `GeoGuaras.xlsx` é a referência inicial do domínio. Ele contém a aba `Diario`, com as pontuações brutas, e a aba `geral`, com os pontos aplicados, resultados mensais e acumulado.
 
