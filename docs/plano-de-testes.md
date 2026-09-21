@@ -85,6 +85,22 @@ Período confirmado do torneio: 01/09/2026 a 30/09/2026, inclusive. Testar os li
 
 Para cada execução, registrar identificador do caso, data, responsável, dados usados, resultado obtido, resultado esperado e evidência (captura de tela ou saída do teste automatizado).
 
+## Perfil público — casos planejados da Sprint 4
+
+Ainda não executados. Ver [Perfil público](perfil-publico.md).
+
+| ID | Requisito | Cenário e aceite |
+| --- | --- | --- |
+| CT26 | RF17 | Cadastrar/editar nome; outra conta vê o nome escolhido em participantes/resultados/ranking, sem e-mail como alternativa |
+| CT27 | RF17 | Conta existente confirma/substitui nome herdado; UUID, pontuações e vínculos preservados |
+| CT28 | RF18 | Incluir/alterar/remover URL; competidor autorizado abre o link; ausência de URL não impede uso |
+| CT29 | RF17/RF18 | Nome vazio/e-mail e URL inválida, domínio estranho ou esquema executável rejeitados no servidor, inclusive por chamada direta |
+| CT30 | RF17/RF18 | Outra conta não edita o perfil; leitura restrita ao recorte autorizado, sem e-mail nas respostas |
+| CT31 | RF17 | Inclusão em outro torneio preserva nome escolhido pelo titular; nome já usado por outra conta é rejeitado no cadastro e na edição |
+| CT32 | RF17 | Duas contas tentam reservar simultaneamente o mesmo nome; somente uma operação é aceita e a outra recebe mensagem de nome indisponível |
+| CT33 | RF17 | Conforme normalização proposta, nomes com diferença apenas de caixa ou espaços nas extremidades colidem; editar outros campos mantendo o próprio nome é permitido |
+| CT34 | RF17 | Migração identifica colisões preexistentes e exige resolução antes da restrição, sem mesclar contas ou alterar pontuações/vínculos |
+
 ## Automação planejada
 
 ### Auditoria por votação — casos futuros da Sprint 6

@@ -15,7 +15,7 @@ Usaremos sprints curtas, backlog versionado no GitHub e revisão por pull reques
 | 1 — Descoberta | Documentar o MVP e definir o escopo | Wiki, requisitos, regras, diagrama e plano de testes |
 | 2 — Fundação | Criar a base técnica e o acesso de usuários | Next.js/TypeScript, Supabase (PostgreSQL e Auth), políticas RLS, perfis, GitHub → Vercel e ambientes de implantação |
 | 3 — MVP utilizável | Entregar o primeiro torneio pronto para os clientes | Torneio pré-instanciado, participantes provisionados, lançamento pessoal, cálculo relativo, penalidade, ranking, testes e publicação |
-| 4 — Torneios e participantes | Administrar competições com a regra existente | Criar, editar e encerrar torneios; gerenciar participantes; listar e acessar múltiplos torneios; ingresso retroativo |
+| 4 — Torneios e participantes | Administrar competições com a regra existente | Criar, editar e encerrar torneios; gerenciar participantes; listar e acessar múltiplos torneios; ingresso retroativo; nome público e perfil GeoGuessr |
 | 5 — Regras e calendário | Configurar competições com rastreabilidade | Modo absoluto/relativo, penalidade, calendário e exclusões; versões e vigência das regras |
 | 6 — Auditoria por votação | Avaliar pontuações dentro de cada torneio | Abertura, votação, apuração, punição local e recálculo rastreável; testes de isolamento |
 | 7 — Moderação e evolução | Completar a operação e melhorar a experiência | Aprovação/correção de lançamentos, consulta de histórico avançado e melhorias de ranking priorizadas pelo retorno dos clientes |
@@ -55,11 +55,15 @@ Por decisão do Dono do produto, o planejamento passa de cinco para sete sprints
 
 Esta divisão reduz a concentração de trabalho, mas ainda não comprova equilíbrio de esforço. Antes de iniciar cada sprint, estimar as histórias, registrar a capacidade disponível, incluir testes e publicação na estimativa e limitar o compromisso à capacidade. A Sprint 3 foi encerrada em 21/09/2026. As próximas sprints ainda exigem estimativas e capacidade confirmadas.
 
+## Inclusão no planejamento — 21/09/2026
+
+Por solicitação do Dono do produto, priorizar RF17–RF18 na Sprint 4 junto do gerenciamento de participantes. Ver [Perfil público](perfil-publico.md). O nome público será único em toda a plataforma, por decisão do Dono do produto. Incluir restrição de unicidade e tratamento de colisões existentes na estimativa. Estimar as novas histórias antes do compromisso; se exceder a capacidade, replanejar S4-03 e suas dependências. Sprint 3 permanece encerrada.
+
 ## Backlog das próximas sprints
 
 | Sprint | Histórias previstas | Dependências e aceite |
 | --- | --- | --- |
-| 4 | S4-01: criar/editar/encerrar torneio com a regra existente; S4-02: gerenciar participantes e ingresso retroativo; S4-03: lista e detalhes de múltiplos torneios | Base da Sprint 3; isolamento entre organizadores, pontuações pessoais reutilizadas e ranking correto por torneio. Sem editor de regras nesta etapa. |
+| 4 | S4-01: criar/editar/encerrar torneio com a regra existente; S4-02: gerenciar participantes e ingresso retroativo; S4-03: lista e detalhes de múltiplos torneios; S4-04: nome público único e edição; S4-05: URL do GeoGuessr | Base da Sprint 3; isolamento entre organizadores, pontuações pessoais reutilizadas e ranking correto por torneio. Sem editor de regras nesta etapa. |
 | 5 | S5-01: configurar modos e penalidade; S5-02: calendário e exclusões; S5-03: versões e vigência de regras | Sprint 4; regras configuradas alteram somente o contexto previsto e preservam a explicação dos resultados consolidados. |
 | 6 | S6-01: abrir avaliação e votar; S6-02: apurar e escolher punição; S6-03: recálculo e histórico da decisão | Sprints 4 e 5; fluxo completo de RF13–RF16, punição restrita ao torneio denunciante e testes de votação, prazo e isolamento. |
 | 7 | S7-01: aprovação/correção de lançamentos; S7-02: consulta de histórico avançado; S7-03: melhorias de ranking e usabilidade | Base das sprints anteriores; alterações administrativas rastreáveis e restritas ao torneio. Refinar RF08 e as melhorias com o Dono do produto, sem permitir contornar a votação de invalidez. |

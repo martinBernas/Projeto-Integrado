@@ -8,6 +8,12 @@ O Git é a fonte do histórico completo. Este registro resume marcos documentais
 | 12/09/2026 | Arquitetura Vercel e Supabase | Commit `57e4600` |
 | 20/09/2026 | Revisão documental 1.1: Sprint 3 passa a entregar torneio único, lançamento, cálculo e ranking; administração configurável adiada; regras de setembro confirmadas e histórico com carga manual após cadastro | Alterações locais; commit e revisão ainda pendentes |
 
+## Revisão 1.4 — 21/09/2026
+
+Dono do produto solicitou nome público independente do e-mail e URL do perfil no GeoGuessr. Registrados RF17–RF18, S4-04/S4-05 e CT26–CT31; Dono do produto confirmou nome público único em toda a plataforma; esforço será refinado. Sprint 3 permanece encerrada. Alterações documentais locais, sem commit e sem implementação nesta revisão.
+
+Complemento de 21/09/2026: unicidade global do nome público confirmada pelo Dono do produto. Planejamento inclui garantia no banco, tratamento de colisões existentes e testes CT32–CT34. Comparação sem distinção de caixa e sem espaços nas extremidades registrada como proposta técnica.
+
 ## Registro de encerramento de sprint
 
 21/09/2026 — Sprint 3 concluída, aplicação no commit `8671149`. Dono do produto confirmou os testes remotos e restauração final às `04:34:11.882419+00`, com `history_ready = false`. Onze testes locais aprovados. [Registro completo](sprints/sprint-3-encerramento.md). Cadastros, vínculos e Excel reais seguem como operação. Documentação e scripts adicionais aguardam commit.

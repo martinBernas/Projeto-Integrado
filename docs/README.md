@@ -16,6 +16,7 @@ Sprint 3 concluída em 21/09/2026. [Encerramento e evidências](sprints/sprint-3
 - [Arquitetura e implantação](arquitetura.md)
 - [Decisão técnica: Vercel e Supabase](decisoes/adr-001-vercel-e-supabase.md)
 - [Requisitos](requisitos.md)
+- [Perfil público — Sprint 4](perfil-publico.md)
 - [Regras de pontuação](regras-de-pontuacao.md)
 - [Plano de testes](plano-de-testes.md)
 - [Diagrama de classes](diagramas/classes.md)

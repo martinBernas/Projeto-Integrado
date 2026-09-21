@@ -14,6 +14,7 @@ Os requisitos abaixo preservam a visão completa do produto. O escopo vigente es
 | RF09 | Rastreabilidade mínima dos dados, alterações permitidas e regra aplicada |
 | RF10 | Acesso direto ao único torneio para seus participantes; lista de múltiplos torneios adiada |
 | RF02, RF08 | Administração de torneios e moderação pela interface adiadas |
+| RF17–RF18 | Perfil público e URL do GeoGuessr planejados para a Sprint 4 |
 | RF13–RF16 | Auditoria por votação prevista para a Sprint 6; fora da Sprint 3 |
 
 RN02 aplica-se ao histórico inserido manualmente: pontuações dentro do período contam mesmo quando anteriores ao cadastro ou vínculo. Fluxos de ingresso pela interface ficam para evolução. RN03 contempla apenas modo relativo nesta sprint. RNF01–RNF06 permanecem aplicáveis ao fluxo entregue.
@@ -45,6 +46,11 @@ Neste documento, gerente do torneio e organizador designam o mesmo papel.
 | RF14 | Os demais usuários elegíveis devem poder votar pela invalidação ou manutenção da pontuação durante o período de avaliação. |
 | RF15 | Após o período de avaliação, o organizador deve poder apurar e encerrar a votação; havendo maioria pela invalidez, a pontuação deve ser invalidada apenas no torneio que abriu a auditoria. |
 | RF16 | Ao aplicar a decisão de invalidez, o organizador deve escolher entre desconsiderar a pontuação ou aplicar a penalidade do dia, preservando votos, apuração, decisão e punição para consulta histórica. |
+
+| RF17 | O jogador deve escolher e editar um nome público único em toda a plataforma, independente do e-mail, exibido aos competidores sem usar o e-mail como alternativa. |
+| RF18 | O jogador deve poder cadastrar, editar e remover a URL opcional do perfil no GeoGuessr, acessível aos participantes e organizadores de torneios em comum. |
+
+RF17–RF18 previstos para a Sprint 4. Ver [Perfil público](perfil-publico.md).
 
 ## Requisitos não funcionais
 

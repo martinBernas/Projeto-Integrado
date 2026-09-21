@@ -8,7 +8,7 @@
 | Objetivo | Registrar pontuações pessoais de GeoGuessr e administrar torneios configuráveis. |
 | Público-alvo | Jogadores de GeoGuessr e usuários que organizam torneios. |
 | Plataforma | Aplicação web responsiva. |
-| Versão do documento | 1.3 — Redistribuição em sete sprints (20/09/2026) |
+| Versão do documento | 1.4 — Perfil público e URL do GeoGuessr (21/09/2026) |
 
 ## 2. Visão funcional
 
@@ -58,6 +58,10 @@ Qualquer usuário pode criar e organizar torneios. O organizador define particip
 3. O sistema exibe período, regras, participantes, resultados e ranking.
 4. A classificação posiciona a maior pontuação total em primeiro lugar.
 
+### 4.4 Perfil público — Sprint 4
+
+O jogador escolhe seu nome público, único em toda a plataforma, e pode informar a URL do perfil no GeoGuessr. Competidores e organizadores de torneios em comum veem o nome e podem abrir o link, sem acesso ao e-mail cadastrado. A edição pertence ao titular e preserva pontuações e vínculos. Ver [Perfil público](perfil-publico.md).
+
 ## 5. Regras funcionais resumidas
 
 ### Auditoria futura por votação
@@ -78,6 +82,8 @@ O organizador marca uma pontuação para avaliação no seu torneio. Os demais u
 As regras completas estão em [Regras de pontuação](regras-de-pontuacao.md) e os requisitos rastreáveis em [Requisitos](requisitos.md).
 
 ## 6. Controle de versão da documentação
+
+A revisão 1.4 acrescenta RF17–RF18 à Sprint 4, com reestimativa de esforço antes do compromisso. A Sprint 3 permanece encerrada.
 
 A revisão 1.3 redistribui o escopo futuro: Sprint 4 para torneios e participantes, Sprint 5 para regras e calendário, Sprint 6 para auditoria por votação e Sprint 7 para moderação e evolução. O escopo da Sprint 3 permanece inalterado. A distribuição ainda depende de estimativas e capacidade para confirmar o equilíbrio de esforço.
 
