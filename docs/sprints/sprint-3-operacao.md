@@ -2,13 +2,13 @@
 
 ## Estado da entrega
 
-Código implementado localmente; migrações e funções verificadas em PostgreSQL embarcado (PGlite). As duas migrações e o provisionamento foram executados pelo Dono do produto no Supabase, com sucesso informado na conversa. Consulta posterior confirmou período, modo relativo, penalidade, calendário, exclusão e histórico pendente. Carga do Excel, publicação da aplicação e validação ponta a ponta ainda pendentes. Não considerar esta instrução como evidência de publicação.
+Sprint 3 concluída em 21/09/2026, publicada no commit `8671149`. Testes e restauração confirmados pelo Dono do produto; histórico permanece em preparação. Consulte o [encerramento e evidências](sprint-3-encerramento.md). Cadastro, vínculos e carga real são atividades operacionais.
 
 ## Implantar a estrutura
 
 1. Fazer backup do banco antes da migração e conferir se existem pontuações duplicadas por jogador/data no fuso `America/Sao_Paulo` ou fora de 0–25.000. As novas restrições interrompem a migração nesses casos, sem descartar dados automaticamente.
 2. No SQL Editor do Supabase, executar em ordem os arquivos de `web/supabase/migrations/`: a migração inicial da Sprint 2 somente se ainda não aplicada, seguida de `202609200001_september_mvp.sql` e `202609200002_score_entry.sql`. Cada migração deve ser aplicada uma vez. Seeds e funções de carga são repetíveis; as migrações não são.
-3. Confirmar a conta do organizador em Authentication e localizar seu UUID em `public.profiles`. Preencher esse UUID no script `web/supabase/seeds/september.sql` e executar. O script sem UUID aborta intencionalmente. Não criar contas ou senhas fictícias em produção.
+3. Confirmar a conta do organizador em Authentication e localizar seu UUID em `public.profiles`. Conferir o UUID já preenchido no script `web/supabase/seeds/september.sql` e executar. O script sem UUID aborta intencionalmente. Não criar contas ou senhas fictícias em produção.
 4. Conferir o torneio `20260900-0000-4000-8000-000000000001`: 01–30/09/2026, segunda a sexta, 07/09 excluído, modo relativo, penalidade −2.500, regra `mvp-v1`. A preparação do histórico começa pendente.
 5. Na Vercel, usar diretório raiz `web`, comando de build `pnpm build` e as variáveis públicas do Supabase e URL do site. Não é necessária chave de serviço para a aplicação. Manter o callback de autenticação já validado na Sprint 2 e conferir a URL do novo ambiente.
 
@@ -62,4 +62,6 @@ Essa ação ativa as penalidades de dias elegíveis encerrados sem resultado pos
 
 Em `web`, executar `pnpm test`, `pnpm lint` e `pnpm build`. Os testes de banco usam funções de autenticação simuladas e papéis PostgreSQL reais em PGlite, não uma instância Supabase remota.
 
-No ambiente de entrega, validar cadastro/login reutilizados, duas contas participantes e uma externa, lançamento/correção, bloqueio de datas passadas, histórico, ranking e carga administrativa de uma amostra. Conferir 07/09 e fins de semana sem pontos/penalidade. Testar chamadas diretas à API, além das telas. Registrar data, responsável, ambiente, commit e evidência. Só então encerrar S3-06.
+Roteiro original de aceite: no ambiente de entrega, validar cadastro/login reutilizados, duas contas participantes e uma externa, lançamento/correção, bloqueio de datas passadas, histórico, ranking e carga administrativa de uma amostra. Conferir 07/09 e fins de semana sem pontos/penalidade. Testar chamadas diretas à API, além das telas. Registrar data, responsável, ambiente, commit e evidência. Só então encerrar S3-06.
+
+O aceite foi concluído em etapas, conforme o encerramento: permissões verificadas por papéis no SQL Editor remoto, sem requisições HTTP diretas; a segunda conta sem vínculo representou o acesso externo após o rollback.

@@ -27,6 +27,23 @@ Os testes seguem a lógica de verificação e validação: requisitos são valid
 
 ## Evidências
 
+### Aceite concluído — 21/09/2026
+
+Carga, formulário, sessão e permissões aprovados; restauração final em `2026-09-21 04:34:11.882419+00`, com `history_ready = false`. Consulte o [encerramento](sprints/sprint-3-encerramento.md) para evidências, executor e limites. Suíte local completa reexecutada: `node --test tests/*.test.mjs`, 11 testes aprovados, zero falhas. Lint e build da aplicação já aprovados; esta etapa adicionou scripts, testes e documentação.
+
+Os registros abaixo preservam estados anteriores da execução; as pendências de aceite foram resolvidas conforme o encerramento. A carga real permanece atividade operacional.
+
+
+### Ensaio remoto concluído e rollback — 21/09/2026
+
+Executado pelo Dono do produto na aplicação publicada da Sprint 3 (commit `8671149`, deployment Ready em Production informado por captura). A consulta de conciliação retornou totais esperados/aplicados de 79.534 e 2.365, com todos os dias corretos para as duas contas. O Dono do produto confirmou no painel o ranking, empate em 02/09, ausência de ambos em 04/09 e exclusão de fim de semana/feriado em 05–07/09. Isso valida esses cenários de carga, cálculo e exibição; não comprova todos os testes de escrita/autorização em produção.
+
+Rollback confirmado por resultado SQL: `history_ready = false`, `rolled_back_at = 2026-09-21 04:12:40.142415+00`. Ensaio encerrado no banco, sem deixar o histórico marcado como concluído. Conferência visual posteriormente confirmada; carga real permanece atividade operacional. Os registros anteriores abaixo descrevem os estados de preparação e validação local anteriores a esse ensaio.
+
+### Ensaio com duas contas e rollback — preparação
+
+A pedido do Dono do produto, preparados `web/supabase/rehearsal/01-load.sql`, `02-verify.sql` e `03-rollback.sql`. Dois testes adicionais em PGlite passaram: carga com conciliação independente e restauração integral das tabelas de negócio ao estado anterior, incluindo dados preexistentes; recusa de rollback quando há pontuação alterada após a carga. O rollback repetido também preservou o estado restaurado. Auditoria interna e backup do ensaio são mantidos. A execução remota posterior está registrada acima. Procedimento em [Ensaio da Sprint 3](sprints/sprint-3-ensaio.md).
+
 ### Confirmação do provisionamento remoto pelo Dono do produto
 
 As migrações `202609200001_september_mvp.sql` (com RLS nas tabelas internas de histórico), `202609200002_score_entry.sql` e o seed retornaram `Success. No rows returned`, conforme informado pelo Dono do produto. A consulta posterior retornou: `GeoGuaras — Setembro 2026`, início `2026-09-01`, fim `2026-09-30`, modo `relative_to_lowest`, penalidade `-2500`, calendário `monday_to_friday`, `history_ready = false` e exclusão `2026-09-07`. Evidência fornecida na conversa pelo executor; não equivale à homologação ponta a ponta nem à carga histórica concluída.
@@ -62,7 +79,7 @@ Executar CT01, CT03, CT06–CT09 e CT11 no fluxo entregue. CT07 passa a seguir o
 
 CT04 será adaptado à carga manual: cadastrar uma conta, vinculá-la ao torneio e carregar pontuações anteriores ao cadastro, mas dentro do período. Elas devem compor o ranking. Repetir uma carga não pode duplicar jogador/data; preservar autoria, origem e regra. Validar ausência antes da data de cadastro segundo a elegibilidade definida, e não segundo a idade da conta.
 
-Estes casos são planejados, não executados. Fixar a data de referência nos testes da penalidade, pois os valores salvos no Excel podem refletir outro dia de cálculo.
+Esta tabela define os casos planejados; execução e adaptações estão registradas nas evidências e no encerramento. Fixar a data de referência nos testes da penalidade, pois os valores salvos no Excel podem refletir outro dia de cálculo.
 
 Período confirmado do torneio: 01/09/2026 a 30/09/2026, inclusive. Testar os limites: 31/08 e 01/10 não entram no ranking nem geram penalidade neste torneio; 01/09 e 30/09 entram conforme calendário e encerramento do dia. Em uma execução com data de referência 20/09, não aplicar antecipadamente penalidades aos dias restantes de setembro.
 

@@ -1,10 +1,10 @@
 # Sprint 3 — MVP utilizável
 
-Data do planejamento e execução: 20/09/2026, conforme informado pelo Dono do produto. Meta: primeira versão ao fim da execução de hoje. Situação: implementação local em validação; implantação e dados reais pendentes. Capacidade em horas da equipe: não informada.
+Planejada em 20/09/2026 e concluída em 21/09/2026. S3-01 a S3-06 concluídos. Aplicação publicada no commit `8671149`. Consulte o [encerramento e evidências](sprint-3-encerramento.md).
 
 ## Progresso da implementação
 
-S3-02 a S3-05 possuem implementação local: migrações incrementais, políticas sem recursão, funções administrativas, lançamento próprio, motor relativo, revisões dos dados/resultados e painel com ranking. S3-06 passou em testes locais de banco/ranking, lint e build; o aceite remoto permanece pendente. As duas migrações e o seed foram aplicados pelo Dono do produto no Supabase real; o resultado da consulta confirmou a configuração do torneio. Publicação da aplicação, vínculos dos jogadores e carga do Excel permanecem pendentes. Consulte [operação e evidências](sprint-3-operacao.md).
+Migrações, torneio, lançamento, cálculo e painel publicados e validados. Histórico em preparação para cadastros, vínculos e Excel reais; essas são atividades operacionais da versão entregue. As seções de planejamento abaixo preservam os critérios originais, cuja execução está registrada no encerramento.
 
 Durante a execução, o Dono do produto esclareceu que fornecerá um Excel depois do cadastro das contas, para carga direta na base. Não desenvolver importador pela interface. A preparação histórica permanece aberta, sem penalidades e com resultados provisórios, até conclusão administrativa explícita da carga. Essa etapa evita classificar dados ainda não carregados como ausências.
 

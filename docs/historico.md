@@ -10,6 +10,13 @@ O Git é a fonte do histórico completo. Este registro resume marcos documentais
 
 ## Registro de encerramento de sprint
 
+21/09/2026 — Sprint 3 concluída, aplicação no commit `8671149`. Dono do produto confirmou os testes remotos e restauração final às `04:34:11.882419+00`, com `history_ready = false`. Onze testes locais aprovados. [Registro completo](sprints/sprint-3-encerramento.md). Cadastros, vínculos e Excel reais seguem como operação. Documentação e scripts adicionais aguardam commit.
+
+Os registros seguintes preservam os estados anteriores e suas pendências à época.
+
+
+21/09/2026 — Ensaio remoto de duas contas concluído pelo Dono do produto: totais de 79.534 e 2.365 conciliados integralmente e confirmados no painel, incluindo empate, ausências e exclusão de feriado/fim de semana. Rollback confirmado às 04:12:40 UTC, com `history_ready = false`. Aplicação publicada no commit `8671149`. Evidências em `plano-de-testes.md` e `sprints/sprint-3-ensaio.md`; carga real e demais verificações de aceite permanecem pendentes.
+
 Avanço da Sprint 3: Dono do produto executou as duas migrações e o seed no Supabase, todos com sucesso. Consulta confirmou o torneio de setembro, regra relativa, penalidade −2.500, segunda a sexta, exclusão de 07/09 e preparação histórica aberta. Publicação da aplicação, vínculos de participantes, carga do Excel e homologação ponta a ponta permanecem pendentes.
 
 Execução da Sprint 3 — 20/09/2026: implementação local de migrações/RLS, provisionamento, carga administrativa, lançamento pessoal, cálculo relativo e painel. Sete testes locais aprovados, lint/build aprovados e inspeção visual de componentes em celular/desktop. Dono do produto esclareceu que fornecerá Excel após cadastro das contas; preparação histórica agora fica provisória e sem penalidades até conclusão da carga. Procedimento em `sprints/sprint-3-operacao.md`. Banco remoto, conta organizadora, Excel real e publicação pendentes; sprint não encerrada.
