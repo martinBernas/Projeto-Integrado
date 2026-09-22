@@ -9,6 +9,13 @@ export type TournamentData = {
   tournament: { name: string; starts_at: string; ends_at: string; timezone: string; history_ready: boolean; rule_version: string };
   participants: Participant[]; excluded_dates: string[]; results: DayResult[];
 };
+export function eligibleResults(participants: Participant[], results: DayResult[]) {
+  const starts = new Map(participants.map(p => [p.id, p.eligible_from]));
+  return results.filter(r => {
+    const start = starts.get(r.player_id);
+    return start !== undefined && r.played_on >= start;
+  });
+}
 export function ranking(participants: Participant[], results: DayResult[]) {
   const totals = new Map<string, number>();
   for (const row of results) totals.set(row.player_id, (totals.get(row.player_id) ?? 0) + row.applied_score);
