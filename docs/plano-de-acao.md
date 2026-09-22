@@ -20,6 +20,14 @@ Usaremos sprints curtas, backlog versionado no GitHub e revisão por pull reques
 | 6 — Auditoria por votação | Avaliar pontuações dentro de cada torneio | Abertura, votação, apuração, punição local e recálculo rastreável; testes de isolamento |
 | 7 — Moderação e evolução | Completar a operação e melhorar a experiência | Aprovação/correção de lançamentos, consulta de histórico avançado e melhorias de ranking priorizadas pelo retorno dos clientes |
 
+## Sprints concluídas
+
+| Sprint | Situação | Registro |
+| --- | --- | --- |
+| 1 — Descoberta e documentação do MVP | Concluída em 06/09/2026 | [Encerramento da Sprint 1](sprints/sprint-1.md) |
+| 2 — Fundação | Concluída em 12/09/2026 | [Encerramento da Sprint 2](sprints/sprint-2.md) |
+| 3 — MVP utilizável | Concluída em 21/09/2026 | [Encerramento da Sprint 3](sprints/sprint-3-encerramento.md) |
+
 ## Situação e revisão de escopo — 20/09/2026
 
 A Sprint 2 entregou cadastro e login concluídos e validados, conforme confirmado pelo Dono do produto e registrado no commit `3f8c614` (autenticação validada). A base Next.js/Supabase e a migração inicial também estão implementadas. Cadastro e login não serão reimplementados nem reabertos como entregas da Sprint 3. Nesta sprint, sua verificação será apenas de regressão e integração com o torneio no ambiente publicado. A Sprint 3 foi concluída em 21/09/2026. Ver [encerramento](sprints/sprint-3-encerramento.md).

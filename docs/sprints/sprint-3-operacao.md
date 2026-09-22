@@ -2,6 +2,8 @@
 
 ## Estado da entrega
 
+Atualização de 22/09/2026: carga real de 11 contas e 148 pontuações confirmada. Ver [registro operacional](operacao-2026-09-22.md) para participantes pendentes, complemento de Tales, início de Bastian em 16/09, penalidades e correção local da tela.
+
 Sprint 3 concluída em 21/09/2026, publicada no commit `8671149`. Testes e restauração confirmados pelo Dono do produto; histórico permanece em preparação. Consulte o [encerramento e evidências](sprint-3-encerramento.md). Cadastro, vínculos e carga real são atividades operacionais.
 
 ## Implantar a estrutura
@@ -26,7 +28,7 @@ A função valida a existência da conta, evita vínculos duplicados e define in
 
 ## Carregar o Excel quando o Dono do produto o fornecer
 
-O arquivo ainda será fornecido. Não há importação automática pela interface. Preparar os comandos SQL a partir das pontuações brutas do Excel e do mapeamento validado de contas; não carregar os pontos relativos como se fossem resultados brutos.
+O arquivo foi fornecido em 22/09 e a primeira carga real foi executada conforme o registro operacional. Não há importação automática pela interface. Nas próximas cargas, preparar os comandos SQL a partir das pontuações brutas do Excel e do mapeamento validado de contas; não carregar os pontos relativos como se fossem resultados brutos. Conferir a data efetiva de entrada de cada participante antes de concluir a preparação.
 
 ```sql
 begin;

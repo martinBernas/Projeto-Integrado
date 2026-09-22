@@ -26,6 +26,8 @@ Testes locais de banco/ranking, lint, build e inspeção visual estão registrad
 
 ## Operação após a entrega
 
+O parágrafo seguinte registra a situação no encerramento de 21/09. A carga real e as decisões posteriores estão no [registro de 22/09](operacao-2026-09-22.md).
+
 O torneio permanece com `history_ready = false`, aguardando os cadastros reais, o vínculo administrativo dos participantes e o Excel fornecido pelo Dono do produto. Após carregar e conciliar o histórico real, concluir sua preparação explicitamente para habilitar penalidades. Essas atividades são operação da versão entregue; não impedem o encerramento do desenvolvimento da Sprint 3.
 
 Próxima sprint planejada: Sprint 4, administração de torneios e participantes. Regras configuráveis continuam na Sprint 5, auditoria por votação na Sprint 6 e moderação/evolução na Sprint 7.

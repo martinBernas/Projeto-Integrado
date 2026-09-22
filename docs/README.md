@@ -2,13 +2,16 @@
 
 Aplicação web para registrar pontuações pessoais de GeoGuessr, administrar torneios e gerar rankings com regras de pontuação auditáveis.
 
-Sprint 3 concluída em 21/09/2026. [Encerramento e evidências](sprints/sprint-3-encerramento.md). Histórico em preparação para a carga real pelo Dono do produto.
+Sprint 3 concluída em 21/09/2026. [Encerramento e evidências](sprints/sprint-3-encerramento.md). Em 22/09, carga real confirmada de 11 participantes e 148 pontuações. Complementos, elegibilidade, penalidades e correção local do painel estão no [registro operacional de 22/09](sprints/operacao-2026-09-22.md).
 
 ## Documentação
 
 - [Plano de ação](plano-de-acao.md)
+- [Sprint 1 — descoberta e documentação](sprints/sprint-1.md)
+- [Sprint 2 — fundação, autenticação e publicação](sprints/sprint-2.md)
 - [Sprint 3 — MVP utilizável](sprints/sprint-3.md)
 - [Sprint 3 — implantação e carga histórica](sprints/sprint-3-operacao.md)
+- [Operação de 22/09 — carga real e correção de elegibilidade](sprints/operacao-2026-09-22.md)
 - [Sprint 3 — ensaio com duas contas e rollback](sprints/sprint-3-ensaio.md)
 - [Histórico da documentação](historico.md)
 - [Auditoria de pontuações — Sprint 6](auditoria-de-pontuacoes.md)
