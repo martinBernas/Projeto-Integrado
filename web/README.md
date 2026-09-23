@@ -16,9 +16,13 @@ Nunca registre `.env.local` ou `SUPABASE_SERVICE_ROLE_KEY` no Git.
 
 ## Recuperação de senha
 
-O login oferece “Esqueci minha senha”, envio de link por e-mail e definição de nova senha após validação da sessão. No Supabase, em Authentication > URL Configuration, autorize `${NEXT_PUBLIC_SITE_URL}/auth/callback?next=/auth/reset-password` (substitua pela URL real do site) e o equivalente local quando necessário. Mantenha o template de recuperação usando o link padrão `{{ .ConfirmationURL }}`. O fluxo PKCE exige solicitar e abrir o link no mesmo navegador. Um link inválido, expirado ou sem o verificador local leva à solicitação de novo link.
+O login oferece “Esqueci minha senha”, envio de link por e-mail e definição de nova senha após validação da sessão. O callback aceita tokens de recuperação via `verifyOtp`, sem depender dos cookies do navegador que solicitou o e-mail. O Supabase valida a expiração e o uso único do token. O callback PKCE anterior continua disponível para cadastro e links antigos.
 
-Validação remota necessária após publicar: solicitar recuperação de uma conta de teste, abrir o e-mail no mesmo navegador, salvar nova senha, sair e entrar novamente; verificar senha antiga recusada, link reutilizado/expirado e senhas divergentes. Testes locais simulam o serviço de Auth; não comprovam entrega de e-mail ou configuração remota.
+Para habilitar recuperação entre aparelhos, primeiro publique o código atualizado. Depois, no Supabase > Authentication > Email Templates > Reset Password, substitua o conteúdo pelo arquivo [recovery.html](supabase/templates/recovery.html). O link deve ser `{{ .SiteURL }}/auth/callback?token_hash={{ .TokenHash }}&type=recovery` (no atributo HTML, use `&amp;`). Configure Site URL como `https://geoguaras.vercel.app`, sem barra final. Solicite um novo e-mail após salvar: links antigos com `{{ .ConfirmationURL }}` continuam dependendo do navegador original. O template usa Site URL, portanto mesmo uma solicitação em localhost/preview abre o site configurado; use um projeto Supabase separado para testar outro ambiente.
+
+Mantenha os redirecionamentos existentes `/auth/callback` e `/auth/callback?next=/auth/reset-password` na lista autorizada. SMTP deve estar configurado para entregar e-mails aos jogadores. Não é necessária migração de banco nem chave de serviço.
+
+Validação remota necessária após publicar e atualizar o template: solicitar recuperação no computador, abrir o e-mail no celular/outro navegador, salvar nova senha, sair e entrar novamente; verificar senha antiga recusada, link reutilizado/expirado e senhas divergentes. Testes locais simulam o serviço de Auth; não comprovam entrega de e-mail, uso único real ou configuração remota.
 
 ## Inclusão de Luca e Zade
 

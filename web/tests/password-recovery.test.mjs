@@ -82,3 +82,40 @@ test('callback preserva cookies, trata falha e impede redirecionamento externo',
   assert.equal(exchanges.length, count);
   assert.match(response.headers.get('location'), /invalid-link/);
 });
+
+test('token de recuperacao funciona sem cookies anteriores e rejeita token expirado, reutilizado ou tipo diferente', async () => {
+  const verified = [];
+  const consumed = new Set();
+  const route = await load('../src/app/auth/callback/route.ts', {
+    'next/server': { NextResponse: { redirect: (location) => ({ headers: new Headers({ location }), cookies: { values: [], set(...args) { this.values.push(args); } } }) } },
+    '@supabase/ssr': { createServerClient: (_url, _key, options) => ({ auth: {
+      exchangeCodeForSession: async () => { throw new Error('Recovery token must not require a PKCE verifier'); },
+      verifyOtp: async ({ token_hash, type }) => {
+        assert.deepEqual(options.cookies.getAll(), []);
+        verified.push({ token_hash, type });
+        if (token_hash === 'expired' || consumed.has(token_hash)) return { error: { message: 'invalid' } };
+        consumed.add(token_hash);
+        options.cookies.setAll([{ name: 'session', value: 'recovered-session', options: { httpOnly: true } }]);
+        return { error: null };
+      },
+    } }) },
+  }, { NEXT_PUBLIC_SUPABASE_URL: 'https://supabase.example', NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: 'test' });
+  const request = (query) => ({ nextUrl: new URL(`https://site.example/auth/callback${query}`), cookies: { getAll: () => [] } });
+  const response = await route.GET(request('?token_hash=valid&type=recovery&next=https://evil.example'));
+  assert.deepEqual(verified, [{ token_hash: 'valid', type: 'recovery' }]);
+  assert.equal(response.headers.get('location'), 'https://site.example/auth/reset-password');
+  assert.equal(response.cookies.values[0][1], 'recovered-session');
+  assert.equal(response.headers.get('Cache-Control'), 'no-store');
+  assert.equal(response.headers.get('Referrer-Policy'), 'no-referrer');
+  for (const query of ['?token_hash=expired&type=recovery', '?token_hash=valid&type=recovery']) {
+    const rejected = await route.GET(request(query));
+    assert.equal(rejected.headers.get('location'), 'https://site.example/auth/forgot-password?error=invalid-link');
+    assert.equal(rejected.cookies.values.length, 0);
+  }
+  const before = verified.length;
+  for (const query of ['?type=recovery', '?token_hash=valid&type=signup', '?token_hash=valid', '?token_hash=valid&type=signup&code=valid']) {
+    const rejected = await route.GET(request(query));
+    assert.match(rejected.headers.get('location'), /invalid-link/);
+  }
+  assert.equal(verified.length, before);
+});

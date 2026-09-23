@@ -14,7 +14,7 @@ export async function requestPasswordReset(_: AuthState, formData: FormData): Pr
     redirectTo: `${siteUrl}/auth/callback?next=/auth/reset-password`,
   });
   if (error) return { error: "Não foi possível solicitar o link agora. Aguarde alguns minutos e tente novamente." };
-  return { message: "Se houver uma conta com esse e-mail, você receberá um link para redefinir a senha. Confira também o spam e abra o link neste mesmo navegador." };
+  return { message: "Se houver uma conta com esse e-mail, você receberá um link para redefinir a senha. Confira também o spam e use o e-mail mais recente." };
 }
 
 export async function resetPassword(_: AuthState, formData: FormData): Promise<AuthState> {
