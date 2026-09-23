@@ -14,6 +14,16 @@ Conecte este repositório à Vercel, selecionando a pasta `web` como diretório 
 
 Nunca registre `.env.local` ou `SUPABASE_SERVICE_ROLE_KEY` no Git.
 
+## Recuperação de senha
+
+O login oferece “Esqueci minha senha”, envio de link por e-mail e definição de nova senha após validação da sessão. No Supabase, em Authentication > URL Configuration, autorize `${NEXT_PUBLIC_SITE_URL}/auth/callback?next=/auth/reset-password` (substitua pela URL real do site) e o equivalente local quando necessário. Mantenha o template de recuperação usando o link padrão `{{ .ConfirmationURL }}`. O fluxo PKCE exige solicitar e abrir o link no mesmo navegador. Um link inválido, expirado ou sem o verificador local leva à solicitação de novo link.
+
+Validação remota necessária após publicar: solicitar recuperação de uma conta de teste, abrir o e-mail no mesmo navegador, salvar nova senha, sair e entrar novamente; verificar senha antiga recusada, link reutilizado/expirado e senhas divergentes. Testes locais simulam o serviço de Auth; não comprovam entrega de e-mail ou configuração remota.
+
+## Inclusão de Luca e Zade
+
+O SQL incremental `supabase/seeds/september-new-players-2026-09-23.sql` inscreve as duas contas confirmadas desde 01/09 e importa 29 resultados até 22/09. Execute integralmente no SQL Editor. A carga é transacional e repetível, preserva a configuração anterior de preparação/penalidades e não altera as pontuações dos demais. Após a orientação de execução, o Dono do produto confirmou o retorno `history_ready = true`; o resumo individual de 14 resultados para Luca e 15 para Zade não foi enviado. Veja o [registro de 23/09](../docs/sprints/operacao-2026-09-23.md).
+
 ## Sprint 3
 
 O painel oferece lançamento bruto pessoal, histórico, torneio de setembro, cálculo relativo e ranking. Consulte [implantação e carga histórica](../docs/sprints/sprint-3-operacao.md) para provisionar o organizador, vincular contas e carregar o Excel pelo SQL Editor. O script `supabase/seeds/september.sql` exige UUID real antes de executar.
