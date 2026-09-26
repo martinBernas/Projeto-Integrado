@@ -10,6 +10,8 @@ O Git é a fonte do histórico completo. Este registro resume marcos documentais
 
 ## Prioridades da Sprint 4 — 26/09/2026
 
+Aceite funcional da S4-01: Dono do produto demonstrou criação, alteração de nome/período e encerramento, confirmou bloqueio antecipado, persistência após recarregar e ausência de mudanças percebidas no ranking de setembro. Segunda conta exibe lista administrativa vazia e opção de criar torneio próprio. Evidências e limites registrados em [Sprint 4](sprints/sprint-4.md). S4-02 é a próxima atividade; Sprint 4 permanece aberta.
+
 S4-01 iniciada: implementação local de criação, edição e encerramento de torneios, com operações restritas ao organizador, trilha de alterações e congelamento de resultados. Dono do produto definiu encerramento após o último dia e disponibilidade dos dados por uma semana; relatório, envio por e-mail e exclusão registrados como requisito futuro RF19. Migração e publicação remotas pendentes. Ver [Sprint 4](sprints/sprint-4.md).
 
 Por decisão do Dono do produto, S4-01 (torneios), S4-02 (participantes e ingresso retroativo) e S4-03 (lista e detalhes de múltiplos torneios) passam a constituir o escopo principal da Sprint 4. S4-04 (nome público único) e S4-05 (perfil GeoGuessr) ficam como entregas adicionais, remanejáveis para uma sprint posterior ainda não definida se não forem concluídas. Plano de ação e documento de perfil público alinhados; esta decisão substitui a prioridade registrada em 21/09. Datas e estimativas permanecem pendentes.
