@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { isSupabaseConfigured } from '@/lib/supabase/config';
 import { formatDate, type Participant } from '@/lib/tournament';
 import { ParticipantForm } from '../../participant-form';
+import { ParticipantGrid } from '../../participant-grid';
 
 type Candidate = { id: string; name: string; email: string | null };
 
@@ -32,25 +33,19 @@ export default async function ParticipantsPage({ params, searchParams }: {
   const directory = candidates.data as { users: Candidate[]; has_more: boolean } | null;
   const period = { target: id, start: tournament.starts_at, end: tournament.ends_at };
   const pageUrl = (index: number) => `?${new URLSearchParams({ q: query, page: String(index) })}`;
-  return <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6"><div className="mx-auto max-w-3xl space-y-6">
+  return <main className="min-h-screen bg-slate-50 px-4 py-6 sm:px-6"><div className="mx-auto max-w-5xl space-y-5">
     <header><Link href="/dashboard/tournaments" className="font-semibold text-emerald-800">← Voltar aos torneios</Link>
       <h1 className="mt-4 text-3xl font-bold">Participantes</h1><p className="mt-2 break-words text-lg">{tournament.name}</p>
       <p className="mt-1 text-sm text-slate-600">{formatDate(tournament.starts_at)} a {formatDate(tournament.ends_at)}</p>
     </header>
-    <aside className="rounded-xl border border-slate-200 bg-white p-5 text-sm leading-6 text-slate-600">
+    <aside className="rounded-lg bg-emerald-50 px-4 py-3 text-sm text-slate-700">
       {tournament.closed_at ? 'Torneio encerrado. Participantes e resultados estão preservados.'
-        : 'As pontuações pessoais já registradas contam desde a data de participação, inclusive antes do vínculo. Adicionar, remover ou mudar a data pode alterar a diferença relativa de todos os jogadores deste torneio. As pontuações pessoais e os outros torneios são preservados.'}
+        : 'A participação considera o histórico desde a data escolhida. Alterações recalculam o ranking deste torneio; pontuações pessoais e outros torneios são preservados.'}
     </aside>
     <section className="space-y-4"><h2 className="text-xl font-bold">Participantes atuais{!members.error && ` (${people.length})`}</h2>
       {members.error ? <p role="alert">Não foi possível carregar os participantes. Atualize a página.</p>
         : !people.length ? <p className="text-slate-600">Nenhum participante vinculado ainda.</p>
-        : people.map(person => <article key={`${person.id}-${person.eligible_from}`} className="rounded-xl border border-slate-200 bg-white p-5">
-          <h3 className="break-words font-bold">{person.name}</h3><p className="mt-1 text-sm text-slate-600">Participa desde {formatDate(person.eligible_from)}</p>
-          {!tournament.closed_at && <><ParticipantForm {...period} player={person.id} eligible={person.eligible_from} operation="update" />
-            <details className="mt-5 border-t border-slate-200 pt-4"><summary className="cursor-pointer text-sm font-semibold text-red-800">Remover participante</summary>
-              <p className="mt-2 text-sm text-slate-600">Remove a participação e a contribuição no ranking deste torneio. O histórico pessoal permanece.</p>
-              <ParticipantForm {...period} player={person.id} operation="remove" /></details></>}
-        </article>)}
+        : <ParticipantGrid {...period} people={people} mode="members" closed={Boolean(tournament.closed_at)} />}
     </section>
     {!tournament.closed_at && <>
       <section className="space-y-4"><h2 className="text-xl font-bold">Adicionar usuários cadastrados</h2>
@@ -60,10 +55,7 @@ export default async function ParticipantsPage({ params, searchParams }: {
           <button className="rounded-lg bg-slate-800 px-4 py-2 font-semibold text-white">Buscar</button></form>
         {candidates.error ? <p role="alert">Não foi possível carregar os usuários. Atualize a página.</p>
           : !directory?.users.length ? <p className="text-slate-600">Nenhuma conta disponível para esta busca.</p>
-          : directory.users.map(candidate => <article key={candidate.id} className="rounded-xl border border-slate-200 bg-white p-5">
-            <h3 className="break-words font-bold">{candidate.name}</h3><p className="mt-1 break-all text-sm text-slate-600">{candidate.email ?? 'Sem e-mail cadastrado'}</p>
-            <ParticipantForm {...period} player={candidate.id} operation="add" />
-          </article>)}
+          : <ParticipantGrid {...period} people={directory.users} mode="candidates" />}
         <nav aria-label="Páginas de usuários" className="flex gap-5 text-sm font-semibold text-emerald-800">
           {page > 0 && <Link href={pageUrl(page - 1)}>Anterior</Link>}{directory?.has_more && <Link href={pageUrl(page + 1)}>Próxima</Link>}
         </nav>

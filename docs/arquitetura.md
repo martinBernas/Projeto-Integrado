@@ -52,12 +52,14 @@ Mutações de participação e recálculo ocorrem na mesma transação, com bloq
 
 A administração usa `/dashboard/tournaments` e `/dashboard/tournaments/[id]/participants`. O painel dos jogadores ainda consulta o torneio de setembro; navegação e resultados de múltiplos torneios para participantes são S4-03.
 
+A tela de participantes renderiza grids compactos por meio de `ParticipantGrid`, componente de cliente com data editável e ações por linha. Cada linha reutiliza a Server Action `manageParticipant`; confirmações são apresentadas ao submeter a ação, e as validações/autorização continuam no servidor e no banco. Essa revisão visual não introduz RPCs, alterações de esquema ou novas regras de cálculo.
+
 ## Migrações e proteção da referência
 
 - `202609260001_tournament_management.sql`: estado de encerramento, auditoria de torneios e RPCs de criação, edição e encerramento.
 - `202609260002_participant_management.sql`: seleção de contas, administração de vínculos, conclusão histórica e auditoria de participação/remoção de resultados. Sua aplicação não altera os dados de negócio existentes nem recalcula o ranking.
 
-Aplicar cada migração uma vez e antes de publicar o código dependente. O backup de referência da S4-02 fica em tabela privada no Supabase e em `backups/sprint-4/`, ignorada pelo Git. A comparação verifica dados, resultados e cálculo na data de referência; ela não restaura automaticamente os dados e não substitui backup integral da plataforma. Execução da segunda migração confirmada pelo Dono do produto, com zero diferenças antes/depois. Publicação e homologação da interface da S4-02 ainda não confirmadas. Ver [Sprint 4](sprints/sprint-4.md) e [backup](sprints/sprint-4-backup.md).
+Aplicar cada migração uma vez e antes de publicar o código dependente. O backup de referência da S4-02 fica em tabela privada no Supabase e em `backups/sprint-4/`, ignorada pelo Git. A comparação verifica dados, resultados e cálculo na data de referência; ela não restaura automaticamente os dados e não substitui backup integral da plataforma. Execução da segunda migração confirmada pelo Dono do produto, com zero diferenças antes/depois. Ensaio de inclusão/remoção na interface confirmado pelo Dono do produto, com zero diferenças após o ciclo; homologação dos demais cenários ainda pendente. Ver [Sprint 4](sprints/sprint-4.md) e [backup](sprints/sprint-4-backup.md).
 
 ## Ambientes e publicação
 

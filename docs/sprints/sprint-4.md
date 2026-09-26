@@ -4,11 +4,17 @@ Iniciada em 26/09/2026. Escopo principal: S4-01, S4-02 e S4-03. Nome público (S
 
 ## S4-02 — Preparação e proteção dos dados
 
-Iniciada pela preparação do backup solicitada pelo Dono do produto. Scripts de captura, comparação e exportação preparados e testados localmente; [roteiro e escopo](sprint-4-backup.md). Backup real executado pelo Dono do produto: 13 participantes, 215 pontuações pessoais e 234 resultados, comparação inicial sem diferenças. Exportação recebida e checksum recalculado localmente com sucesso. Pré-requisito de backup atendido; implementação de gerenciamento de participantes ainda pendente. Usar a mesma referência para conferir mudanças posteriores.
+Iniciada pela preparação do backup solicitada pelo Dono do produto. Scripts de captura, comparação e exportação preparados e testados localmente; [roteiro e escopo](sprint-4-backup.md). Backup real executado pelo Dono do produto: 13 participantes, 215 pontuações pessoais e 234 resultados, comparação inicial sem diferenças. Exportação recebida e checksum recalculado localmente com sucesso. Pré-requisito de backup atendido; implementação entregue e ensaio de inclusão/remoção confirmado. Usar a mesma referência para conferir mudanças posteriores.
 
 ### Implementação da S4-02
 
-Implementação local concluída; migração remota confirmada pelo Dono do produto, publicação e homologação da interface ainda pendentes de confirmação. Em Administrar torneios, o link Gerenciar participantes abre a lista atual e a seleção de usuários cadastrados, pesquisável por nome ou e-mail e paginada em 25 contas. Por solicitação do Dono do produto, o organizador vê nome e e-mail na seleção; a API exige que ele organize o torneio informado. E-mails não são adicionados ao ranking ou à listagem de participantes para competidores. Contas já vinculadas ficam fora da seleção.
+Revisão de interface solicitada pelo Dono do produto: participantes e usuários disponíveis agora aparecem em grids compactos, com colunas de nome, data de participação e ações. Usuários disponíveis mantêm o e-mail abaixo do nome. A data é editada na própria linha; Salvar fica habilitado quando ela muda, e Remover fica na mesma linha. A inclusão também ocorre por linha. Confirmações de recálculo/remoção passam a aparecer no momento da ação, em diálogo do navegador, em vez de ocupar cada linha com checkboxes e explicações repetidas. Em telas estreitas, as tabelas permitem rolagem horizontal. Busca, paginação e consulta de torneios encerrados são preservadas.
+
+Esta revisão é de apresentação e interação no cliente, usando as mesmas Server Actions e RPCs. Não requer nova migração, não altera cálculo nem permissões e não toca no backup. Lint e build aprovados; prévia estática dos componentes reais inspecionada no navegador com dados fictícios. Essa inspeção valida o layout, não substitui o ensaio das ações autenticadas após publicação.
+
+Situação atual: migração remota e ensaio de inclusão/remoção na interface confirmados pelo Dono do produto, com zero diferenças no backup após o ciclo. Esse retorno atualiza as pendências registradas anteriormente nos parágrafos abaixo.
+
+Implementação concluída; migração remota e ensaio de inclusão/remoção na interface confirmados pelo Dono do produto. Limites e verificações restantes registrados abaixo. Em Administrar torneios, o link Gerenciar participantes abre a lista atual e a seleção de usuários cadastrados, pesquisável por nome ou e-mail e paginada em 25 contas. Por solicitação do Dono do produto, o organizador vê nome e e-mail na seleção; a API exige que ele organize o torneio informado. E-mails não são adicionados ao ranking ou à listagem de participantes para competidores. Contas já vinculadas ficam fora da seleção.
 
 - Inclusão de conta existente pela seleção; sem criar contas, enviar mensagens ou alterar perfis. Data de participação padrão é o início do torneio. A data deve estar dentro do período; o histórico pessoal já registrado conta desde ela, mesmo anterior ao vínculo. Uma data posterior representa elegibilidade individual, como no caso de Bastian.
 - Alteração da data e remoção com confirmação dos efeitos. A remoção retira vínculo e contribuição no torneio, preservando todas as pontuações pessoais. Datas e vínculos são auditados, assim como resultados retirados por mudança de elegibilidade. Recalcula somente o torneio alvo; no modo relativo, os resultados de outros participantes desse torneio podem mudar legitimamente.
@@ -25,11 +31,17 @@ Implementação local concluída; migração remota confirmada pelo Dono do prod
 
 Testes locais incluem aplicação da migração sobre a cópia privada do backup real e comparação integral dos dados e do cálculo de referência; esse teste é pulado quando o arquivo local ignorado pelo Git não existe. Testes sintéticos cobrem diretório restrito, busca/paginação, inclusão retroativa, duplicidade, datas inválidas, histórico em preparação/pronto, retirada de resultados fora da elegibilidade, isolamento de outro torneio, preservação dos brutos/perfis, auditoria e bloqueio após encerramento. Testes das ações cobrem sessão, seleção, confirmação, datas e mensagens de erro.
 
-Validação local: 26 testes aprovados, sem testes pulados neste ambiente, incluindo a cópia local do backup real. Build de produção aprovado. Ainda não houve inspeção visual autenticada da nova tela ou homologação remota das operações da S4-02; nenhum dado real foi alterado pelo agente.
+Validação local: 26 testes aprovados, sem testes pulados neste ambiente, incluindo a cópia local do backup real. Build de produção aprovado. Ensaio posterior na interface realizado pelo Dono do produto, conforme registro abaixo; nenhum dado real foi alterado pelo agente.
 
 ### Confirmação da migração pelo Dono do produto
 
-O Dono do produto informou a execução de `202609260002_participant_management.sql` no Supabase e forneceu as comparações anterior e posterior. Ambas retornaram `diferencas = 0`, `detalhes = []` e checksums do backup/estado atual iguais a `3d847140e955fd6feaaffab3b252dbe8`, para `before-s4-02-september-v1` (captura em `2026-09-26 13:56:45.612398+00`). A comparação confirma preservação dos dados abrangidos pelo backup após a migração. Publicação e ensaio de gerenciamento na interface ainda precisam ser confirmados; não reaplicar a migração.
+O Dono do produto informou a execução de `202609260002_participant_management.sql` no Supabase e forneceu as comparações anterior e posterior. Ambas retornaram `diferencas = 0`, `detalhes = []` e checksums do backup/estado atual iguais a `3d847140e955fd6feaaffab3b252dbe8`, para `before-s4-02-september-v1` (captura em `2026-09-26 13:56:45.612398+00`). A comparação confirma preservação dos dados abrangidos pelo backup após a migração. Na ocasião desse retorno, o ensaio na interface ainda estava pendente; foi confirmado posteriormente abaixo. Não reaplicar a migração.
+
+### Ensaio de participantes confirmado pelo Dono do produto
+
+O Dono do produto informou que adicionou o perfil de testes ao torneio, verificou a data de ingresso e removeu o participante. Após o ensaio, `02-verify.sql` retornou novamente zero diferenças, detalhes vazios e checksums iguais a `3d847140e955fd6feaaffab3b252dbe8`. Inclusão, consulta da data e remoção estão validadas pelo relato; os dados abrangidos pelo backup de setembro permanecem iguais à referência após o ciclo.
+
+O relato não identifica qual torneio recebeu o perfil, URL ou commit publicado. Não confirma separadamente alteração e persistência de uma nova data de elegibilidade, conclusão da preparação histórica ou acesso com outra conta nesta tela. Esses cenários têm cobertura local, mas ainda não foram demonstrados no ensaio remoto. A comparação valida os dados abrangidos pelo backup, não a ausência de novos registros de auditoria, que são esperados. S4-02 permanece em homologação dos cenários restantes.
 
 ## S4-01 — Administração de torneios
 

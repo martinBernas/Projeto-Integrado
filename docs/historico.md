@@ -10,6 +10,10 @@ O Git é a fonte do histórico completo. Este registro resume marcos documentais
 
 ## Prioridades da Sprint 4 — 26/09/2026
 
+Revisão visual da S4-02 solicitada pelo Dono do produto: cartões substituídos por grids compactos de participantes e candidatos, datas e ações alinhadas por linha, confirmação no momento da ação. Mesmas operações de servidor e banco, sem migração adicional. Lint/build aprovados e prévia estática com dados fictícios inspecionada no navegador; validação da interação autenticada após publicação pendente.
+
+Validação posterior da S4-02: Dono do produto confirmou inclusão do perfil de testes, conferência da data de ingresso e remoção. Comparação após o ciclo retornou zero diferenças e checksum `3d847140e955fd6feaaffab3b252dbe8`, igual ao backup. Migração remota já confirmada; escopo validado e cenários restantes registrados na [Sprint 4](sprints/sprint-4.md). Os registros abaixo preservam os estados anteriores da entrega.
+
 S4-02 implementada localmente após captura e conferência do backup real. A pedido do Dono do produto, organizador seleciona contas em lista com nome/e-mail, busca e paginação. Incluídos vínculo retroativo, alteração de elegibilidade, remoção, conclusão da preparação histórica e auditoria. Testes sobre cópia local de setembro confirmam que a migração não muda dados nem cálculo de referência; suíte completa com 26 testes aprovada. Aplicação remota e aceite pendentes. [Roteiro](sprints/sprint-4.md).
 
 Aceite funcional da S4-01: Dono do produto demonstrou criação, alteração de nome/período e encerramento, confirmou bloqueio antecipado, persistência após recarregar e ausência de mudanças percebidas no ranking de setembro. Segunda conta exibe lista administrativa vazia e opção de criar torneio próprio. Evidências e limites registrados em [Sprint 4](sprints/sprint-4.md). S4-02 é a próxima atividade; Sprint 4 permanece aberta.
