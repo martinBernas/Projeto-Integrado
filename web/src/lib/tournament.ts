@@ -6,7 +6,7 @@ export type DayResult = {
 };
 export type TournamentData = {
   access: true; today: string;
-  tournament: { name: string; starts_at: string; ends_at: string; timezone: string; history_ready: boolean; rule_version: string };
+  tournament: { name: string; starts_at: string; ends_at: string; timezone: string; history_ready: boolean; rule_version: string; closed_at?: string | null };
   participants: Participant[]; excluded_dates: string[]; results: DayResult[];
 };
 export function eligibleResults(participants: Participant[], results: DayResult[]) {

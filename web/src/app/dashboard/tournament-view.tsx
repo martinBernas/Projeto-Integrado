@@ -7,6 +7,7 @@ export function TournamentView({ data, userId }: { data: TournamentData; userId:
   return <>
     <section className="rounded-2xl bg-slate-900 p-6 text-white sm:p-8">
       <p className="text-sm font-semibold text-emerald-300">TORNEIO</p><h2 className="mt-2 text-2xl font-bold">{data.tournament.name}</h2>
+      {data.tournament.closed_at && <p className="mt-2 font-semibold text-emerald-300">Torneio encerrado · Resultados finais preservados</p>}
       <p className="mt-3 text-slate-300">{formatDate(data.tournament.starts_at)} a {formatDate(data.tournament.ends_at)} · Segunda a sexta · 07/09 excluído</p>
       <div className="mt-5 grid gap-4 sm:grid-cols-3">
         <div><p className="text-sm text-slate-300">Pontuação relativa</p><p className="mt-1 font-semibold">Resultado bruto − menor positivo</p></div>

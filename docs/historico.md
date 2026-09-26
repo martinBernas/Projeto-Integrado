@@ -8,6 +8,12 @@ O Git é a fonte do histórico completo. Este registro resume marcos documentais
 | 12/09/2026 | Arquitetura Vercel e Supabase | Commit `57e4600` |
 | 20/09/2026 | Revisão documental 1.1: Sprint 3 passa a entregar torneio único, lançamento, cálculo e ranking; administração configurável adiada; regras de setembro confirmadas e histórico com carga manual após cadastro | Alterações locais; commit e revisão ainda pendentes |
 
+## Prioridades da Sprint 4 — 26/09/2026
+
+S4-01 iniciada: implementação local de criação, edição e encerramento de torneios, com operações restritas ao organizador, trilha de alterações e congelamento de resultados. Dono do produto definiu encerramento após o último dia e disponibilidade dos dados por uma semana; relatório, envio por e-mail e exclusão registrados como requisito futuro RF19. Migração e publicação remotas pendentes. Ver [Sprint 4](sprints/sprint-4.md).
+
+Por decisão do Dono do produto, S4-01 (torneios), S4-02 (participantes e ingresso retroativo) e S4-03 (lista e detalhes de múltiplos torneios) passam a constituir o escopo principal da Sprint 4. S4-04 (nome público único) e S4-05 (perfil GeoGuessr) ficam como entregas adicionais, remanejáveis para uma sprint posterior ainda não definida se não forem concluídas. Plano de ação e documento de perfil público alinhados; esta decisão substitui a prioridade registrada em 21/09. Datas e estimativas permanecem pendentes.
+
 ## Registro operacional — 22/09/2026
 
 Carga real de 11 participantes e 148 pontuações confirmada pelo retorno do SQL enviado pelo Dono do produto. Coluna C do Excel validada como identificação das contas. Luca e Zade aguardam cadastro; Ramiro e Marcelo não participam. Registradas a pontuação complementar de Tales (17.469 em 22/09), a entrada de Bastian em 16/09 e a solicitação de ativação de penalidades, com confirmação remota dos comandos complementares ainda pendente. Correção local do painel exibe “Não inscrito” antes da elegibilidade e desconsidera resultados antigos desse período no ranking e no status diário. Testes direcionados, lint e build aprovados; publicação ainda não confirmada. [Evidências e pendências](sprints/operacao-2026-09-22.md).

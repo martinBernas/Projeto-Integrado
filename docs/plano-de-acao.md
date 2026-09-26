@@ -65,13 +65,21 @@ Esta divisão reduz a concentração de trabalho, mas ainda não comprova equil�
 
 ## Inclusão no planejamento — 21/09/2026
 
-Por solicitação do Dono do produto, priorizar RF17–RF18 na Sprint 4 junto do gerenciamento de participantes. Ver [Perfil público](perfil-publico.md). O nome público será único em toda a plataforma, por decisão do Dono do produto. Incluir restrição de unicidade e tratamento de colisões existentes na estimativa. Estimar as novas histórias antes do compromisso; se exceder a capacidade, replanejar S4-03 e suas dependências. Sprint 3 permanece encerrada.
+Por solicitação do Dono do produto em 21/09, RF17–RF18 foram incluídos na Sprint 4 junto do gerenciamento de participantes. Ver [Perfil público](perfil-publico.md). O nome público será único em toda a plataforma, por decisão do Dono do produto. Incluir restrição de unicidade e tratamento de colisões existentes na estimativa. A prioridade dessa inclusão foi revista em 26/09, conforme abaixo. Sprint 3 permanece encerrada.
+
+## Prioridades da Sprint 4 — revisão de 26/09/2026
+
+Por decisão do Dono do produto, o foco da Sprint 4 passa a ser S4-01 (criar, editar e encerrar torneios), S4-02 (gerenciar participantes e ingresso retroativo) e S4-03 (listar e acessar múltiplos torneios). Essas três histórias constituem o escopo principal, com testes, documentação e publicação incluídos no esforço.
+
+S4-04 (nome público único e edição) e S4-05 (URL do perfil GeoGuessr) ficam como entregas adicionais, a executar conforme a capacidade restante. Se não forem concluídas, podem ser remanejadas para uma sprint posterior, a definir, sem retirar S4-03 do foco. Esta decisão substitui a orientação anterior de priorizar os perfis e adiar a navegação entre torneios. Datas e estimativas continuam pendentes.
 
 ## Backlog das próximas sprints
 
+Sprint 4 iniciada em 26/09/2026 pela S4-01. Implementação e aceite em [Sprint 4](sprints/sprint-4.md). Relatório, envio por e-mail e exclusão posterior ao encerramento registrados como RF19 futuro, sem sprint definida.
+
 | Sprint | Histórias previstas | Dependências e aceite |
 | --- | --- | --- |
-| 4 | S4-01: criar/editar/encerrar torneio com a regra existente; S4-02: gerenciar participantes e ingresso retroativo; S4-03: lista e detalhes de múltiplos torneios; S4-04: nome público único e edição; S4-05: URL do GeoGuessr | Base da Sprint 3; isolamento entre organizadores, pontuações pessoais reutilizadas e ranking correto por torneio. Sem editor de regras nesta etapa. |
+| 4 | Escopo principal: S4-01: criar/editar/encerrar torneio com a regra existente; S4-02: gerenciar participantes e ingresso retroativo; S4-03: lista e detalhes de múltiplos torneios. Adicionais remanejáveis: S4-04: nome público único e edição; S4-05: URL do GeoGuessr | Base da Sprint 3; isolamento entre organizadores, pontuações pessoais reutilizadas e ranking correto por torneio. Sem editor de regras nesta etapa. |
 | 5 | S5-01: configurar modos e penalidade; S5-02: calendário e exclusões; S5-03: versões e vigência de regras | Sprint 4; regras configuradas alteram somente o contexto previsto e preservam a explicação dos resultados consolidados. |
 | 6 | S6-01: abrir avaliação e votar; S6-02: apurar e escolher punição; S6-03: recálculo e histórico da decisão | Sprints 4 e 5; fluxo completo de RF13–RF16, punição restrita ao torneio denunciante e testes de votação, prazo e isolamento. |
 | 7 | S7-01: aprovação/correção de lançamentos; S7-02: consulta de histórico avançado; S7-03: melhorias de ranking e usabilidade | Base das sprints anteriores; alterações administrativas rastreáveis e restritas ao torneio. Refinar RF08 e as melhorias com o Dono do produto, sem permitir contornar a votação de invalidez. |

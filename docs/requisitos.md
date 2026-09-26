@@ -50,7 +50,13 @@ Neste documento, gerente do torneio e organizador designam o mesmo papel.
 | RF17 | O jogador deve escolher e editar um nome público único em toda a plataforma, independente do e-mail, exibido aos competidores sem usar o e-mail como alternativa. |
 | RF18 | O jogador deve poder cadastrar, editar e remover a URL opcional do perfil no GeoGuessr, acessível aos participantes e organizadores de torneios em comum. |
 
-RF17–RF18 previstos para a Sprint 4. Ver [Perfil público](perfil-publico.md).
+RF17–RF18 são entregas adicionais remanejáveis da Sprint 4. Ver [Perfil público](perfil-publico.md).
+
+### Encerramento e ciclo posterior — decisão de 26/09/2026
+
+Na S4-01, o organizador pode encerrar o torneio após o último dia, no fuso do torneio. O encerramento congela os resultados e bloqueia a edição. Os dados devem permanecer disponíveis por uma semana após o encerramento.
+
+RF19 — requisito futuro, sem sprint definida: gerar relatório do torneio encerrado, enviá-lo aos participantes por e-mail e excluir o torneio para que deixe de aparecer na aplicação, respeitando a semana de disponibilidade. Refinar formato do relatório, destinatários, momento de execução, tratamento de falhas de envio e alcance da exclusão antes de implementar. Preservar pontuações pessoais compartilhadas com outros torneios. Até esse fluxo ser entregue, S4-01 mantém os torneios encerrados visíveis, inclusive depois da semana; não há envio nem exclusão automática nesta entrega.
 
 ## Requisitos não funcionais
 
