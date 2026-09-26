@@ -25,6 +25,7 @@ export default async function ManageTournamentsPage() {
         {(data as ManagedTournament[] | null)?.map(tournament => <article key={tournament.id} className="rounded-2xl border border-slate-200 bg-white p-6">
           <h3 className="break-words text-lg font-bold">{tournament.name}</h3>
           <p className="mb-5 mt-1 text-sm text-slate-600">{formatDate(tournament.starts_at)} a {formatDate(tournament.ends_at)} · {tournament.closed_at ? 'Encerrado' : 'Aberto'}</p>
+          <Link href={`/dashboard/tournaments/${tournament.id}/participants`} className="mb-5 inline-block font-semibold text-emerald-800">{tournament.closed_at ? 'Consultar participantes' : 'Gerenciar participantes'}</Link>
           {tournament.closed_at ? <p className="text-sm text-slate-600">Resultados preservados. Edição indisponível após o encerramento.</p>
             : <><TournamentForm tournament={tournament} /><CloseTournamentForm id={tournament.id} /></>}
         </article>)}

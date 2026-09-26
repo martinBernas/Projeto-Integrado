@@ -19,6 +19,46 @@
 - Pontuação pessoal só pode ser criada ou alterada pelo respectivo jogador, salvo fluxos administrativos definidos para um torneio.
 - Organizador só pode administrar torneios que criou e seus participantes.
 
+## Fluxo implementado — Sprints 3 e 4
+
+A stack da ADR-001 permanece. O fluxo implementado usa Server Actions do Next.js para validar formulários e sessão, seguidas de funções RPC no PostgreSQL executadas com a identidade autenticada. As RPCs públicas de escrita usam `SECURITY DEFINER`, `search_path` fixo e verificam explicitamente identidade, organização do torneio e estado antes de alterar dados. RLS protege as leituras diretas; as escritas do cliente nas tabelas de torneios, participantes, resultados e pontuações pessoais continuam sem políticas que as autorizem diretamente. A aplicação não utiliza chave de serviço nesses fluxos.
+
+```mermaid
+flowchart LR
+  UI[Formulário no navegador] --> SA[Server Action: sessão e validação]
+  SA --> RPC[RPC: autorização e transação]
+  RPC --> DB[(Tabelas do torneio)]
+  RPC --> CALC[Cálculo do torneio afetado]
+  CALC --> RESULTS[(Resultados)]
+  DB --> AUDIT[Triggers de auditoria privada]
+  RESULTS --> AUDIT
+  SA --> CACHE[Revalidação das páginas]
+```
+
+As páginas de servidor também consultam tabelas sob RLS e RPCs de leitura autorizadas. `SECURITY DEFINER` não substitui autorização: essas funções executam com privilégios do proprietário e precisam fazer a própria checagem. A S4-02 disponibiliza nome/e-mail de contas cadastradas somente após validar que o solicitante organiza o torneio informado. A busca tem paginação de 25 contas; não altera a política de leitura de perfis nem expõe e-mails no ranking. Como qualquer usuário pode criar um torneio, qualquer usuário que passe a organizar um também pode acessar essa seleção; não há papel de administrador global adicional.
+
+## Modelo de dados e consistência — S4-01 e S4-02
+
+| Elemento | Implementação e efeito |
+| --- | --- |
+| Encerramento | `tournaments.closed_at` registra o encerramento explícito, permitido após o último dia e a conferência histórica quando houver participantes. As operações da aplicação bloqueiam edição e recálculo de torneios encerrados. |
+| Preparação histórica | `history_ready`, existente desde a Sprint 3, controla se ausências podem gerar penalidades. A S4-02 adiciona a conclusão pela interface; alterar participantes preserva esse estado. |
+| Elegibilidade | `tournament_participants.eligible_from`, existente desde a Sprint 3, passa a ser gerenciado pela interface. A chave do vínculo é composta por torneio e jogador. |
+| Pontuação pessoal | Continua pertencendo ao jogador, com unicidade jogador/dia. Adicionar ou remover participação não altera nem exclui essa pontuação. |
+| Resultados | Inclusão, mudança de elegibilidade e remoção recalculam somente o torneio alvo. Mudanças na composição podem alterar a diferença relativa dos demais participantes. Resultados removidos por alteração do vínculo são auditados. |
+| Auditoria | `private.tournament_changes` e `private.participant_changes` complementam os registros de pontuações e resultados existentes. Guardam ator, instante e valores anteriores/novos; a S4-02 registra também a remoção de resultados. Sem acesso direto pelos papéis de cliente. |
+
+Mutações de participação e recálculo ocorrem na mesma transação, com bloqueio da linha do torneio. Os lançamentos pessoais também bloqueiam os torneios envolvidos, serializando alterações nos dados compartilhados. Não há fila, serviço de cálculo separado ou tarefa agendada introduzida nestas entregas. O encerramento é manual; não existe exclusão automática depois de uma semana. Relatório, e-mail e retirada do torneio da aplicação continuam como RF19 futuro.
+
+A administração usa `/dashboard/tournaments` e `/dashboard/tournaments/[id]/participants`. O painel dos jogadores ainda consulta o torneio de setembro; navegação e resultados de múltiplos torneios para participantes são S4-03.
+
+## Migrações e proteção da referência
+
+- `202609260001_tournament_management.sql`: estado de encerramento, auditoria de torneios e RPCs de criação, edição e encerramento.
+- `202609260002_participant_management.sql`: seleção de contas, administração de vínculos, conclusão histórica e auditoria de participação/remoção de resultados. Sua aplicação não altera os dados de negócio existentes nem recalcula o ranking.
+
+Aplicar cada migração uma vez e antes de publicar o código dependente. O backup de referência da S4-02 fica em tabela privada no Supabase e em `backups/sprint-4/`, ignorada pelo Git. A comparação verifica dados, resultados e cálculo na data de referência; ela não restaura automaticamente os dados e não substitui backup integral da plataforma. Execução da segunda migração confirmada pelo Dono do produto, com zero diferenças antes/depois. Publicação e homologação da interface da S4-02 ainda não confirmadas. Ver [Sprint 4](sprints/sprint-4.md) e [backup](sprints/sprint-4-backup.md).
+
 ## Ambientes e publicação
 
 | Ambiente | Finalidade | Origem |
@@ -39,4 +79,3 @@ O plano gratuito da Vercel é compatível com o caráter acadêmico e não comer
 - https://vercel.com/docs/environment-variables
 - https://supabase.com/docs/guides/auth
 - https://supabase.com/docs/guides/database/postgres/row-level-security
-

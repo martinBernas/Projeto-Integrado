@@ -4,7 +4,7 @@
 
 1. Copie `.env.local.example` para `.env.local`.
 2. Crie um projeto no Supabase e preencha URL e chave pública.
-3. Execute as migrações de `supabase/migrations/` em ordem, uma única vez por ambiente. Se a migração da Sprint 2 já estiver aplicada, execute somente as duas de `20260920`.
+3. Execute as migrações de `supabase/migrations/` em ordem, uma única vez por ambiente. Em ambientes existentes, aplique apenas as ainda não executadas, incluindo as de `20260926` para torneios e participantes.
 4. Em Authentication > URL Configuration, inclua `http://localhost:3000/auth/callback` como URL de redirecionamento.
 5. Execute `pnpm dev` nesta pasta e acesse `http://localhost:3000`.
 
@@ -29,6 +29,8 @@ Validação remota necessária após publicar e atualizar o template: solicitar 
 O SQL incremental `supabase/seeds/september-new-players-2026-09-23.sql` inscreve as duas contas confirmadas desde 01/09 e importa 29 resultados até 22/09. Execute integralmente no SQL Editor. A carga é transacional e repetível, preserva a configuração anterior de preparação/penalidades e não altera as pontuações dos demais. Após a orientação de execução, o Dono do produto confirmou o retorno `history_ready = true`; o resumo individual de 14 resultados para Luca e 15 para Zade não foi enviado. Veja o [registro de 23/09](../docs/sprints/operacao-2026-09-23.md).
 
 ## Sprint 3
+
+Administração da Sprint 4: consulte [escopo, backup e implantação](../docs/sprints/sprint-4.md). Para S4-02, aplique `supabase/migrations/202609260002_participant_management.sql` após a migração de administração de torneios e antes da publicação. Compare os dados com o backup privado antes/depois usando `supabase/rehearsal/sprint4/02-verify.sql`.
 
 O painel oferece lançamento bruto pessoal, histórico, torneio de setembro, cálculo relativo e ranking. Consulte [implantação e carga histórica](../docs/sprints/sprint-3-operacao.md) para provisionar o organizador, vincular contas e carregar o Excel pelo SQL Editor. O script `supabase/seeds/september.sql` exige UUID real antes de executar.
 

@@ -75,7 +75,7 @@ S4-04 (nome público único e edição) e S4-05 (URL do perfil GeoGuessr) ficam 
 
 ## Backlog das próximas sprints
 
-Sprint 4 iniciada em 26/09/2026 pela S4-01, com aceite funcional concluído na mesma data após validação pelo Dono do produto. Próxima atividade: S4-02, gerenciamento de participantes e ingresso retroativo. Implementação e evidências em [Sprint 4](sprints/sprint-4.md). Relatório, envio por e-mail e exclusão posterior ao encerramento registrados como RF19 futuro, sem sprint definida.
+Sprint 4 iniciada em 26/09/2026 pela S4-01, com aceite funcional concluído na mesma data após validação pelo Dono do produto. S4-02, gerenciamento de participantes e ingresso retroativo, implementada localmente após backup validado; migração, publicação e aceite remoto pendentes. Inclui seleção de contas cadastradas por nome/e-mail a pedido do Dono do produto. Implementação e evidências em [Sprint 4](sprints/sprint-4.md). Relatório, envio por e-mail e exclusão posterior ao encerramento registrados como RF19 futuro, sem sprint definida.
 
 | Sprint | Histórias previstas | Dependências e aceite |
 | --- | --- | --- |

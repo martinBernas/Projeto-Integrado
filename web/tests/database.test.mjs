@@ -19,7 +19,7 @@ async function database() {
     grant usage on schema auth, public to authenticated, anon;
     grant execute on function auth.uid() to authenticated, anon;
   `);
-  for (const file of ['202609120001_initial_schema.sql', '202609200001_september_mvp.sql', '202609200002_score_entry.sql', '202609260001_tournament_management.sql']) {
+  for (const file of ['202609120001_initial_schema.sql', '202609200001_september_mvp.sql', '202609200002_score_entry.sql', '202609260001_tournament_management.sql', '202609260002_participant_management.sql']) {
     await db.exec(await readFile(new URL(`../supabase/migrations/${file}`, import.meta.url), 'utf8'));
   }
   await db.exec(`grant select, insert, update, delete on all tables in schema public to authenticated, anon;`);

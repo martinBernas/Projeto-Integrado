@@ -6,6 +6,31 @@ Iniciada em 26/09/2026. Escopo principal: S4-01, S4-02 e S4-03. Nome público (S
 
 Iniciada pela preparação do backup solicitada pelo Dono do produto. Scripts de captura, comparação e exportação preparados e testados localmente; [roteiro e escopo](sprint-4-backup.md). Backup real executado pelo Dono do produto: 13 participantes, 215 pontuações pessoais e 234 resultados, comparação inicial sem diferenças. Exportação recebida e checksum recalculado localmente com sucesso. Pré-requisito de backup atendido; implementação de gerenciamento de participantes ainda pendente. Usar a mesma referência para conferir mudanças posteriores.
 
+### Implementação da S4-02
+
+Implementação local concluída; migração remota confirmada pelo Dono do produto, publicação e homologação da interface ainda pendentes de confirmação. Em Administrar torneios, o link Gerenciar participantes abre a lista atual e a seleção de usuários cadastrados, pesquisável por nome ou e-mail e paginada em 25 contas. Por solicitação do Dono do produto, o organizador vê nome e e-mail na seleção; a API exige que ele organize o torneio informado. E-mails não são adicionados ao ranking ou à listagem de participantes para competidores. Contas já vinculadas ficam fora da seleção.
+
+- Inclusão de conta existente pela seleção; sem criar contas, enviar mensagens ou alterar perfis. Data de participação padrão é o início do torneio. A data deve estar dentro do período; o histórico pessoal já registrado conta desde ela, mesmo anterior ao vínculo. Uma data posterior representa elegibilidade individual, como no caso de Bastian.
+- Alteração da data e remoção com confirmação dos efeitos. A remoção retira vínculo e contribuição no torneio, preservando todas as pontuações pessoais. Datas e vínculos são auditados, assim como resultados retirados por mudança de elegibilidade. Recalcula somente o torneio alvo; no modo relativo, os resultados de outros participantes desse torneio podem mudar legitimamente.
+- Torneio encerrado permite somente consulta. Escritas diretas continuam bloqueadas; as operações validam organizador e estado no banco. Alterações são transacionais e usam o mesmo bloqueio do torneio que os lançamentos.
+- Preparação histórica mantém seu estado nas alterações. Se já estiver pronta, ausências são calculadas para os novos participantes desde sua elegibilidade; a tela explica isso e pede confirmação. Se estiver em preparação, não aplica penalidades até o organizador confirmar a conferência pelo botão Concluir preparação do histórico. A conclusão exige participantes e não importa nem inventa pontuações ausentes.
+
+### Implantação e conferência da S4-02
+
+1. Executar novamente `web/supabase/rehearsal/sprint4/02-verify.sql` e guardar o retorno. Corrigir ou explicar eventuais diferenças em relação à referência, sem substituir o backup.
+2. Aplicar somente `web/supabase/migrations/202609260002_participant_management.sql`, integralmente, uma vez, após a migração da S4-01. Ela cria operações e auditoria, sem modificar os dados de negócio existentes nem recalcular resultados durante a aplicação.
+3. Antes de operar participantes, repetir a comparação e conferir que a migração não introduziu diferenças. Lançamentos legítimos ocorridos desde a captura devem ser distinguidos de alterações indevidas.
+4. Publicar a aplicação. Validar preferencialmente em um torneio de teste: buscar uma conta pelo nome/e-mail, incluí-la desde o início, alterar elegibilidade, remover e conferir que o histórico pessoal permanece. Verificar com outra conta que ela não administra o torneio alheio. A navegação do participante entre vários torneios continua na S4-03.
+5. Conferir novamente setembro com o mesmo script. Operações realizadas apenas no torneio de teste não devem alterar seus vínculos, brutos ou resultados. O ensaio não exige mudar participantes de setembro.
+
+Testes locais incluem aplicação da migração sobre a cópia privada do backup real e comparação integral dos dados e do cálculo de referência; esse teste é pulado quando o arquivo local ignorado pelo Git não existe. Testes sintéticos cobrem diretório restrito, busca/paginação, inclusão retroativa, duplicidade, datas inválidas, histórico em preparação/pronto, retirada de resultados fora da elegibilidade, isolamento de outro torneio, preservação dos brutos/perfis, auditoria e bloqueio após encerramento. Testes das ações cobrem sessão, seleção, confirmação, datas e mensagens de erro.
+
+Validação local: 26 testes aprovados, sem testes pulados neste ambiente, incluindo a cópia local do backup real. Build de produção aprovado. Ainda não houve inspeção visual autenticada da nova tela ou homologação remota das operações da S4-02; nenhum dado real foi alterado pelo agente.
+
+### Confirmação da migração pelo Dono do produto
+
+O Dono do produto informou a execução de `202609260002_participant_management.sql` no Supabase e forneceu as comparações anterior e posterior. Ambas retornaram `diferencas = 0`, `detalhes = []` e checksums do backup/estado atual iguais a `3d847140e955fd6feaaffab3b252dbe8`, para `before-s4-02-september-v1` (captura em `2026-09-26 13:56:45.612398+00`). A comparação confirma preservação dos dados abrangidos pelo backup após a migração. Publicação e ensaio de gerenciamento na interface ainda precisam ser confirmados; não reaplicar a migração.
+
 ## S4-01 — Administração de torneios
 
 Situação atual: aceite funcional concluído em 26/09/2026, com testes locais e validação pelo Dono do produto descrita abaixo. S4-02 e S4-03 permanecem pendentes; a Sprint 4 continua aberta.
