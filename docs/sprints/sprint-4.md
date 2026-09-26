@@ -2,6 +2,10 @@
 
 Iniciada em 26/09/2026. Escopo principal: S4-01, S4-02 e S4-03. Nome público (S4-04) e perfil GeoGuessr (S4-05) são adicionais remanejáveis. Datas de entrega e capacidade ainda não estimadas.
 
+## S4-02 — Preparação e proteção dos dados
+
+Iniciada pela preparação do backup solicitada pelo Dono do produto. Scripts de captura, comparação e exportação preparados e testados localmente; [roteiro e escopo](sprint-4-backup.md). Backup real executado pelo Dono do produto: 13 participantes, 215 pontuações pessoais e 234 resultados, comparação inicial sem diferenças. Exportação recebida e checksum recalculado localmente com sucesso. Pré-requisito de backup atendido; implementação de gerenciamento de participantes ainda pendente. Usar a mesma referência para conferir mudanças posteriores.
+
 ## S4-01 — Administração de torneios
 
 Situação atual: aceite funcional concluído em 26/09/2026, com testes locais e validação pelo Dono do produto descrita abaixo. S4-02 e S4-03 permanecem pendentes; a Sprint 4 continua aberta.

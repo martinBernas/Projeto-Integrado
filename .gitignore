@@ -1,2 +1,5 @@
 # Local dependency cache created by pnpm when running in the workspace.
 .pnpm-store/
+
+# Private local database backups and exports.
+/backups/
