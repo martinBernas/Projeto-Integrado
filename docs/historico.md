@@ -1,5 +1,7 @@
 # Histórico da documentação
 
+27/09/2026 — Avaliados escopo restante das sprints 5–7 e feedback sobre modo escuro, valores esquecidos, desempenho ao encerrar e integração GeoGuessr. Dono do produto prioriza o escopo planejado; propostas registradas sem compromisso de implementação. RF19 detalhado sem duplicação; pesquisa inicial não confirmou API pública oficial suportada. Atualizados requisitos, plano e índice, distinguindo recortes históricos da situação atual. Revisão exclusivamente documental, sem migração ou publicação. [Avaliação](avaliacao-backlog-2026-09-27.md).
+
 27/09/2026 — Sprint 4 formalmente encerrada a pedido do Dono do produto. S4-01 a S4-05 homologadas e carga complementar confirmada por SQL. Consolidados estado atual, evidências, limites e escopo futuro em sprint, requisitos, plano de ação/testes, arquitetura/ADR, perfil público e README operacional. Pendências históricas não representam tarefas atuais; RF19 e configuração de regras permanecem fora desta entrega.
 
 27/09/2026 — Carga revisada do Excel executada pelo Dono do produto. Retorno SQL conferido: 12 perfis com nome confirmado, 11 URLs e Luca com URL nula. Martin fora do escopo para preservar seu preenchimento manual. Pendência de execução remota resolvida; não constitui nova comparação de backup ou conferência visual na aplicação.

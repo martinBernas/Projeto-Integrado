@@ -2,7 +2,7 @@
 
 ## Alocação para a primeira entrega — Sprint 3
 
-Os requisitos abaixo preservam a visão completa do produto. O escopo vigente está no [plano da Sprint 3](sprints/sprint-3.md).
+Os requisitos abaixo preservam a visão completa do produto. A alocação desta seção é histórica; a Sprint 4 foi encerrada e o próximo escopo previsto é a Sprint 5. Consulte a [avaliação atual do backlog e feedback](avaliacao-backlog-2026-09-27.md). O recorte original está no [plano da Sprint 3](sprints/sprint-3.md).
 
 | Requisitos | Recorte da Sprint 3 |
 | --- | --- |
@@ -87,9 +87,9 @@ RF19 — requisito futuro, sem sprint definida: gerar relatório do torneio ence
 
 ## Pendências de validação
 
-- Confirmar se empates na menor pontuação relativa recebem zero para todos os empatados.
-- Definir prazo exato para o envio de pontuação e se o organizador pode aceitar lançamento tardio.
-- Definir se a pontuação absoluta deve aceitar zero e quais limites de pontuação serão válidos.
+- No recorte entregue, empates no menor positivo recebem zero relativo; envio/correção próprios são limitados ao dia atual em São Paulo, e o bruto aceita inteiros de 0 a 25.000, com zero tratado como ausência. Esses pontos não são pendências do MVP encerrado.
+- Para Sprint 5, definir o tratamento do zero no modo absoluto e a configuração de fuso/prazo em relação à pontuação pessoal compartilhada.
+- Aceitação de lançamento tardio permanece futura; ver FB02 na avaliação abaixo.
 - Para a auditoria futura, definir eleitores elegíveis, participação do auditado e do organizador, duração, quórum, base da maioria, empate, ausência de votos, alteração de voto, recurso/reabertura e efeitos provisórios no ranking. Detalhamento em [Auditoria por votação](auditoria-de-pontuacoes.md).
 
 ## Situação S4-02/S4-03 — 27/09/2026
@@ -99,3 +99,7 @@ RF10 — S4-03 publicada e aceita funcionalmente pelo Dono do produto em 27/09/2
 ## Evolução S4-04/S4-05 — 27/09/2026
 
 RF17/RF18 implementados, migrados, publicados e homologados pelo Dono do produto: nome público único, confirmação/edição pelo titular, link GeoGuessr opcional e exposição restrita ao torneio. Sprint 4 encerrada em 27/09/2026 com S4-01 a S4-05 aceitas. Carga complementar do Excel confirmada para 12 nomes e 11 URLs, preservando Martin. Critérios técnicos na ADR-002 e evidências na Sprint 4. RF19 permanece futuro e não integra este encerramento.
+
+## Feedback em avaliação — 27/09/2026
+
+O Dono do produto confirmou a prioridade de concluir o escopo planejado antes de acrescentar evoluções. Modo escuro (FB01), lançamento tardio com controle do organizador (FB02), métricas de desempenho para RF19 (FB03) e integração GeoGuessr (FB04) estão registrados na [avaliação do backlog](avaliacao-backlog-2026-09-27.md), com dependências, riscos e definições propostas. São candidatos sem compromisso de implementação ou sprint; o relatório amplia o detalhamento de RF19, sem duplicá-lo.

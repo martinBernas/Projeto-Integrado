@@ -8,6 +8,8 @@ Entregar incrementalmente uma aplicação que substitua a planilha do campeonato
 
 ## Método de trabalho
 
+Revisão de 27/09/2026: por orientação do Dono do produto, preservar a prioridade do escopo planejado das sprints 5–7. Os pedidos de modo escuro, lançamento tardio, relatório de desempenho e integração GeoGuessr permanecem em avaliação, sem ampliação automática das sprints. Consulte a [avaliação do escopo pendente e feedback](avaliacao-backlog-2026-09-27.md) para situação por requisito, recomendações e investigação inicial de API.
+
 Usaremos sprints curtas, backlog versionado no GitHub e revisão por pull request. Cada história concluída precisa atender aos critérios de aceite e aos casos de teste correspondentes.
 
 ## Sprints
@@ -77,6 +79,8 @@ Por decisão do Dono do produto, o foco da Sprint 4 passa a ser S4-01 (criar, ed
 S4-04 (nome público único e edição) e S4-05 (URL do perfil GeoGuessr) ficam como entregas adicionais, a executar conforme a capacidade restante. Se não forem concluídas, podem ser remanejadas para uma sprint posterior, a definir, sem retirar S4-03 do foco. Esta decisão substitui a orientação anterior de priorizar os perfis e adiar a navegação entre torneios. Datas e estimativas continuam pendentes.
 
 ## Backlog das próximas sprints
+
+Nota de atualização: o parágrafo e a linha da Sprint 4 abaixo preservam o planejamento histórico; as cinco histórias foram concluídas conforme o encerramento ao final deste documento. O backlog pendente começa na Sprint 5.
 
 Sprint 4 iniciada em 26/09/2026 pela S4-01, com aceite funcional concluído na mesma data após validação pelo Dono do produto. S4-02, gerenciamento de participantes e ingresso retroativo, implementada após backup validado; migração remota e ensaio de inclusão/remoção confirmados, com zero diferenças no backup após o ciclo. Homologação dos demais cenários ainda pendente. Inclui seleção de contas cadastradas por nome/e-mail a pedido do Dono do produto. Implementação e evidências em [Sprint 4](sprints/sprint-4.md). Relatório, envio por e-mail e exclusão posterior ao encerramento registrados como RF19 futuro, sem sprint definida.
 

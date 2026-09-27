@@ -7,6 +7,7 @@ Sprint 3 concluída em 21/09/2026. [Encerramento e evidências](sprints/sprint-3
 ## Documentação
 
 - [Plano de ação](plano-de-acao.md)
+- [Avaliação do escopo pendente e feedback — 27/09/2026](avaliacao-backlog-2026-09-27.md)
 - [Sprint 1 — descoberta e documentação](sprints/sprint-1.md)
 - [Sprint 2 — fundação, autenticação e publicação](sprints/sprint-2.md)
 - [Sprint 3 — MVP utilizável](sprints/sprint-3.md)
@@ -26,7 +27,7 @@ Sprint 3 concluída em 21/09/2026. [Encerramento e evidências](sprints/sprint-3
 
 ## Fonte do MVP
 
-A entrega atual é um único torneio pré-instanciado, com lançamento, cálculo e ranking. Criação de torneios e configuração de regras pela interface ficam para sprints futuras. Consulte o plano da Sprint 3 para decisões e critérios de aceite.
+A entrega original da Sprint 3 foi um único torneio pré-instanciado, com lançamento, cálculo e ranking. A Sprint 4 acrescentou administração, participantes, múltiplos torneios e perfis. Configuração de regras pela interface permanece prevista para a Sprint 5. Consulte a avaliação do backlog para as lacunas atuais.
 
 O arquivo `GeoGuaras.xlsx` é a referência inicial do domínio. Ele contém a aba `Diario`, com as pontuações brutas, e a aba `geral`, com os pontos aplicados, resultados mensais e acumulado.
 
