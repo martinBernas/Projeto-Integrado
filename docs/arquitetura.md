@@ -84,10 +84,12 @@ O plano gratuito da Vercel é compatível com o caráter acadêmico e não comer
 - https://supabase.com/docs/guides/auth
 - https://supabase.com/docs/guides/database/postgres/row-level-security
 
-## Perfil público — S4-04/S4-05 (implementação local)
+## Perfil público — S4-04/S4-05
 
 `profiles` recebe `public_name_confirmed` e `geoguessr_url`. Índice de nome normalizado global impede colisões; perfis antigos ficam sem confirmação, sem alteração de nomes/UUIDs. `update_my_profile` valida e edita somente o titular em transação, com auditoria `private.profile_changes`. Políticas de insert/update direto removidas; select próprio mantido. Cadastro envia nome em metadados ao trigger de Auth, que valida e aplica a mesma unicidade. A RPC de disponibilidade anônima informa somente booleano.
 
 A página `/dashboard/profile` usa Server Action e RPC autenticada. RPCs de torneios/participantes retornam nome confirmado (ou rótulo neutro) e link para contas autorizadas; seleção de candidatos não expõe links. `PlayerName` renderiza o link validado sem substituir o nome. Não existe integração servidor-a-servidor com GeoGuessr. A inclusão histórica de setembro mantém assinatura, mas não sobrescreve perfil.
 
-Migração `202609270001_public_profiles.sql` pendente de execução remota; implantação coordenada com o cadastro obrigatório. Decisões e efeitos sobre legado em [ADR-002](decisoes/adr-002-perfil-publico.md), modelo em [Classes](diagramas/classes.md) e fluxo em [Perfil público](diagramas/perfil-publico.md).
+Migração `202609270001_public_profiles.sql`, publicação e homologação confirmadas pelo Dono do produto em 27/09/2026. Decisões e efeitos sobre legado em [ADR-002](decisoes/adr-002-perfil-publico.md), modelo em [Classes](diagramas/classes.md) e fluxo em [Perfil público](diagramas/perfil-publico.md).
+
+Carga complementar autorizada do Excel: operação administrativa única `20260927-import-mvp-profiles.sql`, sem nova tabela, RPC ou permissão de aplicação. Resolve as identidades previamente confirmadas, bloqueia Auth/perfis durante a transação, valida todos os registros antes da escrita e usa a auditoria existente. Confirma somente os nomes importados e preserva URL quando ausente na fonte; conflitos abortam. Execução remota confirmada para 12 nomes e 11 URLs; Martin excluído para preservar seu perfil manual. Fluxo de uso normal e diagramas permanecem iguais.

@@ -30,6 +30,10 @@ Prioridade revista pelo Dono do produto em 26/09/2026: S4-01 (torneios), S4-02 (
 
 ## Implementação local — 27/09/2026
 
+Atualização da carga complementar: Martin foi excluído após o erro remoto de nome divergente e o relato de perfil já preenchido pelo titular. Operação atual importa 12 nomes e 11 links e preserva integralmente Martin; as contagens 13/12 abaixo registram o levantamento inicial. Reexecução remota confirmada: 12 nomes confirmados, 11 URLs e Luca sem URL.
+
 Adicionais autorizados pelo Dono do produto após homologação de S4-02/S4-03. Formulário `/dashboard/profile`, nome obrigatório no cadastro, confirmação de nomes legados, unicidade no banco e URL opcional em participantes/rankings/resultados. Normalização NFC, trim ASCII e comparação por lower; acentos e espaços internos significativos. Colisões legadas abortam a migração. Edição direta bloqueada; RPC só altera o titular, com auditoria. A antiga inclusão administrativa deixa de alterar nomes.
 
-O levantamento de base e os critérios propostos acima representam o planejamento anterior. As decisões implementadas e limitações estão na [ADR-002](decisoes/adr-002-perfil-publico.md); procedimento de verificação, implantação e homologação na [Sprint 4](sprints/sprint-4.md). Nenhuma publicação desta entrega foi confirmada.
+O levantamento de base e os critérios propostos acima representam o planejamento anterior. As decisões implementadas e limitações estão na [ADR-002](decisoes/adr-002-perfil-publico.md); procedimento de verificação, implantação e homologação na [Sprint 4](sprints/sprint-4.md). Migração, publicação Vercel e aprovação de todos os testes de homologação confirmadas pelo Dono do produto em 27/09/2026.
+
+Após o aceite, o Dono do produto autorizou importar os nomes e links existentes no Excel do MVP. Operação administrativa pontual preparada para 13 nomes e 12 URLs, com correspondências da carga original, validação, proteção de escolhas divergentes e auditoria. Essa carga confirma os nomes da fonte por autorização explícita; não muda a regra geral de edição pelo titular. Luca não tem link na fonte, portanto preserva o valor atual; Ramiro e Marcelo ficam fora. Execução remota da versão revisada confirmada pelo retorno SQL; detalhes e script na Sprint 4.

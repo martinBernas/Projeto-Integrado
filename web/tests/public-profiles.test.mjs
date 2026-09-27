@@ -26,6 +26,70 @@ async function login(db,id,role='authenticated'){
 }
 const update=(db,name,url=null)=>db.query('select public.update_my_profile($1,$2)',[name,url]);
 
+test('carga MVP: preserva Martin, importa 12 perfis/11 links, auditoria e rollback', async()=>{
+ const db=await setup();
+ const sql=await readFile(new URL('../supabase/operations/20260927-import-mvp-profiles.sql',import.meta.url),'utf8');
+ const accounts=[['Leo','leonardohuffo'],['Martin','martin.bernasconi'],['Fabio','fabio.teixeira.sap'],
+  ['Arthur','arthur.andrade'],['Tales','tales.ocampos'],['Diana','dianaseibt'],['Luiz','luizf9844'],
+  ['Vinicius','ramos.viniciusuriel'],['Eduardo','eduardobrohr2'],['Cristina','crisbobsin'],['Bastian','math.9711'],
+  ['Luca','luca','8d899496-3cb0-41f6-b67d-4e57bb1185c4'],['Zade','zade','55a4aeaf-30bc-403a-a5e6-563328466313']];
+ try {
+  const ids={};
+  for(const [name,account,id=crypto.randomUUID()] of accounts){
+   ids[name]=id;
+   await db.query('insert into auth.users(id,email,raw_user_meta_data) values($1,$2,$3)',[id,`${account}@fixture.invalid`,JSON.stringify({display_name:name})]);
+  }
+  await db.exec('update public.profiles set public_name_confirmed=false');
+  await db.query('select private.provision_september($1)',[alice]);
+  await db.query("select private.add_september_participant($1,'Leo')",[ids.Leo]);
+  await db.query("select private.load_september_score($1,'2026-09-01',12345)",[ids.Leo]);
+  const unchanged=async()=>{
+   const tables=(await db.query("select tablename from pg_tables where schemaname='public' and tablename<>'profiles' order by tablename")).rows;
+   return Promise.all(tables.map(async({tablename})=>[tablename,(await db.query(`select coalesce(jsonb_agg(to_jsonb(t) order by to_jsonb(t)::text),'[]') data from public.${tablename} t`)).rows[0].data]));
+  };
+  const original=await unchanged();
+  const outsiders=(await db.query('select * from public.profiles where id=any($1::uuid[]) order by id',[[alice,bob,stranger]])).rows;
+  const before=Number((await db.query('select count(*) n from private.profile_changes')).rows[0].n);
+  await db.query("update public.profiles set display_name='Meu perfil', public_name_confirmed=true, geoguessr_url='https://www.geoguessr.com/user/meuPerfil' where id=$1",[ids.Martin]);
+  const martinBefore=(await db.query('select * from public.profiles where id=$1',[ids.Martin])).rows;
+  // A manually changed name in the import scope must abort before any write.
+  await db.query("update public.profiles set display_name='Escolha manual' where id=$1",[ids.Arthur]);
+  await assert.rejects(db.exec(sql),/mvp_profile_name_changed/); await db.exec('rollback');
+  assert.equal((await db.query('select display_name from public.profiles where id=$1',[ids.Leo])).rows[0].display_name,'Leo');
+  await db.query("update public.profiles set display_name='Arthur' where id=$1",[ids.Arthur]);
+  await db.query("update public.profiles set geoguessr_url='https://www.geoguessr.com/user/manual' where id=$1",[ids.Leo]);
+  await assert.rejects(db.exec(sql),/mvp_profile_url_changed/); await db.exec('rollback');
+  await db.query('update public.profiles set geoguessr_url=null where id=$1',[ids.Leo]);
+  await db.query("update public.profiles set display_name='Leonardo H' where id=$1",[stranger]);
+  await assert.rejects(db.exec(sql),/mvp_profile_name_unavailable/); await db.exec('rollback');
+  await db.query("update public.profiles set display_name='stranger' where id=$1",[stranger]);
+  await db.query("update auth.users set email='missing@fixture.invalid' where id=$1",[ids.Leo]);
+  await assert.rejects(db.exec(sql),/mvp_profile_identity/); await db.exec('rollback');
+  await db.query("update auth.users set email='leonardohuffo@fixture.invalid' where id=$1",[ids.Leo]);
+  await db.query("update auth.users set email='leonardohuffo@other.invalid' where id=$1",[stranger]);
+  await assert.rejects(db.exec(sql),/mvp_profile_identity/); await db.exec('rollback');
+  await db.query("update auth.users set email='stranger@example.test' where id=$1",[stranger]);
+  const auditStart=Number((await db.query('select count(*) n from private.profile_changes')).rows[0].n);
+  await db.exec(sql);
+  const imported=(await db.query('select * from public.profiles where id=any($1::uuid[])',[Object.values(ids)])).rows;
+  assert.equal(imported.filter(p=>p.public_name_confirmed).length,13);
+  assert.equal(imported.filter(p=>p.geoguessr_url).length,12);
+  assert.equal(imported.find(p=>p.id===ids.Vinicius).display_name,'Vinícius Ramos');
+  assert.equal(imported.find(p=>p.id===ids.Luca).display_name,'Lucacavalhojeo');
+  assert.equal(imported.find(p=>p.id===ids.Leo).geoguessr_url,'https://www.geoguessr.com/user/60dbd573c3313c000146a66e');
+  const after=Number((await db.query('select count(*) n from private.profile_changes')).rows[0].n);
+  assert.equal(after-auditStart,12); assert.ok(after>before);
+  assert.deepEqual((await db.query('select * from public.profiles where id=$1',[ids.Martin])).rows,martinBefore);
+  await db.exec(sql);
+  assert.equal(Number((await db.query('select count(*) n from private.profile_changes')).rows[0].n),after);
+  await db.query("update public.profiles set geoguessr_url='https://www.geoguessr.com/user/luca' where id=$1",[ids.Luca]);
+  await db.exec(sql);
+  assert.equal((await db.query('select geoguessr_url from public.profiles where id=$1',[ids.Luca])).rows[0].geoguessr_url,'https://www.geoguessr.com/user/luca');
+  assert.deepEqual(await unchanged(),original);
+  assert.deepEqual((await db.query('select * from public.profiles where id=any($1::uuid[]) order by id',[[alice,bob,stranger]])).rows,outsiders);
+ } finally {await db.close();}
+});
+
 test('perfil: migração preserva legado, edição validada e unicidade global sem escrita direta', async()=>{
  const db=await setup(); try{
   await login(db,alice);

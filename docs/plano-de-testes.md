@@ -54,7 +54,7 @@ Responsável pela execução: agente de desenvolvimento. Base do trabalho: commi
 
 `pnpm lint` e `pnpm build` aprovados. Componentes reais de formulário/torneio renderizados com dados fictícios e inspecionados em navegador headless nas larguras 390 e 1.280 pixels; sem overflow horizontal, detalhes diários abrindo corretamente. Essa inspeção visual não é um teste ponta a ponta de login/salvamento: autenticação no PGlite é simulada. O provisionamento no Supabase foi posteriormente confirmado pelo Dono do produto; login/lançamento/ranking ponta a ponta e publicação na Vercel permanecem pendentes.
 
-Carga histórica incompleta: sem penalidades, resultados provisórios. Carga repetida: sem duplicidade. Conclusão administrativa: habilita penalidades de dias encerrados. Requer conciliação do Excel real quando fornecido pelo Dono do produto. CT01 e S3-CT08 no ambiente publicado continuam pendentes, assim como a evidência de publicação e o commit final de implementação.
+Carga histórica incompleta: sem penalidades, resultados provisórios. Carga repetida: sem duplicidade. Conclusão administrativa: habilita penalidades de dias encerrados. Requer conciliação do Excel real quando fornecido pelo Dono do produto. CT01 e S3-CT08 no ambiente publicado continuam pendentes, assim como a evidência de publicação.
 
 ### Recorte de aceite da Sprint 3
 
@@ -135,9 +135,13 @@ Revisão visual S4-03: teste adicional em `ranking.test.mjs` verifica ordem diá
 
 ## Aceite remoto S4-02/S4-03 — 27/09/2026
 
-Dono do produto confirmou todos os cenários funcionais acordados: abas e persistência da seleção, ranking preservado visualmente, ordenação diária decrescente, persistência de elegibilidade, ciclo de inclusão/remoção com concessão/revogação de acesso, restrição de edição por conta não organizadora e conclusão histórica. Homologação funcional concluída por relato do usuário. Não implica teste remoto direto de RPCs ou nova comparação numérica após o último ensaio; evidências e limites em [Sprint 4](sprints/sprint-4.md).
+Dono do produto confirmou todos os cenários funcionais acordados: abas e persistência da seleção, ranking preservado visualmente, ordenação diária decrescente, persistência de elegibilidade, ciclo de inclusão/remoção com concessão/revogação de acesso, restrição de edição por conta não organizadora e conclusão histórica. Homologação funcional concluída por relato do Dono do produto. Não implica teste remoto direto de RPCs ou nova comparação numérica após o último ensaio; evidências e limites em [Sprint 4](sprints/sprint-4.md).
 
 ## Evolução S4-04/S4-05 — 27/09/2026
+
+**Resultado final:** Dono do produto confirmou Vercel pronta e todos os testes de homologação aprovados. S4-01 a S4-05 aceitas; Sprint 4 encerrada em 27/09/2026. A confirmação funcional não equivale a ensaio remoto direto de RPCs ou concorrência PostgreSQL multiconexão; essas garantias têm a cobertura local descrita abaixo.
+
+Carga complementar: sete testes do arquivo `public-profiles.test.mjs` aprovados na revisão final, incluindo importação de 12 nomes/11 URLs, Unicode, preservação integral de Martin, URL ausente de Luca, idempotência, auditoria e rollback para conflitos de identidade/nome/URL. Todas as demais tabelas públicas e os perfis fora da carga preservados no teste. Execução remota confirmada pelo retorno SQL de 12 linhas com `confirmado=true`, 11 URLs e Luca com URL nula. Não houve nova comparação remota de backup nem relato específico de inspeção visual após essa carga. Não houve novo lint/build ou suíte completa neste fechamento exclusivamente documental.
 
 S4-04/S4-05: `public-profiles.test.mjs` cobre CT26–CT34 em banco local, incluindo cópia privada do backup, rollback de colisões, nomes/URLs inválidos, permissões e preservação de dados. `profile-actions.test.mjs` cobre sessão, validação, edição sem ID fornecido pelo cliente e feedback de nome ocupado no cadastro. Duas tentativas são enfileiradas pelo PGlite; ensaio PostgreSQL multiconexão e abertura de link real continuam remotos. Suíte completa: 36 aprovados, zero pulados, em 27/09/2026. Prévia local não substitui os passos de homologação da Sprint 4.
 

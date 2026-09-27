@@ -32,4 +32,4 @@ O torneio permanece com `history_ready = false`, aguardando os cadastros reais, 
 
 Próxima sprint planejada: Sprint 4, administração de torneios e participantes. Regras configuráveis continuam na Sprint 5, auditoria por votação na Sprint 6 e moderação/evolução na Sprint 7.
 
-Este registro e os scripts adicionais de validação são alterações locais para o próximo commit; o commit de produção acima identifica a aplicação efetivamente validada.
+O commit de produção acima identifica a aplicação efetivamente validada.

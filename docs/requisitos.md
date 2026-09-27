@@ -98,4 +98,4 @@ RF10 — S4-03 publicada e aceita funcionalmente pelo Dono do produto em 27/09/2
 
 ## Evolução S4-04/S4-05 — 27/09/2026
 
-RF17/RF18 implementados localmente após autorização para aproveitar a capacidade restante da Sprint 4: nome público único, confirmação/edição pelo titular, link GeoGuessr opcional e exposição restrita ao torneio. Migração, publicação e homologação pendentes; critérios técnicos na ADR-002 e roteiro na Sprint 4.
+RF17/RF18 implementados, migrados, publicados e homologados pelo Dono do produto: nome público único, confirmação/edição pelo titular, link GeoGuessr opcional e exposição restrita ao torneio. Sprint 4 encerrada em 27/09/2026 com S4-01 a S4-05 aceitas. Carga complementar do Excel confirmada para 12 nomes e 11 URLs, preservando Martin. Critérios técnicos na ADR-002 e evidências na Sprint 4. RF19 permanece futuro e não integra este encerramento.

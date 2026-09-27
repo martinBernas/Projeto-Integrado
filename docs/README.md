@@ -33,3 +33,7 @@ O arquivo `GeoGuaras.xlsx` é a referência inicial do domínio. Ele contém a a
 ## Stack definida
 
 TypeScript, Next.js, Tailwind CSS e Vercel para a aplicação web. Supabase fornece PostgreSQL, autenticação e autorização via RLS.
+
+## Situação atual
+
+Sprint 4 encerrada em 27/09/2026, com S4-01 a S4-05 homologadas e carga complementar dos perfis confirmada. Consulte o [registro consolidado de encerramento](sprints/sprint-4.md) para evidências, limites e escopo futuro.

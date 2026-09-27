@@ -1,10 +1,40 @@
 # Sprint 4 — Torneios e participantes
 
-Iniciada em 26/09/2026. Escopo principal: S4-01, S4-02 e S4-03. Nome público (S4-04) e perfil GeoGuessr (S4-05), inicialmente adicionais remanejáveis, tiveram implementação autorizada em 27/09 após o aceite do escopo principal. Datas de entrega e capacidade ainda não estimadas.
+Iniciada em 26/09/2026. Escopo principal: S4-01, S4-02 e S4-03. Nome público (S4-04) e perfil GeoGuessr (S4-05), inicialmente adicionais remanejáveis, tiveram implementação autorizada em 27/09 após o aceite do escopo principal. Encerrada em 27/09/2026 com as cinco histórias aceitas; não houve estimativa formal de capacidade.
 
 ## Situação atual — 27/09/2026
 
-S4-01, S4-02 e S4-03 com aceite funcional concluído pelo Dono do produto. Migrações confirmadas e aplicação publicada validada pelo usuário; código S4-03 no commit `5bb6a3dc333cd45a306916ef8af91112a7469058`. Interface final aprovada, navegação e seleção persistente, data de participação, inclusão/remoção, restrições de acesso/edição, conclusão histórica e ordenação diária validadas. O escopo principal da Sprint 4 está aceito; S4-04/S4-05 foram autorizadas em 27/09 e estão implementadas localmente, com migração/publicação/homologação ainda pendentes. Registros anteriores de pendências ficam preservados como histórico e são substituídos pelas confirmações posteriores. A última comparação fornecida após a migração S4-03 teve zero diferenças; não houve nova comparação após o último ciclo de homologação.
+**Sprint 4 encerrada em 27/09/2026**, por confirmação do Dono do produto, com S4-01 a S4-05 entregues, publicadas e aceitas. A carga complementar do Excel também foi executada e conciliada pelo retorno SQL. As seções posteriores preservam a sequência de implementação e não reabrem pendências resolvidas por este encerramento.
+
+| História | Entrega aceita | Evidência |
+| --- | --- | --- |
+| S4-01 | Criar, editar e encerrar torneios | Aceite funcional do Dono do produto e migração confirmada |
+| S4-02 | Participantes, data de ingresso e preparação histórica | Inclusão/remoção, persistência da data, conclusão da preparação e restrição de administração confirmadas |
+| S4-03 | Múltiplos torneios em abas | Interface aprovada, alternância, seleção após recarga, ranking preservado e ordem diária confirmadas |
+| S4-04 | Nome público único e edição própria | Migração, Vercel pronta e todos os testes de homologação aprovados pelo Dono do produto |
+| S4-05 | Perfil GeoGuessr opcional | Mesmo aceite de homologação, com inclusão/edição/remoção e visualização do link |
+
+Documentação consolidada: requisitos RF17/RF18, plano de ação, plano de testes, arquitetura, ADR-002, orientação de perfis, README operacional e histórico. Evidências locais: suíte de 36 testes, lint/build aprovados na implementação, dois casos adicionais direcionados e depois sete testes de banco/perfil aprovados na revisão da carga (incluindo o novo caso de importação). Não houve nova execução completa de testes neste fechamento documental.
+
+Limites registrados, sem bloquear o aceite: não foi fornecido novo checksum após a carga de nomes nem uma inspeção visual específica dos nomes importados; a carga foi conferida pelo resultado SQL. Não alegar ensaio remoto PostgreSQL multiconexão. A referência de backup permanece intacta e diferenças de nomes após a carga são esperadas. RF19 (relatório, envio por e-mail e exclusão automática) permanece fora do escopo, assim como o editor de regras/calendário previsto para a Sprint 5.
+
+S4-01 a S4-05 com aceite funcional concluído pelo Dono do produto. Migrações confirmadas e aplicação publicada na Vercel validada pelo Dono do produto. Em 27/09, após confirmar o deployment, o Dono do produto informou que executou todos os testes de perfil e passaram. Os registros anteriores de pendências ficam preservados como histórico e são substituídos por essas confirmações. A comparação posterior à migração de perfis retornou zero diferenças nos campos antigos. A carga complementar dos nomes e links do Excel foi solicitada após esse aceite: executada pelo Dono do produto, com retorno de 12 nomes confirmados e 11 URLs conferidas. Conferência visual após a carga ainda não relatada.
+
+### Homologação S4-04/S4-05 e carga complementar do MVP — 27/09/2026
+
+**Atualização operacional:** a primeira execução remota abortou com `mvp_profile_name_changed: Martin`, antes da gravação. O Dono do produto informou que provavelmente já havia preenchido seu próprio perfil. Carga revisada para excluir Martin integralmente, preservando nome, URL e confirmação atuais: agora são **12 nomes e 11 URLs**, com retorno esperado de 12 linhas. Os números de 13/12 abaixo descrevem a versão inicial e o conteúdo da fonte. Sete testes locais novamente aprovados, incluindo preservação integral do perfil manual de Martin, auditoria de somente 12 atualizações e proteção dos demais perfis. Reexecução remota confirmada pelo retorno fornecido pelo Dono do produto: 12 linhas, todas com `confirmado=true`, 11 URLs e Luca com URL nula. Martin não consta no escopo da operação. Essa evidência não representa nova comparação de backup ou inspeção visual.
+
+Evidência de aceite: relato do Dono do produto “executei todos os testes e passaram”, após informar Vercel pronta. Abrange o roteiro de edição/persistência do nome, unicidade, URL e sua edição/remoção, visualização pelos participantes e cadastro com nome obrigatório. Não representa execução remota pelo agente nem nova captura de backup.
+
+Por solicitação explícita do Dono do produto, preparada a carga administrativa dos nomes públicos e URLs já presentes em `GeoGuaras.xlsx`, aba `Diario!A2:C16`: coluna B contém o nome e seu hyperlink; A identifica o jogador do MVP e C a conta previamente validada. Fonte SHA256 `e74d1a6560a56ee1f7d3103df641199fbf308b2a5e735a46b6e0082bf93efcc4`, inalterada. São 13 nomes e 12 links. Luca possui nome `Lucacavalhojeo`, sem hyperlink: seu link atual é preservado. Ramiro e Marcelo não possuem os dados/cadastro nessa carga e ficam excluídos. Não há busca externa de links nem comprovação de titularidade GeoGuessr.
+
+Operação: `web/supabase/operations/20260927-import-mvp-profiles.sql`, gerada por `build-mvp-profiles.py`. Identidades reutilizam a regra de correspondência exata da coluna C com a parte local do e-mail, confirmada na carga original, exigindo uma única conta/perfil; Luca/Zade usam os UUIDs já confirmados. Não associa pela semelhança de nomes. Nome atual deve ser o nome legado ou o nome destino da planilha; URL existente diferente da fonte aborta. Qualquer divergência requer análise do retorno antes de ajustar o script, sem sobrescrever uma escolha manual silenciosamente.
+
+Executar integralmente no SQL Editor como administrador, com a migração de perfis já aplicada. A transação bloqueia alterações concorrentes nas identidades/perfis durante a validação e gravação, aplica as mesmas funções de validação e unicidade da aplicação e marca os nomes importados como confirmados, por autorização do Dono do produto. A versão revisada retorna 12 linhas com nome público, URL e confirmação. Reexecução sem mudanças é neutra. Não requer nova migração ou publicação da aplicação.
+
+Antes/depois dos perfis alterados ficam em `private.profile_changes`, pela trigger existente; ator pode ser nulo no SQL Editor. Essa auditoria permite identificar os valores anteriores, mas não substitui backup completo. O backup `before-s4-02-september-v1` permanece intacto; seu comparador deverá acusar as mudanças de nome legítimas após a carga, não sendo correto exigir checksum antigo igual nem substituir a referência. UUIDs, datas de criação, pontuações, torneios, elegibilidades e resultados não são escritos pela operação.
+
+Validação local: 7 testes do arquivo `public-profiles.test.mjs` aprovados, incluindo carga dos 13 perfis/12 links, Unicode, preservação de URL ausente na fonte, idempotência, auditoria, rollback para nome/URL divergente, conta ausente/ambígua e colisão de nome. Comparação de todas as tabelas públicas exceto perfis e dos perfis fora do escopo sem diferenças. Execução remota desta carga confirmada; visualização no ranking/perfil ainda não relatada; a homologação das funcionalidades S4-04/S4-05 já está concluída.
 
 ## S4-03 — Listar e acessar múltiplos torneios
 
@@ -109,7 +139,7 @@ Com essas confirmações, criação, edição, encerramento e verificações fun
 
 ### Prévia local da S4-03 — 26/09/2026
 
-A pedido do Dono do produto, disponibilizada prévia em `http://127.0.0.1:3103/dashboard`, com três torneios fictícios (aberto, histórico em preparação e encerrado). Renderiza os componentes reais do painel, formulário e resultados com dependências simuladas e CSS do build. Alternância entre abas verificada no navegador e aparência inspecionada no painel lateral. Formulários desativados; não usa sessão, credenciais nem conexão com Supabase. Servidor temporário em `web/out/preview-s4.mjs`, ignorado pelo Git; execução com `node web/out/preview-s4.mjs` enquanto o arquivo e o build existirem. Esta inspeção substitui a pendência de primeira inspeção visual local indicada acima, mas não constitui aceite do usuário nem homologação autenticada. Migração e publicação remotas continuam pendentes.
+A pedido do Dono do produto, disponibilizada prévia em `http://127.0.0.1:3103/dashboard`, com três torneios fictícios (aberto, histórico em preparação e encerrado). Renderiza os componentes reais do painel, formulário e resultados com dependências simuladas e CSS do build. Alternância entre abas verificada no navegador e aparência inspecionada no painel lateral. Formulários desativados; não usa sessão, credenciais nem conexão com Supabase. Servidor temporário em `web/out/preview-s4.mjs`, ignorado pelo Git; execução com `node web/out/preview-s4.mjs` enquanto o arquivo e o build existirem. Esta inspeção substitui a pendência de primeira inspeção visual local indicada acima, mas não constitui aceite do Dono do produto nem homologação autenticada. Migração e publicação remotas continuam pendentes.
 
 ### Revisão pelo esboço do Dono do produto — 26/09/2026
 
@@ -148,13 +178,9 @@ Após a orientação de aplicar a migração S4-03 e repetir a comparação, o D
 
 O Dono do produto confirmou explicitamente que `202609260003_multiple_tournaments.sql` terminou com sucesso antes da nova comparação. Migração remota aplicada pelo Dono do produto; comparação posterior com zero diferenças e checksum igual à referência. A confirmação resolve a pendência do registro anterior. Não reaplicar a migração. Publicação do código e homologação funcional conjunta ainda pendentes.
 
-### Push confirmado — 27/09/2026
-
-Após o Dono do produto informar o push, consulta `git ls-remote origin refs/heads/main` confirmou `5bb6a3dc333cd45a306916ef8af91112a7469058` em `main`. Código S4-03 enviado ao GitHub. A tentativa de consultar a disponibilidade de `https://geoguaras.vercel.app/auth/login` foi bloqueada pelo sandbox e a solicitação de acesso externo foi recusada pelo usuário. Não foi comprovado o deploy da Vercel nem realizada homologação autenticada. Próximo passo: confirmar na Vercel o deployment Production/Ready desse commit, antes dos testes na aplicação. O push, isoladamente, não comprova publicação.
-
 ### Validação da navegação publicada — relato do Dono do produto em 27/09/2026
 
-Após informar que a Vercel concluiu a build do último commit, o Dono do produto confirmou na aplicação: abas presentes, alternância entre torneios funcionando, aba selecionada preservada após recarregar, dias na ordem esperada e ranking intacto. Esses cenários estão validados pelo relato do usuário. A conferência do ranking é visual, não uma nova conciliação numérica. O relato sobre a ordem dos dias não confirma separadamente a ordenação das pontuações dentro de cada dia; esse ponto continua a confirmar.
+Após informar que a Vercel concluiu a build do último commit, o Dono do produto confirmou na aplicação: abas presentes, alternância entre torneios funcionando, aba selecionada preservada após recarregar, dias na ordem esperada e ranking intacto. Esses cenários estão validados pelo relato do Dono do produto. A conferência do ranking é visual, não uma nova conciliação numérica. O relato sobre a ordem dos dias não confirma separadamente a ordenação das pontuações dentro de cada dia; esse ponto continua a confirmar.
 
 Pendências de homologação: confirmar pontuações diárias da maior para a menor; na S4-02, alterar data de participação e verificar persistência após recarregar, concluir preparação histórica em torneio de teste e verificar bloqueio da administração de participantes por outra conta. Não encerrar formalmente a S4-02 com base apenas na navegação. Validação remota relatada pelo Dono do produto, sem execução autenticada direta pelo agente.
 
@@ -186,7 +212,7 @@ Após executar o SQL orientado, o Dono do produto forneceu a listagem contendo a
 
 ## S4-04 e S4-05 — Perfil público e GeoGuessr
 
-Em 27/09/2026, após confirmar a remoção correta de “Teste edicao” e informar o push da homologação (commit local observado `1d69c1f`), o Dono do produto solicitou executar os requisitos restantes na capacidade disponível da sprint. Implementação local concluída; nenhuma migração, publicação ou edição remota de perfil realizada pelo agente.
+Em 27/09/2026, após confirmar a remoção correta de “Teste edicao” o Dono do produto solicitou executar os requisitos restantes na capacidade disponível da sprint. Implementação local concluída; nenhuma migração, publicação ou edição remota de perfil realizada pelo agente.
 
 ### Comportamento e decisões
 
@@ -207,7 +233,7 @@ A comparação da cópia privada confirma preservação de nomes existentes, UUI
 
 Prévia local em `http://127.0.0.1:3104/dashboard/profile`, componentes reais com dados fictícios, CSS do build e gravações desativadas. Tela inspecionada no navegador; não representa aceite do Dono do produto nem teste real de Auth. Script temporário em `web/out/preview-profile.mjs`, ignorado pelo Git.
 
-### Migração, publicação e homologação pendentes
+### Roteiro original de migração, publicação e homologação (histórico concluído)
 
 1. Antes de publicar, executar `web/supabase/operations/20260927-profile-preflight.sql` no SQL Editor. A consulta de colisões deve retornar zero linhas; se houver, acordar a resolução antes de prosseguir. Não renomear automaticamente. Comparar também a referência com `02-verify.sql` e explicar diferenças legítimas desde o backup original.
 2. Preservar o backup privado original. Aplicar somente `202609270001_public_profiles.sql`, uma vez, depois da S4-03. A migração não altera campos antigos de perfis nem dados de jogo; acrescenta dois campos e objetos de validação/auditoria.
@@ -233,4 +259,8 @@ O Dono do produto confirmou “Success. No rows returned” ao executar separada
 
 O Dono do produto esclareceu que executou primeiro a migração `202609270001_public_profiles.sql`, cujo retorno foi “Success. No rows returned”. A comparação imediatamente anterior prevista no roteiro não foi realizada nesta etapa; não presumir essa evidência. Após a orientação, forneceu o retorno de `20260927-profile-verify.sql`: backup `before-s4-02-september-v1`, captura `2026-09-26 13:56:45.612398+00`, referência `2026-09-26`, zero diferenças, detalhes vazios e checksums iguais a `3d847140e955fd6feaaffab3b252dbe8`. Isso confirma preservação dos campos antigos abrangidos pela referência após a migração; o comparador exclui somente `public_name_confirmed` e `geoguessr_url`. Não equivale a validar os valores novos nem a homologar a interface.
 
-Migração de perfis aplicada pelo Dono do produto; não reaplicar. Registros anteriores de execução pendente ficam substituídos por esta confirmação. Código novo ainda precisa de commit/push e deployment; homologação S4-04/S4-05 permanece pendente.
+Migração de perfis aplicada pelo Dono do produto; não reaplicar. Registros anteriores de execução pendente ficam substituídos por esta confirmação. Código novo ainda precisa de deployment; homologação S4-04/S4-05 permanece pendente.
+
+### Consolidação final
+
+As pendências descritas nos registros cronológicos anteriores foram resolvidas pelas confirmações de deployment, homologação e carga registradas no início deste documento. A situação vigente é Sprint 4 encerrada; não reaplicar migrações nem repetir a carga por causa de instruções históricas.

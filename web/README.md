@@ -73,8 +73,12 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-## Perfil público — S4-04/S4-05
+## Perfil público — S4-04/S4-05 (homologadas)
 
-Implementação local em `/dashboard/profile`, com nome obrigatório também no cadastro. Antes de publicar: executar `supabase/operations/20260927-profile-preflight.sql`, resolver colisões se houver e aplicar uma vez `supabase/migrations/202609270001_public_profiles.sql` após S4-03. Conferir campos antigos com `supabase/operations/20260927-profile-verify.sql` (não reescreve o backup; exclui apenas as duas colunas novas).
+Sprint 4 encerrada em 27/09/2026: S4-01 a S4-05 migradas, publicadas na Vercel e homologadas pelo Dono do produto. A página `/dashboard/profile` edita nome público único e link opcional; cadastro exige nome explícito. As instruções anteriores de implantação são referência para ambientes novos, não orientação para reaplicar migrações em produção.
 
-Coordenar migração/publicação: cadastro antigo sem nome será rejeitado após a migração e contas existentes serão identificadas de forma neutra até confirmar o nome. Não aplicar sem preparar o novo código para publicação. Roteiro e evidências em [Sprint 4](../docs/sprints/sprint-4.md); escolhas técnicas na [ADR-002](../docs/decisoes/adr-002-perfil-publico.md). Nenhuma execução remota desta migração foi confirmada.
+Migração de perfis `supabase/migrations/202609270001_public_profiles.sql` já aplicada. Preflight confirmado: 14 contas, zero colisões e zero nomes sinalizados para substituição. Comparação posterior com `supabase/operations/20260927-profile-verify.sql` retornou zero diferenças nos campos antigos. Preservar o backup original; o comparador exclui somente as duas colunas novas e detecta alterações legítimas de nome.
+
+Carga pontual `supabase/operations/20260927-import-mvp-profiles.sql` também executada: 12 nomes confirmados e 11 URLs, com Martin fora do escopo para preservar o perfil manual e Luca sem URL. Não reaplicar para sobrescrever edições posteriores. Antes/depois ficam na auditoria privada; nomes alterados produzirão diferenças esperadas na comparação com o backup antigo. A carga não requer deploy adicional.
+
+Roteiro, evidências e limites em [Sprint 4](../docs/sprints/sprint-4.md); decisões na [ADR-002](../docs/decisoes/adr-002-perfil-publico.md).

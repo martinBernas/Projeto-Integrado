@@ -2,6 +2,8 @@
 
 ## Objetivo
 
+Situação consolidada em 27/09/2026: Sprint 4 encerrada com S4-01 a S4-05 homologadas e carga complementar dos perfis executada. Revisões de escopo e pendências registradas abaixo são históricas quando substituídas pelo encerramento. Próximo escopo previsto: Sprint 5, regras e calendário; implementação ainda não iniciada neste fechamento.
+
 Entregar incrementalmente uma aplicação que substitua a planilha do campeonato GeoGuaras, preservando as regras de negócio e tornando lançamentos, cálculos e rankings rastreáveis.
 
 ## Método de trabalho
@@ -27,6 +29,7 @@ Usaremos sprints curtas, backlog versionado no GitHub e revisão por pull reques
 | 1 — Descoberta e documentação do MVP | Concluída em 06/09/2026 | [Encerramento da Sprint 1](sprints/sprint-1.md) |
 | 2 — Fundação | Concluída em 12/09/2026 | [Encerramento da Sprint 2](sprints/sprint-2.md) |
 | 3 — MVP utilizável | Concluída em 21/09/2026 | [Encerramento da Sprint 3](sprints/sprint-3-encerramento.md) |
+| 4 — Torneios e participantes | Concluída em 27/09/2026, incluindo S4-04/S4-05 | [Encerramento da Sprint 4](sprints/sprint-4.md) |
 
 ## Situação e revisão de escopo — 20/09/2026
 
@@ -106,4 +109,6 @@ S4-01, S4-02 e S4-03 aceitas funcionalmente pelo Dono do produto em 27/09/2026: 
 
 ## Evolução S4-04/S4-05 — 27/09/2026
 
-S4-04/S4-05 autorizadas em 27/09/2026 e implementadas localmente, em continuidade ao escopo principal já aceito. Próximas etapas: revisão visual, preflight de colisões, migração coordenada com publicação e homologação de perfil. Não remanejadas nesta decisão.
+Revisão operacional posterior: carga reduzida a 12 nomes/11 links, preservando o perfil de Martin já preenchido. Primeira tentativa abortou sem gravação; reexecução confirmada pelo retorno de 12 perfis com nome confirmado e 11 URLs. Essa revisão substitui a contagem inicial abaixo.
+
+S4-04/S4-05 autorizadas, implementadas, migradas, publicadas na Vercel e homologadas pelo Dono do produto em 27/09/2026. Aceite substitui as pendências anteriores. Carga complementar revisada de 12 nomes e 11 links executada e conciliada pelo retorno SQL; conferência visual após a carga ainda não relatada, conforme Sprint 4.
