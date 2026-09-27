@@ -124,3 +124,11 @@ Casos planejados, não executados e fora do aceite da Sprint 3. Refinar as polí
 - Testes unitários do motor de pontuação com Vitest.
 - Testes de integração do banco e das permissões.
 - Testes ponta a ponta dos fluxos de login, lançamento, participação em torneio e ranking com Playwright.
+
+## S4-03 — Abas de torneios
+
+Cobertura local: `web/tests/multiple-tournaments.test.mjs` valida listagem RLS, resultados e exclusões por torneio, elegibilidade diferente para a mesma conta, organizador sem participação, encerrados e negação após remoção/sem sessão. `web/tests/dashboard-navigation.test.mjs` renderiza o painel com dependências simuladas e verifica seleção por URL, aba ativa, recarga, parâmetros inválidos/repetidos, lista vazia e mensagens de erro. O teste de backup de participantes aplica também a migração S4-03, comparando hashes dos dados e cálculo da referência privada.
+
+Suíte de 28 testes, lint e build aprovados localmente em 26/09/2026. A renderização automatizada não verifica aparência no navegador nem sessão remota. Homologação pendente: alternância real entre abas, voltar/avançar, teclado/celular, isolamento entre contas, setembro e os três cenários restantes da S4-02, conforme [roteiro da sprint](sprints/sprint-4.md).
+
+Revisão visual S4-03: teste adicional em `ranking.test.mjs` verifica ordem diária por pontuação aplicada decrescente, empate por nome, ausência antes das pendências e entrada não modificada. Aprovado após a suíte de 28 testes. Prévia revisada inspecionada com um dia expandido; aprovação do Dono do produto pendente.

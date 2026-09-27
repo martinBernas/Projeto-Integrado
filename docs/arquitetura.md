@@ -50,11 +50,13 @@ As páginas de servidor também consultam tabelas sob RLS e RPCs de leitura auto
 
 Mutações de participação e recálculo ocorrem na mesma transação, com bloqueio da linha do torneio. Os lançamentos pessoais também bloqueiam os torneios envolvidos, serializando alterações nos dados compartilhados. Não há fila, serviço de cálculo separado ou tarefa agendada introduzida nestas entregas. O encerramento é manual; não existe exclusão automática depois de uma semana. Relatório, e-mail e retirada do torneio da aplicação continuam como RF19 futuro.
 
-A administração usa `/dashboard/tournaments` e `/dashboard/tournaments/[id]/participants`. O painel dos jogadores ainda consulta o torneio de setembro; navegação e resultados de múltiplos torneios para participantes são S4-03.
+A administração usa `/dashboard/tournaments` e `/dashboard/tournaments/[id]/participants`. O painel lista os torneios acessíveis por RLS e navega em abas por `/dashboard?tournament=<uuid>`. A consulta `get_tournament_dashboard(uuid)` verifica identidade e vínculo/organização, bloqueia a linha do torneio, revalida o acesso e usa o recálculo existente somente no alvo. A resposta reúne metadados, participantes, exclusões e resultados do mesmo torneio. A RPC antiga de setembro delega à nova para compatibilidade. Pontuação e histórico pessoal permanecem globais. Fluxo em [diagrama de navegação](diagramas/navegacao-torneios.md).
 
 A tela de participantes renderiza grids compactos por meio de `ParticipantGrid`, componente de cliente com data editável e ações por linha. Cada linha reutiliza a Server Action `manageParticipant`; confirmações são apresentadas ao submeter a ação, e as validações/autorização continuam no servidor e no banco. Essa revisão visual não introduz RPCs, alterações de esquema ou novas regras de cálculo.
 
 ## Migrações e proteção da referência
+
+- `202609260003_multiple_tournaments.sql`: consulta parametrizada de resultados e compatibilidade de setembro; sem mutação de dados na aplicação. Execução remota pendente.
 
 - `202609260001_tournament_management.sql`: estado de encerramento, auditoria de torneios e RPCs de criação, edição e encerramento.
 - `202609260002_participant_management.sql`: seleção de contas, administração de vínculos, conclusão histórica e auditoria de participação/remoção de resultados. Sua aplicação não altera os dados de negócio existentes nem recalcula o ranking.

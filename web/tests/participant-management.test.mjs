@@ -60,6 +60,7 @@ test('cópia local de setembro: migração preserva dados e cálculo integralmen
     const calculation=async ()=>(await db.query('select * from private.calculate_tournament($1,$2) order by player_id,played_on',[backup.tournament_id,backup.as_of])).rows;
     const before=hash(await state(db)); const calculatedBefore=hash(await calculation());
     await db.exec(await migration('202609260002_participant_management'));
+    await db.exec(await migration('202609260003_multiple_tournaments'));
     assert.equal(hash(await state(db)),before,'migration changed captured business data');
     assert.equal(hash(await calculation()),calculatedBefore,'migration changed reference calculation');
   } finally { await db.close(); }

@@ -10,6 +10,8 @@ O Git é a fonte do histórico completo. Este registro resume marcos documentais
 
 ## Prioridades da Sprint 4 — 26/09/2026
 
+Aceite visual da S4-02: Dono do produto aprovou explicitamente a interface em grid compacto de gerenciamento de participantes. Registro da sprint atualizado; aprovação visual distinta dos cenários de homologação funcional ainda não demonstrados.
+
 Revisão visual da S4-02 solicitada pelo Dono do produto: cartões substituídos por grids compactos de participantes e candidatos, datas e ações alinhadas por linha, confirmação no momento da ação. Mesmas operações de servidor e banco, sem migração adicional. Lint/build aprovados e prévia estática com dados fictícios inspecionada no navegador; validação da interação autenticada após publicação pendente.
 
 Validação posterior da S4-02: Dono do produto confirmou inclusão do perfil de testes, conferência da data de ingresso e remoção. Comparação após o ciclo retornou zero diferenças e checksum `3d847140e955fd6feaaffab3b252dbe8`, igual ao backup. Migração remota já confirmada; escopo validado e cenários restantes registrados na [Sprint 4](sprints/sprint-4.md). Os registros abaixo preservam os estados anteriores da entrega.
@@ -56,3 +58,11 @@ Complemento da revisão de 20/09/2026: período do torneio confirmado pelo Dono 
 Calendário confirmado na mesma revisão: segunda a sexta, com 07/09/2026 excluído por feriado. A exclusão prevalece sobre a presença da data no Excel e impede pontos e penalidades também no histórico manual. Planejamento, regras e testes atualizados; implementação ainda pendente.
 
 Ao concluir uma entrega, adicionar data, escopo realmente entregue, hash do commit, evidências de testes e URL do ambiente quando aplicável. Usar branch e revisão por pull request conforme a política do projeto. Uma tag pode identificar o marco após integração; não há tag criada por este replanejamento.
+
+## Atualização S4-03 — 26/09/2026
+
+S4-03 implementada localmente com abas de torneios, seleção por URL, RPC parametrizada e isolamento por torneio. Preferência por abas e homologação conjunta dos três cenários restantes da S4-02 confirmadas pelo Dono do produto. Migração, publicação e aceite das abas pendentes; ver [Sprint 4](sprints/sprint-4.md).
+
+Revisão S4-03 pelo esboço: proposta inicial rejeitada; abas compactas conectadas às regras e resultados diários em ordem decrescente implementados localmente. Prévia atualizada para avaliação antes de qualquer avanço remoto. Testes, lint e build aprovados; aceite pendente.
+
+27/09/2026 — Dono do produto aprovou a interface final da S4-03 e autorizou implantação remota e homologação conjunta. Aceite visual substitui a pendência anterior; migração e publicação ainda não executadas.

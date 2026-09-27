@@ -91,3 +91,7 @@ RF19 — requisito futuro, sem sprint definida: gerar relatório do torneio ence
 - Definir prazo exato para o envio de pontuação e se o organizador pode aceitar lançamento tardio.
 - Definir se a pontuação absoluta deve aceitar zero e quais limites de pontuação serão válidos.
 - Para a auditoria futura, definir eleitores elegíveis, participação do auditado e do organizador, duração, quórum, base da maioria, empate, ausência de votos, alteração de voto, recurso/reabertura e efeitos provisórios no ranking. Detalhamento em [Auditoria por votação](auditoria-de-pontuacoes.md).
+
+## Atualização S4-03 — 26/09/2026
+
+RF10 — S4-03 implementada localmente: abas de torneios acessíveis (participação ou organização), seleção por URL e resultados específicos. Migração, publicação e homologação pendentes; ver [Sprint 4](sprints/sprint-4.md).

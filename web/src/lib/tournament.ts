@@ -28,4 +28,12 @@ export function ranking(participants: Participant[], results: DayResult[]) {
   });
 }
 export function formatDate(day: string) { return day.split('-').reverse().join('/'); }
+export function sortDailyResults(participants: Participant[], results: DayResult[]) {
+  const names = new Map(participants.map(p => [p.id, p.name]));
+  return [...results].sort((a, b) =>
+    Number(a.result_kind === 'pending') - Number(b.result_kind === 'pending')
+    || (a.result_kind === 'pending' ? 0 : b.applied_score - a.applied_score)
+    || (names.get(a.player_id) ?? '').localeCompare(names.get(b.player_id) ?? '', 'pt-BR')
+    || a.player_id.localeCompare(b.player_id));
+}
 export function formatScore(value: number) { return value.toLocaleString('pt-BR'); }

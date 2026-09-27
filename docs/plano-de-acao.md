@@ -99,3 +99,7 @@ Não há estimativas em horas ou pontos nem datas confirmadas para as sprints 4�
 ## Critério de encerramento da Sprint 1
 
 A documentação deve permitir que outro integrante compreenda as entidades do sistema, as regras atuais de cálculo e os comportamentos que precisam ser validados antes da implementação.
+
+## Atualização S4-03 — 26/09/2026
+
+S4-03 avançou para implementação local com navegação em abas solicitada pelo Dono do produto. Homologação incluirá também alteração/persistência de elegibilidade, conclusão histórica e bloqueio administrativo por outra conta da S4-02. Migração S4-03 e publicação pendentes; ver [Sprint 4](sprints/sprint-4.md).

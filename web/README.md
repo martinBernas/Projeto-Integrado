@@ -32,7 +32,7 @@ O SQL incremental `supabase/seeds/september-new-players-2026-09-23.sql` inscreve
 
 Administração da Sprint 4: consulte [escopo, backup e implantação](../docs/sprints/sprint-4.md). Para S4-02, aplique `supabase/migrations/202609260002_participant_management.sql` após a migração de administração de torneios e antes da publicação. Compare os dados com o backup privado antes/depois usando `supabase/rehearsal/sprint4/02-verify.sql`.
 
-O painel oferece lançamento bruto pessoal, histórico, torneio de setembro, cálculo relativo e ranking. Consulte [implantação e carga histórica](../docs/sprints/sprint-3-operacao.md) para provisionar o organizador, vincular contas e carregar o Excel pelo SQL Editor. O script `supabase/seeds/september.sql` exige UUID real antes de executar.
+A S4-03 oferece lançamento bruto pessoal, histórico separado, abas de torneios acessíveis e rankings específicos, com resultados diários em ordem decrescente de pontuação aplicada. Antes de publicar esta versão, aplique somente `supabase/migrations/202609260003_multiple_tournaments.sql` após as migrações S4-01/S4-02 já confirmadas. Execute `supabase/rehearsal/sprint4/02-verify.sql` antes e depois, preservando o backup original. Consulte [implantação e carga histórica](../docs/sprints/sprint-3-operacao.md) para provisionar o organizador, vincular contas e carregar o Excel pelo SQL Editor. O script `supabase/seeds/september.sql` exige UUID real antes de executar.
 
 Histórico incompleto mantém o ranking provisório e não gera penalidades. Após a conferência pelo Dono do produto, `private.complete_september_history()` habilita o cálculo de faltas nos dias encerrados. A aplicação usa somente a chave pública e a sessão do usuário; não requer chave de serviço.
 
