@@ -132,3 +132,7 @@ Cobertura local: `web/tests/multiple-tournaments.test.mjs` valida listagem RLS, 
 Suíte de 28 testes, lint e build aprovados localmente em 26/09/2026. A renderização automatizada não verifica aparência no navegador nem sessão remota. Homologação pendente: alternância real entre abas, voltar/avançar, teclado/celular, isolamento entre contas, setembro e os três cenários restantes da S4-02, conforme [roteiro da sprint](sprints/sprint-4.md).
 
 Revisão visual S4-03: teste adicional em `ranking.test.mjs` verifica ordem diária por pontuação aplicada decrescente, empate por nome, ausência antes das pendências e entrada não modificada. Aprovado após a suíte de 28 testes. Prévia revisada inspecionada com um dia expandido; aprovação do Dono do produto pendente.
+
+## Aceite remoto S4-02/S4-03 — 27/09/2026
+
+Dono do produto confirmou todos os cenários funcionais acordados: abas e persistência da seleção, ranking preservado visualmente, ordenação diária decrescente, persistência de elegibilidade, ciclo de inclusão/remoção com concessão/revogação de acesso, restrição de edição por conta não organizadora e conclusão histórica. Homologação funcional concluída por relato do usuário. Não implica teste remoto direto de RPCs ou nova comparação numérica após o último ensaio; evidências e limites em [Sprint 4](sprints/sprint-4.md).

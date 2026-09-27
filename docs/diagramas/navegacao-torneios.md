@@ -15,4 +15,4 @@ sequenceDiagram
   Painel-->>Conta: Abas e ranking do torneio selecionado
 ```
 
-Seleção inválida não chama a RPC pela interface. A RPC também protege chamadas diretas. Encerrados preservam os resultados existentes. Sem mudanças no modelo de dados; o diagrama de classes da S4-02 permanece válido. Migração e publicação da S4-03 ainda pendentes.
+Seleção inválida não chama a RPC pela interface. A RPC também protege chamadas diretas. Encerrados preservam os resultados existentes. Sem mudanças no modelo de dados; o diagrama de classes da S4-02 permanece válido. Migração confirmada e aplicação publicada homologada pelo Dono do produto em 27/09/2026.

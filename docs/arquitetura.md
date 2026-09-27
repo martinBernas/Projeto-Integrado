@@ -56,12 +56,12 @@ A tela de participantes renderiza grids compactos por meio de `ParticipantGrid`,
 
 ## Migrações e proteção da referência
 
-- `202609260003_multiple_tournaments.sql`: consulta parametrizada de resultados e compatibilidade de setembro; sem mutação de dados na aplicação. Execução remota pendente.
+- `202609260003_multiple_tournaments.sql`: consulta parametrizada de resultados e compatibilidade de setembro; sem mutação de dados na aplicação. Execução remota confirmada pelo Dono do produto em 27/09/2026, com comparação posterior sem diferenças.
 
 - `202609260001_tournament_management.sql`: estado de encerramento, auditoria de torneios e RPCs de criação, edição e encerramento.
 - `202609260002_participant_management.sql`: seleção de contas, administração de vínculos, conclusão histórica e auditoria de participação/remoção de resultados. Sua aplicação não altera os dados de negócio existentes nem recalcula o ranking.
 
-Aplicar cada migração uma vez e antes de publicar o código dependente. O backup de referência da S4-02 fica em tabela privada no Supabase e em `backups/sprint-4/`, ignorada pelo Git. A comparação verifica dados, resultados e cálculo na data de referência; ela não restaura automaticamente os dados e não substitui backup integral da plataforma. Execução da segunda migração confirmada pelo Dono do produto, com zero diferenças antes/depois. Ensaio de inclusão/remoção na interface confirmado pelo Dono do produto, com zero diferenças após o ciclo; homologação dos demais cenários ainda pendente. Ver [Sprint 4](sprints/sprint-4.md) e [backup](sprints/sprint-4-backup.md).
+Aplicar cada migração uma vez e antes de publicar o código dependente. O backup de referência da S4-02 fica em tabela privada no Supabase e em `backups/sprint-4/`, ignorada pelo Git. A comparação verifica dados, resultados e cálculo na data de referência; ela não restaura automaticamente os dados e não substitui backup integral da plataforma. Execução da segunda migração confirmada pelo Dono do produto, com zero diferenças antes/depois. Ensaio de inclusão/remoção na interface confirmado pelo Dono do produto, com zero diferenças após o ciclo; demais cenários funcionais da S4-02 e S4-03 homologados pelo Dono do produto em 27/09/2026. Ver [Sprint 4](sprints/sprint-4.md) e [backup](sprints/sprint-4-backup.md).
 
 ## Ambientes e publicação
 

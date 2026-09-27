@@ -100,6 +100,6 @@ Não há estimativas em horas ou pontos nem datas confirmadas para as sprints 4�
 
 A documentação deve permitir que outro integrante compreenda as entidades do sistema, as regras atuais de cálculo e os comportamentos que precisam ser validados antes da implementação.
 
-## Atualização S4-03 — 26/09/2026
+## Situação S4-02/S4-03 — 27/09/2026
 
-S4-03 avançou para implementação local com navegação em abas solicitada pelo Dono do produto. Homologação incluirá também alteração/persistência de elegibilidade, conclusão histórica e bloqueio administrativo por outra conta da S4-02. Migração S4-03 e publicação pendentes; ver [Sprint 4](sprints/sprint-4.md).
+S4-01, S4-02 e S4-03 aceitas funcionalmente pelo Dono do produto em 27/09/2026: escopo principal da Sprint 4 concluído. S4-04/S4-05 permanecem adicionais remanejáveis; sua execução ou transferência de sprint ainda deve ser definida. Ver [Sprint 4](sprints/sprint-4.md).

@@ -66,3 +66,9 @@ S4-03 implementada localmente com abas de torneios, seleção por URL, RPC param
 Revisão S4-03 pelo esboço: proposta inicial rejeitada; abas compactas conectadas às regras e resultados diários em ordem decrescente implementados localmente. Prévia atualizada para avaliação antes de qualquer avanço remoto. Testes, lint e build aprovados; aceite pendente.
 
 27/09/2026 — Dono do produto aprovou a interface final da S4-03 e autorizou implantação remota e homologação conjunta. Aceite visual substitui a pendência anterior; migração e publicação ainda não executadas.
+27/09/2026 — Dono do produto confirmou na aplicação publicada as abas, alternância entre torneios, persistência da seleção após recarregar, ordem dos dias e ranking intacto. Pontuações dentro do dia e três cenários restantes da S4-02 ainda aguardam confirmação; ver Sprint 4.
+
+27/09/2026 — Homologação pelo Dono do produto: persistência da data, torneio paralelo com outros participantes, conta sem acesso antes do vínculo, visualização sem edição após inclusão e revogação após remoção validadas. Todos os testes descritos satisfatórios. Conclusão histórica e ordenação das pontuações dentro do dia ainda sem confirmação explícita.
+
+27/09/2026 — Confirmação final de ordenação das pontuações dentro do dia e conclusão da preparação histórica. S4-02 e S4-03 homologadas pelo Dono do produto; escopo principal da Sprint 4 aceito. S4-04/S4-05 continuam adicionais remanejáveis. Estados anteriores de homologação pendente substituídos por este aceite.
+27/09/2026 — Remoção pontual de “Teste edicao” confirmada pela listagem retornada pelo Dono do produto após execução do SQL: permanecem Aztecas e GeoGuaras, ambos abertos. Evidência e limites registrados na Sprint 4.

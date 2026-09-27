@@ -2,6 +2,10 @@
 
 Iniciada em 26/09/2026. Escopo principal: S4-01, S4-02 e S4-03. Nome público (S4-04) e perfil GeoGuessr (S4-05) são adicionais remanejáveis. Datas de entrega e capacidade ainda não estimadas.
 
+## Situação atual — 27/09/2026
+
+S4-01, S4-02 e S4-03 com aceite funcional concluído pelo Dono do produto. Migrações confirmadas e aplicação publicada validada pelo usuário; código S4-03 no commit `5bb6a3dc333cd45a306916ef8af91112a7469058`. Interface final aprovada, navegação e seleção persistente, data de participação, inclusão/remoção, restrições de acesso/edição, conclusão histórica e ordenação diária validadas. O escopo principal da Sprint 4 está aceito; S4-04/S4-05 seguem adicionais remanejáveis, sem aceite ou implementação presumidos. Registros anteriores de pendências ficam preservados como histórico e são substituídos pelas confirmações posteriores. A última comparação fornecida após a migração S4-03 teve zero diferenças; não houve nova comparação após o último ciclo de homologação.
+
 ## S4-03 — Listar e acessar múltiplos torneios
 
 Implementação local em 26/09/2026. Por solicitação explícita do Dono do produto, os torneios são apresentados em abas horizontais, com destaque da seleção e rolagem horizontal em telas estreitas. Na revisão pelo esboço do Dono do produto, cada aba mostra somente o nome; período e encerramento ficam no conteúdo, e o estado também consta na descrição do link. A lista inclui torneios em que a conta participa ou que organiza, respeitando as permissões existentes.
@@ -143,3 +147,39 @@ Após a orientação de aplicar a migração S4-03 e repetir a comparação, o D
 ### Migração S4-03 confirmada — 27/09/2026
 
 O Dono do produto confirmou explicitamente que `202609260003_multiple_tournaments.sql` terminou com sucesso antes da nova comparação. Migração remota aplicada pelo Dono do produto; comparação posterior com zero diferenças e checksum igual à referência. A confirmação resolve a pendência do registro anterior. Não reaplicar a migração. Publicação do código e homologação funcional conjunta ainda pendentes.
+
+### Push confirmado — 27/09/2026
+
+Após o Dono do produto informar o push, consulta `git ls-remote origin refs/heads/main` confirmou `5bb6a3dc333cd45a306916ef8af91112a7469058` em `main`. Código S4-03 enviado ao GitHub. A tentativa de consultar a disponibilidade de `https://geoguaras.vercel.app/auth/login` foi bloqueada pelo sandbox e a solicitação de acesso externo foi recusada pelo usuário. Não foi comprovado o deploy da Vercel nem realizada homologação autenticada. Próximo passo: confirmar na Vercel o deployment Production/Ready desse commit, antes dos testes na aplicação. O push, isoladamente, não comprova publicação.
+
+### Validação da navegação publicada — relato do Dono do produto em 27/09/2026
+
+Após informar que a Vercel concluiu a build do último commit, o Dono do produto confirmou na aplicação: abas presentes, alternância entre torneios funcionando, aba selecionada preservada após recarregar, dias na ordem esperada e ranking intacto. Esses cenários estão validados pelo relato do usuário. A conferência do ranking é visual, não uma nova conciliação numérica. O relato sobre a ordem dos dias não confirma separadamente a ordenação das pontuações dentro de cada dia; esse ponto continua a confirmar.
+
+Pendências de homologação: confirmar pontuações diárias da maior para a menor; na S4-02, alterar data de participação e verificar persistência após recarregar, concluir preparação histórica em torneio de teste e verificar bloqueio da administração de participantes por outra conta. Não encerrar formalmente a S4-02 com base apenas na navegação. Validação remota relatada pelo Dono do produto, sem execução autenticada direta pelo agente.
+
+### Homologação de participantes e acesso — 27/09/2026
+
+O Dono do produto informou que todos os testes realizados foram satisfatórios e descreveu:
+
+- Alteração da data de participação com persistência correta.
+- Criação de outro torneio no mesmo intervalo, com outros participantes, aparentemente correto segundo sua conferência visual.
+- Conta sem participação não conseguiu acessar torneios.
+- Organizador incluiu a conta de teste; ao entrar novamente, ela visualizou o torneio, mas não conseguiu alterar suas configurações.
+- Organizador removeu a conta de teste; ela desapareceu da lista de participantes e, ao entrar novamente, voltou a constar sem torneio.
+
+O relato valida o ciclo de concessão/revogação de acesso e a restrição de edição pela interface, além da persistência da data. Não identifica tentativa direta de RPC nem acesso específico à administração de participantes por URL; proteções de banco seguem cobertas localmente. Não confirma explicitamente o acionamento e sucesso de “Concluir preparação do histórico” nem a ordem das pontuações dentro de um dia expandido. Solicitadas apenas essas duas confirmações para completar os pontos funcionais ainda em aberto. A declaração de satisfação se refere aos testes descritos, sem presumir execução de cenários não mencionados. Nenhuma nova operação remota realizada pelo agente.
+
+### Encerramento funcional S4-02 e S4-03 — 27/09/2026
+
+O Dono do produto confirmou que a ordenação dentro de cada dia funciona e que a conclusão da preparação histórica também funcionou. Essas confirmações resolvem os dois pontos funcionais restantes. Com os relatos anteriores de persistência da data, inclusão/remoção, restrição de acesso e edição, navegação entre torneios e preservação visual do ranking, S4-02 e S4-03 ficam homologadas e aceitas funcionalmente.
+
+Evidência: execução remota e aceite relatados pelo Dono do produto, separados dos 29 testes locais aprovados e de lint/build. As confirmações não representam uma nova conciliação numérica do banco, teste remoto direto das RPCs nem ensaio concorrente. Essas limitações não são pendências de aceite dos cenários acordados. Comparações anterior/posterior à migração S4-03 já confirmadas sem diferenças; nenhuma alegação de backup atualizado após a homologação. Nenhum dado ou configuração remota foi alterado pelo agente neste encerramento documental.
+
+### Remoção pontual de torneio de teste — 27/09/2026
+
+Dono do produto solicitou excluir somente “Teste edicao” e confirmou o ID `de088fbd-6b81-4f4d-a3c5-b4e8683ee73e`, período 21–25/09/2026 e encerramento `2026-09-26 13:45:59.445227+00`. Preparado `web/supabase/operations/20260927-remove-test-tournament.sql` para SQL Editor, separado das migrações. Valida identidade/período/encerramento sob bloqueio e exclui em transação. FKs removem vínculos, exclusões de calendário e resultados apenas desse torneio; não remove pontuações pessoais, perfis, outros torneios ou auditorias. Registra a exclusão em `private.tournament_changes`; ator pode ser nulo na sessão administrativa, com papel do banco registrado. Não implementa RF19 nem rotina geral de exclusão. Revisão estática das FKs e triggers realizada; execução remota e conferência ainda pendentes. Nenhum novo backup foi capturado por esta operação.
+
+### Retorno da remoção de “Teste edicao” — 27/09/2026
+
+Após executar o SQL orientado, o Dono do produto forneceu a listagem contendo apenas “Aztecas - Setembro 2026” (`1e7e0238-fd89-49f2-bb2b-4efb99f6db44`) e “GeoGuaras — Setembro 2026” (`20260900-0000-4000-8000-000000000001`), ambos de 01 a 30/09/2026 e sem encerramento. A ausência do ID de “Teste edicao” confirma a remoção na listagem retornada. Execução realizada pelo Dono do produto; não pelo agente. O retorno não constitui nova comparação de pontuações pessoais ou backup, nem confirmação de atualização visual das abas. A pendência anterior de execução desta operação fica resolvida.
