@@ -1,10 +1,11 @@
 "use client";
 
 import { useActionState, useId, useState, type FormEvent } from 'react';
+import { PlayerName } from '../player-name';
 import { formatDate } from '@/lib/tournament';
 import { manageParticipant } from './participant-actions';
 
-export type GridParticipant = { id: string; name: string; email?: string | null; eligible_from?: string };
+export type GridParticipant = { id: string; name: string; geoguessr_url?: string | null; email?: string | null; eligible_from?: string };
 type GridProps = {
   people: GridParticipant[]; target: string; start: string; end: string;
   mode: 'members' | 'candidates'; closed?: boolean;
@@ -25,7 +26,7 @@ function ParticipantRow({ person, target, start, end, mode, closed }: Omit<GridP
   }
   return <tr className="border-t border-slate-200 align-top hover:bg-slate-50">
     <th scope="row" className="px-4 py-3 text-left font-medium">
-      <span className="block break-words">{person.name}</span>
+      <span className="block break-words"><PlayerName name={person.name} url={mode === 'members' ? person.geoguessr_url : null} /></span>
       {mode === 'candidates' && <span className="mt-0.5 block break-all text-xs font-normal text-slate-500">{person.email ?? 'Sem e-mail cadastrado'}</span>}
     </th>
     <td className="px-4 py-2.5">{closed ? <span className="inline-block py-1.5 tabular-nums">{formatDate(day)}</span>

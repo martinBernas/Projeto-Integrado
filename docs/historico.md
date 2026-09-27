@@ -72,3 +72,8 @@ Revisão S4-03 pelo esboço: proposta inicial rejeitada; abas compactas conectad
 
 27/09/2026 — Confirmação final de ordenação das pontuações dentro do dia e conclusão da preparação histórica. S4-02 e S4-03 homologadas pelo Dono do produto; escopo principal da Sprint 4 aceito. S4-04/S4-05 continuam adicionais remanejáveis. Estados anteriores de homologação pendente substituídos por este aceite.
 27/09/2026 — Remoção pontual de “Teste edicao” confirmada pela listagem retornada pelo Dono do produto após execução do SQL: permanecem Aztecas e GeoGuaras, ambos abertos. Evidência e limites registrados na Sprint 4.
+
+## Evolução S4-04/S4-05 — 27/09/2026
+
+27/09/2026 — Dono do produto autorizou S4-04/S4-05 após homologação do escopo principal. Implementados localmente nome público único, confirmação de legado, edição própria, link GeoGuessr e auditoria; 36 testes, lint e build aprovados. Prévia fictícia inspecionada. Execução remota e aceite pendentes.
+27/09/2026 — Migração S4-04/S4-05 aplicada pelo Dono do produto antes da comparação prévia planejada. Comparador específico posterior retornou zero diferenças nos campos antigos e checksum igual à referência. Publicação do código e homologação ainda pendentes.

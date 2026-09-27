@@ -1,4 +1,4 @@
-export type Participant = { id: string; name: string; eligible_from: string };
+export type Participant = { id: string; name: string; geoguessr_url?: string | null; eligible_from: string };
 export type DayResult = {
   player_id: string; played_on: string; raw_score: number | null; applied_score: number;
   result_kind: 'score' | 'absence' | 'pending'; provisional: boolean;

@@ -136,3 +136,9 @@ Revisão visual S4-03: teste adicional em `ranking.test.mjs` verifica ordem diá
 ## Aceite remoto S4-02/S4-03 — 27/09/2026
 
 Dono do produto confirmou todos os cenários funcionais acordados: abas e persistência da seleção, ranking preservado visualmente, ordenação diária decrescente, persistência de elegibilidade, ciclo de inclusão/remoção com concessão/revogação de acesso, restrição de edição por conta não organizadora e conclusão histórica. Homologação funcional concluída por relato do usuário. Não implica teste remoto direto de RPCs ou nova comparação numérica após o último ensaio; evidências e limites em [Sprint 4](sprints/sprint-4.md).
+
+## Evolução S4-04/S4-05 — 27/09/2026
+
+S4-04/S4-05: `public-profiles.test.mjs` cobre CT26–CT34 em banco local, incluindo cópia privada do backup, rollback de colisões, nomes/URLs inválidos, permissões e preservação de dados. `profile-actions.test.mjs` cobre sessão, validação, edição sem ID fornecido pelo cliente e feedback de nome ocupado no cadastro. Duas tentativas são enfileiradas pelo PGlite; ensaio PostgreSQL multiconexão e abertura de link real continuam remotos. Suíte completa: 36 aprovados, zero pulados, em 27/09/2026. Prévia local não substitui os passos de homologação da Sprint 4.
+
+Complemento S4-04/S4-05: dois testes adicionais aprovados para renderização segura de links e comparação do backup excluindo apenas colunas novas; a comparação continua detectando alteração de nome sem modificar a referência. Total de 38 casos no conjunto, 36 na execução completa anterior e dois adicionais verificados na execução direcionada.

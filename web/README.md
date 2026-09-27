@@ -72,3 +72,9 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Perfil público — S4-04/S4-05
+
+Implementação local em `/dashboard/profile`, com nome obrigatório também no cadastro. Antes de publicar: executar `supabase/operations/20260927-profile-preflight.sql`, resolver colisões se houver e aplicar uma vez `supabase/migrations/202609270001_public_profiles.sql` após S4-03. Conferir campos antigos com `supabase/operations/20260927-profile-verify.sql` (não reescreve o backup; exclui apenas as duas colunas novas).
+
+Coordenar migração/publicação: cadastro antigo sem nome será rejeitado após a migração e contas existentes serão identificadas de forma neutra até confirmar o nome. Não aplicar sem preparar o novo código para publicação. Roteiro e evidências em [Sprint 4](../docs/sprints/sprint-4.md); escolhas técnicas na [ADR-002](../docs/decisoes/adr-002-perfil-publico.md). Nenhuma execução remota desta migração foi confirmada.

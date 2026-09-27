@@ -11,9 +11,10 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   if (!isSupabaseConfigured) return <main className="mx-auto min-h-screen max-w-2xl px-6 py-20"><h1 className="text-3xl font-bold">Serviço em preparação</h1><p className="mt-4 text-slate-600">O acesso às pontuações estará disponível em breve.</p><Link className="mt-6 inline-block font-semibold text-emerald-700" href="/">Voltar ao início</Link></main>;
   const supabase = await createClient(); const { data: { user } } = await supabase.auth.getUser(); if (!user) redirect("/auth/login");
   const requested = (await searchParams).tournament;
-  const [{ data: tournaments, error: listError }, { data: history, error: historyError }] = await Promise.all([
+  const [{ data: tournaments, error: listError }, { data: history, error: historyError }, { data: profile }] = await Promise.all([
     supabase.from('tournaments').select('id, name, starts_at, ends_at, closed_at, organizer_id').order('starts_at', { ascending: false }).order('id'),
     supabase.from('personal_scores').select('id, played_on, score, source').eq('player_id', user.id).order('played_on', { ascending: false }).limit(100),
+    supabase.from('profiles').select('public_name_confirmed').eq('id',user.id).maybeSingle(),
   ]);
   const selected = requested === undefined ? tournaments?.find(t => !t.closed_at) ?? tournaments?.[0] : tournaments?.find(t => t.id === requested);
   const { data, error } = selected ? await supabase.rpc('get_tournament_dashboard', { target: selected.id }) : { data: null, error: null };
@@ -26,8 +27,9 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
     <div className="mx-auto max-w-6xl space-y-8">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div><Link href="/" className="text-sm font-bold tracking-wide text-emerald-800">GEOGUARAS</Link><h1 className="mt-2 text-3xl font-bold tracking-tight">Seu painel</h1><p className="mt-1 break-all text-sm text-slate-600">{user.email}</p></div>
-        <div className="flex flex-wrap items-center gap-4"><Link href="/dashboard/tournaments" className="font-semibold text-emerald-800">Administrar torneios</Link><form action={signOut}><button className="rounded-lg border border-slate-300 bg-white px-4 py-2 font-semibold">Sair</button></form></div>
+        <div className="flex flex-wrap items-center gap-4"><Link href="/dashboard/profile" className="font-semibold text-emerald-800">Meu perfil</Link><Link href="/dashboard/tournaments" className="font-semibold text-emerald-800">Administrar torneios</Link><form action={signOut}><button className="rounded-lg border border-slate-300 bg-white px-4 py-2 font-semibold">Sair</button></form></div>
       </header>
+      {profile && !profile.public_name_confirmed && <aside className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm">Confirme seu nome público para ser identificado nos torneios. <Link href="/dashboard/profile" className="font-semibold underline">Completar meu perfil</Link></aside>}
       <section className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7" aria-labelledby="entry-title">
         <h2 id="entry-title" className="mb-4 text-xl font-bold">Resultado de hoje</h2>
         <ScoreForm today={today} current={ownToday} />

@@ -1,6 +1,6 @@
 # Diagrama de classes inicial
 
-O primeiro diagrama preserva o modelo conceitual da descoberta. O diagrama ao final descreve os principais campos e vínculos efetivamente implementados até S4-02.
+O primeiro diagrama preserva o modelo conceitual da descoberta. O diagrama ao final descreve os principais campos e vínculos efetivamente implementados localmente até S4-05.
 
 ```mermaid
 classDiagram
@@ -54,13 +54,15 @@ classDiagram
 
 `PontuacaoPessoal` não pertence a um torneio. `ResultadoTorneio` registra como uma pontuação pessoal foi calculada dentro de determinado torneio, preservando o resultado quando a configuração mudar.
 
-## Modelo implementado até S4-02
+## Modelo implementado localmente até S4-05
 
 ```mermaid
 classDiagram
   class Perfil {
     +uuid id
     +text display_name
+    +boolean public_name_confirmed
+    +text geoguessr_url nullable
   }
   class TorneioAtual {
     +uuid id

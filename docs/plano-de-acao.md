@@ -103,3 +103,7 @@ A documentação deve permitir que outro integrante compreenda as entidades do s
 ## Situação S4-02/S4-03 — 27/09/2026
 
 S4-01, S4-02 e S4-03 aceitas funcionalmente pelo Dono do produto em 27/09/2026: escopo principal da Sprint 4 concluído. S4-04/S4-05 permanecem adicionais remanejáveis; sua execução ou transferência de sprint ainda deve ser definida. Ver [Sprint 4](sprints/sprint-4.md).
+
+## Evolução S4-04/S4-05 — 27/09/2026
+
+S4-04/S4-05 autorizadas em 27/09/2026 e implementadas localmente, em continuidade ao escopo principal já aceito. Próximas etapas: revisão visual, preflight de colisões, migração coordenada com publicação e homologação de perfil. Não remanejadas nesta decisão.

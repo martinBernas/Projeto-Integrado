@@ -27,7 +27,7 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
     '@/lib/supabase/server': { createClient: async () => ({
       auth: { getUser: async () => ({ data: { user: { id: 'user', email: 'test@example.test' } } }) },
       from: table => {
-        const query = { select: () => query, eq: () => query, order: () => query, limit: () => query,
+        const query = { select: () => query, eq: () => query, order: () => query, limit: () => query, maybeSingle: () => query,
           then: resolve => resolve({ data: table === 'tournaments' ? rows : [], error: table === 'tournaments' ? listError : null }) };
         return query;
       },

@@ -1,10 +1,10 @@
 # Sprint 4 — Torneios e participantes
 
-Iniciada em 26/09/2026. Escopo principal: S4-01, S4-02 e S4-03. Nome público (S4-04) e perfil GeoGuessr (S4-05) são adicionais remanejáveis. Datas de entrega e capacidade ainda não estimadas.
+Iniciada em 26/09/2026. Escopo principal: S4-01, S4-02 e S4-03. Nome público (S4-04) e perfil GeoGuessr (S4-05), inicialmente adicionais remanejáveis, tiveram implementação autorizada em 27/09 após o aceite do escopo principal. Datas de entrega e capacidade ainda não estimadas.
 
 ## Situação atual — 27/09/2026
 
-S4-01, S4-02 e S4-03 com aceite funcional concluído pelo Dono do produto. Migrações confirmadas e aplicação publicada validada pelo usuário; código S4-03 no commit `5bb6a3dc333cd45a306916ef8af91112a7469058`. Interface final aprovada, navegação e seleção persistente, data de participação, inclusão/remoção, restrições de acesso/edição, conclusão histórica e ordenação diária validadas. O escopo principal da Sprint 4 está aceito; S4-04/S4-05 seguem adicionais remanejáveis, sem aceite ou implementação presumidos. Registros anteriores de pendências ficam preservados como histórico e são substituídos pelas confirmações posteriores. A última comparação fornecida após a migração S4-03 teve zero diferenças; não houve nova comparação após o último ciclo de homologação.
+S4-01, S4-02 e S4-03 com aceite funcional concluído pelo Dono do produto. Migrações confirmadas e aplicação publicada validada pelo usuário; código S4-03 no commit `5bb6a3dc333cd45a306916ef8af91112a7469058`. Interface final aprovada, navegação e seleção persistente, data de participação, inclusão/remoção, restrições de acesso/edição, conclusão histórica e ordenação diária validadas. O escopo principal da Sprint 4 está aceito; S4-04/S4-05 foram autorizadas em 27/09 e estão implementadas localmente, com migração/publicação/homologação ainda pendentes. Registros anteriores de pendências ficam preservados como histórico e são substituídos pelas confirmações posteriores. A última comparação fornecida após a migração S4-03 teve zero diferenças; não houve nova comparação após o último ciclo de homologação.
 
 ## S4-03 — Listar e acessar múltiplos torneios
 
@@ -183,3 +183,54 @@ Dono do produto solicitou excluir somente “Teste edicao” e confirmou o ID `d
 ### Retorno da remoção de “Teste edicao” — 27/09/2026
 
 Após executar o SQL orientado, o Dono do produto forneceu a listagem contendo apenas “Aztecas - Setembro 2026” (`1e7e0238-fd89-49f2-bb2b-4efb99f6db44`) e “GeoGuaras — Setembro 2026” (`20260900-0000-4000-8000-000000000001`), ambos de 01 a 30/09/2026 e sem encerramento. A ausência do ID de “Teste edicao” confirma a remoção na listagem retornada. Execução realizada pelo Dono do produto; não pelo agente. O retorno não constitui nova comparação de pontuações pessoais ou backup, nem confirmação de atualização visual das abas. A pendência anterior de execução desta operação fica resolvida.
+
+## S4-04 e S4-05 — Perfil público e GeoGuessr
+
+Em 27/09/2026, após confirmar a remoção correta de “Teste edicao” e informar o push da homologação (commit local observado `1d69c1f`), o Dono do produto solicitou executar os requisitos restantes na capacidade disponível da sprint. Implementação local concluída; nenhuma migração, publicação ou edição remota de perfil realizada pelo agente.
+
+### Comportamento e decisões
+
+- “Meu perfil”, acessível pelo painel, edita nome público global e URL opcional. Campo vazio remove a URL. Mensagens indicam nome ocupado, dados inválidos ou sessão expirada. Salvar revalida as páginas do painel.
+- Cadastro exige nome explícito; não deriva nome do e-mail. O banco garante unicidade com índice, inclusive quando duas tentativas disputam o mesmo nome. Feedback após erro de cadastro reconsulta disponibilidade sem exibir erro interno de Auth.
+- Nome de 1 a 80 caracteres, trim ASCII e normalização NFC; sem @/controles, comparação sem distinção de caixa. Acentos e espaços internos distinguem nomes. Colisões preexistentes impedem a migração, sem alterar identidades. A grafia escolhida aparece em todos os torneios.
+- Contas existentes confirmam/substituem o nome no formulário. Até salvar, RPCs exibem identificação neutra “Jogador ” + prefixo do UUID, sem e-mail como alternativa. Nomes legados são preservados e reservados até alteração. Aviso no painel encaminha ao formulário. A seleção administrativa por nome/e-mail mantém a exceção já autorizada da S4-02, mas não expõe URL de candidatos sem vínculo.
+- Links GeoGuessr aparecem junto ao jogador no ranking, resultados diários e lista administrativa de participantes. URL restrita a HTTPS e host oficial exato, caminho `/user/<id>`; não consulta o serviço externo, não importa resultados nem comprova titularidade. Abrir em nova aba preserva isolamento com `noopener noreferrer`. Conferir formato com link real durante homologação.
+- Políticas de escrita direta de perfis removidas; RPC só edita `auth.uid()`. Leitura direta de perfil continua restrita ao titular, e os dados de competidores são entregues apenas pelo torneio autorizado. Alterações registradas em auditoria privada. Inclusão administrativa antiga não sobrescreve nome do titular.
+
+Decisões e consequências em [ADR-002](../decisoes/adr-002-perfil-publico.md). UUID, pontuações e vínculos são preservados. Atualizar nome muda a identificação exibida também em torneios encerrados, sem alterar os totais; desempates visuais por nome podem mudar de ordem.
+
+### Verificação local
+
+`pnpm test`: 36 testes aprovados, sem falhas ou testes pulados, incluindo cópia privada do backup real. `pnpm lint` e `pnpm build` aprovados. Testes de banco cobrem rejeição de colisões legadas com rollback, nomes/URLs inválidos, cadastro sem nome, duas tentativas concorrentes na fila do PGlite, unicidade, edição do próprio nome, remoção da URL, escrita direta bloqueada, isolamento de leitura, auditoria e não sobrescrita pela inclusão administrativa antiga. PGlite serializa as chamadas; não equivale a ensaio remoto com múltiplas conexões PostgreSQL. A garantia concorrente é o índice único do banco.
+
+A comparação da cópia privada confirma preservação de nomes existentes, UUIDs, vínculos, pontuações, resultados e cálculo. Novos campos de perfil são excluídos dessa comparação de campos antigos; seus defaults são testados separadamente. Nenhum conteúdo privado do backup foi adicionado ao Git.
+
+Prévia local em `http://127.0.0.1:3104/dashboard/profile`, componentes reais com dados fictícios, CSS do build e gravações desativadas. Tela inspecionada no navegador; não representa aceite do Dono do produto nem teste real de Auth. Script temporário em `web/out/preview-profile.mjs`, ignorado pelo Git.
+
+### Migração, publicação e homologação pendentes
+
+1. Antes de publicar, executar `web/supabase/operations/20260927-profile-preflight.sql` no SQL Editor. A consulta de colisões deve retornar zero linhas; se houver, acordar a resolução antes de prosseguir. Não renomear automaticamente. Comparar também a referência com `02-verify.sql` e explicar diferenças legítimas desde o backup original.
+2. Preservar o backup privado original. Aplicar somente `202609270001_public_profiles.sql`, uma vez, depois da S4-03. A migração não altera campos antigos de perfis nem dados de jogo; acrescenta dois campos e objetos de validação/auditoria.
+3. Executar `web/supabase/operations/20260927-profile-verify.sql` antes de editar perfis. Compara campos antigos, excluindo apenas `public_name_confirmed` e `geoguessr_url`; não altera a captura original. O comparador anterior, sem essa projeção, mostrará diferenças pela adição das colunas. Registrar evidências sem dados pessoais.
+4. Publicar o novo código logo após a migração, pois o cadastro antigo sem nome ficará bloqueado. Comunicar que os nomes existentes passam a neutros até confirmação pelo titular. Não tratar migração aplicada como deployment concluído.
+5. Homologar cadastro com nome novo, nome repetido/caixa/espaços, duas tentativas disputando o mesmo nome; confirmar/alterar nome de conta existente e verificar em outro torneio sem mudança nos totais. Testar manter o próprio nome ao mudar somente URL.
+6. Incluir, editar e remover link real do GeoGuessr; verificar abertura por conta participante/organizadora e ausência de acesso por conta sem torneio comum. Testar URL inválida e tentativa de edição de outro perfil. Conferir o link no ranking, no dia expandido e na lista de participantes.
+7. Registrar URL/commit publicados, retorno da migração e aceite. S4-04/S4-05 continuam pendentes de implantação e homologação; o aceite de S4-01/S4-02/S4-03 permanece válido.
+
+### Conferência complementar de S4-04/S4-05 — 27/09/2026
+
+Após o pedido de continuidade, acrescentados e aprovados testes de renderização de links (host/caminho permitido, nova aba protegida, rejeição de links inseguros) e do script operacional de comparação. O comparador ignora somente as duas colunas novas, detecta alteração posterior do nome e mantém intacta a captura original. São 38 testes no conjunto: suíte anterior de 36 aprovada e dois casos adicionais aprovados em execução direcionada, com regressão dos seis testes de banco de perfis. Não houve alteração de código de aplicação desde lint/build aprovados. Preflight de colisões é o próximo passo remoto; migração não aplicada, código não publicado e nenhum aceite visual presumido.
+
+### Preflight de perfis — retorno parcial em 27/09/2026
+
+O Dono do produto forneceu o resumo `existing_accounts = 14` e `names_requiring_replacement = 0` do script `20260927-profile-preflight.sql`. Isso confirma a contagem de contas e ausência de nomes sinalizados pelo critério dessa consulta; não comprova ausência de colisões de nomes normalizados. A primeira consulta do script, que agrupa duplicidades por caixa/espaços/NFC, ainda não teve seu resultado confirmado. Confirmar que retornou zero linhas antes de aplicar a migração. Nenhuma execução remota da migração de perfis foi confirmada.
+
+### Preflight de perfis concluído — 27/09/2026
+
+O Dono do produto confirmou “Success. No rows returned” ao executar separadamente a primeira consulta de `20260927-profile-preflight.sql`. Nenhuma colisão de nomes normalizados foi encontrada. Com o resumo anterior (14 contas, zero nomes sinalizados para substituição), o preflight está concluído. O registro parcial anterior fica substituído por esta confirmação. Próxima etapa: comparar a referência antes da migração, aplicar `202609270001_public_profiles.sql` uma vez e usar o comparador específico de perfis depois; não reaplicar migrações anteriores. Migração de perfis e publicação ainda não confirmadas.
+
+### Migração de perfis e comparação posterior — 27/09/2026
+
+O Dono do produto esclareceu que executou primeiro a migração `202609270001_public_profiles.sql`, cujo retorno foi “Success. No rows returned”. A comparação imediatamente anterior prevista no roteiro não foi realizada nesta etapa; não presumir essa evidência. Após a orientação, forneceu o retorno de `20260927-profile-verify.sql`: backup `before-s4-02-september-v1`, captura `2026-09-26 13:56:45.612398+00`, referência `2026-09-26`, zero diferenças, detalhes vazios e checksums iguais a `3d847140e955fd6feaaffab3b252dbe8`. Isso confirma preservação dos campos antigos abrangidos pela referência após a migração; o comparador exclui somente `public_name_confirmed` e `geoguessr_url`. Não equivale a validar os valores novos nem a homologar a interface.
+
+Migração de perfis aplicada pelo Dono do produto; não reaplicar. Registros anteriores de execução pendente ficam substituídos por esta confirmação. Código novo ainda precisa de commit/push e deployment; homologação S4-04/S4-05 permanece pendente.

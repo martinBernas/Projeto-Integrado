@@ -1,6 +1,6 @@
 # Perfil público — Sprint 4
 
-Solicitação do Dono do produto em 21/09/2026. Planejamento de RF17–RF18, ainda não implementado; Sprint 3 permanece encerrada.
+Solicitação do Dono do produto em 21/09/2026. RF17–RF18 implementados localmente em 27/09/2026; migração/publicação/homologação pendentes; Sprint 3 permanece encerrada.
 
 ## Escopo
 
@@ -27,3 +27,9 @@ Garantir unicidade no banco, inclusive sob requisições simultâneas; a consult
 O banco já possui profiles.display_name, e o cadastro usa como alternativa a parte do e-mail anterior a @. O formulário não oferece escolha de nome. O ranking usa o nome do perfil; o e-mail no cabeçalho identifica a própria sessão. A função administrativa de vínculo atualmente pode alterar o nome. Ajustar esses caminhos, adicionar a URL e revisar permissões.
 
 Prioridade revista pelo Dono do produto em 26/09/2026: S4-01 (torneios), S4-02 (participantes) e S4-03 (navegação entre múltiplos torneios) formam o escopo principal da Sprint 4. S4-04 (nome público/edição) e S4-05 (URL/perfil externo) são entregas adicionais, conforme a capacidade restante, e podem ser remanejadas para uma sprint posterior, a definir, se não forem concluídas. Estimar migração, formulário, permissões e testes antes de assumir essas entregas. Esta decisão substitui a orientação anterior de adiar S4-03 para priorizar perfis; os requisitos de perfil permanecem válidos.
+
+## Implementação local — 27/09/2026
+
+Adicionais autorizados pelo Dono do produto após homologação de S4-02/S4-03. Formulário `/dashboard/profile`, nome obrigatório no cadastro, confirmação de nomes legados, unicidade no banco e URL opcional em participantes/rankings/resultados. Normalização NFC, trim ASCII e comparação por lower; acentos e espaços internos significativos. Colisões legadas abortam a migração. Edição direta bloqueada; RPC só altera o titular, com auditoria. A antiga inclusão administrativa deixa de alterar nomes.
+
+O levantamento de base e os critérios propostos acima representam o planejamento anterior. As decisões implementadas e limitações estão na [ADR-002](decisoes/adr-002-perfil-publico.md); procedimento de verificação, implantação e homologação na [Sprint 4](sprints/sprint-4.md). Nenhuma publicação desta entrega foi confirmada.

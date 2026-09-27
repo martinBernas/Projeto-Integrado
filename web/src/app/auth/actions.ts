@@ -3,6 +3,8 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
+import { cleanPublicName, validPublicName, nameHelp } from "@/lib/profile";
+
 export type AuthState = { error?: string; message?: string };
 
 export async function requestPasswordReset(_: AuthState, formData: FormData): Promise<AuthState> {
@@ -37,9 +39,19 @@ export async function signIn(_: AuthState, formData: FormData): Promise<AuthStat
 }
 
 export async function signUp(_: AuthState, formData: FormData): Promise<AuthState> {
+  const name = cleanPublicName(String(formData.get('public_name') ?? ''));
+  if (!validPublicName(name)) return { error: nameHelp };
   const supabase = await createClient();
-  const { error } = await supabase.auth.signUp({ email: String(formData.get("email") ?? "").trim(), password: String(formData.get("password") ?? ""), options: { emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/auth/callback` } });
-  if (error) return { error: error.message };
+  const availability = await supabase.rpc('is_public_name_available', { public_name: name });
+  if (availability.error) return { error: 'Não foi possível verificar o nome agora. Tente novamente.' };
+  if (!availability.data) return { error: 'Este nome público já está em uso. Escolha outro.' };
+  const { error } = await supabase.auth.signUp({ email: String(formData.get("email") ?? "").trim(), password: String(formData.get("password") ?? ""), options: { data: { display_name: name }, emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/auth/callback` } });
+  if (error) {
+    // Auth may hide the trigger's unique-constraint error: recheck availability
+    // to provide a useful message even if another signup won the race.
+    const latest = await supabase.rpc('is_public_name_available', { public_name: name });
+    return { error: !latest.error && latest.data === false ? 'Este nome público já está em uso. Escolha outro.' : 'Não foi possível criar a conta. Verifique os dados e tente novamente.' };
+  }
   return { message: "Conta criada. Confira seu e-mail para confirmar o acesso." };
 }
 

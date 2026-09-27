@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
+import * as profile from '../src/lib/profile.ts';
 import ts from 'typescript';
 
 async function load(relative, dependencies, env = {}) {
@@ -9,6 +10,7 @@ async function load(relative, dependencies, env = {}) {
   const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } });
   const exports = {};
   vm.runInNewContext(outputText, { exports, require: (name) => {
+    if (name === '@/lib/profile') return profile;
     assert.ok(name in dependencies, `Unexpected dependency: ${name}`);
     return dependencies[name];
   }, process: { env } });

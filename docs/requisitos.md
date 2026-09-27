@@ -95,3 +95,7 @@ RF19 — requisito futuro, sem sprint definida: gerar relatório do torneio ence
 ## Situação S4-02/S4-03 — 27/09/2026
 
 RF10 — S4-03 publicada e aceita funcionalmente pelo Dono do produto em 27/09/2026: abas de torneios acessíveis, seleção persistida na URL, resultados próprios e ordenação diária decrescente. S4-02 também aceita após confirmação de persistência da data, ciclo de inclusão/remoção, restrições de acesso/edição e conclusão histórica. Ver [Sprint 4](sprints/sprint-4.md).
+
+## Evolução S4-04/S4-05 — 27/09/2026
+
+RF17/RF18 implementados localmente após autorização para aproveitar a capacidade restante da Sprint 4: nome público único, confirmação/edição pelo titular, link GeoGuessr opcional e exposição restrita ao torneio. Migração, publicação e homologação pendentes; critérios técnicos na ADR-002 e roteiro na Sprint 4.
