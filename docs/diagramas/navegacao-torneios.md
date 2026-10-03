@@ -38,3 +38,4 @@ sequenceDiagram
 ```
 
 Conteúdos completos continuam transferidos; limite apenas de apresentação. Implementação local, publicação/homologação adicional pendentes.
+Histórico pessoal: servidor consulta até 100 lançamentos próprios em ordem decrescente, com RLS; outra instância de RecentResults apresenta cinco inicialmente e expande/reduz os registros carregados. Estado independente da instância do torneio; dias fora do calendário continuam visíveis.

@@ -169,4 +169,6 @@ Registrar executor, ambiente, versão publicada, cenários, resultados e aceite 
 
 ## Acréscimo S5-04 — resultados recentes
 
-Implementado localmente em 03/10/2026. Não requer SQL, migração ou novo backup. Após disponibilização da versão, conferir um torneio com mais de cinco dias: cinco datas mais recentes inicialmente, Ver todos apresenta todas, Mostrar menos retorna a cinco; ranking acumulado permanece completo. Trocar de torneio reinicia a lista reduzida. Conferir também torneio com até cinco dias (sem botão), ausência de resultados e apresentação em celular. Publicação e homologação deste acréscimo ainda não confirmadas. Validação local: 64 testes, lint e build aprovados.
+Implementado localmente em 03/10/2026. Não requer SQL, migração ou novo backup. Após disponibilização da versão, conferir um torneio com mais de cinco dias: cinco datas mais recentes inicialmente, Ver todos apresenta todas, Mostrar menos retorna a cinco; ranking acumulado permanece completo. Trocar de torneio reinicia a lista reduzida. Conferir também torneio com até cinco dias (sem botão), ausência de resultados e apresentação em celular. Publicação e homologação deste acréscimo ainda não confirmadas. Validação local: 65 testes, lint e build aprovados.
+
+S5-04 inclui também o histórico pessoal: conferir cinco lançamentos iniciais, expansão/redução dos até 100 carregados, estados vazio/curto e dias sem torneio elegível. Os controles pessoal e do torneio são independentes. Acesso a lançamentos anteriores ao limite de 100 continua no backlog.

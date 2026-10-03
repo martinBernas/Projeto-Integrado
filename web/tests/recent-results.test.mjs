@@ -48,3 +48,15 @@ test('tournament keeps full ranking, orders recent dates and keys expansion by s
  assert.doesNotMatch(html,/>01\/10\/2026 </);assert.match(html,/>08\/10\/2026 </);
  assert.equal(TournamentView({data:{...data,tournament:{...data.tournament,id:'second'}},userId:'a'}).props.children.at(-1).key,'second');
 });
+
+test('personal history has independent presentation, counts entries and expands the loaded history',async()=>{
+ const {RecentResults}=await harness();const list=items(9);
+ let tree=RecentResults({items:list,personal:true});let html=renderToStaticMarkup(tree);
+ assert.match(html,/Meu histórico pessoal/);assert.match(html,/Mostrando 5 de 9 lançamentos/);
+ assert.match(html,/Até 100 lançamentos/);assert.doesNotMatch(html,/result-8/);
+ tree.props.children.at(-1).props.onClick();html=renderToStaticMarkup(RecentResults({items:list,personal:true}));
+ assert.match(html,/Mostrando 9 de 9 lançamentos/);assert.match(html,/result-8/);assert.match(html,/Mostrar menos/);
+ tree.props.children.at(-1).props.onClick();assert.match(renderToStaticMarkup(RecentResults({items:list,personal:true})),/Mostrando 5 de 9 lançamentos/);
+ const {RecentResults:empty}=await harness();assert.match(renderToStaticMarkup(empty({items:[],personal:true})),/Seu primeiro lançamento aparecerá aqui/);
+ for(const count of [1,5])assert.doesNotMatch(renderToStaticMarkup(empty({items:items(count),personal:true})),/<button/);
+});

@@ -1,6 +1,6 @@
 # Histórico da documentação
 
-03/10/2026 — Dono do produto aprovou S5-04 (recorte de FB05): cinco dias recentes com Ver todos/Mostrar menos e ranking completo. Implementação local e requisitos/arquitetura/testes atualizados; sem migração de banco. Histórico pessoal/lista de torneios e FB06 permanecem no backlog futuro. Publicação e homologação do acréscimo ainda não confirmadas.
+03/10/2026 — Dono do produto aprovou S5-04 (recorte de FB05): cinco dias recentes com Ver todos/Mostrar menos e ranking completo. Implementação local e requisitos/arquitetura/testes atualizados; sem migração de banco. Histórico pessoal incluído com cinco lançamentos recentes e expansão dos até 100 registros carregados. Lista de torneios, acesso a registros anteriores ao limite e FB06 permanecem no backlog futuro. Publicação e homologação do acréscimo ainda não confirmadas.
 
 03/10/2026 — Revisão final de consistência da arquitetura S5: ADR-003 histórico, ADR-004 vigente, diagramas de regra única, classes e navegação atualizados com evidências remotas e retirada do teste. Pendências antigas separadas da situação atual; aceite global ainda não confirmado.
 

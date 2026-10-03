@@ -52,4 +52,4 @@ Sprint 5 iniciada em 03/10/2026 por autorização do Dono do produto. S5-01–S5
 Sprint 4 encerrada em 27/09/2026, com S4-01 a S4-05 homologadas e carga complementar dos perfis confirmada. Consulte o [registro consolidado de encerramento](sprints/sprint-4.md) para evidências, limites e escopo futuro.
 
 
-Acréscimo S5-04 aprovado após homologação do núcleo: resultados diários limitados a cinco dias com expansão/redução, mantendo ranking completo. Implementação local, publicação/homologação adicionais pendentes; ver seção 10 da Sprint 5.
+Acréscimo S5-04 aprovado após homologação do núcleo: resultados diários e histórico pessoal exibem cinco itens recentes com expansão/redução independente, mantendo ranking completo e limite atual de 100 lançamentos pessoais consultados. Implementação local, publicação/homologação adicionais pendentes; ver seção 10 da Sprint 5.

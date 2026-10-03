@@ -162,4 +162,6 @@ S4-04/S4-05: `public-profiles.test.mjs` cobre CT26–CT34 em banco local, inclui
 Complemento S4-04/S4-05: dois testes adicionais aprovados para renderização segura de links e comparação do backup excluindo apenas colunas novas; a comparação continua detectando alteração de nome sem modificar a referência. Total de 38 casos no conjunto, 36 na execução completa anterior e dois adicionais verificados na execução direcionada.
 
 
-S5-04: lista vazia/curta/limite, expansão integral e redução com controle acessível, ordenação das datas, ranking de todos os resultados e chave por torneio cobertos em recent-results.test.mjs. Teste de visualização de regras ajustado para a fronteira de cliente. Validação final: 64 testes aprovados, sem falhas ou cenários ignorados; lint e build de produção aprovados em 03/10/2026. Homologação remota adicional pendente.
+S5-04: lista vazia/curta/limite, expansão integral e redução com controle acessível, ordenação das datas, ranking de todos os resultados e chave por torneio cobertos em recent-results.test.mjs. Teste de visualização de regras ajustado para a fronteira de cliente. Validação final: 65 testes aprovados, sem falhas ou cenários ignorados; lint e build de produção aprovados em 03/10/2026. Homologação remota adicional pendente.
+
+S5-04 — histórico pessoal incluído: teste de lista vazia/até cinco, contagem de lançamentos, expansão/redução e informação do limite existente de 100 registros. Teste de navegação do painel carrega também o componente real de expansão. Homologação remota deste alcance ainda pendente.

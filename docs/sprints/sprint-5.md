@@ -207,7 +207,7 @@ Todas as exportações foram conferidas integralmente, com `md5(snapshot::jsonb:
 
 ## 10. Acréscimo aprovado — S5-04: resultados recentes e expansão
 
-Após homologação e conferências do núcleo, Dono do produto informou margem de 33% no primeiro intervalo de cinco horas e propôs um requisito adicional. Selecionou explicitamente resultados recentes e expansão, antecipando o recorte de resultados diários de FB05, antes candidato à Sprint 7. Cota informada não é estimativa de esforço nem medição independente.
+Após homologação e conferências do núcleo, Dono do produto informou margem de 33% no primeiro intervalo de cinco horas e propôs um requisito adicional. Selecionou explicitamente resultados recentes e expansão, incluindo resultados diários e histórico pessoal de FB05, antes candidato à Sprint 7. Cota informada não é estimativa de esforço nem medição independente.
 
 Escopo aprovado e implementado localmente:
 
@@ -215,11 +215,11 @@ Escopo aprovado e implementado localmente:
 - “Ver todos” mostra todos os dias disponíveis e muda para “Mostrar menos”, retornando aos cinco recentes. Até cinco dias não há botão; lista vazia mantém explicação.
 - Ranking acumulado usa todos os resultados elegíveis, mesmo quando dias não estão na apresentação reduzida. Ordenação, snapshots e detalhes diários preservados.
 - Nova seleção de torneio começa reduzida, assim como recarga. Controle por teclado, foco visível, `aria-expanded`, `aria-controls` e anúncio da contagem.
-- Histórico pessoal, lista de torneios e FB06 permanecem fora desse recorte.
+- Histórico pessoal também exibe cinco lançamentos recentes, com expansão/redução independente. A consulta mantém o limite existente de 100 lançamentos; Ver todos mostra os registros carregados, inclusive dias sem torneio elegível. Lista de torneios e FB06 permanecem fora desse recorte.
 
 Escolha técnica: `RecentResults` é componente de cliente com estado de apresentação. `TournamentView` monta ranking e detalhes no servidor e fornece os conteúdos diários; chave pelo ID do torneio separa a expansão entre seleções. Sem cache privado, consulta adicional ou alteração de autorização. Dados completos continuam consultados/transferidos: não é paginação nem prova de redução da latência de troca.
 
-Sem migração SQL, backup novo ou novas gravações de negócio. Arquitetura/navegação/requisitos e backlog atualizados. Validação: 64 testes aprovados, sem falhas ou cenários ignorados; lint e build de produção aprovados em 03/10/2026.
+Sem migração SQL, backup novo ou novas gravações de negócio. Arquitetura/navegação/requisitos e backlog atualizados. Validação: 65 testes aprovados, sem falhas ou cenários ignorados; lint e build de produção aprovados em 03/10/2026.
 
 Homologação adicional após disponibilizar a versão:
 
@@ -227,7 +227,8 @@ Homologação adicional após disponibilizar a versão:
 2. Expandir/reduzir: acesso aos dias antigos e retorno aos recentes, ranking inalterado.
 3. Trocar de torneio após expandir e recarregar: apresentação reduzida.
 4. Até cinco dias: sem botão; lista vazia: explicação.
-5. Conferir celular/teclado e detalhes diários.
+5. No histórico pessoal, conferir cinco lançamentos recentes, expandir/reduzir sem alterar a expansão do torneio e incluir dias sem torneio elegível. Validar vazio/até cinco e a informação do limite de 100.
+6. Conferir celular/teclado e detalhes diários.
 
 Publicação/homologação remotas de S5-04 ainda não confirmadas. Cenários do núcleo já aprovados permanecem como evidência; sem reabertura automática.
 

@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { formatDate, formatScore, type TournamentData } from '@/lib/tournament';
 import { ScoreForm } from './score-form';
 import { TournamentView } from './tournament-view';
+import { RecentResults } from './recent-results';
 import { ruleForDate } from '@/lib/rules';
 
 export default async function DashboardPage({ searchParams }: { searchParams: Promise<{ tournament?: string | string[] }> }) {
@@ -51,9 +52,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         : <TournamentView data={tournament} userId={user.id} />}
         </div>
       </section>
-      <section className="rounded-2xl border border-slate-200 bg-white p-6"><h2 className="text-xl font-bold">Meu histórico pessoal</h2><p className="mt-1 text-sm text-slate-600">Até 100 lançamentos recentes, incluindo dias que não contam no torneio.</p>
-        {historyError ? <p role="alert" className="mt-4 text-red-700">Não foi possível carregar seu histórico.</p> : !history?.length ? <p className="mt-4 text-slate-600">Seu primeiro lançamento aparecerá aqui.</p> : <ul className="mt-4 divide-y divide-slate-100">{history.map(row => <li key={row.id} className="flex flex-wrap justify-between gap-2 py-3 text-sm"><span>{formatDate(row.played_on)} <span className="ml-2 text-slate-500">{row.source === 'manual_history' ? 'Carga histórica' : 'Lançamento pessoal'}</span></span><strong className="tabular-nums">{formatScore(row.score)}</strong></li>)}</ul>}
-      </section>
+      {historyError ? <section className="rounded-2xl border border-slate-200 bg-white p-6"><h2 className="text-xl font-bold">Meu histórico pessoal</h2><p role="alert" className="mt-4 text-red-700">Não foi possível carregar seu histórico.</p></section>
+        : <RecentResults key={user.id} personal items={(history ?? []).map(row => ({ day: row.played_on, content: <div className="flex flex-wrap justify-between gap-2 border-b border-slate-100 py-3 text-sm"><span>{formatDate(row.played_on)} <span className="ml-2 text-slate-500">{row.source === 'manual_history' ? 'Carga histórica' : 'Lançamento pessoal'}</span></span><strong className="tabular-nums">{formatScore(row.score)}</strong></div> }))} />}
     </div>
   </main>;
 }

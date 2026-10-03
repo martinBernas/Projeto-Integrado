@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 import ts from 'typescript';
 import * as jsx from 'react/jsx-runtime';
+import * as react from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import * as tournament from '../src/lib/tournament.ts';
 import * as rules from '../src/lib/rules.ts';
@@ -41,6 +42,11 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
       },
     }) },
   };
+  const recentSource = await readFile(new URL('../src/app/dashboard/recent-results.tsx', import.meta.url), 'utf8');
+  const recentCode = ts.transpileModule(recentSource, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
+  const recentExports = {};
+  vm.runInNewContext(recentCode, { exports: recentExports, require: name => name === 'react' ? react : jsx });
+  dependencies['./recent-results'] = recentExports;
   const source = await readFile(new URL('../src/app/dashboard/page.tsx', import.meta.url), 'utf8');
   const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } });
   const exports = {};

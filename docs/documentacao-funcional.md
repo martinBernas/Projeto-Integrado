@@ -111,4 +111,4 @@ A documentação deve permanecer no repositório Git junto com o código. Cada a
 
 
 
-Complemento aprovado S5-04 (RF07/RF10, RNF04): resultados diários exibem inicialmente cinco dias disponíveis mais recentes, com Ver todos/Mostrar menos quando excederem cinco. Ranking considera todo o período elegível; expansão não altera totais, regras ou permissões. Nova seleção de torneio começa reduzida. Histórico pessoal e lista de torneios fora desse recorte. Implementação local, publicação/homologação pendentes.
+Complemento aprovado S5-04 (RF07/RF10, RNF04): resultados diários exibem inicialmente cinco dias disponíveis mais recentes, com Ver todos/Mostrar menos quando excederem cinco. Ranking considera todo o período elegível; expansão não altera totais, regras ou permissões. Nova seleção de torneio começa reduzida. Histórico pessoal também exibe cinco lançamentos recentes com expansão/redução independente, dentro dos até 100 registros consultados. Lista de torneios fora desse recorte. Implementação local, publicação/homologação pendentes.
