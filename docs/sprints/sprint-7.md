@@ -44,3 +44,5 @@ Antes do Sprint Planning: definir alcance e limite de FB05, linha de base/meta d
 ## Situação e evidências
 
 Entrega de 03/10/2026 exclusivamente documental: feedbacks, histórias, critérios e encaixe propostos. Verificação: revisão de referências e `git diff --check`. Nenhum teste da aplicação executado, código alterado ou operação remota realizada. Implementação, publicação e homologação não realizadas; necessidade de migração ainda não definida, dependente da solução futura.
+
+03/10/2026 — S5-05 autorizada: investigar primeira abertura/troca lenta e aviso intermitente. Carregamento, nova tentativa explícita e métricas sem dados pessoais implementados localmente; causa remota não confirmada. Sem migração. Publicação, linha de base e homologação pendentes. Ver seção 11 da Sprint 5 e ADR-005.

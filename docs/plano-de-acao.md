@@ -138,3 +138,5 @@ S4-01, S4-02 e S4-03 aceitas funcionalmente pelo Dono do produto em 27/09/2026: 
 Revisão operacional posterior: carga reduzida a 12 nomes/11 links, preservando o perfil de Martin já preenchido. Primeira tentativa abortou sem gravação; reexecução confirmada pelo retorno de 12 perfis com nome confirmado e 11 URLs. Essa revisão substitui a contagem inicial abaixo.
 
 S4-04/S4-05 autorizadas, implementadas, migradas, publicadas na Vercel e homologadas pelo Dono do produto em 27/09/2026. Aceite substitui as pendências anteriores. Carga complementar revisada de 12 nomes e 11 links executada e conciliada pelo retorno SQL; conferência visual após a carga ainda não relatada, conforme Sprint 4.
+
+03/10/2026 — S5-05 autorizada: investigar primeira abertura/troca lenta e aviso intermitente. Carregamento, nova tentativa explícita e métricas sem dados pessoais implementados localmente; causa remota não confirmada. Sem migração. Publicação, linha de base e homologação pendentes. Ver seção 11 da Sprint 5 e ADR-005.

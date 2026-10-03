@@ -39,3 +39,32 @@ sequenceDiagram
 
 Conteúdos completos continuam transferidos; limite apenas de apresentação. Implementação local, publicação/homologação adicional pendentes.
 Histórico pessoal: servidor consulta até 100 lançamentos próprios em ordem decrescente, com RLS; outra instância de RecentResults apresenta cinco inicialmente e expande/reduz os registros carregados. Estado independente da instância do torneio; dias fora do calendário continuam visíveis.
+
+## S5-05 — Carregamento e recuperação
+
+```mermaid
+sequenceDiagram
+  actor Conta
+  participant Cliente as TournamentPanel / cliente
+  participant Servidor as Proxy e DashboardPage
+  participant Banco as Supabase autenticado
+  Conta->>Cliente: Selecionar torneio
+  Cliente-->>Conta: Carregando seleção solicitada; abas disponíveis
+  Note over Cliente: Ocultar resultados anteriores; sem prefetch privado
+  Cliente->>Servidor: Navegar pela URL do torneio em transição
+  Servidor->>Banco: Validar sessão e consultar dados autorizados
+  Servidor->>Banco: RPC selecionada, bloqueio e recálculo existentes
+  Note over Servidor: Registrar duração/resultado por etapa, sem dados pessoais
+  alt Dados disponíveis
+    Servidor-->>Cliente: Conteúdo autorizado da seleção
+    Cliente-->>Conta: Resultados atualizados
+  else Falha temporária ou retorno nulo
+    Servidor-->>Cliente: Erro e Tentar novamente
+    Conta->>Cliente: Tentar novamente
+    Cliente->>Servidor: Atualizar rota explicitamente
+  else Torneio sem acesso ou inexistente
+    Servidor-->>Cliente: Indisponibilidade por existência/acesso
+  end
+```
+
+loading.tsx cobre entrada no segmento; error.tsx/retry cobre exceções. Sem mudança do modelo de dados/RPC. Feedback visual e instrumentação locais; causa remota e melhora de tempo não comprovadas.

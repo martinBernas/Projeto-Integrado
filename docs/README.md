@@ -53,3 +53,5 @@ Sprint 4 encerrada em 27/09/2026, com S4-01 a S4-05 homologadas e carga compleme
 
 
 Acréscimo S5-04 aprovado após homologação do núcleo: resultados diários e histórico pessoal exibem cinco itens recentes com expansão/redução independente, mantendo ranking completo e limite atual de 100 lançamentos pessoais consultados. Implementação local, publicação/homologação adicionais pendentes; ver seção 10 da Sprint 5.
+
+03/10/2026 — S5-05 autorizada: investigar primeira abertura/troca lenta e aviso intermitente. Carregamento, nova tentativa explícita e métricas sem dados pessoais implementados localmente; causa remota não confirmada. Sem migração. Publicação, linha de base e homologação pendentes. Ver seção 11 da Sprint 5 e ADR-005.

@@ -165,3 +165,9 @@ Complemento S4-04/S4-05: dois testes adicionais aprovados para renderização se
 S5-04: lista vazia/curta/limite, expansão integral e redução com controle acessível, ordenação das datas, ranking de todos os resultados e chave por torneio cobertos em recent-results.test.mjs. Teste de visualização de regras ajustado para a fronteira de cliente. Validação final: 65 testes aprovados, sem falhas ou cenários ignorados; lint e build de produção aprovados em 03/10/2026. Homologação remota adicional pendente.
 
 S5-04 — histórico pessoal incluído: teste de lista vazia/até cinco, contagem de lançamentos, expansão/redução e informação do limite existente de 100 registros. Teste de navegação do painel carrega também o componente real de expansão. Homologação remota deste alcance ainda pendente.
+
+## S5-05 — Carregamento e diagnóstico
+
+Testes novos em dashboard-loading.test.mjs: transições simuladas com status da seleção solicitada, ocultação do ranking anterior, trocas rápidas e URLs; nova tentativa explícita, status acessível e retry() da fronteira Next; medição simulada, códigos/outcomes e exclusão de conteúdo privado; sessão do proxy, preservação dos cookies e instrumentação restrita ao painel. dashboard-navigation.test.mjs cobre RPC nula, falta de acesso e erro temporário, mantendo seleção/listas/encerrados.
+
+Validação: 69 testes aprovados, sem falhas ou cenários ignorados; lint sem avisos e build de produção aprovados em 03/10/2026. Simulação de hooks/roteador não comprova comportamento end-to-end do Next, corrida de respostas, rede lenta ou voltar/avançar real. Esses cenários e a linha de base da primeira abertura/troca estão no procedimento da Sprint 5. Sem migração ou operação remota.

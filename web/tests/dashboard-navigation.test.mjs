@@ -17,15 +17,18 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
   let listError = null;
   let rpcError = null;
   let schedule;
+  let rpcDataMissing = false;
+  let rpcAccess = true;
   const calls = [];
   const dependencies = {
     'react/jsx-runtime': jsx,
-    'next/link': { default: ({ children, ...props }) => jsx.jsx('a', { ...props, children }) },
-    'next/navigation': { redirect: () => { throw new Error('redirect'); } },
+    'next/link': { default: ({ children, ...props }) => { const attributes = { ...props }; delete attributes.onNavigate; delete attributes.prefetch; return jsx.jsx('a', { ...attributes, children }); } },
+    'next/navigation': { useRouter: () => ({ push() {}, refresh() {} }), redirect: () => { throw new Error('redirect'); } },
     '@/app/auth/actions': { signOut: () => {} },
     '@/lib/supabase/config': { isSupabaseConfigured: true },
     '@/lib/tournament': tournament,
     '@/lib/rules': rules,
+    '@/lib/dashboard-metrics': { measureDashboardQuery: async (_, query) => await query },
     './score-form': { ScoreForm: () => null },
     './tournament-view': { TournamentView: ({ data }) => jsx.jsx('p', { children: `Ranking ${data.tournament.name}` }) },
     '@/lib/supabase/server': { createClient: async () => ({
@@ -37,7 +40,7 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
       },
       rpc: async (_, { target }) => {
         calls.push(target);
-        return { error: rpcError, data: { access: true, today: '2026-09-26', tournament: rows.find(t => t.id === target), excluded_dates: [],
+        return { error: rpcError, data: rpcDataMissing ? null : { access: rpcAccess, today: '2026-09-26', tournament: rows.find(t => t.id === target), excluded_dates: [],
           ...(schedule ? { rule_versions: [{ id: 1, effective_from: '2026-08-01', effective_to: '2026-10-31', weekly_schedule: schedule, exclusions: [] }] } : {}) } };
       },
     }) },
@@ -47,6 +50,13 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
   const recentExports = {};
   vm.runInNewContext(recentCode, { exports: recentExports, require: name => name === 'react' ? react : jsx });
   dependencies['./recent-results'] = recentExports;
+  for (const name of ['tournament-panel','retry-load']) {
+    const componentSource = await readFile(new URL('../src/app/dashboard/' + name + '.tsx', import.meta.url), 'utf8');
+    const code = ts.transpileModule(componentSource, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
+    const componentExports = {};
+    vm.runInNewContext(code, { exports: componentExports, require: dependency => dependency === 'react' ? react : dependencies[dependency] });
+    dependencies['./' + name] = componentExports;
+  }
   const source = await readFile(new URL('../src/app/dashboard/page.tsx', import.meta.url), 'utf8');
   const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } });
   const exports = {};
@@ -69,7 +79,14 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
   assert.equal(calls.length, before);
   rpcError = { message: 'internal' };
   assert.match(await render({ tournament: 'open' }), /Torneio temporariamente indisponível/);
+  assert.match(await render({ tournament: 'open' }), /Tentar novamente/);
   rpcError = null;
+  rpcDataMissing = true;
+  assert.match(await render({ tournament: 'open' }), /Torneio temporariamente indisponível/);
+  rpcDataMissing = false; rpcAccess = false;
+  const denied = await render({ tournament: 'open' });
+  assert.match(denied, /Torneio indisponível/);assert.doesNotMatch(denied, /Tentar novamente/);
+  rpcAccess = true;
   rows = [];
   assert.match(await render({}), /Você ainda não participa/);
   listError = { message: 'internal' };

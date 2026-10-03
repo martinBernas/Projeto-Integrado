@@ -157,3 +157,5 @@ Revisão S4-03 pelo esboço: proposta inicial rejeitada; abas compactas conectad
 
 27/09/2026 — Dono do produto autorizou S4-04/S4-05 após homologação do escopo principal. Implementados localmente nome público único, confirmação de legado, edição própria, link GeoGuessr e auditoria; 36 testes, lint e build aprovados. Prévia fictícia inspecionada. Execução remota e aceite pendentes.
 27/09/2026 — Migração S4-04/S4-05 aplicada pelo Dono do produto antes da comparação prévia planejada. Comparador específico posterior retornou zero diferenças nos campos antigos e checksum igual à referência. Publicação do código e homologação ainda pendentes.
+
+03/10/2026 — S5-05 autorizada: investigar primeira abertura/troca lenta e aviso intermitente. Carregamento, nova tentativa explícita e métricas sem dados pessoais implementados localmente; causa remota não confirmada. Sem migração. Publicação, linha de base e homologação pendentes. Ver seção 11 da Sprint 5 e ADR-005.

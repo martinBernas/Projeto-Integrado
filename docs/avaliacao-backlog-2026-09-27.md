@@ -71,3 +71,5 @@ Critérios para uma investigação posterior: confirmar canal oficial e permiss�
 ## Validação desta revisão
 
 Entrega exclusivamente documental. Requisitos confrontados com planejamento, encerramento e pontos relevantes do código local; fontes externas identificadas acima. Revisão do diff e `git diff --check`; testes da aplicação não executados, pois não houve alteração de código. Sem migração, publicação ou homologação funcional nova. O aceite das propostas e a capacidade das sprints futuras permanecem por definir; a prioridade do escopo já planejado foi confirmada pelo Dono do produto.
+
+03/10/2026 — S5-05 autorizada: investigar primeira abertura/troca lenta e aviso intermitente. Carregamento, nova tentativa explícita e métricas sem dados pessoais implementados localmente; causa remota não confirmada. Sem migração. Publicação, linha de base e homologação pendentes. Ver seção 11 da Sprint 5 e ADR-005.

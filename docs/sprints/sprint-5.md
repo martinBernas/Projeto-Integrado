@@ -230,11 +230,26 @@ Homologação adicional após disponibilizar a versão:
 5. No histórico pessoal, conferir cinco lançamentos recentes, expandir/reduzir sem alterar a expansão do torneio e incluir dias sem torneio elegível. Validar vazio/até cinco e a informação do limite de 100.
 6. Conferir celular/teclado e detalhes diários.
 
-Publicação/homologação remotas de S5-04 ainda não confirmadas. Cenários do núcleo já aprovados permanecem como evidência; sem reabertura automática.
+Evidência posterior em 03/10/2026: Dono do produto relatou “funcionou” após a inclusão do histórico pessoal; funcionamento do acréscimo confirmado por esse relato. Não foram fornecidas medições de desempenho nem identificação da versão/ambiente neste retorno. Cenários do núcleo já aprovados permanecem como evidência; sem reabertura automática.
 
-## 11. Situação para aceite
+## 11. Acréscimo aprovado — S5-05: investigação e carregamento de torneios
 
-**Núcleo S5-01–S5-03 implementado, migrado/verificado e homologado nos cenários relatados; conferências finais de preservação concluídas. S5-04 implementada localmente, com publicação/homologação adicionais pendentes. Aceite global e encerramento aguardam manifestação explícita do Dono do produto após esse acréscimo.**
+Dono do produto autorizou em 03/10/2026 investigar a demora ao trocar de torneio e o aviso intermitente de indisponibilidade que desaparece após recarga, com estados de carregamento e recuperação de falhas. Escopo: analisar navegação, autenticação e RPC; instrumentar tempos de consultas sem dados pessoais; indicar carregamento inicial e troca; permitir nova tentativa explícita em falhas temporárias; preservar distinção de falta de acesso. Não inclui pré-carregamento privado nem mudança de cálculo/transações do banco.
+
+Critérios de aceite: feedback de carregamento identifica a seleção solicitada e não atribui resultados anteriores ao novo torneio; navegação continua disponível; falha de consulta permite Tentar novamente; ausência de permissão não é ocultada pelo carregamento; URL, recarga e voltar/avançar preservam seleção; testar trocas rápidas, lista vazia, falhas e encerrados. Meta de tempo remoto será definida após a linha de base, sem prometer redução da latência nesta investigação.
+
+Investigação local inicial: cada renderização autentica no servidor, consulta lista/histórico/perfil em paralelo e depois chama a RPC selecionada. A RPC bloqueia a linha do torneio, revalida acesso e recalcula resultados de torneios abertos antes de retornar todos os resultados. São pontos de custo e possível contenção; inspeção não comprova a causa da demora ou do aviso remoto. Não há medição remota disponível. Relato complementar do Dono do produto: espera principalmente na primeira abertura e ao trocar de torneio; não recorda o texto exato do aviso. Não atribuir a ocorrência a timeout, sessão ou falta de acesso sem evidência.
+
+Implementado localmente: loading.tsx na entrada, TournamentPanel com navegação em transição e indicação da seleção solicitada, resultados anteriores ocultos enquanto a troca está pendente, abas acessíveis, URL preservada, prefetch das abas desabilitado. Falhas de lista, histórico e RPC oferecem Tentar novamente via atualização da rota; retorno nulo da RPC é falha temporária, access:false mantém falta de acesso. error.tsx usa retry() para falhas inesperadas. Sem repetição automática.
+
+Instrumentação dashboard_query registra duração por etapa da sessão no proxy, autenticação e consultas na página; resultado e código normalizado, sem dados pessoais. Não adiciona consulta, migração ou backup. Arquitetura e fluxo atualizados; [ADR-005](../decisoes/adr-005-carregamento-e-diagnostico-do-painel.md) registra motivo e consequências. Feedback visual não comprova redução da latência; RPC mantém bloqueio/recálculo e payload completo.
+
+Validação local: 69 testes aprovados, sem falhas ou cenários ignorados; lint sem avisos e build de produção aprovados em 03/10/2026. Testes simulam transições e tempos, preservam seleção/erros/autorização e atualização dos cookies. Não equivalem a ensaio real de rede lenta, corrida entre respostas ou histórico do navegador.
+
+Homologação/medição após disponibilizar a versão: primeira abertura versus três recargas; três trocas entre os mesmos torneios e trocas rápidas; voltar/avançar; celular/teclado; falha temporária com nova tentativa e falta de acesso. Registrar tempo até status e até conteúdo completo, navegador/rede/ambiente e horário. Confrontar com etapas dashboard_query nos logs da aplicação. Meta quantitativa e otimização do gargalo dependem dessa linha de base; publicação, medição e homologação S5-05 pendentes.
+## 12. Situação para aceite
+
+**Núcleo S5-01–S5-03 implementado, migrado/verificado e homologado nos cenários relatados; conferências finais de preservação concluídas. S5-04 implementada e funcionamento confirmado pelo Dono do produto; versão/ambiente e verificações detalhadas adicionais não informados. S5-05 implementada localmente, com publicação, medição e homologação pendentes. Aceite global e encerramento aguardam manifestação explícita do Dono do produto após os acréscimos.**
 
 Limites das evidências:
 
