@@ -264,3 +264,168 @@ test('post-migration read-only structural checklist', async () => {
   }
  } finally { await db.close(); }
 });
+
+test('pre-test S5 backup preserves versions and refuses overwrite', async () => {
+ const db = await setup(false);
+ try {
+  await tournament(db);
+  await db.exec('reset role');
+  await db.exec(await readFile(new URL('../supabase/rehearsal/sprint5/01-backup.sql', import.meta.url), 'utf8'));
+  await db.exec(await readFile(new URL(`../supabase/migrations/${migration}`, import.meta.url), 'utf8'));
+  const script = await readFile(new URL('../supabase/rehearsal/sprint5/07-backup-before-tests.sql', import.meta.url), 'utf8');
+  await db.exec(script);
+  const b = (await db.query("select snapshot from private.sprint5_backups where id='before-s5-tests-v1'")).rows[0];
+  assert.equal(b.snapshot.tournaments.length, 1);
+  assert.equal(b.snapshot.rule_versions.length, 1);
+  assert.deepEqual(b.snapshot.rule_revision_changes, []);
+  const exported = await db.exec(await readFile(new URL('../supabase/rehearsal/sprint5/08-export-before-tests.sql', import.meta.url), 'utf8'));
+  assert.equal(exported.flatMap(r => r.rows ?? [])[0].backup_completo.id, 'before-s5-tests-v1');
+  const verification = await db.exec(await readFile(new URL('../supabase/rehearsal/sprint5/09-verify-before-tests.sql', import.meta.url), 'utf8'));
+  const comparison = verification.flatMap(r => r.rows ?? []).find(r => r.id === 'before-s5-tests-v1');
+  assert.equal(Number(comparison.different_sections), 0);
+  assert.equal(comparison.checksum_backup, comparison.checksum_current);
+  await assert.rejects(db.exec(script), /ja existe/);
+  await db.exec('rollback');
+  assert.equal(Number((await db.query('select count(*) n from private.sprint5_backups')).rows[0].n), 2);
+ } finally { await db.close(); }
+});
+
+const singleRuleMigration = '202610030002_single_tournament_rule.sql';
+const wholeProposal = (overrides={}) => proposal({scope:'tournament', ...overrides});
+async function installSingleRule(db) {
+ await db.exec('reset role');
+ await db.exec(await readFile(new URL(`../supabase/migrations/${singleRuleMigration}`,import.meta.url),'utf8'));
+ await login(db,alice);
+}
+
+test('single rule migration preserves full-period data, requires updated proposal and replaces whole rule',async()=>{
+ const db=await setup();
+ try {
+  const id=await tournament(db);
+  await db.exec('reset role');
+  const stored=(await db.query('select to_jsonb(r) d from public.tournament_score_results r order by id')).rows;
+  const computed=(await db.query("select * from private.calculate_tournament($1,'2020-01-11') order by played_on,player_id",[id])).rows;
+  await installSingleRule(db);
+  await db.exec('reset role');
+  assert.deepEqual((await db.query('select to_jsonb(r) d from public.tournament_score_results r order by id')).rows,stored);
+  assert.deepEqual((await db.query("select * from private.calculate_tournament($1,'2020-01-11') order by played_on,player_id",[id])).rows,computed);
+  const scores=(await db.query('select to_jsonb(s) d from public.personal_scores s order by id')).rows;
+  await login(db,alice);
+  await assert.rejects(preview(db,id,proposal({from:'2020-01-02'})),/rule_scope_requires_updated_app/);
+  const p=wholeProposal({schedule:'every_day'}); const pre=await preview(db,id,p);
+  const before=(await dashboard(db,id)).rule_versions.length;
+  assert.equal(before,1);
+  await apply(db,id,p,pre.token);
+  const d=await dashboard(db,id);
+  assert.equal(d.rule_versions.length,2);
+  assert.ok(d.results.every(r=>r.applied_rule_snapshot.mode==='absolute'));
+  assert.ok(d.results.every(r=>r.applied_rule_snapshot.version===d.current_rule.version));
+  await db.exec('reset role');
+  assert.deepEqual((await db.query('select to_jsonb(s) d from public.personal_scores s order by id')).rows,scores);
+ } finally {await db.close();}
+});
+
+test('single rule period changes preview new days, reconcile removed dates and restore without raw score edits',async()=>{
+ const db=await setup();
+ try {
+  const id=await tournament(db); await installSingleRule(db);
+  const extend=wholeProposal({from:'2019-12-30',to:'2020-01-12',schedule:'every_day'});
+  const pre=await preview(db,id,extend);
+  assert.ok(pre.changes.some(c=>c.day==='2020-01-11'));
+  assert.equal((await dashboard(db,id)).tournament.starts_at,'2020-01-01');
+  await apply(db,id,extend,pre.token);
+  let d=await dashboard(db,id);
+  assert.equal(d.tournament.starts_at,'2019-12-30');assert.equal(d.tournament.ends_at,'2020-01-12');
+  assert.ok(d.results.some(r=>r.played_on==='2020-01-11'));
+  assert.ok(!d.results.some(r=>r.played_on==='2019-12-30')); // Existing eligibility stays unchanged.
+  const shrink=wholeProposal({from:'2020-01-02',to:'2020-01-05',schedule:'every_day'});
+  const narrow=await preview(db,id,shrink);
+  assert.ok(narrow.changes.some(c=>c.day==='2020-01-01'&&c.after===null));
+  await apply(db,id,shrink,narrow.token);d=await dashboard(db,id);
+  assert.ok(d.results.every(r=>r.played_on>='2020-01-02'&&r.played_on<='2020-01-05'));
+  assert.ok(d.results.every(r=>r.applied_rule_snapshot.version===d.current_rule.version));
+  await db.exec('reset role');
+  assert.ok(Number((await db.query("select count(*) n from private.result_changes where tournament_id=$1 and new_data='null'::jsonb",[id])).rows[0].n)>0);
+  await login(db,alice);
+  const restore=wholeProposal({schedule:'every_day'});
+  await apply(db,id,restore,(await preview(db,id,restore)).token);
+  assert.ok((await dashboard(db,id)).results.some(r=>r.played_on==='2020-01-01'&&r.raw_score===10000));
+  await assert.rejects(db.query("select public.update_tournament($1,'Nome','2020-01-02','2020-01-10')",[id]),/period_requires_rule_preview/);
+  await db.query("select public.update_tournament($1,'Novo nome','2020-01-01','2020-01-10')",[id]);
+ } finally {await db.close();}
+});
+
+test('single rule rejects silent conversion of partial revisions and retains old state on failure',async()=>{
+ const db=await setup();
+ try {
+  const id=await tournament(db);
+  const partial=proposal({from:'2020-01-02',to:'2020-01-03'});
+  await apply(db,id,partial,(await preview(db,id,partial)).token);
+  await db.exec('reset role');
+  await assert.rejects(db.exec(await readFile(new URL(`../supabase/migrations/${singleRuleMigration}`,import.meta.url),'utf8')),/requires_full_period/);
+  await db.exec('rollback');
+  const diagnosis=await db.exec(await readFile(new URL('../supabase/rehearsal/sprint5/13-diagnose-partial-rules.sql',import.meta.url),'utf8'));
+  const affected=diagnosis.flatMap(r=>r.rows??[]);
+  assert.equal(affected.length,1);assert.equal(affected[0].tournament_id,id);
+  assert.equal(affected[0].scoring_mode,'absolute');
+  await login(db,alice);
+  // Old interval API remains usable when the incremental migration rolls back.
+  assert.equal((await preview(db,id,proposal())).proposal.from,'2020-01-01');
+ } finally {await db.close();}
+});
+
+test('single rule includes expanded score inputs in freshness token and rejects invalid exclusions, closed and other actors',async()=>{
+ const db=await setup();
+ try {
+  const id=await tournament(db); await installSingleRule(db);
+  const p=wholeProposal({to:'2020-01-12',schedule:'every_day'});
+  const pre=await preview(db,id,p);
+  await db.exec('reset role');
+  await db.query("insert into public.personal_scores(player_id,occurred_at,score) values($1,'2020-01-11 15:00Z',19000)",[alice]);
+  await login(db,alice);
+  await assert.rejects(apply(db,id,p,pre.token),/rule_preview_expired/);
+  await assert.rejects(preview(db,id,wholeProposal({to:'2020-01-02',exclusions:[{date:'2020-01-03',reason:'Feriado'}]})),/invalid_exclusions/);
+  await login(db,bob);await assert.rejects(preview(db,id,p),/tournament_not_allowed/);
+  await login(db,alice);await db.query('select public.close_tournament($1)',[id]);
+  await assert.rejects(preview(db,id,p),/tournament_closed/);
+ } finally {await db.close();}
+});
+
+test('single rule configured creation and period failure roll back dates, version and audit together',async()=>{
+ const db=await setup();
+ try {
+  await installSingleRule(db);
+  const config=wholeProposal({schedule:'every_day',exclusions:[{date:'2020-01-03',reason:'Feriado'}]});
+  const id=(await db.query("select public.create_configured_tournament('Torneio único','2020-01-01','2020-01-10',$1) id",[config])).rows[0].id;
+  await db.query("select public.add_tournament_participant($1,$2,'2020-01-01')",[id,alice]);
+  const p=wholeProposal({from:'2019-12-30',to:'2020-01-12',schedule:'every_day'});
+  const pre=await preview(db,id,p);
+  await db.exec('reset role');
+  await db.exec(`create function private.fail_single_refresh() returns trigger language plpgsql as $$begin raise exception 'simulated_refresh_failure'; end $$;
+   create trigger fail_single_refresh before insert on public.tournament_score_results for each row execute function private.fail_single_refresh();`);
+  await login(db,alice);
+  await assert.rejects(apply(db,id,p,pre.token),/simulated_refresh_failure/);
+  await db.exec('reset role');await db.exec('drop trigger fail_single_refresh on public.tournament_score_results');await login(db,alice);
+  const d=await dashboard(db,id);
+  assert.equal(d.tournament.starts_at,'2020-01-01');assert.equal(d.tournament.ends_at,'2020-01-10');
+  assert.equal(d.rule_versions.length,1);assert.equal(d.current_rule.exclusions[0].date,'2020-01-03');
+  await db.exec('reset role');
+  assert.equal(Number((await db.query('select count(*) n from private.rule_revision_changes where tournament_id=$1',[id])).rows[0].n),0);
+ } finally {await db.close();}
+});
+
+test('single rule fresh backup/export/verify preserves reference across migration',async()=>{
+ const db=await setup(false);
+ try {
+  await tournament(db);await db.exec('reset role');
+  const script=async file=>readFile(new URL(`../supabase/rehearsal/sprint5/${file}`,import.meta.url),'utf8');
+  await db.exec(await script('01-backup.sql'));
+  await db.exec(await readFile(new URL(`../supabase/migrations/${migration}`,import.meta.url),'utf8'));
+  await db.exec(await script('10-backup-before-single-rule.sql'));
+  const output=await db.exec(await script('11-export-before-single-rule.sql'));
+  assert.equal(output.flatMap(r=>r.rows??[])[0].backup_completo.function_definitions.length,7);
+  await db.exec(await readFile(new URL(`../supabase/migrations/${singleRuleMigration}`,import.meta.url),'utf8'));
+  const comparison=(await db.exec(await script('12-verify-single-rule.sql'))).flatMap(r=>r.rows??[]).find(r=>r.id==='before-s5-single-rule-v1');
+  assert.equal(Number(comparison.different_sections),0);assert.equal(comparison.checksum_backup,comparison.checksum_current);
+ }finally{await db.close();}
+});

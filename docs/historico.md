@@ -1,5 +1,33 @@
 # Histórico da documentação
 
+03/10/2026 — Comparação pós-migração complementar de regra única aprovada pelo retorno do Dono do produto: zero diferenças e checksums iguais à referência v2. Dados e cálculo de referência preservados; verificação remota da migração concluída. Publicação/homologação da interface e retirada de torneios de teste ainda não confirmadas.
+
+03/10/2026 — Migração complementar de regra única aplicada pelo Dono do produto no Supabase, retorno de sucesso sem linhas após normalização do TESTE S5. Comparação pós-migração, publicação da interface e homologação ainda pendentes.
+
+03/10/2026 — Comparação remota v2 pós-normalização do TESTE S5 aprovada: zero diferenças e checksums iguais ao backup exportado. Preparação da nova tentativa da migração de regra única concluída; execução ainda não confirmada.
+
+03/10/2026 — Exportação v2 anterior à regra única S5 validada integralmente e salva fora do Git; checksum reconfirmado após releitura, 8 versões e 3 revisões auditadas. Comparação remota e nova tentativa da migração ainda pendentes.
+
+03/10/2026 — Captura v2 anterior à migração de regra única executada pelo Dono do produto após normalização: 5 torneios, 290 pontuações, 842 resultados e 8 versões. Metadados/checksum registrados; exportação/comparação e nova tentativa da migração ainda pendentes.
+
+03/10/2026 — Dono do produto forneceu imagem confirmando revisão s5-8 do TESTE S5 para 01/09–31/10, com histórico anterior preservado. Preparada referência v2 por scripts 14–16 antes de nova tentativa da migração complementar; execução ainda não confirmada.
+
+03/10/2026 — Migração complementar de regra única recusada pela proteção de revisão parcial. Referência exportada identifica TESTE S5 com revisão restrita a outubro em torneio setembro–outubro. Diagnóstico somente leitura preparado; aplicação e homologação da simplificação permanecem pendentes.
+
+03/10/2026 — Comparação pré-migração de regra única S5 aprovada pelo retorno remoto do Dono do produto: zero diferenças e checksums iguais à referência exportada. Migração complementar e comparação posterior ainda não confirmadas; evidência na sprint e operação.
+
+03/10/2026 — Exportação anterior à regra única S5 recebida, validada e salva fora do Git. Contagens e sete funções conferidas; checksum PostgreSQL reconfirmado após releitura. Comparação remota e migração complementar ainda pendentes; evidências na sprint e operação.
+
+03/10/2026 — Dono do produto capturou referência anterior à migração complementar de regra única: 5 torneios, 290 pontuações pessoais, 978 resultados e 7 versões. Metadados/checksum registrados na sprint e operação; exportação/comparação e migração complementar ainda não confirmadas.
+
+03/10/2026 — Durante homologação, Dono do produto definiu regra única para todo o torneio e início/fim editáveis, substituindo desenho técnico por intervalos. Implementados localmente fluxo conjunto, migração complementar com guarda de compatibilidade e backup/ensaio atuais. Atualizados ADR-004, requisitos, regras, sprint, operação, arquitetura e diagramas. `pnpm test`: 60 aprovados, zero falhas/pulados; `pnpm lint` e `pnpm build` aprovados. Nenhuma execução remota da migração complementar ou aceite confirmado.
+
+03/10/2026 — Referência anterior aos testes S5 comparada remotamente pelo Dono do produto: zero diferenças e checksums iguais à exportação. Preparação de captura/exportação/comparação concluída; provas em novos torneios e retirada posterior ainda pendentes.
+
+03/10/2026 — Exportação da referência anterior aos testes S5 recebida, validada e salva fora do Git: checksum confirmado após releitura, 5 versões e 1 auditoria de revisão. Comparação remota inicial ainda pendente; evidências na sprint e operação.
+
+03/10/2026 — Dono do produto confirmou edição funcional do Aztecas Outubro e capturou referência pré-testes S5 com 4 torneios e 5 versões. Provas usarão novos torneios/regras e pontuações existentes, sem alterar dados brutos pessoais; retirada posterior limitada aos torneios de teste. Evidências e limites registrados na sprint e operação.
+
 03/10/2026 — Referências iniciais S5 aprovadas pelo retorno remoto do Dono do produto: 4 torneios, 4 versões, zero inconsistências. Verificação remota da migração concluída; publicação da aplicação, testes funcionais e aceite ainda não confirmados.
 
 03/10/2026 — Conferência remota S5: nove indicadores de esquema/permissões aprovados pelo retorno fornecido pelo Dono do produto. Resultado das referências iniciais ainda não fornecido; publicação e homologação funcional ainda não confirmadas.

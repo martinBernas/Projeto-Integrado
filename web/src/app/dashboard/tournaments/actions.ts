@@ -9,6 +9,7 @@ export type TournamentState = { error?: string; message?: string };
 const messages: Record<string, string> = {
   invalid_name: 'Informe um nome de 3 a 100 caracteres.',
   invalid_period: 'Informe um período válido, com o fim igual ou posterior ao início.',
+  period_requires_rule_preview: 'Altere as datas em Configurar período e regras, conferindo o impacto antes de confirmar.',
   period_locked: 'O período não pode mudar depois de vincular participantes, resultados ou exclusões de calendário.',
   tournament_closed: 'Este torneio está encerrado e não pode ser editado.',
   tournament_not_allowed: 'Torneio indisponível ou sem permissão para administrar.',

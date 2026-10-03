@@ -1,5 +1,17 @@
 # Arquitetura e implantação
 
+Situação atual em 03/10/2026: migração complementar de regra única executada pelo Dono do produto e comparação remota pós-migração aprovada por `16-verify-after-full-period.sql`: `different_sections = 0`, `sections = []`, `checksum_backup = checksum_current = f6c6d78a67309d858fae0e70c4080477`. Dados de negócio, versões/auditorias e cálculo na data de referência preservados. Verificação remota da migração complementar concluída. Publicação da interface correspondente, homologação de período/regra únicos, retirada delimitada de torneios de teste e aceite ainda não confirmados. Não reaplicar migrações. Retomar criação/revisão somente na interface correspondente ao contrato `scope: tournament`.
+
+Registros abaixo preservam a situação de cada etapa; pendências anteriores de aplicação/comparação da migração foram resolvidas pela evidência acima.
+
+## Arquitetura vigente da edição de regras — complemento S5
+
+Regra única por torneio implementada localmente em `202610030002_single_tournament_rule.sql`; migração/publicação remotas pendentes. Para abertos, última revisão é canônica para todo o período; anteriores guardam configuração/período históricos. `effective_from/to` registram período da alteração, sem vigência independente de novas revisões. Encerrados conservam cálculo/resultados. RLS/grants permanecem.
+
+Tela conjunta envia período real e regra com `scope: tournament`; contrato antigo é rejeitado. Prévia simula período proposto sem gravação e token cobre pontuações nos períodos antigo e novo. Confirmação grava versão, datas/parâmetros atuais de `tournaments`, auditoria e recálculo atomicamente; reconcilia dias removidos/acrescentados. Elegibilidade/vínculos e brutos preservados. Trigger de referência inicial atua somente na criação; revisões não alteram linhas históricas. RPC antiga de edição permite nome, mas rejeita datas diferentes sem prévia.
+
+Migração recusa última revisão parcial em aberto e não reescreve dados/resultados. Scripts 10–12 capturam/exportam/comparam estado atual; comparação pós-migração antes de uso. Recuperação anterior ao uso da entrega inicial não desfaz complemento após uso. [ADR-004](decisoes/adr-004-regra-unica-por-torneio.md), [diagrama vigente](diagramas/regras-versionadas.md). Descrição por intervalos mais abaixo preserva desenho anterior, substituído para novas edições.
+
 ## Stack definida
 
 | Camada | Tecnologia | Responsabilidade |

@@ -20,7 +20,7 @@ test('S5 actions: valid dates, session, explicit confirmation, changed preview a
  user={id:'owner'}; f.set('rule_from','2026-02-30');assert.match((await exports.reviseRules({},f)).error,/Confira/);
  assert.equal(calls.length,0);f.set('rule_from','2026-10-01');
  assert.equal((await exports.reviseRules({},f)).preview.token,'a'.repeat(32));assert.equal(paths.length,0);
- assert.equal(calls.at(-1)[0],'preview_tournament_rules');
+ assert.equal(calls.at(-1)[0],'preview_tournament_rules');assert.equal(calls.at(-1)[1].proposal.scope,'tournament');
  f.set('operation','apply'); const previous=calls.length;
  assert.match((await exports.reviseRules({},f)).error,/confirme/);assert.equal(calls.length,previous);
  f.set('confirm','yes');f.set('token','a'.repeat(32));f.set('proposal','{}'); error={message:'rule_preview_expired'};

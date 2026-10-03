@@ -4,11 +4,12 @@ import { createClient } from '@/lib/supabase/server';
 import { parseRuleFields, type RulePreview } from '@/lib/rules';
 
 export type RuleState = { error?: string; message?: string; preview?: RulePreview };
-const invalid = 'Confira vigência, modo, penalidade, calendário e exclusões (data | motivo).';
+const invalid = 'Confira período do torneio, modo, penalidade, calendário e exclusões (data | motivo).';
 function message(error: { message: string }) {
   if (error.message.includes('rule_preview_expired')) return 'Os dados mudaram desde a prévia. Gere uma nova prévia antes de confirmar.';
   if (error.message.includes('tournament_closed')) return 'Este torneio está encerrado e não permite revisão.';
   if (error.message.includes('tournament_not_allowed')) return 'Torneio indisponível ou sem permissão para administrar.';
+  if (error.message.includes('rule_scope_requires_updated_app')) return 'Atualize a aplicação para editar o período e a regra única do torneio.';
   if (error.message.includes('invalid_')) return invalid;
   return 'Não foi possível revisar as regras. Atualize a página e tente novamente.';
 }

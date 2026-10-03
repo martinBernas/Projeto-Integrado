@@ -13,6 +13,6 @@ export function RuleFields({ rule }: { rule?: RuleVersion }) {
       </select></label>
     </div>
     {rule?.weekly_schedule === 'monday_to_friday_and_sunday' && <p className="text-sm text-amber-800">A versão anterior usa segunda a sexta e domingos. Escolha um dos calendários atuais e confira o impacto antes de confirmar.</p>}
-    <label className="block text-sm font-medium">Datas excluídas e motivos<textarea name="exclusions" rows={3} maxLength={90000} defaultValue={rule?.exclusions.map(e => `${e.date} | ${e.reason}`).join('\n') ?? ''} className={inputClass} aria-describedby="exclusion-help" placeholder="2026-10-12 | Feriado" /><span id="exclusion-help" className="mt-1 block text-xs text-slate-600">Uma por linha: AAAA-MM-DD | motivo. Inclua apenas datas dentro da vigência. Deixar vazio significa nenhum dia excluído nesse intervalo.</span></label>
+    <label className="block text-sm font-medium">Datas excluídas e motivos<textarea name="exclusions" rows={3} maxLength={90000} defaultValue={rule?.exclusions.map(e => `${e.date} | ${e.reason}`).join('\n') ?? ''} className={inputClass} aria-describedby="exclusion-help" placeholder="2026-10-12 | Feriado" /><span id="exclusion-help" className="mt-1 block text-xs text-slate-600">Uma por linha: AAAA-MM-DD | motivo. Inclua apenas datas dentro do período do torneio. Deixar vazio significa nenhum dia excluído.</span></label>
   </fieldset>;
 }

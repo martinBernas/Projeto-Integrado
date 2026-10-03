@@ -1,5 +1,6 @@
 export type RuleExclusion = { date: string; reason: string };
 export type RuleProposal = {
+  scope: 'tournament';
   from: string; to: string; mode: 'absolute' | 'relative_to_lowest'; penalty: number;
   schedule: 'monday_to_friday' | 'every_day'; exclusions: RuleExclusion[]; reason: string;
 };
@@ -38,7 +39,7 @@ export function parseRuleFields(form: FormData): RuleProposal | null {
   });
   if (exclusions.some(e => !validRuleDate(e.date) || e.date < from || e.date > to || e.reason.length < 3 || e.reason.length > 200)
     || new Set(exclusions.map(e => e.date)).size !== exclusions.length) return null;
-  return { from, to, mode: mode as RuleProposal['mode'], penalty: Number(penaltyText),
+  return { scope: 'tournament', from, to, mode: mode as RuleProposal['mode'], penalty: Number(penaltyText),
     schedule: schedule as RuleProposal['schedule'], exclusions, reason };
 }
 export const modeLabel = (mode: string) => mode === 'absolute' ? 'Absoluto' : 'Relativo ao menor positivo';

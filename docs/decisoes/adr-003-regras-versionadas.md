@@ -1,5 +1,7 @@
 # ADR-003 — Regras por data e revisão explícita
 
+Situação: o desenho de intervalos independentes foi substituído para novas edições pelo [ADR-004 — regra única por torneio](adr-004-regra-unica-por-torneio.md). Este documento preserva a decisão técnica inicial e sua migração já executada.
+
 Data: 03/10/2026. Situação: implementada localmente na Sprint 5; migração, publicação e homologação remotas ainda não realizadas.
 
 ## Contexto e decisões funcionais

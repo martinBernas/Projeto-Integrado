@@ -2,7 +2,7 @@
 
 ## Evolução local — Sprint 5, 03/10/2026
 
-Modo, penalidade, calendário e exclusões passam a versões por intervalo. A última revisão que cobre uma data prevalece, preservando as anteriores e a regra aplicada no snapshot diário. Revisão retroativa requer motivo, prévia de impacto e confirmação explícita do organizador; encerrados não admitem revisão. Regras futuras não alteram datas anteriores. Pontuação pessoal permanece compartilhada; revisão do torneio não edita seu valor nem regras de outros torneios. Fuso fixo São Paulo; zero bruto é ausência em ambos os modos, distinto de zero aplicado válido no relativo. Implementação local, com publicação/homologação pendentes. [Sprint 5](sprints/sprint-5.md).
+Modo, penalidade, calendário e exclusões formam uma única regra para todo o período do torneio aberto. Início/fim e regras mudam com prévia de impacto e confirmação, recalculando o período alcançado. Versões anteriores são histórico, sem vigências simultâneas. Encerrados preservam resultados e rejeitam edição. Brutos/elegibilidade e regras de outros torneios não mudam. Fuso fixo São Paulo; zero bruto é ausência nos dois modos, distinto de zero aplicado válido no relativo. Complemento local; migração/publicação/homologação pendentes. [Sprint 5](sprints/sprint-5.md), [ADR-004](decisoes/adr-004-regra-unica-por-torneio.md).
 
 ## Recorte da Sprint 3
 

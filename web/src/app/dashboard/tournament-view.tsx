@@ -13,7 +13,7 @@ export function TournamentView({ data, userId }: { data: TournamentData; userId:
       <h2 className="text-sm font-semibold text-emerald-300">Regras<span className="sr-only"> de {data.tournament.name}</span></h2>
       {data.tournament.closed_at && <p className="mt-2 font-semibold text-emerald-300">Torneio encerrado · Resultados finais preservados</p>}
       <p className="mt-3 text-slate-300">{formatDate(data.tournament.starts_at)} a {formatDate(data.tournament.ends_at)} · {scheduleLabel(rule?.weekly_schedule ?? 'monday_to_friday')}</p>
-      {rule && <p className="mt-2 text-sm text-slate-300">Regra na data de referência · {rule.version}. Cada dia usa a versão vigente na sua data.</p>}
+      {rule && <p className="mt-2 text-sm text-slate-300">Regra do torneio · {rule.version}. A mesma configuração vale para todo o período.</p>}
       {data.excluded_dates.length > 0 && <p className="mt-2 text-sm text-slate-300">Datas excluídas: {data.excluded_dates.map(formatDate).join(', ')}</p>}
       <div className="mt-5 grid gap-4 sm:grid-cols-3">
         <div><p className="text-sm text-slate-300">{modeLabel(rule?.scoring_mode ?? 'relative_to_lowest')}</p><p className="mt-1 font-semibold">{rule?.scoring_mode === 'absolute' ? 'Resultado bruto positivo' : 'Resultado bruto − menor positivo'}</p></div>

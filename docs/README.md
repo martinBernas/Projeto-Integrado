@@ -1,5 +1,9 @@
 # GeoGuaras — Wiki do Projeto
 
+Situação atual em 03/10/2026: migração complementar de regra única executada pelo Dono do produto e comparação remota pós-migração aprovada por `16-verify-after-full-period.sql`: `different_sections = 0`, `sections = []`, `checksum_backup = checksum_current = f6c6d78a67309d858fae0e70c4080477`. Dados de negócio, versões/auditorias e cálculo na data de referência preservados. Verificação remota da migração complementar concluída. Publicação da interface correspondente, homologação de período/regra únicos, retirada delimitada de torneios de teste e aceite ainda não confirmados. Não reaplicar migrações. Retomar criação/revisão somente na interface correspondente ao contrato `scope: tournament`.
+
+Registros abaixo preservam a situação de cada etapa; pendências anteriores de aplicação/comparação da migração foram resolvidas pela evidência acima.
+
 Aplicação web para registrar pontuações pessoais de GeoGuessr, administrar torneios e gerar rankings com regras de pontuação auditáveis.
 
 Sprint 3 concluída em 21/09/2026. [Encerramento e evidências](sprints/sprint-3-encerramento.md). Em 22/09, carga real confirmada de 11 participantes e 148 pontuações. Complementos, elegibilidade, penalidades e correção local do painel estão no [registro operacional de 22/09](sprints/operacao-2026-09-22.md).
@@ -40,6 +44,8 @@ O arquivo `GeoGuaras.xlsx` é a referência inicial do domínio. Ele contém a a
 TypeScript, Next.js, Tailwind CSS e Vercel para a aplicação web. Supabase fornece PostgreSQL, autenticação e autorização via RLS.
 
 ## Situação atual
+
+Simplificação S5: regra única e período editável implementados localmente; migração complementar/publicação/homologação pendentes. [ADR-004](decisoes/adr-004-regra-unica-por-torneio.md). Migrações iniciais já executadas/verificadas, edição do Aztecas Outubro confirmada pelo Dono do produto. A descrição seguinte preserva o início da sprint.
 
 Sprint 5 iniciada em 03/10/2026 por autorização do Dono do produto. S5-01–S5-03 implementadas localmente; migração, publicação e homologação pendentes. Fuso fixo São Paulo, zero bruto como ausência, calendário configurável e revisão retroativa explícita com prévia/confirmação. Ver [entrega e evidências](sprints/sprint-5.md).
 

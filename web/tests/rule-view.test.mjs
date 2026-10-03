@@ -26,6 +26,7 @@ test('S5 views show absolute mode, each day snapshot, immutable timezone and exp
  const form=await load('tournaments/rule-form.tsx'); const view=await load('tournament-view.tsx');
  const html=renderToStaticMarkup(jsx.jsx(form.RuleForm,{id:'test',start:'2026-10-01',end:'2026-10-31',rule}));
  assert.match(html,/Prévia da revisão retroativa/);assert.match(html,/Confirmar revisão/);assert.match(html,/name="confirm"/);
+ assert.match(html,/Início do torneio/);assert.match(html,/Fim do torneio/);assert.match(html,/Uma única regra vale para todo o torneio/);assert.doesNotMatch(html,/Vigência inicial|Datas fora do intervalo/);
  assert.doesNotMatch(html,/name="timezone"/);assert.match(html,/Zero bruto representa ausência/);
  const data={access:true,today:'2026-10-03',tournament:{name:'Copa',starts_at:'2026-10-01',ends_at:'2026-10-31',history_ready:true,timezone:'America/Sao_Paulo',rule_version:'mvp-v1'},
  participants:[{id:'a',name:'Ana',eligible_from:'2026-10-01'}],excluded_dates:[],current_rule:rule,rule_versions:[rule],

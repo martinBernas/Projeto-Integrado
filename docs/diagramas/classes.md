@@ -109,3 +109,5 @@ classDiagram
 ```
 
 `Perfil` corresponde a `public.profiles`; e-mail pertence a `auth.users` e só é retornado na seleção administrativa autorizada. Ausências podem gerar resultados sem `personal_score_id`. O resultado é único por torneio/jogador/dia; a pontuação pessoal é única por jogador/dia. O diagrama omite campos auxiliares, exclusões de calendário e tabelas privadas de auditoria, detalhadas em [Arquitetura](../arquitetura.md).
+
+Complemento S5: TorneioAtual tem uma configuração única para todo o período editável. Versões anteriores registram configurações/períodos históricos, sem regras simultaneamente aplicáveis em torneios abertos. Confirmação altera período/regra e reconcilia resultados atomicamente, preservando PontuacaoAtual e Vinculo. Ver [diagrama de regras](regras-versionadas.md) e [ADR-004](../decisoes/adr-004-regra-unica-por-torneio.md). Implementação local; migração complementar pendente.

@@ -1,5 +1,7 @@
 # Levantamento de requisitos
 
+Definição funcional vigente S5: um torneio aberto tem uma única regra aplicada a todo o período. Início/fim podem mudar juntamente com a configuração, mediante prévia de impacto e confirmação. Versões anteriores são histórico, sem revisões parciais nem programação independente de regra futura. Encerrados não permitem edição; brutos permanecem intactos. Complemento local; migração/publicação pendentes. [ADR-004](decisoes/adr-004-regra-unica-por-torneio.md).
+
 ## Alocação para a primeira entrega — Sprint 3
 
 Os requisitos abaixo preservam a visão completa do produto. A alocação desta seção é histórica; a Sprint 4 foi encerrada e o próximo escopo previsto é a Sprint 5. Consulte a [avaliação atual do backlog e feedback](avaliacao-backlog-2026-09-27.md). O recorte original está no [plano da Sprint 3](sprints/sprint-3.md).
@@ -35,7 +37,7 @@ Atualização S5 em 03/10/2026: RF04/RF06/RF09/RF11/RF12 implementados localment
 | RF01 | O sistema deve permitir cadastro e autenticação de usuários. |
 | RF02 | Qualquer usuário deve poder criar, editar, encerrar e consultar os torneios que organiza. |
 | RF03 | O organizador deve gerenciar os jogadores participantes de cada torneio. |
-| RF04 | Um torneio deve possuir nome, período de início e fim e regras configuráveis; seu fuso é fixo em `America/Sao_Paulo`, sem configuração pelo organizador. |
+| RF04 | Um torneio deve possuir nome, período de início e fim editáveis e uma única regra configurável para todo o período, com histórico das alterações; seu fuso é fixo em `America/Sao_Paulo`, sem configuração pelo organizador. |
 | RF05 | O jogador deve registrar sua pontuação bruta pessoal por dia, independentemente de participar de um torneio. |
 | RF06 | O sistema deve calcular a pontuação aplicada segundo as regras vigentes. |
 | RF07 | O sistema deve usar as pontuações pessoais dentro do período de cada torneio para exibir ranking diário, resultado do período e ranking acumulado. |

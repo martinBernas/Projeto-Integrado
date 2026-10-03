@@ -1,5 +1,7 @@
 # Documentação funcional — GeoGuaras
 
+Definição vigente S5: organizador edita início/fim e uma única regra para todo o período em “Configurar período e regras”. Prévia mostra impacto no conjunto do torneio; confirmação registra histórico e recalcula. Encerrados são somente consulta. Testes experimentais usam TESTE S5, sem alterar brutos reais. Migração complementar/publicação dessa simplificação ainda pendentes.
+
 ## Evolução vigente — Sprint 5 (local em 03/10/2026)
 
 Criar torneio permite escolher modo absoluto/relativo, penalidade e calendário, com exclusões por data/motivo. Fuso fixo São Paulo, sem configuração. Zero bruto representa ausência nos dois modos; zero aplicado ao menor positivo permanece resultado válido. Administração oferece revisão de regras por intervalo: configuração completa, motivo, prévia de totais/alterações e confirmação explícita. A revisão mais recente prevalece por data, inclusive retroativamente, com histórico preservado; encerrados só permitem consulta. Pontuação pessoal continua compartilhada e não é alterada pela revisão. Dias e painel mostram as versões correspondentes.

@@ -1,5 +1,11 @@
 # Plano de ação
 
+Situação atual em 03/10/2026: migração complementar de regra única executada pelo Dono do produto e comparação remota pós-migração aprovada por `16-verify-after-full-period.sql`: `different_sections = 0`, `sections = []`, `checksum_backup = checksum_current = f6c6d78a67309d858fae0e70c4080477`. Dados de negócio, versões/auditorias e cálculo na data de referência preservados. Verificação remota da migração complementar concluída. Publicação da interface correspondente, homologação de período/regra únicos, retirada delimitada de torneios de teste e aceite ainda não confirmados. Não reaplicar migrações. Retomar criação/revisão somente na interface correspondente ao contrato `scope: tournament`.
+
+Registros abaixo preservam a situação de cada etapa; pendências anteriores de aplicação/comparação da migração foram resolvidas pela evidência acima.
+
+Situação mais recente S5: Dono do produto definiu regra única por torneio e período editável durante homologação. Complemento local e ADR-004; `pnpm test`: 60 aprovados, zero falhas/pulados; `pnpm lint` e `pnpm build` aprovados. Migração complementar, publicação e homologação pendentes. Registros anteriores abaixo descrevem entrega inicial e verificação já concluída de suas migrações.
+
 Situação atual da Sprint 5 em 03/10/2026: backup capturado/exportado e verificado; ambas as migrações executadas pelo Dono do produto no Supabase. Comparação pós-migração sem diferenças, nove indicadores de esquema/permissões verdadeiros e 4 referências iniciais equivalentes aprovados. Verificação remota da migração concluída; publicação da aplicação atualizada, testes funcionais e aceite ainda não confirmados. Evidências na [Sprint 5](sprints/sprint-5.md). Registros anteriores abaixo preservam a situação de cada momento.
 
 ## Objetivo

@@ -18,11 +18,11 @@ export function TournamentForm({ tournament }: { tournament?: ManagedTournament 
     <label className="block text-sm font-medium">Nome do torneio
       <input name="name" required minLength={3} maxLength={100} defaultValue={tournament?.name} className={inputClass} />
     </label>
-    <div className="grid gap-4 sm:grid-cols-2">
-      <label className="block text-sm font-medium">Início<input name="start" type="date" required min="0001-01-01" max="9999-12-31" defaultValue={tournament?.starts_at} className={inputClass} /></label>
-      <label className="block text-sm font-medium">Fim<input name="end" type="date" required min="0001-01-01" max="9999-12-31" defaultValue={tournament?.ends_at} className={inputClass} /></label>
-    </div>
-    {tournament && <p className="text-sm text-slate-600">O período só pode mudar enquanto não houver participantes, resultados ou exclusões de calendário.</p>}
+    {!tournament && <div className="grid gap-4 sm:grid-cols-2">
+      <label className="block text-sm font-medium">Início<input name="start" type="date" required min="0001-01-01" max="9999-12-31" className={inputClass} /></label>
+      <label className="block text-sm font-medium">Fim<input name="end" type="date" required min="0001-01-01" max="9999-12-31" className={inputClass} /></label>
+    </div>}
+    {tournament && <><input type="hidden" name="start" value={tournament.starts_at} /><input type="hidden" name="end" value={tournament.ends_at} /><p className="text-sm text-slate-600">Altere início, fim e regras em “Configurar período e regras”, conferindo o impacto antes de confirmar.</p></>}
     {!tournament && <RuleFields />}
     <button disabled={pending} className={buttonClass}>{pending ? 'Salvando…' : tournament ? 'Salvar alterações' : 'Criar torneio'}</button>
     <div aria-live="polite">{state.error && <p role="alert" className="text-sm text-red-700">{state.error}</p>}{state.message && <p className="text-sm text-emerald-800">{state.message}</p>}</div>

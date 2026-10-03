@@ -1,5 +1,7 @@
 # Plano de testes
 
+Complemento S5 de regra única/período editável: `pnpm test`: 60 aprovados, zero falhas/pulados; `pnpm lint` e `pnpm build` aprovados. Cobertura adicional: migração sem alteração de dados/cálculo, contrato atualizado, regra única nos snapshots, ampliação/redução/restauração, elegibilidade/brutos preservados, exclusões inválidas, token com pontuações de datas acrescentadas, autorização/encerramento, criação e rollback atômico. Scripts 10–12 de captura/exportação/comparação ensaiados localmente. Contagens anteriores abaixo são históricas.
+
 ## Sprint 5 — evidências locais de 03/10/2026
 
 Suíte completa da Sprint 5: `pnpm test`, 52 aprovados, zero falhas/pulados. Inclui dez cenários de banco em `versioned-rules.test.mjs`, duas verificações de ações/entrada em `rule-actions.test.mjs` e renderização em `rule-view.test.mjs`, além da regressão anterior. Cobertura: legado/cópia privada, absoluto/zero, sábado/domingo em todos os dias, exclusão/restauração, aviso de lançamento no sábado, versões futuras e precedência, prévia somente leitura/obsoleta, isolamento/RLS/escrita direta, encerrados, repetição de confirmação, rollback e captura/exportação/recuperação antes do uso. Calendário legado que excluía sábado conserva sua semântica. Comparações de SQL usam ordem explícita e datas normalizadas. Substitui a contagem inicial de 51.
