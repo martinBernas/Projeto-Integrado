@@ -1,5 +1,33 @@
 # Histórico da documentação
 
+03/10/2026 — Referências iniciais S5 aprovadas pelo retorno remoto do Dono do produto: 4 torneios, 4 versões, zero inconsistências. Verificação remota da migração concluída; publicação da aplicação, testes funcionais e aceite ainda não confirmados.
+
+03/10/2026 — Conferência remota S5: nove indicadores de esquema/permissões aprovados pelo retorno fornecido pelo Dono do produto. Resultado das referências iniciais ainda não fornecido; publicação e homologação funcional ainda não confirmadas.
+
+03/10/2026 — Comparação pós-migração S5 fornecida pelo Dono do produto: zero diferenças e checksums iguais ao backup. Preservação dos dados/cálculo de referência confirmada. Preparada conferência estrutural somente leitura; publicação e homologação ainda não confirmadas.
+
+03/10/2026 — Dono do produto executou a migração principal de regras versionadas S5 no Supabase, com retorno de sucesso sem linhas. Ambas as migrações S5 confirmadas; comparação pós-migração, publicação da aplicação e homologação ainda pendentes. Evidências atualizadas na sprint e operação.
+
+03/10/2026 — Dono do produto executou a migração preparatória S5 de calendário no Supabase, com retorno de sucesso sem linhas. Migração principal e comparação posterior ainda pendentes; evidência registrada na sprint e operação.
+
+03/10/2026 — Comparação remota do backup S5 executada pelo Dono do produto: zero seções diferentes, lista vazia e checksums iguais à captura/exportação. Evidência pré-migração registrada; execução das migrações e comparação posterior ainda não confirmadas.
+
+03/10/2026 — Exportação do backup S5 recebida, validada integralmente e salva na pasta privada ignorada pelo Git. Checksum PostgreSQL reconfirmado após releitura, metadados/contagens e três definições de funções conferidos. Evidências na sprint e operação; comparação remota anterior à migração ainda pendente.
+
+03/10/2026 — Captura de backup S5 executada pelo Dono do produto no Supabase: `before-s5-v1`, 4 torneios, 289 pontuações pessoais e 434 resultados armazenados. Retorno registrado na sprint e no roteiro operacional. Exportação, comparação e backup integral ainda não confirmados; migração/publicação pendentes.
+
+03/10/2026 — Definição funcional da Sprint 5: calendário oferece segunda a sexta ou todos os dias, incluindo sábado/domingo. Atualizados interface, cálculo/avisos, RF11, regras, critérios, testes, ADR e operação; enum `every_day` em migração preparatória separada. Sem alteração silenciosa da semântica dos calendários legados. Sem execução remota.
+
+03/10/2026 — Dono do produto autorizou início da Sprint 5. Implementados localmente modos/penalidade, calendário/exclusões e versões por intervalo, com prévia/confirmação de revisão retroativa, auditoria e proteção dos encerrados. Fuso fixo e zero como ausência respeitados. Preparados migração e scripts de captura/exportação/comparação/recuperação antes do uso; equivalência de cópia privada e ensaio de recuperação locais. Atualizados requisitos, regras, sprint, operação, arquitetura, ADR-003, diagramas e orientações funcionais. Nenhuma migração/publicação remota; homologação pendente. [Entrega](sprints/sprint-5.md).
+
+03/10/2026 — Decisão posterior do Dono do produto no planejamento da Sprint 5: zero representa ausência também no modo absoluto; fuso permanece fixo em São Paulo e deixa de fazer parte da configuração do torneio. Substitui a escolha anterior de múltiplos fusos e resolve as pendências de zero/data compartilhada. Revisão retroativa explícita permanece. Atualizados plano, requisitos RF04/RN06, regras e cenários de teste; apenas documentação, sem implementação.
+
+03/10/2026 — Refinamento da Sprint 5: Dono do produto definiu capacidade por tokens da semana, preferência de conclusão no fim de semana e reserva da semana seguinte para correções menores; escolheu revisão retroativa explícita e configuração de outros fusos. Plano atualizado, substituindo propostas de somente vigência futura/fuso fixo e invalidando a estimativa inicial do conjunto. Zero e semântica de datas compartilhadas ainda abertos; nenhuma implementação iniciada.
+
+03/10/2026 — A pedido do Dono do produto, preparado planejamento da Sprint 5 antes de iniciar: objetivo, histórias S5-01–S5-03, critérios, estimativas preliminares, dependências, testes e implantação. Capacidade e decisões funcionais ainda abertas; não há compromisso fechado nem implementação. [Planejamento](sprints/sprint-5.md).
+
+03/10/2026 — Dono do produto solicitou documentar e encaixar em Scrum os feedbacks sobre excesso de resultados/dias/torneios (FB05) e lentidão ao trocar torneios, com sugestão de pré-carregamento antes do login (FB06). Registrados como candidatos à S7-03, com histórias, critérios propostos, investigação e condições de capacidade. Sprints 5 e 6 preservadas; alocação sujeita ao Sprint Planning. Atualizados requisitos, plano, avaliação de backlog, índice e testes planejados. Revisão exclusivamente documental, sem implementação, migração, publicação ou homologação. [Pré-planejamento](sprints/sprint-7.md).
+
 27/09/2026 — Avaliados escopo restante das sprints 5–7 e feedback sobre modo escuro, valores esquecidos, desempenho ao encerrar e integração GeoGuessr. Dono do produto prioriza o escopo planejado; propostas registradas sem compromisso de implementação. RF19 detalhado sem duplicação; pesquisa inicial não confirmou API pública oficial suportada. Atualizados requisitos, plano e índice, distinguindo recortes históricos da situação atual. Revisão exclusivamente documental, sem migração ou publicação. [Avaliação](avaliacao-backlog-2026-09-27.md).
 
 27/09/2026 — Sprint 4 formalmente encerrada a pedido do Dono do produto. S4-01 a S4-05 homologadas e carga complementar confirmada por SQL. Consolidados estado atual, evidências, limites e escopo futuro em sprint, requisitos, plano de ação/testes, arquitetura/ADR, perfil público e README operacional. Pendências históricas não representam tarefas atuais; RF19 e configuração de regras permanecem fora desta entrega.

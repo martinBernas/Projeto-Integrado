@@ -1,5 +1,7 @@
 # Diagrama de classes inicial
 
+Evolução local S5 em 03/10/2026: [modelo de regras versionadas](regras-versionadas.md) acrescenta versões por intervalo e auditoria privada. Fuso passa a constante São Paulo, fora da configuração; os diagramas anteriores abaixo são históricos do recorte descrito. Resultado identifica versão via snapshot; pontuação pessoal permanece compartilhada.
+
 O primeiro diagrama preserva o modelo conceitual da descoberta. O diagrama ao final descreve os principais campos e vínculos efetivamente implementados localmente até S4-05.
 
 ```mermaid

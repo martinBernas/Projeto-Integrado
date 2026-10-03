@@ -2,6 +2,7 @@
 
 import { useActionState } from 'react';
 import { manageTournament } from './actions';
+import { RuleFields } from './rule-fields';
 
 export type ManagedTournament = {
   id: string; name: string; starts_at: string; ends_at: string; closed_at: string | null;
@@ -22,6 +23,7 @@ export function TournamentForm({ tournament }: { tournament?: ManagedTournament 
       <label className="block text-sm font-medium">Fim<input name="end" type="date" required min="0001-01-01" max="9999-12-31" defaultValue={tournament?.ends_at} className={inputClass} /></label>
     </div>
     {tournament && <p className="text-sm text-slate-600">O período só pode mudar enquanto não houver participantes, resultados ou exclusões de calendário.</p>}
+    {!tournament && <RuleFields />}
     <button disabled={pending} className={buttonClass}>{pending ? 'Salvando…' : tournament ? 'Salvar alterações' : 'Criar torneio'}</button>
     <div aria-live="polite">{state.error && <p role="alert" className="text-sm text-red-700">{state.error}</p>}{state.message && <p className="text-sm text-emerald-800">{state.message}</p>}</div>
   </form>;

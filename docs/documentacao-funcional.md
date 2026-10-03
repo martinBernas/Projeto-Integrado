@@ -1,5 +1,11 @@
 # Documentação funcional — GeoGuaras
 
+## Evolução vigente — Sprint 5 (local em 03/10/2026)
+
+Criar torneio permite escolher modo absoluto/relativo, penalidade e calendário, com exclusões por data/motivo. Fuso fixo São Paulo, sem configuração. Zero bruto representa ausência nos dois modos; zero aplicado ao menor positivo permanece resultado válido. Administração oferece revisão de regras por intervalo: configuração completa, motivo, prévia de totais/alterações e confirmação explícita. A revisão mais recente prevalece por data, inclusive retroativamente, com histórico preservado; encerrados só permitem consulta. Pontuação pessoal continua compartilhada e não é alterada pela revisão. Dias e painel mostram as versões correspondentes.
+
+Limites, decisões e evidências em [Sprint 5](sprints/sprint-5.md), [ADR-003](decisoes/adr-003-regras-versionadas.md) e [operação](sprints/sprint-5-operacao.md). Migração/publicação/homologação pendentes; esta seção não declara entrega remota. As seções seguintes preservam a visão e os recortes anteriores quando superados por esta evolução.
+
 ## 1. Identificação do projeto
 
 | Campo | Descrição |
@@ -27,7 +33,7 @@ Qualquer usuário pode criar e organizar torneios. O organizador define particip
 | Torneios | Criar e administrar competições. | Criar, editar, encerrar e consultar torneio. | Organizador. |
 | Participantes | Controlar quem participa de cada torneio. | Adicionar, remover e listar participantes. | Organizador; visualização para participante. |
 | Configuração de regras | Definir como o torneio calcula resultados. | Escolher pontuação absoluta ou relativa, penalidade, período, fuso e calendário. | Organizador. |
-| Calendário | Determinar os dias válidos de jogo. | Selecionar segunda a sexta ou segunda a sexta mais domingos; excluir feriados. | Organizador. |
+| Calendário | Determinar os dias válidos de jogo. | Selecionar segunda a sexta ou todos os dias; excluir datas específicas. | Organizador. |
 | Cálculo e ranking | Transformar resultados em classificação. | Aplicar regras, calcular totais e ordenar maior pontuação primeiro. | Sistema; visualização para participantes. |
 | Auditoria | Preservar a explicação dos resultados. | Registrar pontuação bruta, regra aplicada, resultado e alterações. | Organizador. |
 | Auditoria por votação (Sprint 6) | Avaliar a validade de uma pontuação em um torneio. | Abrir avaliação, votar, apurar e aplicar invalidação ou penalidade restrita ao torneio. | Organizador e eleitores elegíveis. |
@@ -45,7 +51,7 @@ Qualquer usuário pode criar e organizar torneios. O organizador define particip
 
 1. O usuário cria um torneio e se torna seu organizador.
 2. Informa nome, início, fim e fuso horário.
-3. Escolhe o calendário: segunda a sexta ou segunda a sexta mais domingos.
+3. Escolhe o calendário: segunda a sexta ou todos os dias, incluindo sábado e domingo.
 4. Opcionalmente exclui datas, como feriados.
 5. Escolhe o modo absoluto ou relativo ao menor resultado positivo do dia.
 6. Define a penalidade por ausência.

@@ -17,7 +17,7 @@ export default async function ManageTournamentsPage() {
       <p className="mt-2 text-slate-600">Crie competições e administre os torneios que você organiza.</p></header>
     {error ? <p role="alert" className="rounded-xl bg-amber-50 p-5">Administração temporariamente indisponível. Tente novamente em instantes.</p> : <>
       <section className="rounded-2xl border border-slate-200 bg-white p-6"><h2 className="mb-3 text-xl font-bold">Novo torneio</h2>
-        <p className="mb-5 text-sm leading-6 text-slate-600">Regra atual: diferença para o menor positivo, ausência de −2.500 após o fim do dia, segunda a sexta, no horário de São Paulo. Novos torneios começam sem participantes, sem datas excluídas e com o histórico em preparação.</p>
+        <p className="mb-5 text-sm leading-6 text-slate-600">Escolha pontuação, penalidade e calendário. O horário é fixo em São Paulo; zero bruto representa ausência. Novos torneios começam sem participantes e com o histórico em preparação.</p>
         <TournamentForm />
       </section>
       <section className="space-y-4"><h2 className="text-xl font-bold">Torneios que organizo</h2>
@@ -26,6 +26,7 @@ export default async function ManageTournamentsPage() {
           <h3 className="break-words text-lg font-bold">{tournament.name}</h3>
           <p className="mb-5 mt-1 text-sm text-slate-600">{formatDate(tournament.starts_at)} a {formatDate(tournament.ends_at)} · {tournament.closed_at ? 'Encerrado' : 'Aberto'}</p>
           <Link href={`/dashboard?tournament=${tournament.id}`} className="mb-5 mr-5 inline-block font-semibold text-emerald-800">Ver resultados</Link>
+          <Link href={`/dashboard/tournaments/${tournament.id}/rules`} className="mb-5 mr-5 inline-block font-semibold text-emerald-800">{tournament.closed_at ? 'Consultar regras' : 'Configurar regras'}</Link>
           <Link href={`/dashboard/tournaments/${tournament.id}/participants`} className="mb-5 inline-block font-semibold text-emerald-800">{tournament.closed_at ? 'Consultar participantes' : 'Gerenciar participantes'}</Link>
           {tournament.closed_at ? <p className="text-sm text-slate-600">Resultados preservados. Edição indisponível após o encerramento.</p>
             : <><TournamentForm tournament={tournament} /><CloseTournamentForm id={tournament.id} /></>}

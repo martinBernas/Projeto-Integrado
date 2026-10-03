@@ -1,6 +1,18 @@
 # Plano de testes
 
+## Sprint 5 — evidências locais de 03/10/2026
+
+Suíte completa da Sprint 5: `pnpm test`, 52 aprovados, zero falhas/pulados. Inclui dez cenários de banco em `versioned-rules.test.mjs`, duas verificações de ações/entrada em `rule-actions.test.mjs` e renderização em `rule-view.test.mjs`, além da regressão anterior. Cobertura: legado/cópia privada, absoluto/zero, sábado/domingo em todos os dias, exclusão/restauração, aviso de lançamento no sábado, versões futuras e precedência, prévia somente leitura/obsoleta, isolamento/RLS/escrita direta, encerrados, repetição de confirmação, rollback e captura/exportação/recuperação antes do uso. Calendário legado que excluía sábado conserva sua semântica. Comparações de SQL usam ordem explícita e datas normalizadas. Substitui a contagem inicial de 51.
+
+Lint/build aprovados; inspeção visual de componentes reais com dados fictícios, gravação desativada, em viewport padrão e 390 px. PGlite serializa a fila: duas confirmações enfileiradas não são ensaio PostgreSQL multiconexão. Nenhum teste remoto/homologação presumido. [Roteiro e limites operacionais](sprints/sprint-5-operacao.md). Após a execução completa, ajustes de compatibilidade do wrapper legado, legenda da prévia e rejeição de exclusão sem separador verificados nos 12 testes direcionados S5, com lint/build final; sem alteração dos demais fluxos.
+
+## Feedback de usabilidade — planejamento de 03/10/2026
+
+FB05/FB06 são candidatos à S7-03, sem implementação ou testes executados. [Critérios e cenários propostos](sprints/sprint-7.md): limites/expansão de resultados, ranking integral, muitos dias/torneios, celular/teclado; feedback de carregamento, navegação rápida e por histórico, rede lenta/falhas, atualização de dados e isolamento/revogação de acesso. Para FB06, estabelecer linha de base e meta mensurável antes de implementar; registrar ambiente, volume e condições de rede. Esses cenários não reabrem o aceite da Sprint 4.
+
 ## Estratégia
+
+Planejamento da Sprint 5 em 03/10/2026: CT05–CT10, CT12 e CT14–CT16 relacionados às histórias e aos cenários adicionais de vigência/revisão retroativa, migração/legado, permissões, concorrência e calendário no [plano da sprint](sprints/sprint-5.md). Zero bruto como ausência em ambos os modos e fuso fixo São Paulo confirmados; testar distinção entre zero bruto e zero aplicado válido no relativo, virada do dia e dispositivo em outro fuso. Nenhum teste novo executado nesta etapa documental.
 
 Os testes seguem a lógica de verificação e validação: requisitos são validados por testes de aceitação; fluxos integrados por testes de sistema; integrações entre módulos por testes de integração; e cálculos por testes unitários.
 
@@ -9,7 +21,7 @@ Os testes seguem a lógica de verificação e validação: requisitos são valid
 | ID | Requisito | Cenário | Resultado esperado |
 | --- | --- | --- | --- |
 | CT01 | RF01 | Usuário informado com credenciais válidas | Acesso autenticado e perfil carregado |
-| CT02 | RF02/RF04 | Usuário cria torneio com período e fuso válidos | Torneio é salvo e o criador torna-se organizador |
+| CT02 | RF02/RF04 | Usuário cria torneio com período válido | Torneio é salvo com fuso fixo `America/Sao_Paulo` e o criador torna-se organizador |
 | CT03 | RF05/RN01 | Jogador lança 20.000 sem estar em torneio | Lançamento pessoal é salvo, associado ao jogador e à data |
 | CT04 | RF03/RN02 | Jogador entra após o torneio iniciar | Pontuações pessoais desde o início do período entram no ranking |
 | CT05 | RF06/RN03 | Torneio absoluto e pontuação de 15.500 | Pontuação aplicada é 15.500 |
@@ -22,7 +34,7 @@ Os testes seguem a lógica de verificação e validação: requisitos são valid
 | CT12 | RF09/RN08 | Regra é alterada após resultado consolidado | Resultado existente e regra aplicada permanecem auditáveis |
 | CT13 | RF10 | Usuário participa de dois torneios e não participa de um terceiro | A lista exibe somente os dois torneios participantes, com acesso aos detalhes de cada um |
 | CT14 | RF11/RN09 | Torneio configurado de segunda a sexta e lançamento feito no domingo | Domingo não é considerado dia de jogo nem gera resultado |
-| CT15 | RF11/RN09 | Torneio configurado de segunda a sexta mais domingos | Domingo é considerado dia de jogo e pode receber pontuação ou penalidade |
+| CT15 | RF11/RN09 | Torneio configurado para todos os dias | Sábado e domingo são dias de jogo, com pontuação ou ausência conforme a regra; exclusão específica prevalece |
 | CT16 | RF12/RN09 | Organizador exclui uma segunda-feira por feriado | A data excluída não gera pontuação nem penalidade |
 
 ## Evidências

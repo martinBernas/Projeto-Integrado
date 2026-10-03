@@ -1,13 +1,15 @@
+import type { RuleVersion } from './rules';
 export type Participant = { id: string; name: string; geoguessr_url?: string | null; eligible_from: string };
 export type DayResult = {
   player_id: string; played_on: string; raw_score: number | null; applied_score: number;
   result_kind: 'score' | 'absence' | 'pending'; provisional: boolean;
-  applied_rule_snapshot: { version: string; minimum_positive: number | null };
+  applied_rule_snapshot: { version: string; minimum_positive: number | null; mode?: string; absence_penalty?: number };
 };
 export type TournamentData = {
   access: true; today: string;
   tournament: { name: string; starts_at: string; ends_at: string; timezone: string; history_ready: boolean; rule_version: string; closed_at?: string | null };
   participants: Participant[]; excluded_dates: string[]; results: DayResult[];
+  current_rule?: RuleVersion; rule_versions?: RuleVersion[];
 };
 export function eligibleResults(participants: Participant[], results: DayResult[]) {
   const starts = new Map(participants.map(p => [p.id, p.eligible_from]));

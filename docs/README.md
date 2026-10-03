@@ -7,6 +7,10 @@ Sprint 3 concluída em 21/09/2026. [Encerramento e evidências](sprints/sprint-3
 ## Documentação
 
 - [Plano de ação](plano-de-acao.md)
+- [Sprint 5 — implementação local e planejamento](sprints/sprint-5.md)
+- [Sprint 5 — migração, backup, recuperação e homologação](sprints/sprint-5-operacao.md)
+- [Decisão e modelo de regras versionadas](decisoes/adr-003-regras-versionadas.md)
+- [Sprint 7 — pré-planejamento de usabilidade e carregamento](sprints/sprint-7.md)
 - [Avaliação do escopo pendente e feedback — 27/09/2026](avaliacao-backlog-2026-09-27.md)
 - [Sprint 1 — descoberta e documentação](sprints/sprint-1.md)
 - [Sprint 2 — fundação, autenticação e publicação](sprints/sprint-2.md)
@@ -36,5 +40,7 @@ O arquivo `GeoGuaras.xlsx` é a referência inicial do domínio. Ele contém a a
 TypeScript, Next.js, Tailwind CSS e Vercel para a aplicação web. Supabase fornece PostgreSQL, autenticação e autorização via RLS.
 
 ## Situação atual
+
+Sprint 5 iniciada em 03/10/2026 por autorização do Dono do produto. S5-01–S5-03 implementadas localmente; migração, publicação e homologação pendentes. Fuso fixo São Paulo, zero bruto como ausência, calendário configurável e revisão retroativa explícita com prévia/confirmação. Ver [entrega e evidências](sprints/sprint-5.md).
 
 Sprint 4 encerrada em 27/09/2026, com S4-01 a S4-05 homologadas e carga complementar dos perfis confirmada. Consulte o [registro consolidado de encerramento](sprints/sprint-4.md) para evidências, limites e escopo futuro.

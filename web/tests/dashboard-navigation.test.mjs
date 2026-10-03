@@ -6,6 +6,7 @@ import ts from 'typescript';
 import * as jsx from 'react/jsx-runtime';
 import { renderToStaticMarkup } from 'react-dom/server';
 import * as tournament from '../src/lib/tournament.ts';
+import * as rules from '../src/lib/rules.ts';
 
 test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inválido', async () => {
   let rows = [
@@ -14,6 +15,7 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
   ];
   let listError = null;
   let rpcError = null;
+  let schedule;
   const calls = [];
   const dependencies = {
     'react/jsx-runtime': jsx,
@@ -22,6 +24,7 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
     '@/app/auth/actions': { signOut: () => {} },
     '@/lib/supabase/config': { isSupabaseConfigured: true },
     '@/lib/tournament': tournament,
+    '@/lib/rules': rules,
     './score-form': { ScoreForm: () => null },
     './tournament-view': { TournamentView: ({ data }) => jsx.jsx('p', { children: `Ranking ${data.tournament.name}` }) },
     '@/lib/supabase/server': { createClient: async () => ({
@@ -33,7 +36,8 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
       },
       rpc: async (_, { target }) => {
         calls.push(target);
-        return { error: rpcError, data: { access: true, today: '2026-09-26', tournament: rows.find(t => t.id === target), excluded_dates: [] } };
+        return { error: rpcError, data: { access: true, today: '2026-09-26', tournament: rows.find(t => t.id === target), excluded_dates: [],
+          ...(schedule ? { rule_versions: [{ id: 1, effective_from: '2026-08-01', effective_to: '2026-10-31', weekly_schedule: schedule, exclusions: [] }] } : {}) } };
       },
     }) },
   };
@@ -44,6 +48,11 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
   const render = async value => renderToStaticMarkup(await exports.default({ searchParams: Promise.resolve(value) }));
   assert.match(await render({}), /Ranking Copa aberta/);
   assert.equal(calls.at(-1), 'open');
+  schedule = 'every_day';
+  assert.doesNotMatch(await render({ tournament: 'open' }), /Este lançamento não conta/);
+  schedule = 'monday_to_friday';
+  assert.match(await render({ tournament: 'open' }), /Este lançamento não conta/);
+  schedule = undefined;
   const closed = await render({ tournament: 'closed' });
   assert.match(closed, /href="\/dashboard\?tournament=closed" aria-current="page"/);
   assert.match(closed, /Ranking Copa encerrada/);

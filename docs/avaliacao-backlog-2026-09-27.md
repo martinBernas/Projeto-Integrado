@@ -8,6 +8,10 @@ Base: requisitos, plano de ação, encerramento da Sprint 4 e inspeção do form
 
 ## O que falta no escopo planejado
 
+Situação posterior em 03/10/2026: S5-01–S5-03 implementadas localmente, incluindo revisão retroativa explícita; implantação e aceite pendentes. [Sprint 5](sprints/sprint-5.md). As lacunas abaixo descrevem a avaliação de 27/09, anterior a essa implementação.
+
+Atualização de 03/10/2026: a lacuna de fuso configurável mencionada na avaliação histórica abaixo foi retirada do requisito pelo Dono do produto. Fuso fixo `America/Sao_Paulo`, zero como ausência em ambos os modos e revisão retroativa explícita são as decisões vigentes no [planejamento da Sprint 5](sprints/sprint-5.md).
+
 | Escopo | Situação e trabalho restante |
 | --- | --- |
 | RF01, RF02, RF03, RF05, RF07, RF10, RF17 e RF18 | Fluxos básicos entregues nas sprints 2–4, dentro dos recortes aceitos: autenticação, torneios, participantes, lançamento diário, rankings, navegação e perfis. Não reabrir como novas entregas. |
@@ -19,6 +23,8 @@ Base: requisitos, plano de ação, encerramento da Sprint 4 e inspeção do form
 Ordem recomendada: refinar e concluir Sprint 5, depois Sprint 6 e o núcleo de moderação/histórico da Sprint 7. Melhorias adicionais só entram após priorização e capacidade explícitas. RNF01–RNF06 continuam sendo critérios transversais, não uma entrega já dispensada para os fluxos futuros.
 
 ## Avaliação dos pedidos
+
+Complemento de 03/10/2026: FB05 (excesso de informações, resultados recentes e expansão por botão) e FB06 (espera ao trocar de torneio e sugestão de pré-carregar antes do login) constam no [pré-planejamento da Sprint 7](sprints/sprint-7.md), como candidatos à S7-03. Medir o gargalo antes de escolher a solução; dados privados exigem autenticação/autorização. A diretriz anterior permanece: pedidos não ampliam automaticamente o compromisso das sprints 5–7.
 
 | Referência de feedback | Pedido | Avaliação | Encaminhamento proposto |
 | --- | --- | --- | --- |

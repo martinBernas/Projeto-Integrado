@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { formatDate, formatScore, type TournamentData } from '@/lib/tournament';
 import { ScoreForm } from './score-form';
 import { TournamentView } from './tournament-view';
+import { ruleForDate } from '@/lib/rules';
 
 export default async function DashboardPage({ searchParams }: { searchParams: Promise<{ tournament?: string | string[] }> }) {
   if (!isSupabaseConfigured) return <main className="mx-auto min-h-screen max-w-2xl px-6 py-20"><h1 className="text-3xl font-bold">Serviço em preparação</h1><p className="mt-4 text-slate-600">O acesso às pontuações estará disponível em breve.</p><Link className="mt-6 inline-block font-semibold text-emerald-700" href="/">Voltar ao início</Link></main>;
@@ -21,8 +22,12 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   const tournament = data?.access ? data as TournamentData : null;
   const today = tournament?.today ?? new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
   const ownToday = history?.find(row => row.played_on === today)?.score;
+  const todayRule = tournament?.rule_versions ? ruleForDate(tournament.rule_versions, today) : undefined;
   const todayIsGame = tournament && today >= tournament.tournament.starts_at && today <= tournament.tournament.ends_at
-    && !tournament.excluded_dates.includes(today) && ![0, 6].includes(new Date(`${today}T12:00:00Z`).getUTCDay());
+    && !(todayRule?.exclusions.map(e => e.date) ?? tournament.excluded_dates).includes(today)
+    && (todayRule?.weekly_schedule === 'every_day' ? true : todayRule?.weekly_schedule === 'monday_to_friday_and_sunday'
+      ? new Date(`${today}T12:00:00Z`).getUTCDay() !== 6
+      : ![0, 6].includes(new Date(`${today}T12:00:00Z`).getUTCDay()));
   return <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 sm:py-12">
     <div className="mx-auto max-w-6xl space-y-8">
       <header className="flex flex-wrap items-center justify-between gap-4">

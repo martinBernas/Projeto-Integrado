@@ -1,5 +1,9 @@
 # Regras de pontuação
 
+## Evolução local — Sprint 5, 03/10/2026
+
+Modo, penalidade, calendário e exclusões passam a versões por intervalo. A última revisão que cobre uma data prevalece, preservando as anteriores e a regra aplicada no snapshot diário. Revisão retroativa requer motivo, prévia de impacto e confirmação explícita do organizador; encerrados não admitem revisão. Regras futuras não alteram datas anteriores. Pontuação pessoal permanece compartilhada; revisão do torneio não edita seu valor nem regras de outros torneios. Fuso fixo São Paulo; zero bruto é ausência em ambos os modos, distinto de zero aplicado válido no relativo. Implementação local, com publicação/homologação pendentes. [Sprint 5](sprints/sprint-5.md).
+
 ## Recorte da Sprint 3
 
 A primeira entrega usará um torneio pré-instanciado e uma regra fixa identificada como `mvp-v1`, sem configuração pela interface. O Dono do produto confirmou o bloco de setembro (modo relativo, penalidade −2.500 após a virada do dia). O histórico será inserido manualmente pelo Dono do produto após o cadastro dos usuários; período, elegibilidade e procedimento de carga estão detalhados no [plano da Sprint 3](sprints/sprint-3.md). As opções configuráveis abaixo descrevem a evolução do produto.
@@ -11,6 +15,8 @@ A planilha distingue períodos: `geral!C2` trata ausência como zero no bloco de
 Cada pontuação bruta pertence ao jogador, identificada pela data e hora do lançamento. Ela existe mesmo quando o jogador não participa de torneio. Ao ser incluído em um torneio em andamento, o jogador passa a aparecer no ranking com suas pontuações existentes desde o início daquele torneio.
 
 ## Modos configuráveis
+
+Decisão do Dono do produto em 03/10/2026: zero bruto representa ausência também no modo absoluto. A penalidade só é aplicada no dia elegível encerrado e com preparação histórica concluída. Zero aplicado ao menor positivo no relativo continua sendo resultado válido. Todos os torneios e lançamentos adotam `America/Sao_Paulo`, sem configuração de fuso; substitui a proposta anterior de múltiplos fusos. Implementação local e evidências em [Sprint 5](sprints/sprint-5.md).
 
 Cada torneio define um dos seguintes modos:
 
@@ -31,13 +37,13 @@ Exemplo: se as pontuações forem 10.000, 12.000 e 15.500, os pontos aplicados s
 
 Na carga inicial da Sprint 3, o Dono do produto fornecerá um Excel após o cadastro das contas. Enquanto a preparação histórica estiver aberta, dados ausentes ficam pendentes e o ranking é provisório, sem penalidades. Após conferir e concluir a carga diretamente na base, as ausências dos dias elegíveis encerrados passam a gerar −2.500. Ver [procedimento operacional](sprints/sprint-3-operacao.md). A aplicação do resultado relativo aos lançamentos positivos permanece independente dessa faixa de pontuação bruta.
 
-O valor da penalidade por não jogar é uma configuração do torneio. O MVP usa −2.500 no bloco de setembro, mas a aplicação não deve fixar esse número. A ausência só pode ser avaliada dentro do período do torneio e conforme o fuso horário configurado.
+O valor da penalidade por não jogar é uma configuração do torneio. O MVP usa −2.500 no bloco de setembro, mas a aplicação não deve fixar esse número. A ausência só pode ser avaliada dentro do período do torneio e no fuso fixo `America/Sao_Paulo`.
 
 ## Calendário de jogo
 
 Na Sprint 3, o torneio de 01/09/2026 a 30/09/2026 ocorre de segunda a sexta, excluindo 07/09/2026 por determinação do Dono do produto. Sábados, domingos e o feriado não geram pontos aplicados nem penalidades. A exclusão também vale para pontuações históricas inseridas manualmente, mesmo que a planilha contenha essa data. Os controles configuráveis abaixo ficam para entregas futuras.
 
-O organizador configura os dias recorrentes do torneio: **segunda a sexta** ou **segunda a sexta mais domingos**. Além disso, pode excluir datas específicas, como feriados. Uma data excluída não é considerada dia de jogo, portanto não recebe pontuação e não aplica penalidade de ausência.
+O organizador configura os dias recorrentes do torneio: **segunda a sexta** ou **todos os dias**. Além disso, pode excluir datas específicas, como feriados. Uma data excluída não é considerada dia de jogo, portanto não recebe pontuação e não aplica penalidade de ausência.
 
 ## Consolidação
 

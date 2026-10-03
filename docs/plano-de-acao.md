@@ -1,12 +1,22 @@
 # Plano de ação
 
+Situação atual da Sprint 5 em 03/10/2026: backup capturado/exportado e verificado; ambas as migrações executadas pelo Dono do produto no Supabase. Comparação pós-migração sem diferenças, nove indicadores de esquema/permissões verdadeiros e 4 referências iniciais equivalentes aprovados. Verificação remota da migração concluída; publicação da aplicação atualizada, testes funcionais e aceite ainda não confirmados. Evidências na [Sprint 5](sprints/sprint-5.md). Registros anteriores abaixo preservam a situação de cada momento.
+
 ## Objetivo
+
+Situação vigente em 03/10/2026: Sprint 5 iniciada por autorização do Dono do produto; S5-01–S5-03 implementadas localmente, com testes/documentação e implantação/homologação remotas pendentes. [Sprint 5](sprints/sprint-5.md) e [operação](sprints/sprint-5-operacao.md). O fechamento de 27/09 abaixo permanece como histórico anterior ao início.
 
 Situação consolidada em 27/09/2026: Sprint 4 encerrada com S4-01 a S4-05 homologadas e carga complementar dos perfis executada. Revisões de escopo e pendências registradas abaixo são históricas quando substituídas pelo encerramento. Próximo escopo previsto: Sprint 5, regras e calendário; implementação ainda não iniciada neste fechamento.
 
 Entregar incrementalmente uma aplicação que substitua a planilha do campeonato GeoGuaras, preservando as regras de negócio e tornando lançamentos, cálculos e rankings rastreáveis.
 
 ## Método de trabalho
+
+Definição funcional do calendário da Sprint 5: calendário oferece segunda a sexta ou todos os dias, incluindo sábado e domingo. O escopo contempla essas duas opções, sem seleção livre de dias. [Registro atualizado](sprints/sprint-5.md).
+
+Sprint Planning de 03/10/2026: Dono do produto confirmou capacidade por tokens semanais, meta preferencial de concluir em 03–04/10 com semana seguinte para correções, revisão retroativa explícita e zero como ausência em ambos os modos. Fuso fixo `America/Sao_Paulo`, sem configuração, substitui a decisão anterior de múltiplos fusos. Em seguida autorizou desenvolvimento; entrega local registrada na Sprint 5, com aceite/publicação pendentes. Estimativas preliminares não representam consumo de tokens; saldo quantitativo não informado.
+
+Atualização de 03/10/2026: FB05 (resultados recentes com expansão) e FB06 (troca de torneio responsiva e investigação de pré-carregamento) registrados como candidatos à S7-03. [Pré-planejamento da Sprint 7](sprints/sprint-7.md) contém histórias, critérios propostos e condições de capacidade. Sprints 5 e 6 preservadas; seleção no Sprint Planning depende de refinamento, estimativas e prioridade do Dono do produto. Nenhuma implementação iniciada.
 
 Revisão de 27/09/2026: por orientação do Dono do produto, preservar a prioridade do escopo planejado das sprints 5–7. Os pedidos de modo escuro, lançamento tardio, relatório de desempenho e integração GeoGuessr permanecem em avaliação, sem ampliação automática das sprints. Consulte a [avaliação do escopo pendente e feedback](avaliacao-backlog-2026-09-27.md) para situação por requisito, recomendações e investigação inicial de API.
 

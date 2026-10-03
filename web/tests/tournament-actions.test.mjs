@@ -3,12 +3,14 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 import ts from 'typescript';
+import * as rules from '../src/lib/rules.ts';
 
 test('ações validam sessão, datas reais e confirmação; usam RPC e invalidam telas', async () => {
   const source = await readFile(new URL('../src/app/dashboard/tournaments/actions.ts', import.meta.url), 'utf8');
   const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } });
   const calls = []; const paths = []; let user = null; let error = null;
   const dependencies = {
+    '@/lib/rules': rules,
     'next/cache': { revalidatePath: path => paths.push(path) },
     '@/lib/supabase/server': { createClient: async () => ({
       auth: { getUser: async () => ({ data: { user } }) },
@@ -47,4 +49,15 @@ test('ações validam sessão, datas reais e confirmação; usam RPC e invalidam
   form.set('confirm', 'yes'); error = null;
   assert.match((await exports.manageTournament({}, form)).message, /encerrado/);
   assert.equal(calls.at(-1)[0], 'close_tournament');
+  form.set('operation', 'create'); form.set('mode', 'absolute');
+  form.set('penalty', '-1000'); form.set('schedule', 'every_day');
+  form.set('exclusions', '2026-10-12 | Feriado');
+  assert.match((await exports.manageTournament({}, form)).message, /criado/);
+  assert.equal(calls.at(-1)[0], 'create_configured_tournament');
+  assert.equal(calls.at(-1)[1].proposal.mode, 'absolute');
+  assert.equal(calls.at(-1)[1].proposal.penalty, -1000);
+  const configuredCalls = calls.length;
+  form.set('penalty', '500');
+  assert.match((await exports.manageTournament({}, form)).error, /Confira/);
+  assert.equal(calls.length, configuredCalls);
 });

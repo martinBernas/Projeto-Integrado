@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
+import { parseRuleFields } from '@/lib/rules';
 
 export type TournamentState = { error?: string; message?: string };
 
@@ -13,6 +14,8 @@ const messages: Record<string, string> = {
   tournament_not_allowed: 'Torneio indisponível ou sem permissão para administrar.',
   tournament_not_finished: 'Aguarde o fim do último dia do torneio, no horário de São Paulo.',
   history_not_ready: 'Conclua a conferência do histórico antes de encerrar o torneio.',
+  invalid_rule: 'Confira modo, penalidade (−25.000 a 0), calendário, datas excluídas e motivos.',
+  invalid_exclusions: 'Confira as datas excluídas: uma por linha, dentro do período e sem repetição, com motivo.',
 };
 
 function validDate(value: string) {
@@ -40,8 +43,10 @@ export async function manageTournament(_: TournamentState, form: FormData): Prom
     if ([...name].length < 3 || [...name].length > 100) return { error: messages.invalid_name };
     if (!validDate(start) || !validDate(end) || end < start) return { error: messages.invalid_period };
     const fields = { tournament_name: name, start_day: start, end_day: end };
+    const proposal = operation === 'create' && form.has('mode') ? parseRuleFields(form) : null;
+    if (operation === 'create' && form.has('mode') && !proposal) return { error: messages.invalid_rule };
     result = operation === 'create'
-      ? await supabase.rpc('create_tournament', fields)
+      ? proposal ? await supabase.rpc('create_configured_tournament', { ...fields, proposal }) : await supabase.rpc('create_tournament', fields)
       : await supabase.rpc('update_tournament', { target, ...fields });
   }
   if (result.error) {

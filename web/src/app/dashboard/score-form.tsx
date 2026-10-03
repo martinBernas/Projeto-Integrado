@@ -16,7 +16,7 @@ export function ScoreForm({ today, current }: { today: string; current?: number 
         {pending ? 'Salvando…' : current === undefined ? 'Salvar pontuação' : 'Atualizar pontuação'}
       </button>
     </div>
-    <p id="score-help" className="text-sm leading-6 text-slate-600">Informe o resultado de 0 a 25.000 do jogo. No torneio, calculamos a diferença para o menor resultado positivo do dia. Zero é tratado como ausência. Você pode corrigir o lançamento até o fim do dia.</p>
+    <p id="score-help" className="text-sm leading-6 text-slate-600">Informe o resultado de 0 a 25.000 do jogo. Cada torneio aplica seu modo de pontuação e calendário. Zero é tratado como ausência nos dois modos. Você pode corrigir o lançamento até o fim do dia, no horário de São Paulo.</p>
     <div aria-live="polite">{state.error && <p className="text-sm text-red-700">{state.error}</p>}{state.message && <p className="text-sm text-emerald-800">{state.message}</p>}</div>
   </form>;
 }
