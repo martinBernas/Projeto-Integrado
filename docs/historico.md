@@ -173,3 +173,5 @@ Revisão S4-03 pelo esboço: proposta inicial rejeitada; abas compactas conectad
 03/10/2026 — S5-05 autorizada: investigar primeira abertura/troca lenta e aviso intermitente. Carregamento, nova tentativa explícita e métricas sem dados pessoais implementados localmente; causa remota não confirmada. Sem migração. Publicação, linha de base e homologação pendentes. Ver seção 11 da Sprint 5 e ADR-005.
 
 Evidência posterior S5-05 em 03/10/2026: Dono do produto confirmou as telas de carregamento na aplicação utilizada. Não houve erro para conferir Tentar novamente; recuperação validada nos testes locais, sem confirmação remota desse cenário. Identificação de versão/URL e aceite global não informados. Análise das amostras permanece acompanhamento posterior.
+
+03/10/2026 — Fora da Sprint 5: ficha de acompanhamento atualizada em cópia DOCX com registros das Sprints 2 a 5 e datas documentadas autorizadas pelo Dono do produto. Original preservado; campos do tutor mantidos; página renderizada e conferida. Ver atualizacao-ficha-acompanhamento-2026-10-03.md.
