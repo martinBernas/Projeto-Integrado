@@ -1,4 +1,4 @@
-# Regras versionadas — Sprint 5 (implementação local)
+# Regra única e histórico de alterações — Sprint 5
 
 ```mermaid
 sequenceDiagram
@@ -54,4 +54,4 @@ erDiagram
   }
 ```
 
-Em torneios abertos, a última revisão vale para todo o período atual; anteriores são histórico imutável, sem vigências simultâneas. Encerrados preservam a consulta histórica. `effective_from/to` registram o período do torneio quando ocorreu a alteração. O snapshot guarda o identificador textual da versão, sem nova FK nos resultados legados. Fuso global fixo São Paulo, fora da configuração. Versões são consultáveis por participantes/organizador, auditoria é privada. Complemento local: migração `202610030002_single_tournament_rule.sql` e publicação/homologação ainda não confirmadas; migrações iniciais já executadas e verificadas pelo Dono do produto. Ver ADR-004.
+Em torneios abertos, a última revisão vale para todo o período atual; anteriores são histórico imutável, sem vigências simultâneas. Encerrados preservam a consulta histórica. `effective_from/to` registram o período do torneio quando ocorreu a alteração. O snapshot guarda o identificador textual da versão, sem nova FK nos resultados legados. Fuso global fixo São Paulo, fora da configuração. Versões são consultáveis por participantes/organizador, auditoria é privada. Migração complementar aplicada e verificada pelo Dono do produto; cenários funcionais relatados aprovados e torneio de teste retirado, sem alterar brutos/originais. Aceite global pendente. Ver [ADR-004](../decisoes/adr-004-regra-unica-por-torneio.md).

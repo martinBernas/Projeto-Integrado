@@ -429,3 +429,35 @@ test('single rule fresh backup/export/verify preserves reference across migratio
   assert.equal(Number(comparison.different_sections),0);assert.equal(comparison.checksum_backup,comparison.checksum_current);
  }finally{await db.close();}
 });
+
+test('targeted test cleanup preserves live raw scores, originals and revision audit',async()=>{
+ const db=await setup(false);
+ try {
+  const id=await tournament(db);await db.exec('reset role');
+  await db.exec(await readFile(new URL('../supabase/rehearsal/sprint5/01-backup.sql',import.meta.url),'utf8'));
+  await db.exec(await readFile(new URL(`../supabase/migrations/${migration}`,import.meta.url),'utf8'));
+  await installSingleRule(db);
+  await db.query("select public.update_tournament($1,'TESTE S5','2020-01-01','2020-01-10')",[id]);
+  const p=wholeProposal();await apply(db,id,p,(await preview(db,id,p)).token);
+  const original=(await db.query("select public.create_tournament('Original preservado','2020-01-01','2020-01-10') id")).rows[0].id;
+  await db.exec('reset role');
+  // A legitimate live score written after the older backup must survive cleanup.
+  await db.query("insert into public.personal_scores(player_id,occurred_at,score) values($1,'2020-01-03 15:00Z',13943)",[bob]);
+  const scores=(await db.query('select to_jsonb(s) d from public.personal_scores s order by id')).rows;
+  const counts=(await db.query(`select (select count(*) from public.tournament_participants where tournament_id=$1) participants,
+   (select count(*) from public.tournament_score_results where tournament_id=$1) results,
+   (select count(*) from public.tournament_rule_versions where tournament_id=$1) versions`,[id])).rows[0];
+  let sql=await readFile(new URL('../supabase/rehearsal/sprint5/19-remove-confirmed-test.sql',import.meta.url),'utf8');
+  sql=sql.replaceAll('ffb35af7-e582-49b8-bc74-05906df651ca',id).replaceAll('2026-09-01','2020-01-01').replaceAll('2026-10-31','2020-01-10')
+   .replace('<>17','<>'+counts.participants).replace('<>544','<>'+counts.results).replace('<>9','<>'+counts.versions);
+  const invalidCounts=sql.replace('<>'+counts.results,'<>999999');
+  await assert.rejects(db.exec(invalidCounts),/Contagens mudaram/);await db.exec('rollback');
+  assert.equal(Number((await db.query('select count(*) n from public.tournaments where id=$1',[id])).rows[0].n),1);
+  await db.exec(sql);
+  assert.equal(Number((await db.query('select count(*) n from private.rule_revision_changes where tournament_id=$1',[id])).rows[0].n),1);
+  assert.deepEqual((await db.query('select to_jsonb(s) d from public.personal_scores s order by id')).rows,scores);
+  assert.equal(Number((await db.query('select count(*) n from public.tournaments where id=$1',[original])).rows[0].n),1);
+  assert.equal(Number((await db.query('select count(*) n from public.tournaments where id=$1',[id])).rows[0].n),0);
+  assert.equal(Number((await db.query("select count(*) n from private.sprint5_backups where id='before-s5-test-cleanup-v1'")).rows[0].n),1);
+ }finally{await db.close();}
+});

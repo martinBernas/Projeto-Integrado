@@ -23,6 +23,7 @@ test('S5 views show absolute mode, each day snapshot, immutable timezone and exp
  }
  deps['./rule-fields']=await load('tournaments/rule-fields.tsx');
  const timeline=await load('tournaments/rule-timeline.tsx');deps['./tournaments/rule-timeline']=timeline;
+ deps['./recent-results']=await load('recent-results.tsx');
  const form=await load('tournaments/rule-form.tsx'); const view=await load('tournament-view.tsx');
  const html=renderToStaticMarkup(jsx.jsx(form.RuleForm,{id:'test',start:'2026-10-01',end:'2026-10-31',rule}));
  assert.match(html,/Prévia da revisão retroativa/);assert.match(html,/Confirmar revisão/);assert.match(html,/name="confirm"/);

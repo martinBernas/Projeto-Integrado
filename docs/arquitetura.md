@@ -1,12 +1,12 @@
 # Arquitetura e implantação
 
-Situação atual em 03/10/2026: migração complementar de regra única executada pelo Dono do produto e comparação remota pós-migração aprovada por `16-verify-after-full-period.sql`: `different_sections = 0`, `sections = []`, `checksum_backup = checksum_current = f6c6d78a67309d858fae0e70c4080477`. Dados de negócio, versões/auditorias e cálculo na data de referência preservados. Verificação remota da migração complementar concluída. Publicação da interface correspondente, homologação de período/regra únicos, retirada delimitada de torneios de teste e aceite ainda não confirmados. Não reaplicar migrações. Retomar criação/revisão somente na interface correspondente ao contrato `scope: tournament`.
+Situação consolidada em 03/10/2026: migrações S5 aplicadas pelo Dono do produto, com comparação pós-migração de regra única sem diferenças. Interface exercitada e cenários relatados aprovados: regra única, ranking, recarga, alteração/restauração do período, calendário, exclusões e modos. TESTE S5 retirado; quatro torneios originais e lançamentos legítimos preservados, com capturas privadas exportadas/validadas. URL e identificação formal do deployment não fornecidas. Aceite global/encerramento da Sprint 5 ainda não confirmados.
 
 Registros abaixo preservam a situação de cada etapa; pendências anteriores de aplicação/comparação da migração foram resolvidas pela evidência acima.
 
 ## Arquitetura vigente da edição de regras — complemento S5
 
-Regra única por torneio implementada localmente em `202610030002_single_tournament_rule.sql`; migração/publicação remotas pendentes. Para abertos, última revisão é canônica para todo o período; anteriores guardam configuração/período históricos. `effective_from/to` registram período da alteração, sem vigência independente de novas revisões. Encerrados conservam cálculo/resultados. RLS/grants permanecem.
+Regra única por torneio implementada em `202610030002_single_tournament_rule.sql`, aplicada e verificada no Supabase pelo Dono do produto. Para abertos, última revisão é canônica para todo o período; anteriores guardam configuração/período históricos. `effective_from/to` registram período da alteração, sem vigência independente de novas revisões. Encerrados conservam cálculo/resultados. RLS/grants permanecem.
 
 Tela conjunta envia período real e regra com `scope: tournament`; contrato antigo é rejeitado. Prévia simula período proposto sem gravação e token cobre pontuações nos períodos antigo e novo. Confirmação grava versão, datas/parâmetros atuais de `tournaments`, auditoria e recálculo atomicamente; reconcilia dias removidos/acrescentados. Elegibilidade/vínculos e brutos preservados. Trigger de referência inicial atua somente na criação; revisões não alteram linhas históricas. RPC antiga de edição permite nome, mas rejeita datas diferentes sem prévia.
 
@@ -96,7 +96,7 @@ O plano gratuito da Vercel é compatível com o caráter acadêmico e não comer
 - https://supabase.com/docs/guides/auth
 - https://supabase.com/docs/guides/database/postgres/row-level-security
 
-## Regras versionadas — Sprint 5 (local em 03/10/2026)
+## Desenho inicial de regras por intervalo — histórico substituído pelo ADR-004
 
 Calendário vigente: `monday_to_friday` ou `every_day` (sábado e domingo incluídos), conforme a definição funcional da Sprint 5. Migração preparatória `202610030000_all_days_calendar.sql` adiciona o valor ao enum em transação separada. O valor legado de segunda a sexta mais domingos é somente compatibilidade histórica; novas propostas o rejeitam e a interface não o oferece. Recuperação anterior ao uso mantém o enum ampliado, sem alterar o cálculo do código antigo.
 
@@ -104,7 +104,7 @@ Calendário vigente: `monday_to_friday` ou `every_day` (sábado e domingo inclu�
 
 Criação configurada é atômica; trigger dá referência a clientes antigos. `calculate_tournament` mantém assinatura, selecionando versão por dia. `refresh_open_tournament` reconcilia resultados e remove dias fora do calendário, com auditoria de remoção existente. Encerrados preservam resultados. Painel retorna regra da data de referência e histórico autorizado; interface diária usa a versão do snapshot, e avisos de lançamento usam o calendário da data atual.
 
-Server Actions validam sessão e entrada; banco revalida organizador/estado e bloqueia torneio em prévia/confirmação. Token de frescor cobre proposta e entradas; confirmação reconstrói prévia antes de inserir versão, auditar impacto em `private.rule_revision_changes` e recalcular na mesma transação. Scores e vínculos seguem o protocolo de bloqueio do torneio existente. Detalhes, limitações e decisões em [ADR-003](decisoes/adr-003-regras-versionadas.md) e [fluxo/modelo](diagramas/regras-versionadas.md). Migração/publicação/homologação remotas pendentes; [operação](sprints/sprint-5-operacao.md) inclui captura atual e recuperação restrita ao estágio anterior ao uso.
+Server Actions validam sessão e entrada; banco revalida organizador/estado e bloqueia torneio em prévia/confirmação. Token de frescor cobre proposta e entradas; confirmação reconstrói prévia antes de inserir versão, auditar impacto em `private.rule_revision_changes` e recalcular na mesma transação. Scores e vínculos seguem o protocolo de bloqueio do torneio existente. Detalhes, limitações e decisões em [ADR-003](decisoes/adr-003-regras-versionadas.md) e [fluxo/modelo](diagramas/regras-versionadas.md). Situação histórica dessa implementação inicial, substituída pela consolidação atual no início deste documento; [operação](sprints/sprint-5-operacao.md) inclui captura atual e recuperação restrita ao estágio anterior ao uso.
 
 ## Perfil público — detalhamento S4-04/S4-05
 
@@ -115,3 +115,9 @@ A página `/dashboard/profile` usa Server Action e RPC autenticada. RPCs de torn
 Migração `202609270001_public_profiles.sql`, publicação e homologação confirmadas pelo Dono do produto em 27/09/2026. Decisões e efeitos sobre legado em [ADR-002](decisoes/adr-002-perfil-publico.md), modelo em [Classes](diagramas/classes.md) e fluxo em [Perfil público](diagramas/perfil-publico.md).
 
 Carga complementar autorizada do Excel: operação administrativa única `20260927-import-mvp-profiles.sql`, sem nova tabela, RPC ou permissão de aplicação. Resolve as identidades previamente confirmadas, bloqueia Auth/perfis durante a transação, valida todos os registros antes da escrita e usa a auditoria existente. Confirma somente os nomes importados e preserva URL quando ausente na fonte; conflitos abortam. Execução remota confirmada para 12 nomes e 11 URLs; Martin excluído para preservar seu perfil manual. Fluxo de uso normal e diagramas permanecem iguais.
+
+## S5-04 — Apresentação reduzida dos resultados diários
+
+`TournamentView` permanece no servidor: consulta completa existente, filtro de elegibilidade, ranking de todos os resultados e montagem dos detalhes diários. `RecentResults`, componente de cliente, recebe conteúdos diários serializáveis e mostra cinco dias ou todos conforme estado local. Chave pelo ID do torneio reinicia apresentação ao trocar de seleção; `useId` liga botão/região, com foco visível e anúncio da contagem. Não altera RPCs, banco, autenticação, permissões, cálculos ou gravações.
+
+É limite de apresentação, sem paginação de dados: resultados completos continuam consultados/transferidos. Não demonstra redução de latência e não implementa FB06. Histórico pessoal/lista de torneios mantidos. Implementação local; publicação/homologação de S5-04 ainda pendentes. Decisão funcional e validação na Sprint 5.

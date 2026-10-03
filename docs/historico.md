@@ -1,5 +1,19 @@
 # Histórico da documentação
 
+03/10/2026 — Dono do produto aprovou S5-04 (recorte de FB05): cinco dias recentes com Ver todos/Mostrar menos e ranking completo. Implementação local e requisitos/arquitetura/testes atualizados; sem migração de banco. Histórico pessoal/lista de torneios e FB06 permanecem no backlog futuro. Publicação e homologação do acréscimo ainda não confirmadas.
+
+03/10/2026 — Revisão final de consistência da arquitetura S5: ADR-003 histórico, ADR-004 vigente, diagramas de regra única, classes e navegação atualizados com evidências remotas e retirada do teste. Pendências antigas separadas da situação atual; aceite global ainda não confirmado.
+
+03/10/2026 — Conferência final direta confirmou lançamento legítimo de 03/10 preservado integralmente após retirada de TESTE S5 (13.943 pontos). Quatro torneios originais preservados visualmente; captura privada exportada/validada. Evidências de homologação consolidadas, sem antecipar aceite global/encerramento da Sprint 5.
+
+03/10/2026 — Exportação da captura anterior à retirada de TESTE S5 recebida, validada e salva fora do Git. Checksum reconfirmado após releitura; 291 pontuações preservadas na referência. Conferência visual final e aceite global ainda não confirmados.
+
+03/10/2026 — Dono do produto retirou TESTE S5 pelo script transacional específico; quatro torneios restantes e 291 pontuações pessoais preservadas. Comparação interna da retirada aprovada e referência capturada antes da exclusão. Exportação privada, conferência visual final e aceite global ainda não confirmados.
+
+03/10/2026 — Dono do produto aprovou persistência após recarga, redução e restauração do período de TESTE S5 e preservação das regras dos quatro torneios originais. Evidências de homologação atualizadas; retirada do torneio de teste e aceite global ainda não confirmados.
+
+03/10/2026 — Homologação de TESTE S5: ranking fornecido pelo Dono do produto tem os 17 totais iguais à prévia confirmada e ordenação coerente. Aplicação da mudança de penalidade conferida; recarga, edição do período e demais critérios de aceite ainda não confirmados.
+
 03/10/2026 — Comparação pós-migração complementar de regra única aprovada pelo retorno do Dono do produto: zero diferenças e checksums iguais à referência v2. Dados e cálculo de referência preservados; verificação remota da migração concluída. Publicação/homologação da interface e retirada de torneios de teste ainda não confirmadas.
 
 03/10/2026 — Migração complementar de regra única aplicada pelo Dono do produto no Supabase, retorno de sucesso sem linhas após normalização do TESTE S5. Comparação pós-migração, publicação da interface e homologação ainda pendentes.

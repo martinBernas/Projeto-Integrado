@@ -20,7 +20,7 @@ Prioridade relativa proposta entre as melhorias: FB05, depois FB06, preservando 
 ### FB05 / S7-03a
 
 - Mostrar quantidade limitada dos dias mais recentes em ordem decrescente, preservando ranking acumulado de todo o período elegível.
-- Oferecer botão de expansão e retorno à apresentação reduzida, sem botão de expansão quando não houver mais itens. Quantidade inicial e expansão incremental ou integral dependem do refinamento; cinco itens foi sugestão técnica inicial, ainda não aprovada.
+- Oferecer botão de expansão e retorno à apresentação reduzida, sem botão de expansão quando não houver mais itens. No recorte aprovado S5-04: cinco dias e expansão integral. Outros alcances continuam dependentes de refinamento.
 - Definir alcance sobre resultados diários, histórico pessoal e seleção de torneios. Não apresentar os 100 lançamentos hoje consultados como histórico completo; coordenar acesso a registros anteriores com S7-02.
 - Manter todos os torneios autorizados acessíveis, inclusive encerrados, com seleção por URL, recarga e voltar/avançar. Refinar se a lista de torneios também exige apresentação reduzida.
 - Validar lista vazia, quantidade abaixo/no/acima do limite, muitos dias e torneios, celular e teclado. Expandir não altera totais, ordenação dos jogadores ou permissões.

@@ -2,11 +2,11 @@
 
 Situação: o desenho de intervalos independentes foi substituído para novas edições pelo [ADR-004 — regra única por torneio](adr-004-regra-unica-por-torneio.md). Este documento preserva a decisão técnica inicial e sua migração já executada.
 
-Data: 03/10/2026. Situação: implementada localmente na Sprint 5; migração, publicação e homologação remotas ainda não realizadas.
+Data: 03/10/2026. Registro histórico da entrega inicial da Sprint 5: migração executada e verificada remotamente. Desenho por intervalos substituído pelo ADR-004; descrição de implantação/ensaio abaixo preserva o contexto original.
 
 ## Contexto e decisões funcionais
 
-Definição funcional da Sprint 5: calendário oferece segunda a sexta ou todos os dias, incluindo sábado/domingo. A configuração de todos os dias usa `every_day`; o calendário legado de segunda a sexta mais domingos fica restrito à compatibilidade histórica. A migração preparatória do enum termina antes da principal, por exigência do PostgreSQL. Valores históricos antigos mantêm sua semântica; não transformar implicitamente um calendário antigo em todos os dias. Não há execução remota confirmada.
+Definição funcional da Sprint 5: calendário oferece segunda a sexta ou todos os dias, incluindo sábado/domingo. A configuração de todos os dias usa `every_day`; o calendário legado de segunda a sexta mais domingos fica restrito à compatibilidade histórica. A migração preparatória do enum termina antes da principal, por exigência do PostgreSQL. Valores históricos antigos mantêm sua semântica; não transformar implicitamente um calendário antigo em todos os dias. Migrações iniciais posteriormente executadas e verificadas pelo Dono do produto, conforme a Sprint 5.
 
 O cálculo anterior usa modo, penalidade e calendário únicos do torneio. Editá-los diretamente reescreveria a explicação de dias anteriores. O Dono do produto confirmou revisão retroativa explícita, zero bruto como ausência nos dois modos e fuso fixo `America/Sao_Paulo`, retirado da configuração. Essas decisões funcionais não autorizam reabrir encerrados ou editar pontuações pessoais.
 

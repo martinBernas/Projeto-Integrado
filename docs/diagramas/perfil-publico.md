@@ -18,4 +18,4 @@ sequenceDiagram
   Banco-->>Titular: Nomes confirmados e links dos participantes
 ```
 
-Cadastro usa Supabase Auth e trigger de criação, com validação e índice único. Leitura direta de perfis é limitada ao próprio usuário. Link GeoGuessr é navegação externa do navegador, sem busca ou importação no servidor. Implementação local, implantação e homologação pendentes.
+Cadastro usa Supabase Auth e trigger de criação, com validação e índice único. Leitura direta de perfis é limitada ao próprio usuário. Link GeoGuessr é navegação externa do navegador, sem busca ou importação no servidor. Implementação, migração/publicação e homologação confirmadas no [encerramento da Sprint 4](../sprints/sprint-4.md) em 27/09/2026. Fluxo permanece válido após S5.

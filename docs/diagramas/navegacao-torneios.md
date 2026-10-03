@@ -1,6 +1,6 @@
 # Navegação entre torneios — S4-03
 
-Evolução local S5 em 03/10/2026: o painel autorizado passa a retornar também versão da data de referência e histórico de regras; cálculo escolhe versão por dia, avisos usam calendário atual e legendas diárias usam snapshots. [Fluxo de revisão](regras-versionadas.md). O fluxo aceito da S4-03 abaixo continua como base; migração/publicação S5 ainda pendentes.
+Situação S5 em 03/10/2026: painel retorna a regra única atual do torneio aberto e seu histórico de alterações; resultados diários guardam snapshots, avisos usam o calendário atual. Edição conjunta de período/regra está em /dashboard/tournaments/id/rules, com prévia e confirmação. Migrações aplicadas/verificadas e cenários relatados conferidos pelo Dono do produto; aceite global pendente. [Fluxo de revisão](regras-versionadas.md). O fluxo aceito de S4-03 abaixo permanece como base.
 
 ```mermaid
 sequenceDiagram
@@ -13,8 +13,28 @@ sequenceDiagram
   Painel->>Banco: get_tournament_dashboard(uuid selecionado)
   Banco->>Banco: Autenticar, autorizar, bloquear torneio e revalidar acesso
   Banco->>Banco: Atualizar resultados do alvo se aberto
-  Banco-->>Painel: Torneio, participantes, exclusões e resultados
+  Banco-->>Painel: Torneio, participantes, exclusões, resultados, regra atual e histórico
   Painel-->>Conta: Abas e ranking do torneio selecionado
 ```
 
-Seleção inválida não chama a RPC pela interface. A RPC também protege chamadas diretas. Encerrados preservam os resultados existentes. Sem mudanças no modelo de dados; o diagrama de classes da S4-02 permanece válido. Migração confirmada e aplicação publicada homologada pelo Dono do produto em 27/09/2026.
+Seleção inválida não chama a RPC pela interface. A RPC também protege chamadas diretas. Encerrados preservam os resultados existentes. Na S4-03 não houve mudança de modelo; a S5 acrescentou histórico de regras/auditoria, conforme o [modelo atualizado](classes.md) e ADR-004. Migração confirmada e aplicação publicada homologada pelo Dono do produto em 27/09/2026.
+
+## S5-04 — Expansão local de dias
+
+```mermaid
+sequenceDiagram
+  actor Conta
+  participant Servidor as TournamentView / servidor
+  participant Lista as RecentResults / cliente
+  Servidor->>Servidor: Ranking completo e detalhes de todos os dias autorizados
+  Servidor->>Lista: Conteúdos diários, chave pelo ID do torneio
+  Lista-->>Conta: Cinco dias recentes e Ver todos, quando necessário
+  Conta->>Lista: Ver todos / Mostrar menos
+  Lista-->>Conta: Alternar apresentação, ranking permanece completo
+  Note over Lista: Sem nova consulta ou gravação
+  Conta->>Servidor: Selecionar outro torneio pela URL
+  Servidor->>Lista: Nova seleção autorizada, nova chave
+  Lista-->>Conta: Apresentação reduzida da nova seleção
+```
+
+Conteúdos completos continuam transferidos; limite apenas de apresentação. Implementação local, publicação/homologação adicional pendentes.

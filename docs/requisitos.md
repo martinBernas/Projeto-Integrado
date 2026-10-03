@@ -111,3 +111,6 @@ RF17/RF18 implementados, migrados, publicados e homologados pelo Dono do produto
 ## Feedback em avaliação — 27/09/2026
 
 O Dono do produto confirmou a prioridade de concluir o escopo planejado antes de acrescentar evoluções. Modo escuro (FB01), lançamento tardio com controle do organizador (FB02), métricas de desempenho para RF19 (FB03) e integração GeoGuessr (FB04) estão registrados na [avaliação do backlog](avaliacao-backlog-2026-09-27.md), com dependências, riscos e definições propostas. São candidatos sem compromisso de implementação ou sprint; o relatório amplia o detalhamento de RF19, sem duplicá-lo.
+
+
+Complemento aprovado S5-04 (RF07/RF10, RNF04): resultados diários exibem inicialmente cinco dias disponíveis mais recentes, com Ver todos/Mostrar menos quando excederem cinco. Ranking considera todo o período elegível; expansão não altera totais, regras ou permissões. Nova seleção de torneio começa reduzida. Histórico pessoal e lista de torneios fora desse recorte. Implementação local, publicação/homologação pendentes.

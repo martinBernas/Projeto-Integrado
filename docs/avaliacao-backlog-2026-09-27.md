@@ -1,5 +1,7 @@
 # Avaliação do escopo pendente e feedback — 27/09/2026
 
+03/10/2026 — Dono do produto aprovou S5-04 (recorte de FB05): cinco dias recentes com Ver todos/Mostrar menos e ranking completo. Implementação local e requisitos/arquitetura/testes atualizados; sem migração de banco. Histórico pessoal/lista de torneios e FB06 permanecem no backlog futuro. Publicação e homologação do acréscimo ainda não confirmadas.
+
 ## Diretriz e evidências
 
 Diretriz confirmada pelo Dono do produto: garantir primeiro o escopo já planejado e avaliar os pedidos dos usuários para evolução posterior. Esta revisão não autoriza implementação nem altera o compromisso das sprints. As recomendações abaixo são propostas para refinamento, sem datas ou estimativas fechadas.

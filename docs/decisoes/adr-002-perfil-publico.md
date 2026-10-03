@@ -1,6 +1,6 @@
 # ADR-002 — Perfil público confirmado e unicidade global
 
-Data: 27/09/2026. Estado: escolha técnica implementada localmente, pendente de migração/publicação e homologação. Unicidade global e edição pelo titular foram confirmadas pelo Dono do produto; os detalhes de transição e normalização abaixo são escolhas técnicas.
+Data: 27/09/2026. Estado: implementada, migrada, publicada e homologada pelo Dono do produto no encerramento da Sprint 4 em 27/09/2026; ver [evidências](../sprints/sprint-4.md). Unicidade global e edição pelo titular foram confirmadas pelo Dono do produto; os detalhes de transição e normalização abaixo são escolhas técnicas.
 
 ## Contexto
 

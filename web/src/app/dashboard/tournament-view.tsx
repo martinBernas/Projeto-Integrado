@@ -1,3 +1,4 @@
+import { RecentResults } from './recent-results';
 import { PlayerName } from './player-name';
 import { eligibleResults, sortDailyResults, formatDate, formatScore, ranking, type TournamentData } from '@/lib/tournament';
 import { modeLabel, scheduleLabel } from '@/lib/rules';
@@ -27,16 +28,13 @@ export function TournamentView({ data, userId }: { data: TournamentData; userId:
       <div className="p-6"><h2 className="text-xl font-bold">Ranking acumulado</h2><p className="mt-1 text-sm text-slate-600">{data.participants.length} participantes · Resultados do dia atual são provisórios. Empates compartilham a posição.</p></div>
       {standings.length === 0 ? <p className="px-6 pb-6 text-slate-600">Nenhum participante vinculado ainda.</p> : <div className="overflow-x-auto"><table className="w-full text-left text-sm"><caption className="sr-only">Classificação acumulada de {data.tournament.name}</caption><thead className="bg-slate-100 text-slate-600"><tr><th className="px-6 py-3">Posição</th><th className="px-6 py-3">Jogador</th><th className="px-6 py-3 text-right">Pontos</th></tr></thead><tbody>{standings.map(p => <tr key={p.id} className={`border-t border-slate-100 ${p.id === userId ? 'bg-emerald-50' : ''}`}><td className="px-6 py-4 font-semibold">{p.position}º</td><th scope="row" className="px-6 py-4 font-medium"><PlayerName name={p.name} url={p.geoguessr_url} />{p.id === userId && <span className="ml-2 text-xs text-emerald-800">você</span>}</th><td className="px-6 py-4 text-right font-bold tabular-nums">{formatScore(p.total)}</td></tr>)}</tbody></table></div>}
     </section>
-    <section className="space-y-3"><h2 className="text-xl font-bold">Resultados por dia</h2>
-      {days.length === 0 && <p className="text-slate-600">Ainda não há dias de jogo a apresentar.</p>}
-      {days.map(day => {
+    <RecentResults key={data.tournament.id} items={days.map(day => {
         const rows = sortDailyResults(data.participants, results.filter(r => r.played_on === day));
         const hasScores = rows.some(r => r.result_kind === 'score');
         const snapshot = rows[0]?.applied_rule_snapshot;
-        return <details key={day} className="rounded-xl border border-slate-200 bg-white"><summary className="cursor-pointer px-5 py-4 font-semibold">{formatDate(day)} <span className="ml-2 text-xs font-normal text-slate-600">{rows.some(r => r.provisional) ? 'Provisório' : 'Encerrado'}{!hasScores ? ' · Sem resultados positivos' : ''}</span></summary>
+        return { day, content: <details key={day} className="rounded-xl border border-slate-200 bg-white"><summary className="cursor-pointer px-5 py-4 font-semibold">{formatDate(day)} <span className="ml-2 text-xs font-normal text-slate-600">{rows.some(r => r.provisional) ? 'Provisório' : 'Encerrado'}{!hasScores ? ' · Sem resultados positivos' : ''}</span></summary>
           <div className="overflow-x-auto px-5 pb-5"><table className="w-full text-left text-sm"><caption className="pb-3 text-left text-xs text-slate-600">{snapshot?.mode === 'absolute' ? 'Pontuação absoluta' : hasScores ? `Menor positivo: ${formatScore(rows.find(r => r.raw_score && r.raw_score > 0)?.applied_rule_snapshot.minimum_positive ?? 0)}` : 'Sem resultados positivos; ausências e pendências abaixo.'} · Regra {snapshot?.version ?? data.tournament.rule_version}</caption><thead><tr className="border-b"><th className="py-2 pr-4">Jogador</th><th className="p-2 text-right">Bruta</th><th className="p-2 text-right">Aplicada</th><th className="p-2">Situação</th></tr></thead><tbody>{rows.map(r => <tr key={r.player_id} className="border-b border-slate-100"><th scope="row" className="py-3 pr-4 font-medium"><PlayerName name={data.participants.find(p => p.id === r.player_id)?.name ?? 'Jogador'} url={data.participants.find(p => p.id === r.player_id)?.geoguessr_url} /></th><td className="p-2 text-right tabular-nums">{r.raw_score === null ? '—' : formatScore(r.raw_score)}</td><td className="p-2 text-right tabular-nums">{r.result_kind === 'pending' ? '—' : formatScore(r.applied_score)}</td><td className="p-2 text-slate-600">{r.result_kind === 'score' ? 'Resultado' : r.result_kind === 'absence' ? 'Ausência' : 'Aguardando'}</td></tr>)}{data.participants.filter(p => day < p.eligible_from).map(p => <tr key={p.id} className="border-b border-slate-100"><th scope="row" className="py-3 pr-4 font-medium"><PlayerName name={p.name} url={p.geoguessr_url} /></th><td className="p-2 text-right">—</td><td className="p-2 text-right">—</td><td className="p-2 text-slate-600">Não inscrito</td></tr>)}</tbody></table></div>
-        </details>;
-      })}
-    </section>
+        </details> };
+      })} />
   </>;
 }

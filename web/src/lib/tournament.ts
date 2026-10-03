@@ -7,7 +7,7 @@ export type DayResult = {
 };
 export type TournamentData = {
   access: true; today: string;
-  tournament: { name: string; starts_at: string; ends_at: string; timezone: string; history_ready: boolean; rule_version: string; closed_at?: string | null };
+  tournament: { id: string; name: string; starts_at: string; ends_at: string; timezone: string; history_ready: boolean; rule_version: string; closed_at?: string | null };
   participants: Participant[]; excluded_dates: string[]; results: DayResult[];
   current_rule?: RuleVersion; rule_versions?: RuleVersion[];
 };

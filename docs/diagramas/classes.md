@@ -1,6 +1,6 @@
 # Diagrama de classes inicial
 
-Evolução local S5 em 03/10/2026: [modelo de regras versionadas](regras-versionadas.md) acrescenta versões por intervalo e auditoria privada. Fuso passa a constante São Paulo, fora da configuração; os diagramas anteriores abaixo são históricos do recorte descrito. Resultado identifica versão via snapshot; pontuação pessoal permanece compartilhada.
+Modelo vigente S5: regra única por torneio aberto, histórico imutável de configurações/períodos e auditoria privada. São Paulo é constante, sem configuração. Resultados identificam regra via snapshot; pontuação pessoal é compartilhada. Migrações aplicadas/verificadas e cenários relatados conferidos pelo Dono do produto. Os diagramas iniciais abaixo são históricos; o complemento S5 está ao final e no [modelo/fluxo de regras](regras-versionadas.md).
 
 O primeiro diagrama preserva o modelo conceitual da descoberta. O diagrama ao final descreve os principais campos e vínculos efetivamente implementados localmente até S4-05.
 
@@ -110,4 +110,55 @@ classDiagram
 
 `Perfil` corresponde a `public.profiles`; e-mail pertence a `auth.users` e só é retornado na seleção administrativa autorizada. Ausências podem gerar resultados sem `personal_score_id`. O resultado é único por torneio/jogador/dia; a pontuação pessoal é única por jogador/dia. O diagrama omite campos auxiliares, exclusões de calendário e tabelas privadas de auditoria, detalhadas em [Arquitetura](../arquitetura.md).
 
-Complemento S5: TorneioAtual tem uma configuração única para todo o período editável. Versões anteriores registram configurações/períodos históricos, sem regras simultaneamente aplicáveis em torneios abertos. Confirmação altera período/regra e reconcilia resultados atomicamente, preservando PontuacaoAtual e Vinculo. Ver [diagrama de regras](regras-versionadas.md) e [ADR-004](../decisoes/adr-004-regra-unica-por-torneio.md). Implementação local; migração complementar pendente.
+Complemento S5: TorneioAtual tem uma configuração única para todo o período editável. Versões anteriores registram configurações/períodos históricos, sem regras simultaneamente aplicáveis em torneios abertos. Confirmação altera período/regra e reconcilia resultados atomicamente, preservando PontuacaoAtual e Vinculo. Ver [diagrama de regras](regras-versionadas.md) e [ADR-004](../decisoes/adr-004-regra-unica-por-torneio.md). Migração complementar aplicada e verificada; homologação dos cenários relatados confirmada, aceite global pendente.
+
+## Modelo de regras efetivamente implementado — S5
+
+```mermaid
+classDiagram
+  class TorneioS5 {
+    +uuid id
+    +date starts_at
+    +date ends_at
+    +timestamptz closed_at
+    +string timezone constante Sao_Paulo
+  }
+  class RevisaoRegraS5 {
+    +bigint id
+    +uuid tournament_id
+    +date effective_from periodo_registrado
+    +date effective_to periodo_registrado
+    +enum scoring_mode
+    +integer absence_penalty
+    +enum weekly_schedule
+    +jsonb exclusions
+    +text version
+    +text reason
+    +uuid actor_id
+    +timestamptz created_at
+  }
+  class AuditoriaRevisaoS5 {
+    +uuid tournament_id
+    +bigint version_id
+    +jsonb proposal
+    +jsonb impact
+  }
+  class ResultadoS5 {
+    +uuid tournament_id
+    +uuid personal_score_id nullable
+    +jsonb applied_rule_snapshot
+  }
+  class PontuacaoPessoalS5 {
+    +uuid id
+    +uuid player_id
+    +date played_on
+    +integer score
+  }
+  TorneioS5 "1" --> "*" RevisaoRegraS5 : historico
+  TorneioS5 "1" --> "*" ResultadoS5 : resultados
+  TorneioS5 "1" ..> "*" AuditoriaRevisaoS5 : auditoria_privada
+  RevisaoRegraS5 "1" ..> "*" AuditoriaRevisaoS5 : referencia_logica
+  PontuacaoPessoalS5 "0..1" --> "*" ResultadoS5 : fonte_compartilhada
+```
+
+Última revisão governa todo o período atual de torneios abertos; revisões anteriores são somente histórico. Setas pontilhadas de auditoria indicam vínculos lógicos, sem FK/cascata: retirada de TESTE S5 preservou esses registros. Resultado referencia a versão textual pelo snapshot, sem FK para a revisão. Vínculos/perfis do modelo S4 permanecem.

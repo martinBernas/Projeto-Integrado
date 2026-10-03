@@ -1,10 +1,10 @@
 # ADR-004 — Uma regra por torneio e edição conjunta do período
 
-Situação atual em 03/10/2026: migração complementar de regra única executada pelo Dono do produto e comparação remota pós-migração aprovada por `16-verify-after-full-period.sql`: `different_sections = 0`, `sections = []`, `checksum_backup = checksum_current = f6c6d78a67309d858fae0e70c4080477`. Dados de negócio, versões/auditorias e cálculo na data de referência preservados. Verificação remota da migração complementar concluída. Publicação da interface correspondente, homologação de período/regra únicos, retirada delimitada de torneios de teste e aceite ainda não confirmados. Não reaplicar migrações. Retomar criação/revisão somente na interface correspondente ao contrato `scope: tournament`.
+Situação consolidada em 03/10/2026: migrações S5 aplicadas pelo Dono do produto, com comparação pós-migração de regra única sem diferenças. Interface exercitada e cenários relatados aprovados: regra única, ranking, recarga, alteração/restauração do período, calendário, exclusões e modos. TESTE S5 retirado; quatro torneios originais e lançamentos legítimos preservados, com capturas privadas exportadas/validadas. URL e identificação formal do deployment não fornecidas. Aceite global/encerramento da Sprint 5 ainda não confirmados.
 
 Registros abaixo preservam a situação de cada etapa; pendências anteriores de aplicação/comparação da migração foram resolvidas pela evidência acima.
 
-Data: 03/10/2026. Definição funcional confirmada pelo Dono do produto durante a homologação da Sprint 5. Implementação local; migração complementar e publicação ainda não confirmadas. Substitui a escolha técnica de vigências independentes de ADR-003 para novas edições de torneios abertos.
+Data: 03/10/2026. Definição funcional confirmada pelo Dono do produto durante a homologação da Sprint 5. Migração complementar aplicada e verificada remotamente; interface e cenários funcionais conferidos pelo Dono do produto, sem registro formal de URL/versão de deployment. Aceite global pendente. Substitui a escolha técnica de vigências independentes de ADR-003 para novas edições de torneios abertos.
 
 ## Contexto e definição
 
