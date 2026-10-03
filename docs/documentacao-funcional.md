@@ -111,6 +111,6 @@ A documentação deve permanecer no repositório Git junto com o código. Cada a
 
 
 
-Complemento aprovado S5-04 (RF07/RF10, RNF04): resultados diários exibem inicialmente cinco dias disponíveis mais recentes, com Ver todos/Mostrar menos quando excederem cinco. Ranking considera todo o período elegível; expansão não altera totais, regras ou permissões. Nova seleção de torneio começa reduzida. Histórico pessoal também exibe cinco lançamentos recentes com expansão/redução independente, dentro dos até 100 registros consultados. Lista de torneios fora desse recorte. Implementação local, publicação/homologação pendentes.
+Complemento aprovado S5-04 (RF07/RF10, RNF04): resultados diários exibem inicialmente cinco dias disponíveis mais recentes, com Ver todos/Mostrar menos quando excederem cinco. Ranking considera todo o período elegível; expansão não altera totais, regras ou permissões. Nova seleção de torneio começa reduzida. Histórico pessoal também exibe cinco lançamentos recentes com expansão/redução independente, dentro dos até 100 registros consultados. Lista de torneios fora desse recorte. Implementação local e funcionamento de S5-04 confirmado pelo Dono do produto; identificação da versão/ambiente não informada.
 
 03/10/2026 — S5-05 autorizada: investigar primeira abertura/troca lenta e aviso intermitente. Carregamento, nova tentativa explícita e métricas sem dados pessoais implementados localmente; causa remota não confirmada. Sem migração. Publicação, linha de base e homologação pendentes. Ver seção 11 da Sprint 5 e ADR-005.

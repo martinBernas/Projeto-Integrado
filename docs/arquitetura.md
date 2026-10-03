@@ -1,5 +1,9 @@
 # Arquitetura e implantação
 
+Aceite e encerramento em 03/10/2026: Dono do produto declarou explicitamente “está aceita a sprint”. Sprint 5 concluída, incluindo S5-01–S5-05. Aceite considera as evidências e limites registrados: carregamento confirmado na aplicação utilizada; Tentar novamente validado localmente, sem falha observada para homologação remota. Análise de amostras, diagnóstico da demora e eventuais melhorias permanecem acompanhamento posterior. Versão/URL do deployment não informadas; nenhum novo SQL necessário para S5-04/S5-05.
+
+Os estados anteriores abaixo são registros históricos; o aceite acima é a situação vigente.
+
 Situação consolidada em 03/10/2026: migrações S5 aplicadas pelo Dono do produto, com comparação pós-migração de regra única sem diferenças. Interface exercitada e cenários relatados aprovados: regra única, ranking, recarga, alteração/restauração do período, calendário, exclusões e modos. TESTE S5 retirado; quatro torneios originais e lançamentos legítimos preservados, com capturas privadas exportadas/validadas. URL e identificação formal do deployment não fornecidas. Aceite global/encerramento da Sprint 5 ainda não confirmados.
 
 Registros abaixo preservam a situação de cada etapa; pendências anteriores de aplicação/comparação da migração foram resolvidas pela evidência acima.
@@ -120,9 +124,11 @@ Carga complementar autorizada do Excel: operação administrativa única `202609
 
 `TournamentView` permanece no servidor: consulta completa existente, filtro de elegibilidade, ranking de todos os resultados e montagem dos detalhes diários. `RecentResults`, componente de cliente, recebe conteúdos diários serializáveis e mostra cinco dias ou todos conforme estado local. Chave pelo ID do torneio reinicia apresentação ao trocar de seleção; `useId` liga botão/região, com foco visível e anúncio da contagem. Não altera RPCs, banco, autenticação, permissões, cálculos ou gravações.
 
-É limite de apresentação, sem paginação de dados: resultados completos continuam consultados/transferidos. Não demonstra redução de latência e não implementa FB06. Histórico pessoal usa o mesmo componente com estado independente: cinco lançamentos iniciais, expansão dos até 100 registros carregados pelo servidor com filtro do jogador e RLS, incluindo dias fora dos calendários dos torneios. Lista de torneios mantida. Implementação local; publicação/homologação de S5-04 ainda pendentes. Decisão funcional e validação na Sprint 5.
+É limite de apresentação, sem paginação de dados: resultados completos continuam consultados/transferidos. Não demonstra redução de latência e não implementa FB06. Histórico pessoal usa o mesmo componente com estado independente: cinco lançamentos iniciais, expansão dos até 100 registros carregados pelo servidor com filtro do jogador e RLS, incluindo dias fora dos calendários dos torneios. Lista de torneios mantida. Implementação local e funcionamento de S5-04 confirmado pelo Dono do produto; identificação da versão/ambiente não informada. Decisão funcional e validação na Sprint 5.
 ## S5-05 — Carregamento, recuperação e tempos de consulta
 
 Entrada do painel usa loading.tsx; TournamentPanel recebe abas autorizadas e conteúdo do servidor. Link/onNavigate e router.push em useTransition identificam a seleção solicitada; resultados anteriores são substituídos por status enquanto pendente. Prefetch das abas desabilitado, pois a RPC atual pode atualizar resultados. RetryLoad atualiza a rota em falhas de consulta; error.tsx oferece retry() para exceções. Sem cache privado nem alterações de autorização, transações ou modelo.
 
 measureDashboardQuery registra tempos/resultado/código normalizado no servidor, com session_claims no proxy de /dashboard e demais etapas na página. Não registra dados pessoais. O fluxo de cookies permanece igual. Medidas incluem transporte e não isolam SQL, bloqueios, inicialização ou renderização do navegador. Causa da demora não confirmada; publicação/medição/homologação pendentes. [ADR-005](decisoes/adr-005-carregamento-e-diagnostico-do-painel.md).
+
+Evidência posterior S5-05 em 03/10/2026: Dono do produto confirmou as telas de carregamento na aplicação utilizada. Não houve erro para conferir Tentar novamente; recuperação validada nos testes locais, sem confirmação remota desse cenário. Identificação de versão/URL e aceite global não informados. Análise das amostras permanece acompanhamento posterior.

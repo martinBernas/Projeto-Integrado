@@ -1,5 +1,17 @@
 # Plano de ação
 
+Aceite e encerramento em 03/10/2026: Dono do produto declarou explicitamente “está aceita a sprint”. Sprint 5 concluída, incluindo S5-01–S5-05. Aceite considera as evidências e limites registrados: carregamento confirmado na aplicação utilizada; Tentar novamente validado localmente, sem falha observada para homologação remota. Análise de amostras, diagnóstico da demora e eventuais melhorias permanecem acompanhamento posterior. Versão/URL do deployment não informadas; nenhum novo SQL necessário para S5-04/S5-05.
+
+Os estados anteriores abaixo são registros históricos; o aceite acima é a situação vigente.
+
+## Situação consolidada
+
+Situação consolidada em 03/10/2026: S5-01–S5-03 implementadas, migrações executadas/verificadas e cenários relatados homologados; TESTE S5 retirado, quatro torneios originais e lançamentos legítimos preservados. S5-04 (resultados recentes e histórico pessoal) teve funcionamento confirmado pelo Dono do produto. S5-05 (carregamento, recuperação e métricas) implementada localmente, com 69 testes, lint e build aprovados; telas de carregamento confirmadas pelo Dono do produto na aplicação utilizada; nenhuma falha ocorreu para conferir Tentar novamente. Versão/URL não informadas. Análise das amostras e otimização posterior ficam como acompanhamento, conforme orientação do Dono do produto, sem prometer redução de latência. Sprint 5 aceita e encerrada pelo Dono do produto em 03/10/2026; análise de logs e melhorias posteriores ficam como acompanhamento. A situação detalhada e cronológica está em docs/sprints/sprint-5.md.
+
+## Registros das etapas anteriores
+
+Os registros abaixo preservam as evidências de cada etapa. Pendências descritas em etapas anteriores não prevalecem sobre a situação consolidada; os acréscimos S5-04/S5-05 ao final complementam esse histórico.
+
 03/10/2026 — Dono do produto aprovou S5-04 (recorte de FB05): cinco dias recentes com Ver todos/Mostrar menos e ranking completo. Implementação local e requisitos/arquitetura/testes atualizados; sem migração de banco. Histórico pessoal incluído com cinco lançamentos recentes e expansão dos até 100 registros carregados. Lista de torneios, acesso a registros anteriores ao limite e FB06 permanecem no backlog futuro. Publicação e homologação do acréscimo ainda não confirmadas.
 
 Conferência direta final fornecida pelo Dono do produto via `21-check-preserved-score.sql`: data 03/10/2026, valor anterior/atual 13.943, `score_present = true`, `unchanged_from_cleanup_backup = true`. Lançamento legítimo do Feyh preservado integralmente. Conferência visual dos quatro torneios originais já confirmada; TESTE S5 retirado e captura anterior à retirada exportada/validada. Cenários funcionais relatados pelo Dono do produto aprovados: regra única, ranking igual à prévia, persistência, alteração/restauração do período, calendário semanal, exclusão/restauração de data, absoluto/relativo e isolamento dos originais. Testes locais de autorização/encerrados/concorrência e rollback constam nas evidências anteriores; não equivalem a homologação remota desses cenários. Conferências finais de preservação concluídas. Aceite global e encerramento da Sprint 5 ainda não confirmados explicitamente pelo Dono do produto.
@@ -140,3 +152,5 @@ Revisão operacional posterior: carga reduzida a 12 nomes/11 links, preservando 
 S4-04/S4-05 autorizadas, implementadas, migradas, publicadas na Vercel e homologadas pelo Dono do produto em 27/09/2026. Aceite substitui as pendências anteriores. Carga complementar revisada de 12 nomes e 11 links executada e conciliada pelo retorno SQL; conferência visual após a carga ainda não relatada, conforme Sprint 4.
 
 03/10/2026 — S5-05 autorizada: investigar primeira abertura/troca lenta e aviso intermitente. Carregamento, nova tentativa explícita e métricas sem dados pessoais implementados localmente; causa remota não confirmada. Sem migração. Publicação, linha de base e homologação pendentes. Ver seção 11 da Sprint 5 e ADR-005.
+
+Evidência posterior S5-05 em 03/10/2026: Dono do produto confirmou as telas de carregamento na aplicação utilizada. Não houve erro para conferir Tentar novamente; recuperação validada nos testes locais, sem confirmação remota desse cenário. Identificação de versão/URL e aceite global não informados. Análise das amostras permanece acompanhamento posterior.

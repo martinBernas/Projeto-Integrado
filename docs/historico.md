@@ -1,5 +1,17 @@
 # Histórico da documentação
 
+Aceite e encerramento em 03/10/2026: Dono do produto declarou explicitamente “está aceita a sprint”. Sprint 5 concluída, incluindo S5-01–S5-05. Aceite considera as evidências e limites registrados: carregamento confirmado na aplicação utilizada; Tentar novamente validado localmente, sem falha observada para homologação remota. Análise de amostras, diagnóstico da demora e eventuais melhorias permanecem acompanhamento posterior. Versão/URL do deployment não informadas; nenhum novo SQL necessário para S5-04/S5-05.
+
+Os estados anteriores abaixo são registros históricos; o aceite acima é a situação vigente.
+
+## Situação consolidada
+
+Situação consolidada em 03/10/2026: S5-01–S5-03 implementadas, migrações executadas/verificadas e cenários relatados homologados; TESTE S5 retirado, quatro torneios originais e lançamentos legítimos preservados. S5-04 (resultados recentes e histórico pessoal) teve funcionamento confirmado pelo Dono do produto. S5-05 (carregamento, recuperação e métricas) implementada localmente, com 69 testes, lint e build aprovados; telas de carregamento confirmadas pelo Dono do produto na aplicação utilizada; nenhuma falha ocorreu para conferir Tentar novamente. Versão/URL não informadas. Análise das amostras e otimização posterior ficam como acompanhamento, conforme orientação do Dono do produto, sem prometer redução de latência. Sprint 5 aceita e encerrada pelo Dono do produto em 03/10/2026; análise de logs e melhorias posteriores ficam como acompanhamento. A situação detalhada e cronológica está em docs/sprints/sprint-5.md.
+
+## Registros das etapas anteriores
+
+Os registros abaixo preservam as evidências de cada etapa. Pendências descritas em etapas anteriores não prevalecem sobre a situação consolidada; os acréscimos S5-04/S5-05 ao final complementam esse histórico.
+
 03/10/2026 — Dono do produto aprovou S5-04 (recorte de FB05): cinco dias recentes com Ver todos/Mostrar menos e ranking completo. Implementação local e requisitos/arquitetura/testes atualizados; sem migração de banco. Histórico pessoal incluído com cinco lançamentos recentes e expansão dos até 100 registros carregados. Lista de torneios, acesso a registros anteriores ao limite e FB06 permanecem no backlog futuro. Publicação e homologação do acréscimo ainda não confirmadas.
 
 03/10/2026 — Revisão final de consistência da arquitetura S5: ADR-003 histórico, ADR-004 vigente, diagramas de regra única, classes e navegação atualizados com evidências remotas e retirada do teste. Pendências antigas separadas da situação atual; aceite global ainda não confirmado.
@@ -159,3 +171,5 @@ Revisão S4-03 pelo esboço: proposta inicial rejeitada; abas compactas conectad
 27/09/2026 — Migração S4-04/S4-05 aplicada pelo Dono do produto antes da comparação prévia planejada. Comparador específico posterior retornou zero diferenças nos campos antigos e checksum igual à referência. Publicação do código e homologação ainda pendentes.
 
 03/10/2026 — S5-05 autorizada: investigar primeira abertura/troca lenta e aviso intermitente. Carregamento, nova tentativa explícita e métricas sem dados pessoais implementados localmente; causa remota não confirmada. Sem migração. Publicação, linha de base e homologação pendentes. Ver seção 11 da Sprint 5 e ADR-005.
+
+Evidência posterior S5-05 em 03/10/2026: Dono do produto confirmou as telas de carregamento na aplicação utilizada. Não houve erro para conferir Tentar novamente; recuperação validada nos testes locais, sem confirmação remota desse cenário. Identificação de versão/URL e aceite global não informados. Análise das amostras permanece acompanhamento posterior.

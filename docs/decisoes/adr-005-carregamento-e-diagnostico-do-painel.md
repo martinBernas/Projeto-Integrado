@@ -1,5 +1,9 @@
 # ADR-005 — Carregamento e diagnóstico do painel
 
+Aceite e encerramento em 03/10/2026: Dono do produto declarou explicitamente “está aceita a sprint”. Sprint 5 concluída, incluindo S5-01–S5-05. Aceite considera as evidências e limites registrados: carregamento confirmado na aplicação utilizada; Tentar novamente validado localmente, sem falha observada para homologação remota. Análise de amostras, diagnóstico da demora e eventuais melhorias permanecem acompanhamento posterior. Versão/URL do deployment não informadas; nenhum novo SQL necessário para S5-04/S5-05.
+
+Os estados anteriores abaixo são registros históricos; o aceite acima é a situação vigente.
+
 Data: 03/10/2026. Escopo S5-05 autorizado pelo Dono do produto; escolhas técnicas implementadas localmente. Publicação, medição e homologação remotas ainda não confirmadas.
 
 ## Contexto
@@ -19,3 +23,5 @@ Registrar dashboard_query no servidor com etapa, duração em milissegundos, res
 Feedback visual melhora a compreensão da espera e a recuperação dispensa recarga manual completa. Não há evidência de redução do tempo de consulta. Logs medem a espera percebida pelo servidor na chamada, incluindo transporte; não isolam execução SQL, espera de bloqueio ou inicialização do processo. Não medem custo de renderização/transferência do navegador nem substituem logs da plataforma para investigar inicialização. Nova tentativa explícita repete as consultas/recálculo existentes.
 
 Somente a instrumentação publicada poderá oferecer linha de base remota. Comparar primeira abertura, repetições e trocas rápidas antes de alterar cálculo/transações. Separar leitura e recálculo depende de um desenho de atualização de ausências, novos lançamentos e regras; não faz parte desta entrega. Sem migração de banco e sem alteração de autenticação, cookies ou permissões.
+
+Evidência posterior S5-05 em 03/10/2026: Dono do produto confirmou as telas de carregamento na aplicação utilizada. Não houve erro para conferir Tentar novamente; recuperação validada nos testes locais, sem confirmação remota desse cenário. Identificação de versão/URL e aceite global não informados. Análise das amostras permanece acompanhamento posterior.

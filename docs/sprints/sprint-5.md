@@ -246,10 +246,12 @@ Instrumentação dashboard_query registra duração por etapa da sessão no prox
 
 Validação local: 69 testes aprovados, sem falhas ou cenários ignorados; lint sem avisos e build de produção aprovados em 03/10/2026. Testes simulam transições e tempos, preservam seleção/erros/autorização e atualização dos cookies. Não equivalem a ensaio real de rede lenta, corrida entre respostas ou histórico do navegador.
 
-Homologação/medição após disponibilizar a versão: primeira abertura versus três recargas; três trocas entre os mesmos torneios e trocas rápidas; voltar/avançar; celular/teclado; falha temporária com nova tentativa e falta de acesso. Registrar tempo até status e até conteúdo completo, navegador/rede/ambiente e horário. Confrontar com etapas dashboard_query nos logs da aplicação. Meta quantitativa e otimização do gargalo dependem dessa linha de base; publicação, medição e homologação S5-05 pendentes.
-## 12. Situação para aceite
+Homologação/medição após disponibilizar a versão: primeira abertura versus três recargas; três trocas entre os mesmos torneios e trocas rápidas; voltar/avançar; celular/teclado; falha temporária com nova tentativa e falta de acesso. Registrar tempo até status e até conteúdo completo, navegador/rede/ambiente e horário. Confrontar com etapas dashboard_query nos logs da aplicação. Evidência posterior: Dono do produto confirmou que as telas de carregamento aparecem na aplicação utilizada; não houve erro para conferir Tentar novamente. Recuperação foi validada localmente, sem homologação remota desse cenário. Versão/URL não informadas. Por orientação posterior do Dono do produto, uso normal pelos usuários fornecerá amostras para revisão futura: análise da linha de base, definição de meta e otimização do gargalo serão acompanhamento posterior, não requisito de encerramento desta sprint. Nenhuma causa ou redução de tempo foi comprovada.
+## 12. Encerramento e aceite
 
-**Núcleo S5-01–S5-03 implementado, migrado/verificado e homologado nos cenários relatados; conferências finais de preservação concluídas. S5-04 implementada e funcionamento confirmado pelo Dono do produto; versão/ambiente e verificações detalhadas adicionais não informados. S5-05 implementada localmente, com publicação, medição e homologação pendentes. Aceite global e encerramento aguardam manifestação explícita do Dono do produto após os acréscimos.**
+**Sprint 5 aceita e encerrada pelo Dono do produto em 03/10/2026.**
+
+Aceite e encerramento em 03/10/2026: Dono do produto declarou explicitamente “está aceita a sprint”. Sprint 5 concluída, incluindo S5-01–S5-05. Aceite considera as evidências e limites registrados: carregamento confirmado na aplicação utilizada; Tentar novamente validado localmente, sem falha observada para homologação remota. Análise de amostras, diagnóstico da demora e eventuais melhorias permanecem acompanhamento posterior. Versão/URL do deployment não informadas; nenhum novo SQL necessário para S5-04/S5-05.
 
 Limites das evidências:
 
@@ -259,4 +261,4 @@ Limites das evidências:
 - URL/versão formal do deployment não fornecidas, embora a interface tenha sido exercitada pelo Dono do produto.
 - Capturas de negócio não substituem backup integral do Supabase/Auth. Backup integral/restauro e cópia protegida fora do repositório não foram confirmados.
 
-Critério de encerramento: decisão do Dono do produto sobre o aceite do incremento, considerando as evidências e os limites acima. Não registrar aceite ou publicação de versão específica sem comprovação.
+Encerramento confirmado pelo aceite explícito acima. Registros de pendências nas etapas anteriores são históricos e não reabrem a sprint. A identificação formal de deployment e a recuperação remota não foram comprovadas por este aceite; permanecem limites das evidências, não trabalho comprometido nesta sprint.

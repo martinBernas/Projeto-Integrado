@@ -1,8 +1,10 @@
 # GeoGuaras — Wiki do Projeto
 
-Situação atual em 03/10/2026: migração complementar de regra única executada pelo Dono do produto e comparação remota pós-migração aprovada por `16-verify-after-full-period.sql`: `different_sections = 0`, `sections = []`, `checksum_backup = checksum_current = f6c6d78a67309d858fae0e70c4080477`. Dados de negócio, versões/auditorias e cálculo na data de referência preservados. Verificação remota da migração complementar concluída. Publicação da interface correspondente, homologação de período/regra únicos, retirada delimitada de torneios de teste e aceite ainda não confirmados. Não reaplicar migrações. Retomar criação/revisão somente na interface correspondente ao contrato `scope: tournament`.
+Aceite e encerramento em 03/10/2026: Dono do produto declarou explicitamente “está aceita a sprint”. Sprint 5 concluída, incluindo S5-01–S5-05. Aceite considera as evidências e limites registrados: carregamento confirmado na aplicação utilizada; Tentar novamente validado localmente, sem falha observada para homologação remota. Análise de amostras, diagnóstico da demora e eventuais melhorias permanecem acompanhamento posterior. Versão/URL do deployment não informadas; nenhum novo SQL necessário para S5-04/S5-05.
 
-Registros abaixo preservam a situação de cada etapa; pendências anteriores de aplicação/comparação da migração foram resolvidas pela evidência acima.
+Os estados anteriores abaixo são registros históricos; o aceite acima é a situação vigente.
+
+Situação consolidada em 03/10/2026: S5-01–S5-03 implementadas, migrações executadas/verificadas e cenários relatados homologados; TESTE S5 retirado, quatro torneios originais e lançamentos legítimos preservados. S5-04 (resultados recentes e histórico pessoal) teve funcionamento confirmado pelo Dono do produto. S5-05 (carregamento, recuperação e métricas) implementada localmente, com 69 testes, lint e build aprovados; telas de carregamento confirmadas pelo Dono do produto na aplicação utilizada; nenhuma falha ocorreu para conferir Tentar novamente. Versão/URL não informadas. Análise das amostras e otimização posterior ficam como acompanhamento, conforme orientação do Dono do produto, sem prometer redução de latência. Sprint 5 aceita e encerrada pelo Dono do produto em 03/10/2026; análise de logs e melhorias posteriores ficam como acompanhamento. A situação detalhada e cronológica está em docs/sprints/sprint-5.md.
 
 Aplicação web para registrar pontuações pessoais de GeoGuessr, administrar torneios e gerar rankings com regras de pontuação auditáveis.
 
@@ -35,7 +37,7 @@ Sprint 3 concluída em 21/09/2026. [Encerramento e evidências](sprints/sprint-3
 
 ## Fonte do MVP
 
-A entrega original da Sprint 3 foi um único torneio pré-instanciado, com lançamento, cálculo e ranking. A Sprint 4 acrescentou administração, participantes, múltiplos torneios e perfis. Configuração de regras pela interface permanece prevista para a Sprint 5. Consulte a avaliação do backlog para as lacunas atuais.
+A entrega original da Sprint 3 foi um único torneio pré-instanciado, com lançamento, cálculo e ranking. A Sprint 4 acrescentou administração, participantes, múltiplos torneios e perfis. A Sprint 5 entregou configuração de regras pela interface, regra única e período editável, com evidências no documento da sprint. Consulte a avaliação do backlog para as lacunas atuais.
 
 O arquivo `GeoGuaras.xlsx` é a referência inicial do domínio. Ele contém a aba `Diario`, com as pontuações brutas, e a aba `geral`, com os pontos aplicados, resultados mensais e acumulado.
 
@@ -45,13 +47,12 @@ TypeScript, Next.js, Tailwind CSS e Vercel para a aplicação web. Supabase forn
 
 ## Situação atual
 
-Simplificação S5: regra única e período editável implementados localmente; migração complementar/publicação/homologação pendentes. [ADR-004](decisoes/adr-004-regra-unica-por-torneio.md). Migrações iniciais já executadas/verificadas, edição do Aztecas Outubro confirmada pelo Dono do produto. A descrição seguinte preserva o início da sprint.
+Situação consolidada em 03/10/2026: S5-01–S5-03 implementadas, migrações executadas/verificadas e cenários relatados homologados; TESTE S5 retirado, quatro torneios originais e lançamentos legítimos preservados. S5-04 (resultados recentes e histórico pessoal) teve funcionamento confirmado pelo Dono do produto. S5-05 (carregamento, recuperação e métricas) implementada localmente, com 69 testes, lint e build aprovados; telas de carregamento confirmadas pelo Dono do produto na aplicação utilizada; nenhuma falha ocorreu para conferir Tentar novamente. Versão/URL não informadas. Análise das amostras e otimização posterior ficam como acompanhamento, conforme orientação do Dono do produto, sem prometer redução de latência. Sprint 5 aceita e encerrada pelo Dono do produto em 03/10/2026; análise de logs e melhorias posteriores ficam como acompanhamento. A situação detalhada e cronológica está em docs/sprints/sprint-5.md.
 
-Sprint 5 iniciada em 03/10/2026 por autorização do Dono do produto. S5-01–S5-03 implementadas localmente; migração, publicação e homologação pendentes. Fuso fixo São Paulo, zero bruto como ausência, calendário configurável e revisão retroativa explícita com prévia/confirmação. Ver [entrega e evidências](sprints/sprint-5.md).
+A análise das amostras ocorrerá após utilização pelos usuários, conforme orientação do Dono do produto. Isso não equivale a confirmação de deployment ou de resolução da causa da demora.
 
-Sprint 4 encerrada em 27/09/2026, com S4-01 a S4-05 homologadas e carga complementar dos perfis confirmada. Consulte o [registro consolidado de encerramento](sprints/sprint-4.md) para evidências, limites e escopo futuro.
+- [Sprint 5 — escopo, evidências e aceite](sprints/sprint-5.md)
+- [ADR-004 — regra única](decisoes/adr-004-regra-unica-por-torneio.md)
+- [ADR-005 — carregamento e diagnóstico](decisoes/adr-005-carregamento-e-diagnostico-do-painel.md)
 
-
-Acréscimo S5-04 aprovado após homologação do núcleo: resultados diários e histórico pessoal exibem cinco itens recentes com expansão/redução independente, mantendo ranking completo e limite atual de 100 lançamentos pessoais consultados. Implementação local, publicação/homologação adicionais pendentes; ver seção 10 da Sprint 5.
-
-03/10/2026 — S5-05 autorizada: investigar primeira abertura/troca lenta e aviso intermitente. Carregamento, nova tentativa explícita e métricas sem dados pessoais implementados localmente; causa remota não confirmada. Sem migração. Publicação, linha de base e homologação pendentes. Ver seção 11 da Sprint 5 e ADR-005.
+Evidência posterior S5-05 em 03/10/2026: Dono do produto confirmou as telas de carregamento na aplicação utilizada. Não houve erro para conferir Tentar novamente; recuperação validada nos testes locais, sem confirmação remota desse cenário. Identificação de versão/URL e aceite global não informados. Análise das amostras permanece acompanhamento posterior.

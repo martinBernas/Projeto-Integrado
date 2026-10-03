@@ -1,6 +1,6 @@
 # Levantamento de requisitos
 
-Definição funcional vigente S5: um torneio aberto tem uma única regra aplicada a todo o período. Início/fim podem mudar juntamente com a configuração, mediante prévia de impacto e confirmação. Versões anteriores são histórico, sem revisões parciais nem programação independente de regra futura. Encerrados não permitem edição; brutos permanecem intactos. Complemento local; migração/publicação pendentes. [ADR-004](decisoes/adr-004-regra-unica-por-torneio.md).
+Definição funcional vigente S5: um torneio aberto tem uma única regra aplicada a todo o período. Início/fim podem mudar juntamente com a configuração, mediante prévia de impacto e confirmação. Versões anteriores são histórico, sem revisões parciais nem programação independente de regra futura. Encerrados não permitem edição; brutos permanecem intactos. Migração executada/verificada e cenários relatados homologados pelo Dono do produto. Identificação formal da versão publicada não fornecida. [ADR-004](decisoes/adr-004-regra-unica-por-torneio.md).
 
 ## Alocação para a primeira entrega — Sprint 3
 
@@ -113,6 +113,6 @@ RF17/RF18 implementados, migrados, publicados e homologados pelo Dono do produto
 O Dono do produto confirmou a prioridade de concluir o escopo planejado antes de acrescentar evoluções. Modo escuro (FB01), lançamento tardio com controle do organizador (FB02), métricas de desempenho para RF19 (FB03) e integração GeoGuessr (FB04) estão registrados na [avaliação do backlog](avaliacao-backlog-2026-09-27.md), com dependências, riscos e definições propostas. São candidatos sem compromisso de implementação ou sprint; o relatório amplia o detalhamento de RF19, sem duplicá-lo.
 
 
-Complemento aprovado S5-04 (RF07/RF10, RNF04): resultados diários exibem inicialmente cinco dias disponíveis mais recentes, com Ver todos/Mostrar menos quando excederem cinco. Ranking considera todo o período elegível; expansão não altera totais, regras ou permissões. Nova seleção de torneio começa reduzida. Histórico pessoal também exibe cinco lançamentos recentes com expansão/redução independente, dentro dos até 100 registros consultados. Lista de torneios fora desse recorte. Implementação local, publicação/homologação pendentes.
+Complemento aprovado S5-04 (RF07/RF10, RNF04): resultados diários exibem inicialmente cinco dias disponíveis mais recentes, com Ver todos/Mostrar menos quando excederem cinco. Ranking considera todo o período elegível; expansão não altera totais, regras ou permissões. Nova seleção de torneio começa reduzida. Histórico pessoal também exibe cinco lançamentos recentes com expansão/redução independente, dentro dos até 100 registros consultados. Lista de torneios fora desse recorte. Implementação local e funcionamento de S5-04 confirmado pelo Dono do produto; identificação da versão/ambiente não informada.
 
 03/10/2026 — S5-05 autorizada: investigar primeira abertura/troca lenta e aviso intermitente. Carregamento, nova tentativa explícita e métricas sem dados pessoais implementados localmente; causa remota não confirmada. Sem migração. Publicação, linha de base e homologação pendentes. Ver seção 11 da Sprint 5 e ADR-005.
