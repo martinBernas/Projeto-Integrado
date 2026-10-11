@@ -16,6 +16,7 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
   ];
   let listError = null;
   let rpcError = null;
+  let auditReadError = null;
   let schedule;
   let rpcDataMissing = false;
   let rpcAccess = true;
@@ -38,8 +39,9 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
           then: resolve => resolve({ data: table === 'tournaments' ? rows : [], error: table === 'tournaments' ? listError : null }) };
         return query;
       },
-      rpc: async (_, { target }) => {
+      rpc: async (name, { target }) => {
         calls.push(target);
+        if (name === 'get_score_audits') return { data: { audits: [] }, error: auditReadError };
         return { error: rpcError, data: rpcDataMissing ? null : { access: rpcAccess, today: '2026-09-26', tournament: rows.find(t => t.id === target), excluded_dates: [],
           ...(schedule ? { rule_versions: [{ id: 1, effective_from: '2026-08-01', effective_to: '2026-10-31', weekly_schedule: schedule, exclusions: [] }] } : {}) } };
       },
@@ -87,6 +89,12 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
   const denied = await render({ tournament: 'open' });
   assert.match(denied, /Torneio indisponível/);assert.doesNotMatch(denied, /Tentar novamente/);
   rpcAccess = true;
+  auditReadError = { message: 'audit read unavailable' };
+  const auditFailure = await render({ tournament: 'open' });
+  assert.match(auditFailure, /Não foi possível conferir as auditorias das pontuações/);
+  assert.match(auditFailure, /Ranking Copa aberta/);
+  assert.doesNotMatch(auditFailure, /Torneio temporariamente indisponível/);
+  auditReadError = null;
   rows = [];
   assert.match(await render({}), /Você ainda não participa/);
   listError = { message: 'internal' };

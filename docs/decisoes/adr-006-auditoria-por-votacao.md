@@ -22,6 +22,8 @@ Participantes solicitam auditoria com justificativa obrigatória; organizador ap
 
 ## Consequências e limites
 
+Complemento local durante homologação em 11/10/2026: resultados diários consultam a RPC autorizada existente em paralelo, projetando somente referência/id/estado para avisos e âncoras à avaliação. Legendas de votação aberta e punição aplicada preservam sigilo e cálculo. Sem nova migração. A consulta ainda carrega histórico completo antes da projeção; acompanhar custo/volume e eventual paginação futura.
+
 Torneios não envolvidos e pontuações pessoais permanecem preservados pela apuração. Histórico da decisão permanece mesmo se uma revisão posterior retirar o dia do calendário; restauração do dia reutiliza a decisão. A interface não oferece reabertura, recurso, tarefa automática de apuração, notificação ou moderação global. Pedidos podem bloquear operações administrativas até o organizador avaliá-los. Um pedido rejeitado também impede outro pedido sobre o mesmo par nesta sprint.
 
 Página dedicada evita aumentar o payload do painel com votos e eventos. A consulta de auditorias ainda não é paginada; validar volume em homologação e refinar paginação no histórico avançado da Sprint 7. Testes locais usam PGlite e não comprovam concorrência real entre conexões do Supabase.

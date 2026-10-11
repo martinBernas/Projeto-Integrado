@@ -2,6 +2,8 @@
 
 ## Incremento local da Sprint 6 — 11/10/2026
 
+Complemento dos avisos diários: página de servidor consulta `get_score_audits` em paralelo com o dashboard, usando a sessão e o torneio selecionado; projeta apenas id/referência/estado open/invalidated para `TournamentView`. Links com âncora `audit-<id>` direcionam ao artigo correspondente na página de avaliações. Dados de voto não são renderizados no painel; RPC existente mantém autorização e sigilo. Métrica adicional `audit_status`; falha isolada tem aviso e nova tentativa. Sem alteração de esquema/cálculo ou migração adicional. Publicação/homologação desse complemento pendentes.
+
 Auditoria por votação implementada localmente com quatro tabelas privadas: `score_audits`, `audit_electors`, `audit_votes` e `audit_events`, todas com RLS e sem acesso direto de clientes. Server Actions autenticadas chamam RPCs com autorização explícita. Participante solicita com justificativa; organizador aprova/rejeita; aprovação fixa eleitorado e prazo de 48 horas. Consulta fornece apenas voto próprio e totais finais, preservando segredo inclusive perante o organizador.
 
 Apuração bloqueia o torneio e grava decisão/punição e resultados anteriores/posteriores na mesma transação do recálculo; repetição não duplica efeitos. Decisão vinculada a torneio/pontuação, sem reescrever bruto global. Cálculo canônico e prévias excluem inválidos antes do menor positivo; resultados distinguem `audit_disregarded`/`audit_penalty`, com decisão no snapshot. Penalidade da data auditada fixada na apuração. Tokens de prévia incluem estado das avaliações.

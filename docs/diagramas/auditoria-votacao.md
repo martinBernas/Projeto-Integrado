@@ -29,3 +29,5 @@ flowchart LR
 ```
 
 A pontuação pessoal original continua compartilhada; decisão usa o par torneio/pontuação. As tabelas privadas não recebem permissões diretas para papéis clientes. Bloqueio do torneio coordena votos, apuração e mutações existentes; encerramento/configuração e alteração do auditado aguardam avaliações pendentes. Correção do bruto em avaliação é bloqueada. A autoria dos demais votos não aparece na projeção nem nos resultados anteriores/posteriores.
+
+Complemento local de transparência: painel consulta em paralelo a projeção autorizada já existente e associa avaliação à pontuação pessoal no torneio selecionado. “Auditoria aberta” navega à votação e “Punição aplicada” à decisão por âncora na mesma página. Falha da consulta tem aviso/nova tentativa. Votos não são exibidos nos resultados diários; nenhuma nova RPC ou tabela.

@@ -1,4 +1,4 @@
-type Stage = 'session_claims' | 'authentication' | 'tournaments' | 'personal_history' | 'profile' | 'tournament_rpc';
+type Stage = 'session_claims' | 'authentication' | 'tournaments' | 'personal_history' | 'profile' | 'tournament_rpc' | 'audit_status';
 
 // Record query duration and outcome only; never include payloads, IDs or error messages.
 export async function measureDashboardQuery<T>(stage: Stage, query: PromiseLike<T>): Promise<T> {

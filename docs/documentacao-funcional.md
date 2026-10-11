@@ -2,6 +2,8 @@
 
 ## Auditoria por votação — Sprint 6 (local em 11/10/2026)
 
+Complemento local solicitado durante homologação: a situação de cada pontuação do dia pode mostrar “Auditoria aberta · Ver votação”, com link direto à avaliação, ou “Punição aplicada · Ver resultado” após invalidação, com link à decisão e resultados antes/depois. Desconsideração e penalidade recebem a legenda de punição aplicada. Pedido não aprovado/rejeitado e pontuação mantida não recebem esses avisos. Aviso de avaliação aberta permanece até a apuração, inclusive após o prazo. Link não concede direito de voto a quem não integra o eleitorado. Atualizar página para consultar novo estado; complemento ainda sem publicação/homologação confirmadas.
+
 No painel do torneio, “Auditoria de pontuações” abre pedidos e decisões. Participante escolhe uma pontuação positiva e informa justificativa de 3 a 1.000 caracteres. Organizador aprova e inicia 48 horas de votação ou rejeita com motivo. Cada integrante da abertura, exceto o auditado, pode votar e alterar seu voto até o prazo; organizador vota se participante. Os votos são secretos: cada jogador consulta apenas seu próprio voto, e o resultado agregado aparece após a apuração.
 
 Após o prazo, o organizador apura. Maioria simples dos votos recebidos pela invalidez determina a invalidação; empate ou ausência de votos mantém o resultado. Na invalidação, escolhe contribuição zero sem penalidade ou penalidade da data auditada. O dia é recalculado sem essa pontuação como referência relativa; bruto pessoal e outros torneios são preservados. Histórico exibe resultados antes/depois e o painel distingue a punição de uma ausência comum.

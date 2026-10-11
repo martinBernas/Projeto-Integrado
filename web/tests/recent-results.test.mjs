@@ -49,6 +49,30 @@ test('tournament keeps full ranking, orders recent dates and keys expansion by s
  assert.equal(TournamentView({data:{...data,tournament:{...data.tournament,id:'second'}},userId:'a'}).props.children.at(-1).key,'second');
 });
 
+test('open audit badge links the exact daily score to its evaluation without changing ranking or revealing votes',async()=>{
+ const {deps,RecentResults}=await harness();
+ Object.assign(deps,{'next/link':{default:({children,...props})=>{delete props.prefetch;return jsx.jsx('a',{...props,children});}},'./recent-results':{RecentResults},'@/lib/tournament':tournament,'@/lib/rules':rules,
+ './player-name':{PlayerName:({name})=>jsx.jsx('span',{children:name})},'./tournaments/rule-timeline':{RuleTimeline:()=>null}});
+ const {TournamentView}=await load('tournament-view.tsx',deps);
+ const data={access:true,today:'2026-10-09',excluded_dates:[],tournament:{id:'target',name:'Teste',starts_at:'2026-10-01',ends_at:'2026-10-31',timezone:'America/Sao_Paulo',history_ready:true,rule_version:'test'},
+ participants:[{id:'a',name:'Ana',eligible_from:'2026-10-01'}],results:[{player_id:'a',played_on:'2026-10-08',personal_score_id:'score',raw_score:100,applied_score:100,result_kind:'score',provisional:false,applied_rule_snapshot:{version:'test',mode:'absolute'}}],
+ score_audits:[{id:'evaluation',personal_score_id:'score',status:'open'},{id:'other-evaluation',personal_score_id:'other-score',status:'open'}]};
+ const html=renderToStaticMarkup(TournamentView({data,userId:'a'}));
+ assert.match(html,/href="\/dashboard\/tournaments\/target\/audits#audit-evaluation"/);
+ assert.match(html,/Auditoria aberta da pontuação de Ana em 08\/10\/2026: ver votação/);
+ assert.equal((html.match(/Auditoria aberta · Ver votação/g)??[]).length,1);
+ assert.doesNotMatch(html,/other-evaluation|my_vote|invalid_votes/);
+ assert.match(html,/>100<\/td>/);
+ for(const kind of ['audit_disregarded','audit_penalty']) {
+  const punished=renderToStaticMarkup(TournamentView({data:{...data,score_audits:[{id:'evaluation',personal_score_id:'score',status:'invalidated'}],results:[{...data.results[0],result_kind:kind,applied_score:kind==='audit_penalty'?-2500:0}]},userId:'a'}));
+  assert.match(punished,/Punição aplicada · Ver resultado/);
+  assert.match(punished,/href="\/dashboard\/tournaments\/target\/audits#audit-evaluation"/);
+  assert.doesNotMatch(punished,/Auditoria aberta · Ver votação/);
+ }
+ const without=renderToStaticMarkup(TournamentView({data:{...data,score_audits:[]},userId:'a'}));
+ assert.doesNotMatch(without,/Auditoria aberta/);assert.match(without,/>100<\/td>/);
+});
+
 test('personal history has independent presentation, counts entries and expands the loaded history',async()=>{
  const {RecentResults}=await harness();const list=items(9);
  let tree=RecentResults({items:list,personal:true});let html=renderToStaticMarkup(tree);

@@ -36,7 +36,7 @@ export default async function AuditsPage({ params }: { params: Promise<{ id: str
     </section>}
     <section className="space-y-4"><h2 className="text-xl font-bold">Pedidos e decisões</h2>
       {!evaluation.audits.length && <p>Nenhum pedido de auditoria.</p>}
-      {evaluation.audits.map(a => <article key={a.id} className="rounded-xl border border-slate-200 bg-white p-5">
+      {evaluation.audits.map(a => <article key={a.id} id={`audit-${a.id}`} className="scroll-mt-6 rounded-xl border border-slate-200 bg-white p-5">
         <h3 className="font-bold">{name(a.player_id)} · {formatDate(a.played_on)} · {formatScore(a.raw_score)} pontos</h3>
         <p className="mt-2 font-semibold">{auditStatus[a.status]}</p><p className="mt-2 whitespace-pre-wrap break-words">{a.reason}</p>
         <p className="mt-2 text-sm text-slate-600">Pedido em {auditTimestamp(a.requested_at)} (São Paulo)</p>

@@ -11,6 +11,7 @@ export type TournamentData = {
   tournament: { id: string; name: string; starts_at: string; ends_at: string; timezone: string; history_ready: boolean; rule_version: string; closed_at?: string | null };
   participants: Participant[]; excluded_dates: string[]; results: DayResult[];
   current_rule?: RuleVersion; rule_versions?: RuleVersion[];
+  score_audits?: { id: string; personal_score_id: string; status: 'open' | 'invalidated' }[];
 };
 export function eligibleResults(participants: Participant[], results: DayResult[]) {
   const starts = new Map(participants.map(p => [p.id, p.eligible_from]));

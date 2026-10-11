@@ -11,6 +11,7 @@ import { TournamentPanel } from './tournament-panel';
 import { RetryLoad } from './retry-load';
 import { measureDashboardQuery } from '@/lib/dashboard-metrics';
 import { ruleForDate } from '@/lib/rules';
+import type { AuditData } from '@/lib/audits';
 
 export default async function DashboardPage({ searchParams }: { searchParams: Promise<{ tournament?: string | string[] }> }) {
   if (!isSupabaseConfigured) return <main className="mx-auto min-h-screen max-w-2xl px-6 py-20"><h1 className="text-3xl font-bold">Serviço em preparação</h1><p className="mt-4 text-slate-600">O acesso às pontuações estará disponível em breve.</p><Link className="mt-6 inline-block font-semibold text-emerald-700" href="/">Voltar ao início</Link></main>;
@@ -22,8 +23,13 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
     measureDashboardQuery('profile', supabase.from('profiles').select('public_name_confirmed').eq('id',user.id).maybeSingle()),
   ]);
   const selected = requested === undefined ? tournaments?.find(t => !t.closed_at) ?? tournaments?.[0] : tournaments?.find(t => t.id === requested);
-  const { data, error } = selected ? await measureDashboardQuery('tournament_rpc', supabase.rpc('get_tournament_dashboard', { target: selected.id })) : { data: null, error: null };
+  const [{ data, error }, { data: auditData, error: auditError }] = selected ? await Promise.all([
+    measureDashboardQuery('tournament_rpc', supabase.rpc('get_tournament_dashboard', { target: selected.id })),
+    measureDashboardQuery('audit_status', supabase.rpc('get_score_audits', { target: selected.id })),
+  ]) : [{ data: null, error: null }, { data: null, error: null }];
   const tournament = data?.access ? data as TournamentData : null;
+  const scoreAudits = ((auditData as AuditData | null)?.audits ?? []).filter(a => a.status === 'open' || a.status === 'invalidated')
+    .map(a => ({ id: a.id, personal_score_id: a.personal_score_id, status: a.status as 'open' | 'invalidated' }));
   const today = tournament?.today ?? new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
   const ownToday = history?.find(row => row.played_on === today)?.score;
   const todayRule = tournament?.rule_versions ? ruleForDate(tournament.rule_versions, today) : undefined;
@@ -48,7 +54,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         {listError ? <section role="alert" className="rounded-xl bg-white p-5 text-red-700"><p>Não foi possível carregar seus torneios.</p><RetryLoad /></section> : !tournaments?.length && <p className="rounded-xl bg-white p-5 text-slate-600">Você ainda não participa de um torneio. O organizador pode incluir sua conta; você já pode registrar pontuações pessoais.</p>}
       {error || (selected && !data) ? <section role="alert" className="rounded-xl border border-amber-300 bg-amber-50 p-5"><h2 className="font-bold">Torneio temporariamente indisponível</h2><p className="mt-2 text-sm">Não foi possível carregar os resultados. Tente novamente.</p><RetryLoad /></section>
         : !tournament ? (requested !== undefined && !listError ? <section role="alert" className="rounded-xl border border-slate-200 bg-white p-6"><h2 className="text-xl font-bold">Torneio indisponível</h2><p className="mt-2 text-slate-600">Este torneio não existe ou sua conta não tem acesso. Selecione um dos seus torneios acima.</p></section> : null)
-        : <TournamentView data={tournament} userId={user.id} />}
+        : <>{auditError && <aside role="alert" className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm"><p>Não foi possível conferir as auditorias das pontuações. Atualize para consultar os avisos nas pontuações.</p><RetryLoad /></aside>}<TournamentView data={{ ...tournament, score_audits: scoreAudits }} userId={user.id} /></>}
       </TournamentPanel>
       {historyError ? <section className="rounded-2xl border border-slate-200 bg-white p-6"><h2 className="text-xl font-bold">Meu histórico pessoal</h2><p role="alert" className="mt-4 text-red-700">Não foi possível carregar seu histórico.</p><RetryLoad /></section>
         : <RecentResults key={user.id} personal items={(history ?? []).map(row => ({ day: row.played_on, content: <div className="flex flex-wrap justify-between gap-2 border-b border-slate-100 py-3 text-sm"><span>{formatDate(row.played_on)} <span className="ml-2 text-slate-500">{row.source === 'manual_history' ? 'Carga histórica' : 'Lançamento pessoal'}</span></span><strong className="tabular-nums">{formatScore(row.score)}</strong></div> }))} />}

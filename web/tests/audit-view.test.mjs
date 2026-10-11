@@ -29,6 +29,7 @@ test('S6 page renders requests, secret own vote, organizer approval, deadline, a
  const exports={};vm.runInNewContext(outputText,{exports,Date,Intl,require:n=>{assert.ok(n in deps,n);return deps[n];}});
  const render=async()=>renderToStaticMarkup(await exports.default({params:Promise.resolve({id})}));
  const html=await render();
+ assert.match(html,/id="audit-open"/);
  for(const text of ['Enviar pedido','Aprovar e iniciar votação','Rejeitar pedido','Alterar meu voto','Seu voto: Manter','Apurar e encerrar','Apuração: 2 para invalidar','Resultados do dia antes e depois']) assert.ok(html.includes(text),text);
  assert.match(html,/required="" minLength="3" maxLength="1000"/);
  evaluation.organizer=false;evaluation.audits[1].can_vote=false;
