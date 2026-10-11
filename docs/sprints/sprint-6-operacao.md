@@ -1,6 +1,6 @@
 # Sprint 6 — Backup, migração e homologação
 
-Situação em 11/10/2026: scripts preparados e exercitados localmente com dados fictícios/PGlite. Nenhum backup novo capturado no Supabase, migração remota aplicada, publicação ou homologação confirmada.
+Situação vigente em 11/10/2026: backup remoto/exportação validados, migração aplicada e comparação aprovada; deployment pronto relatado. Homologação parcial confirmada pelo Dono do produto, inclusive sigilo/troca do voto, bloqueio do auditado, pedido repetido após rejeição, aviso clicável e celular/teclado. URL/versão não informadas. Apuração/punições e demais cenários ainda pendentes; sem aceite global. Os registros abaixo preservam a sequência operacional e evidências anteriores, substituídas quando houver confirmação posterior.
 
 ## Sequência operacional
 
@@ -31,6 +31,14 @@ Falha dentro da migração reverte a própria transação. Se a comparação div
 
 ## Evidências a registrar
 
+11/10/2026 — Dono do produto forneceu o prazo exibido para a votação aprovada no torneio de teste: **13/10/2026 às 11:15 (America/Sao_Paulo)**. Precisão informada pela interface: minutos; segundos do instante armazenado não fornecidos. Após esse prazo, atualizar a página e conferir término da votação/disponibilidade da apuração. Não há lembrete ou acompanhamento automático configurado. Apuração e resultados ainda não executados/confirmados.
+
+11/10/2026 — Dono do produto confirmou que ranking e pontuações continuam iguais durante a avaliação, regras não podem ser alteradas com auditoria aberta e pedido sem justificativa é recusado. Cenários homologados pelo relato. Não houve identificação separada do torneio original nessa resposta; preservação remota entre torneios após punição continua a verificar na apuração. A lista anterior de pendências sem esperar prazo é substituída para esses três cenários. Remoção/alteração de elegibilidade do auditado, conta externa/revogação e cenários após 48 horas permanecem sem confirmação específica.
+
+11/10/2026 — Dono do produto confirmou na aplicação utilizada: troca do próprio voto; impossibilidade de novo pedido para pontuação cujo pedido anterior foi rejeitado; funcionamento do aviso clicável; verificação em celular e teclado; auditado impedido de votar na própria avaliação. Esses cinco cenários são homologação funcional relatada. Confirmação do aviso implica complemento de avaliação aberta exercitado na aplicação, sem identificação formal de versão/URL; não confirma a mudança para “Punição aplicada” nem a apuração. Sigilo e bloqueio de participante incluído após abertura já confirmados anteriormente.
+
+Pendências sem esperar 48 horas: preservação do ranking durante a votação e do torneio original; bloqueios de revisão de regras e mudança do vínculo do auditado; justificativa vazia/conta externa e acesso após revogação, conforme roteiro. Correção pessoal só é testável pelo fluxo comum no dia atual; recusa de alteração de uma data passada não comprova o bloqueio específico de auditoria. Após o prazo: voto/alteração recusados, apuração, manutenção/empate/nenhum voto, duas punições, recálculo/isolamento, idempotência e aviso de punição. Concorrência real permanece no roteiro; nenhuma dessas pendências é declarada homologada pelo relato acima.
+
 11/10/2026 — Dono do produto confirmou sigilo do voto na aplicação utilizada. Solicitou avisos clicáveis nos resultados diários: votação aberta e punição aplicada após decisão desfavorável. Complemento implementado localmente, sem SQL adicional; publicação/homologação dos avisos pendentes. Próxima conferência: link da pontuação abre a avaliação correta e, após apuração pela invalidez, muda para “Punição aplicada · Ver resultado” levando à decisão/impacto diário. Participante incluído após abertura sem direito a voto foi observado pelo Dono do produto; comportamento corresponde ao eleitorado fixo aprovado.
 
 11/10/2026 — Homologação parcial relatada pelo Dono do produto em torneio separado chamado `Teste auditoria Aztecas Outubro`, criado por ele como idêntico ao torneio de referência `Aztecas Outubro`: pedido para uma pontuação rejeitado pelo organizador por falta de comprovação; outro pedido para pontuação de outro participante aprovado; organizador emitiu seu voto. Confirmação funcional desses fluxos pelo relato, sem registrar identidades ou valores pessoais dos auditados. Sigilo perante outra conta, restrição do auditado, alteração de voto, prazo exato, preservação do ranking durante avaliação, apuração/punições e isolamento ainda não confirmados remotamente. Identificadores técnicos dos torneios/avaliações e URL/versão não fornecidos. Nenhum procedimento de exclusão de teste executado.
@@ -46,3 +54,14 @@ Falha dentro da migração reverte a própria transação. Se a comparação div
 11/10/2026 — Dono do produto executou `01-backup.sql` no Supabase e forneceu o retorno: identificador `before-s6-v1`, captura `2026-10-11 13:53:51.711585+00` (10:53:51 em São Paulo), referência `2026-10-11`, checksum `99a06d73cc74acb813732eca01f03bc9`, 4 torneios e 362 pontuações pessoais. Captura remota confirmada por esse retorno; exportação privada/validação, migração e comparação ainda pendentes. Nenhum conteúdo pessoal do snapshot registrado aqui.
 
 Identificador/horário/checksum/contagens da captura; exportação validada em armazenamento privado; retorno da migração; `preserved` e checksums da comparação; versão/URL da aplicação; cenários e resultados da homologação; aceite explícito do Dono do produto. Não apresentar os testes locais como evidência remota.
+
+## Publicação e homologação de RF20 / S6-04
+
+Implementação local, sem SQL adicional. Publicar a versão com `/dashboard/statistics` pelo fluxo vigente e registrar versão/ambiente antes de declarar publicação. A apuração de auditorias mantém seu roteiro e prazo.
+
+1. Conferir acesso pelo painel, padrão de cinco dias positivos, intervalos/zeros e menos de cinco registros.
+2. Conciliar médias: 20.000 e 15.000 produzem 17.500/dia e 3.500/jogo; verificar arredondamento e independência da punição de torneio.
+3. Aplicar 30 dias: hoje e 29 dias anteriores incluídos, 30 dias anteriores excluídos, São Paulo; desde o início inclui mais de 100 registros.
+4. Conferir gráfico, datas, tabela e rolagem no computador, celular e teclado.
+5. Conferir conta sem positivos, sessão ausente, tentativa de escolher outro perfil por URL e recuperação de erro.
+6. Registrar evidências e aceite do Dono do produto. RF20 ainda não possui evidências remotas nesta entrega.

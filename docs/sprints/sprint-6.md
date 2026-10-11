@@ -1,8 +1,10 @@
-# Sprint 6 — Auditoria por votação
+# Sprint 6 — Auditoria por votação e estatísticas pessoais
 
 ## Situação em 11/10/2026
 
-O Dono do produto solicitou planejar e executar a próxima sprint e aprovou as regras após o refinamento nesta conversa. S6-01–S6-03 implementadas localmente com migração incremental, ações, página de auditorias e integração ao painel/cálculo. Verificação final local aprovada: 82 testes, lint e build. Migração remota, publicação, homologação e aceite pendentes; sprint não encerrada. Sprint 5 permanece aceita e encerrada.
+RF20 incluído por autorização do Dono do produto e implementado localmente como S6-04; publicação e homologação pendentes. Veja o registro S6-04 ao final.
+
+S6-01–S6-03 implementadas após aprovação das regras pelo Dono do produto. Backup/exportação validados, migração remota e comparação de preservação aprovadas; deployment pronto relatado. Homologação parcial confirmada: pedidos, rejeição/aprovação, voto do organizador, sigilo, troca do voto, bloqueio do auditado e de participante incluído após abertura, pedido repetido após rejeição, aviso clicável e uso em celular/teclado. Complemento do aviso aberto exercitado na aplicação; versão/URL não fornecidas. Testes locais e build/lint aprovados, com evidências detalhadas abaixo. Apuração, punições e demais cenários remotos ainda pendentes; sprint sem aceite global. Sprint 5 permanece encerrada. Registros de pendências anteriores abaixo são históricos quando substituídos por estas evidências.
 
 ## Objetivo e backlog
 
@@ -52,6 +54,10 @@ Leitura do planejamento, encerramento S5, requisitos, auditoria funcional, arqui
 
 ## Pendências atuais
 
+Prazo da votação de teste informado pelo Dono do produto: **13/10/2026 às 11:15, em São Paulo**. Após o prazo efetivo, atualizar e homologar apuração/punição/recálculo e mudança do aviso. Horário fornecido com precisão de minutos; segundos não informados. Nenhuma apuração ou automação realizada por este registro.
+
+Homologação adicional em 11/10/2026: Dono do produto confirmou ranking/pontuações inalterados durante avaliação, revisão de regras bloqueada com auditoria aberta e justificativa obrigatória no pedido. Pendências anteriores desses cenários resolvidas. Restam os demais cenários do roteiro, principalmente apuração/punições/recálculo e aviso de punição após o prazo, além de aceite global.
+
 11/10/2026 — Dono do produto confirmou o voto secreto na aplicação utilizada e solicitou transparência nos resultados diários. Complemento local implementado: linha da pontuação mostra “Auditoria aberta · Ver votação” após aprovação; após invalidação/apuração, mostra “Punição aplicada · Ver resultado”, tanto para desconsideração quanto penalidade. Ambos navegam por âncora diretamente à avaliação correspondente. Pedido aguardando aprovação, rejeitado ou pontuação mantida não recebem esses avisos. Auditoria aberta com prazo vencido mantém o aviso até a apuração. Nenhuma mudança em votos, cálculo ou banco; sem migração adicional. Publicação e homologação desse complemento ainda pendentes.
 
 Complemento consulta a RPC autorizada existente `get_score_audits` em paralelo com o dashboard do torneio selecionado e passa ao componente somente identificador, referência da pontuação e estado open/invalidated. Não apresenta voto próprio ou votos alheios no painel. Falha da consulta exibe aviso/nova tentativa e preserva resultados carregados, sem sugerir que a pontuação está livre de auditoria. Métrica `audit_status` registra duração sem dados pessoais. Consulta completa existente ainda sem paginação, com volume a acompanhar.
@@ -90,3 +96,17 @@ S6-01 foi reestimada tecnicamente em 8 pontos pela inclusão do fluxo pedido/apr
 Escolhas técnicas adicionais de integridade, a homologar: pedido/votação pendente bloqueia encerramento/revisão de regras e mudança de vínculo do auditado; correção do bruto em avaliação também aguarda conclusão para impedir troca do valor votado. Eleitor removido perde acesso, mas seu voto anterior permanece válido; novos integrantes não entram no eleitorado fixado. A chave única inclui pedidos rejeitados. Essas escolhas não são apresentadas como decisões funcionais especificamente confirmadas pelo Dono do produto.
 
 Limites: sem apuração automática, notificações, atualização em tempo real, paginação de avaliações, recurso ou nova solicitação após rejeição do mesmo par. Atualizar página para consultar novos estados. PGlite/renderização estática não comprovam concorrência real entre conexões Supabase ou homologação visual em navegador/mobile.
+
+## RF20 — incluído e implementado na Sprint 6 em 11/10/2026
+
+O Dono do produto autorizou incluir RF20 na Sprint 6 (S6-04). Implementação local concluída: acesso “Minhas estatísticas” no painel, tela própria `/dashboard/statistics`, médias bruta diária e por jogo, gráfico cronológico e tabela acessível. RF21 permanece futuro, em refinamento. Este registro substitui as referências anteriores a RF20 sem sprint/entrega apenas documental, que passam a ser históricas. Publicação, homologação e aceite de RF20 ainda não confirmados; não há migração adicional.
+
+Períodos aprovados: cinco dias positivos mais recentes (padrão), últimos 30 dias corridos (hoje e 29 anteriores em São Paulo) e histórico até hoje. Médias e gráfico usam somente bruto positivo; zero e ausência não contam como jogos. Cada dia equivale a cinco jogos; cada média é arredondada apenas após sua própria divisão. Auditorias de torneio não alteram a fonte pessoal. Sem positivos: mensagem, sem indicadores ou gráfico fictício. Erro de qualquer página: tentar novamente, sem médias parciais.
+
+Consulta no servidor restrita à identidade autenticada e às políticas RLS existentes; nenhum parâmetro permite escolher outro perfil. Paginação por cursor na data única por jogador até página vazia, sem limite total de 100 registros; últimos cinco para ao completar cinco positivos. Tamanho solicitado de até 200 registros, tolerando teto remoto inferior. Sem novas tabelas, RPCs, permissões, dependências ou mutações. Gráfico SVG com escala diária 0–25.000 e distâncias proporcionais às datas; tabela completa expansível e rolagem horizontal acessível. Estratégia de consulta e apresentação são escolhas técnicas; fórmulas e períodos foram confirmados pelo Dono do produto.
+
+Validação local: suíte de 86 testes aprovada; RLS real em PGlite, 257 positivos sob teto remoto de 37 por página, últimos cinco sob teto de dois, médias/arredondamento, fronteiras de 30 dias/ano bissexto, isolamento entre contas/anônimo, erro intermediário e renderização. Lint e build aprovados; apresentação revalidada após corrigir títulos dos pontos SVG. Homologação visual de RF20 no computador/celular/teclado ainda pendente. Não houve operação remota de RF20.
+
+Limitações: custo de consultas, memória e renderização proporcional ao histórico; leitura paginada não é snapshot transacional e correções concorrentes podem exigir recarga. Sem atualização em tempo real. A apuração das auditorias mantém seu prazo e roteiro; não há aceite global da Sprint 6.
+
+Build final de RF20 aprovado após preservar a saída .next bloqueada por EPERM em diretório ignorado node_modules/.cache/s6-next-before-rf20-final e gerar nova saída, sem alteração de configuração.
