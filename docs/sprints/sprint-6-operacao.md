@@ -2,11 +2,15 @@
 
 Situação vigente em 11/10/2026: backup remoto/exportação validados, migração aplicada e comparação aprovada; deployment pronto relatado. Homologação parcial confirmada pelo Dono do produto, inclusive sigilo/troca do voto, bloqueio do auditado, pedido repetido após rejeição, aviso clicável e celular/teclado. URL/versão não informadas. Apuração/punições e demais cenários ainda pendentes; sem aceite global. Os registros abaixo preservam a sequência operacional e evidências anteriores, substituídas quando houver confirmação posterior.
 
-## Sequência operacional
+## Situação consolidada e próximos testes
+
+Backup/exportação, migração e comparação concluídos; não repetir. Auditoria em homologação parcial e RF20 com validação visual geral confirmada. Restam apuração/efeitos após 13/10/2026 às 11:15 (São Paulo), cenários específicos não relatados e aceite global. A lista atual de pendências está em [Sprint 6](sprint-6.md#pendências-reais-para-concluir-a-sprint). Os relatos abaixo são registros históricos: suas pendências são substituídas pelas evidências posteriores e pelo resumo consolidado.
+
+## Sequência operacional — referência do procedimento já executado
 
 1. Programar pausa de gravações na aplicação durante captura, migração e comparação. O bloqueio SQL existe apenas durante cada transação e não substitui a pausa entre scripts. Confirmar ambiente alvo e disponibilidade de backup integral da plataforma; a captura desta sprint cobre dados de negócio e definições alteradas, sem exportar Auth, credenciais ou toda a infraestrutura.
 2. Executar `web/supabase/rehearsal/sprint6/01-backup.sql` no SQL Editor. Guarda `before-s6-v1` em tabela privada, com data de referência, dados, históricos, cálculo e definições anteriores. Registrar apenas identificador, horário, contagens e checksum como evidência. Não sobrescreve a captura nem aceita executar após S6 instalada.
-3. Executar `02-export.sql`. Salvar o retorno completo em arquivo privado em `backups/sprint-6/`, diretório ignorado pelo Git. Conferir que snapshot e definições estão completos e que o checksum é igual ao da captura. Não colar dados pessoais no chat, documentação ou repositório. Exportação privada real e sua validação ainda pendentes.
+3. Executar `02-export.sql`. Salvar o retorno completo em arquivo privado em `backups/sprint-6/`, diretório ignorado pelo Git. Conferir que snapshot e definições estão completos e que o checksum é igual ao da captura. Não colar dados pessoais no chat, documentação ou repositório. Exportação privada real recebida e validada conforme evidências abaixo.
 4. Aplicar uma única vez `web/supabase/migrations/202610110001_score_audits.sql`, após todas as migrações S5. Não reaplicar migrações antigas. Transação com lock_timeout de 10 segundos; falha exige diagnosticar antes de reexecutar.
 5. Executar `03-verify.sql` antes de usar a nova interface, ainda com gravações pausadas. Exige backup presente, ausência de avaliações e igualdade integral dos dados/histórico/cálculo, além de conferir RLS e permissões selecionadas. Esperado: `preserved = true` e checksums iguais. Divergência aborta o procedimento; não publicar nem restaurar dados globalmente por iniciativa automática.
 6. Publicar a aplicação compatível somente após a comparação aprovada e confirmar a versão/URL usada. Liberar acesso e executar o roteiro abaixo em torneios e contas de teste separados, sem alterar lançamentos legítimos.
@@ -29,7 +33,7 @@ Situação vigente em 11/10/2026: backup remoto/exportação validados, migraç�
 
 Falha dentro da migração reverte a própria transação. Se a comparação divergir após sua conclusão, manter gravações pausadas, preservar a captura e o estado atual e diagnosticar a diferença. As definições anteriores são exportadas para recuperação orientada; não há script genérico de restauração global. Antes do uso, retorno técnico exige restaurar definições/contratos anteriores e remover apenas objetos S6 numa operação revisada em cópia, com comparação posterior. Depois do uso, não remover tabelas de votos/decisões nem restaurar a captura antiga: isso perderia avaliações ou lançamentos legítimos. Preferir correção incremental, preservando histórico e votos secretos.
 
-## Evidências a registrar
+## Histórico das evidências operacionais
 
 11/10/2026 — Dono do produto forneceu o prazo exibido para a votação aprovada no torneio de teste: **13/10/2026 às 11:15 (America/Sao_Paulo)**. Precisão informada pela interface: minutos; segundos do instante armazenado não fornecidos. Após esse prazo, atualizar a página e conferir término da votação/disponibilidade da apuração. Não há lembrete ou acompanhamento automático configurado. Apuração e resultados ainda não executados/confirmados.
 
@@ -64,4 +68,8 @@ Implementação local, sem SQL adicional. Publicar a versão com `/dashboard/sta
 3. Aplicar 30 dias: hoje e 29 dias anteriores incluídos, 30 dias anteriores excluídos, São Paulo; desde o início inclui mais de 100 registros.
 4. Conferir gráfico, datas, tabela e rolagem no computador, celular e teclado.
 5. Conferir conta sem positivos, sessão ausente, tentativa de escolher outro perfil por URL e recuperação de erro.
-6. Registrar evidências e aceite do Dono do produto. RF20 ainda não possui evidências remotas nesta entrega.
+6. Registrar evidências e aceite do Dono do produto. RF20 possui validação visual geral relatada abaixo; casos específicos e ambiente/versão ainda não detalhados.
+
+## RF20 — validação da tela pelo Dono do produto
+
+11/10/2026 — O Dono do produto relatou: “validei a tela parece ok”. Registrada validação visual da tela de estatísticas pessoais na aplicação utilizada, sem problemas relatados. Esta evidência substitui a ausência anterior de homologação visual geral de RF20. O relato não identifica ambiente/versão, dispositivos ou casos específicos; não comprova separadamente todos os cenários do roteiro nem constitui aceite global da Sprint 6. Apuração e efeitos das auditorias permanecem pendentes conforme prazo de 13/10/2026 às 11:15 (São Paulo).

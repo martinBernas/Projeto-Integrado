@@ -144,3 +144,15 @@ Consulta no servidor restrita à identidade autenticada e às políticas RLS exi
 Validação local: suíte de 86 testes aprovada; RLS real em PGlite, 257 positivos sob teto remoto de 37 por página, últimos cinco sob teto de dois, médias/arredondamento, fronteiras de 30 dias/ano bissexto, isolamento entre contas/anônimo, erro intermediário e renderização. Lint e build aprovados; apresentação revalidada após corrigir títulos dos pontos SVG. Homologação visual de RF20 no computador/celular/teclado ainda pendente. Não houve operação remota de RF20.
 
 Limitações: custo de consultas, memória e renderização proporcional ao histórico; leitura paginada não é snapshot transacional e correções concorrentes podem exigir recarga. Sem atualização em tempo real. A apuração das auditorias mantém seu prazo e roteiro; não há aceite global da Sprint 6.
+
+## Novo requisito — detalhamento dos jogos (11/10/2026)
+
+RF22 — O jogador deve poder fornecer, como alternativa ao total bruto de RF05, o texto dos cinco jogos e do Total com país, pontos, distância, tempo e passos, conforme exemplo em [Estatísticas](estatisticas.md). Manter lançamento simples e permissões/prazo vigentes.
+
+RF23 — O jogador deve consultar nas estatísticas pessoais países de melhor e pior desempenho e estatísticas de tempo médio, a partir dos jogos detalhados de RF22. Fórmulas, empates, cobertura e tratamento de dados incompletos/divergentes permanecem em refinamento; propostas em [Estatísticas](estatisticas.md).
+
+Pedido relatado pelo Dono do produto; requisitos futuros sem sprint definida. RF23 amplia RF20, sem alterar o escopo já implementado. Dados antigos sem detalhes não permitem derivar essas métricas. O exemplo contém distância total de 6.164 km versus soma de 6.165 km; definir tratamento explícito antes de implementar.
+
+## RF24 — métricas operacionais persistentes (11/10/2026)
+
+O sistema deve guardar uma amostra mínima de tempos e falhas do painel para análise posterior ao uso semanal, com consulta/exportação restrita, retenção e volume limitados e coleta cuja falha não impeça as funções da aplicação. Pedido do Dono do produto registrado para futuras sprints; armazenamento, custo, retenção e critérios finais dependem de refinamento. [Escopo e critérios propostos](metricas-operacionais.md). Entrega exclusivamente documental, sem implementação ou alteração da arquitetura atual.

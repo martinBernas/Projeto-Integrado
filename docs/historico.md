@@ -217,3 +217,17 @@ Consulta no servidor restrita à identidade autenticada e às políticas RLS exi
 Validação local: suíte de 86 testes aprovada; RLS real em PGlite, 257 positivos sob teto remoto de 37 por página, últimos cinco sob teto de dois, médias/arredondamento, fronteiras de 30 dias/ano bissexto, isolamento entre contas/anônimo, erro intermediário e renderização. Lint e build aprovados; apresentação revalidada após corrigir títulos dos pontos SVG. Homologação visual de RF20 no computador/celular/teclado ainda pendente. Não houve operação remota de RF20.
 
 Limitações: custo de consultas, memória e renderização proporcional ao histórico; leitura paginada não é snapshot transacional e correções concorrentes podem exigir recarga. Sem atualização em tempo real. A apuração das auditorias mantém seu prazo e roteiro; não há aceite global da Sprint 6.
+
+## RF20 — validação da tela pelo Dono do produto
+
+11/10/2026 — O Dono do produto relatou: “validei a tela parece ok”. Registrada validação visual da tela de estatísticas pessoais na aplicação utilizada, sem problemas relatados. Esta evidência substitui a ausência anterior de homologação visual geral de RF20. O relato não identifica ambiente/versão, dispositivos ou casos específicos; não comprova separadamente todos os cenários do roteiro nem constitui aceite global da Sprint 6. Apuração e efeitos das auditorias permanecem pendentes conforme prazo de 13/10/2026 às 11:15 (São Paulo).
+
+## Novo requisito — RF22–RF23 (11/10/2026)
+
+Dono do produto relatou pedido dos usuários para fornecer texto detalhado dos cinco jogos e Total, além do total bruto simples, e ampliar estatísticas pessoais com país de melhor/pior desempenho e tempo médio. Registrados requisitos, escopo/exemplo, propostas de fórmulas, pendências, planejamento da evolução e critérios de teste. O exemplo concilia 13.953 pontos, 812 segundos e 143 passos; distância das linhas soma 6.165 km versus 6.164 km no Total, com tratamento a refinar. Sem sprint definida ou implementação; revisão exclusivamente documental local, sem migração ou operação remota. Arquitetura vigente preservada. Verificação: revisão e `git diff --check`.
+
+## 11/10/2026 — requisito futuro de métricas operacionais
+
+A pedido do Dono do produto, RF24 registrado para planejamento futuro após relato de uso de Tentar novamente e dificuldade de consultar logs da semana. Criado detalhamento com critérios propostos de persistência, consulta restrita, retenção, limites e isolamento de falhas. Requisitos, plano de ação, candidatos futuros e plano de testes atualizados. Sem sprint definida, implementação ou execução remota; arquitetura atual preservada. Ver [Métricas operacionais](metricas-operacionais.md).
+
+11/10/2026 — A pedido do Dono do produto, consolidada a situação atual da Sprint 6: S6-01–S6-04 implementadas, backup/migração/comparação concluídos, homologação parcial da auditoria e validação visual geral de RF20 registradas. Documento da sprint reorganizado por estado atual, evidências e pendências reais, removendo pendências superadas do resumo vigente. Roteiro operacional distingue procedimento já executado e relatos históricos. Restam apuração/efeitos após o prazo informado, cenários específicos sem evidência e aceite global. Atualização documental, sem código, testes funcionais adicionais ou ações remotas; git diff --check aprovado.

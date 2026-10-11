@@ -209,3 +209,11 @@ Consulta no servidor restrita à identidade autenticada e às políticas RLS exi
 Validação local: suíte de 86 testes aprovada; RLS real em PGlite, 257 positivos sob teto remoto de 37 por página, últimos cinco sob teto de dois, médias/arredondamento, fronteiras de 30 dias/ano bissexto, isolamento entre contas/anônimo, erro intermediário e renderização. Lint e build aprovados; apresentação revalidada após corrigir títulos dos pontos SVG. Homologação visual de RF20 no computador/celular/teclado ainda pendente. Não houve operação remota de RF20.
 
 Limitações: custo de consultas, memória e renderização proporcional ao histórico; leitura paginada não é snapshot transacional e correções concorrentes podem exigir recarga. Sem atualização em tempo real. A apuração das auditorias mantém seu prazo e roteiro; não há aceite global da Sprint 6.
+
+## RF22–RF23 — cenários futuros (11/10/2026)
+
+Validar importação dos cinco jogos e Total do [exemplo](estatisticas.md): 13.953 pontos, 812 segundos e 143 passos; soma de distância de 6.165 km diverge dos 6.164 km informados. Validar tratamento conforme regra a aprovar, separadores de milhar, acentos, segundos omitidos, limites, linhas inválidas/duplicadas/incompletas e gravação sem resultados parciais. Conferir lançamento simples, correções consistentes, prazos, isolamento, rankings pelo bruto, histórico misto, filtros, denominadores sem dados e jogo individual com zero. Testar países repetidos, amostras desiguais, empates e médias de tempo após aprovação das fórmulas; celular e teclado. Cenários não executados: entrega atual documental, verificada por revisão e `git diff --check`.
+
+## RF24 — validação futura de métricas operacionais
+
+Casos propostos para a sprint que selecionar RF24: cobertura semanal dentro da retenção; agregações com denominador e amostragem definidos; exclusão de dados pessoais e rejeição de campos inválidos; acesso autorizado e negação a contas comuns/anônimas; expurgo e limites de volume; indisponibilidade da coleta sem falha nas funções da aplicação; impacto de desempenho dentro do orçamento aprovado. [Critérios e decisões pendentes](metricas-operacionais.md). Testes de implementação ainda não executados: requisito somente documentado.

@@ -61,3 +61,5 @@ A análise das amostras ocorrerá após utilização pelos usuários, conforme o
 Evidência posterior S5-05 em 03/10/2026: Dono do produto confirmou as telas de carregamento na aplicação utilizada. Não houve erro para conferir Tentar novamente; recuperação validada nos testes locais, sem confirmação remota desse cenário. Identificação de versão/URL e aceite global não informados. Análise das amostras permanece acompanhamento posterior.
 
 - [Estatísticas pessoais e de torneio — RF20–RF21](estatisticas.md): RF20 implementado localmente na Sprint 6; RF21 em refinamento futuro.
+
+- [Métricas operacionais persistentes — RF24](metricas-operacionais.md): requisito futuro para análise semanal, sujeito a refinamento e seleção de sprint.

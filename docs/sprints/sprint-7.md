@@ -76,3 +76,13 @@ Consulta no servidor restrita à identidade autenticada e às políticas RLS exi
 Validação local: suíte de 86 testes aprovada; RLS real em PGlite, 257 positivos sob teto remoto de 37 por página, últimos cinco sob teto de dois, médias/arredondamento, fronteiras de 30 dias/ano bissexto, isolamento entre contas/anônimo, erro intermediário e renderização. Lint e build aprovados; apresentação revalidada após corrigir títulos dos pontos SVG. Homologação visual de RF20 no computador/celular/teclado ainda pendente. Não houve operação remota de RF20.
 
 Limitações: custo de consultas, memória e renderização proporcional ao histórico; leitura paginada não é snapshot transacional e correções concorrentes podem exigir recarga. Sem atualização em tempo real. A apuração das auditorias mantém seu prazo e roteiro; não há aceite global da Sprint 6.
+
+## RF22–RF23 — candidatos futuros (11/10/2026)
+
+Registrar entrada alternativa do texto dos cinco jogos (país, pontos, distância, tempo e passos) e Total, preservando lançamento bruto simples; ampliar estatísticas pessoais com melhor/pior país e tempo médio. Dependências: refinamento das fórmulas/validação, persistência dos jogos e integração com RF05/RF20. Sem compromisso de Sprint 7 ou autorização de implementação nesta revisão. [Escopo, exemplo, decisões pendentes e critérios](../estatisticas.md).
+
+Entrega exclusivamente documental. Arquitetura vigente preservada; migração, implementação, testes funcionais, publicação, homologação e aceite deste incremento dependem da entrega futura. Verificação local: revisão do exemplo e `git diff --check`.
+
+## RF24 — candidato futuro (11/10/2026)
+
+Registrar persistência mínima de métricas operacionais para análise semanal, relacionada ao acompanhamento de FB06. Refinamento deve definir armazenamento, custo, retenção, acesso, limites e impacto da coleta. Sem sprint definida ou compromisso de entrega na Sprint 7. [História e critérios propostos](../metricas-operacionais.md).

@@ -75,3 +75,50 @@ Validação local: suíte de 86 testes aprovada; RLS real em PGlite, 257 positiv
 
 Limitações: custo de consultas, memória e renderização proporcional ao histórico; leitura paginada não é snapshot transacional e correções concorrentes podem exigir recarga. Sem atualização em tempo real. A apuração das auditorias mantém seu prazo e roteiro; não há aceite global da Sprint 6.
 
+
+## RF20 — validação da tela pelo Dono do produto
+
+11/10/2026 — O Dono do produto relatou: “validei a tela parece ok”. Registrada validação visual da tela de estatísticas pessoais na aplicação utilizada, sem problemas relatados. Esta evidência substitui a ausência anterior de homologação visual geral de RF20. O relato não identifica ambiente/versão, dispositivos ou casos específicos; não comprova separadamente todos os cenários do roteiro nem constitui aceite global da Sprint 6. Apuração e efeitos das auditorias permanecem pendentes conforme prazo de 13/10/2026 às 11:15 (São Paulo).
+
+## RF22–RF23 — lançamento detalhado e novas métricas pessoais (11/10/2026)
+
+Novo requisito relatado pelo Dono do produto a partir de comentários dos usuários: além do lançamento do total bruto, aceitar o texto com os cinco jogos e a linha Total, contendo país, pontos, distância, tempo e passos. RF22 cobre essa entrada alternativa; RF23 amplia as estatísticas pessoais com países de melhor/pior desempenho e tempo médio. Requisitos futuros, sem sprint de implementação definida. O escopo atual implementado de RF20 permanece baseado no total diário; a exclusão anterior do desempenho individual refere-se à entrega original e é ampliada por este pedido.
+
+### Exemplo fornecido
+
+```text
+1. Uganda: 590 pts., 3.189 km, 3 min, 17 passos
+2. Costa Rica: 4.604 pts., 123 km, 3 min, 20 passos
+3. Montenegro: 1.412 pts., 1.886 km, 2 min, 52 seg, 41 passos
+4. Tailândia: 4.320 pts., 218 km, 2 min, 12 seg, 31 passos
+5. Rússia: 3.027 pts., 749 km, 2 min, 28 seg, 34 passos
+Total: 13.953 pts., 6.164 km, 13 min, 32 seg, 143 passos
+```
+
+Conciliação documental: pontos = 13.953; distâncias = 6.165 km nas linhas, enquanto o Total informado é 6.164 km; tempos = 812 segundos (13 min 32 seg); passos = 143. A divergência de distância exige uma regra de validação a refinar, considerando eventual arredondamento na origem. Não corrigir silenciosamente o texto nem considerar a discrepância evidência de fraude.
+
+### Escopo solicitado e propostas de refinamento
+
+- Manter o lançamento por total bruto como alternativa; históricos sem detalhamento continuam disponíveis às métricas atuais. Não inferir países, tempos ou passos a partir do total.
+- Interpretar os cinco jogos com seus países e medidas; pontos por jogo entre 0 e 5.000, total entre 0 e 25.000. No exemplo, ponto é separador de milhar; tempo pode omitir segundos, como em “3 min”. Preservar nomes com espaços e acentos.
+- Exibir as novas métricas na tela pessoal existente, somente ao titular, preservando a independência das regras/auditorias de torneio. A entrada detalhada deve respeitar os prazos e permissões do lançamento pessoal vigente.
+- Proposta técnica/funcional, ainda não confirmada: melhor/pior país pela média de pontos brutos dos jogos detalhados daquele país, com quantidade de jogos e todos os empatados; evitar comparar somas quando países têm quantidades diferentes de jogos.
+- Proposta ainda não confirmada: tempo médio por jogo = soma dos tempos / número de jogos com tempo válido; tempo médio diário = soma dos tempos dos dias completos / número desses dias. Calcular em segundos e formatar em minutos/segundos, com arredondamento somente ao exibir. Para o exemplo: média por jogo de 162,4 segundos, ou 2 min 42 seg se arredondada ao segundo; média diária de 13 min 32 seg.
+- Proposta ainda não confirmada: aplicar os períodos de RF20 às novas métricas e informar quantos dias/jogos têm detalhamento. Histórico sem detalhes não entra nos denominadores dessas métricas; zero pontos em um jogo detalhado não é automaticamente ausência, pois pode integrar um dia efetivamente jogado.
+- Distância e passos constam da entrada; indicadores próprios dessas medidas não foram solicitados neste pedido.
+
+### Decisões pendentes antes da implementação
+
+Definir com o Dono do produto: critério de melhor/pior país (média ou outro), empates e amostra mínima; tempo médio por jogo, por dia ou ambos e sua apresentação; abrangência dos filtros; aceitação de detalhes incompletos e de formatos/idiomas alternativos; normalização dos países; tratamento de divergências entre linhas e Total (especialmente distância arredondada); prévia/confirmação da importação; correção posterior e substituição de lançamento detalhado por total simples. Detalhamento não pode ficar associado a um total corrigido sem reconciliação explícita.
+
+A arquitetura vigente não é alterada nesta entrega documental. A implementação futura exige definir persistência dos cinco jogos, vínculo com a pontuação diária, validação e gravação consistente do conjunto, RLS, correções e migração; registrar a solução em arquitetura/diagramas e decisão técnica quando definida. Sem criar dados detalhados fictícios para lançamentos antigos.
+
+### Critérios de aceite futuros
+
+1. Importar o exemplo identificando cinco países, pontos, tempos e passos; conciliar pontos/tempo/passos e tratar explicitamente a diferença de 1 km conforme a regra aprovada.
+2. Validar separadores de milhar, acentos, nomes compostos e segundos omitidos; rejeitar ou informar linhas inválidas, duplicadas, faltantes, valores negativos e pontos acima dos limites, conforme formatos aprovados. Uma falha não deve deixar gravação parcial.
+3. Preservar lançamento simples, prazos, isolamento entre contas e uso do total diário nos torneios, sem alterar rankings por distância, tempo ou passos.
+4. Conciliar melhor/pior país com países repetidos, quantidades desiguais, empates e jogos de zero pontos; conciliar tempo médio e filtros com histórico misto, sem dados e fronteiras de período.
+5. Correção/substituição não duplica jogos nem mantém detalhes incompatíveis; verificar celular, teclado, mensagens de validação e alternativa textual das métricas.
+
+Situação: registro e revisão documental local; cenários acima ainda não executados. Sem implementação, migração, operação remota, publicação ou homologação deste incremento. RF20 já entregue não implica entrega de RF22–RF23.
