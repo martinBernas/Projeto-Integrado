@@ -2,7 +2,8 @@ import type { RuleVersion } from './rules';
 export type Participant = { id: string; name: string; geoguessr_url?: string | null; eligible_from: string };
 export type DayResult = {
   player_id: string; played_on: string; raw_score: number | null; applied_score: number;
-  result_kind: 'score' | 'absence' | 'pending'; provisional: boolean;
+  personal_score_id?: string | null;
+  result_kind: 'score' | 'absence' | 'pending' | 'audit_disregarded' | 'audit_penalty'; provisional: boolean;
   applied_rule_snapshot: { version: string; minimum_positive: number | null; mode?: string; absence_penalty?: number };
 };
 export type TournamentData = {

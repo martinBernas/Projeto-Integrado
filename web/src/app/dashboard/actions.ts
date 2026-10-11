@@ -13,6 +13,7 @@ export async function saveScore(_: ScoreState, form: FormData): Promise<ScoreSta
   }
   const { error } = await supabase.rpc('submit_personal_score', { game_day: day, raw_score: Number(text) });
   if (error) {
+    if (error.message.includes('audit_score_locked')) return { error: 'Esta pontuação tem um pedido de auditoria pendente. Aguarde a avaliação antes de corrigi-la.' };
     if (error.message.includes('current_day_only')) return { error: 'Você pode lançar ou corrigir apenas o dia atual, no fuso de São Paulo. Atualize a página se o dia virou.' };
     return { error: 'Não foi possível salvar a pontuação. Tente novamente.' };
   }

@@ -1,5 +1,7 @@
 # Levantamento de requisitos
 
+11/10/2026 — RF13–RF16 implementados localmente após aprovação das regras: pedido por participante, aprovação pelo organizador, votação secreta de 48 horas, apuração manual e punição/recálculo restritos ao torneio. Eleitorado da abertura exclui auditado; maioria dos votos recebidos sem quórum; empate/nenhum voto mantém pontuação. [Sprint 6](sprints/sprint-6.md) e [ADR-006](decisoes/adr-006-auditoria-por-votacao.md). Migração remota, publicação, homologação e aceite pendentes.
+
 Definição funcional vigente S5: um torneio aberto tem uma única regra aplicada a todo o período. Início/fim podem mudar juntamente com a configuração, mediante prévia de impacto e confirmação. Versões anteriores são histórico, sem revisões parciais nem programação independente de regra futura. Encerrados não permitem edição; brutos permanecem intactos. Migração executada/verificada e cenários relatados homologados pelo Dono do produto. Identificação formal da versão publicada não fornecida. [ADR-004](decisoes/adr-004-regra-unica-por-torneio.md).
 
 ## Alocação para a primeira entrega — Sprint 3
@@ -46,8 +48,8 @@ Atualização S5 em 03/10/2026: RF04/RF06/RF09/RF11/RF12 implementados localment
 | RF10 | O usuário deve visualizar a lista de todos os torneios dos quais participa e acessar os respectivos detalhes e rankings. |
 | RF11 | O organizador deve configurar os dias da semana em que o torneio ocorre, com as opções padrão de segunda a sexta ou todos os dias. |
 | RF12 | O organizador deve excluir datas específicas do calendário do torneio, como feriados. |
-| RF13 | O organizador deve poder marcar uma pontuação como sujeita a auditoria no seu torneio, com período de avaliação registrado. |
-| RF14 | Os demais usuários elegíveis devem poder votar pela invalidação ou manutenção da pontuação durante o período de avaliação. |
+| RF13 | Qualquer jogador participante do torneio deve poder solicitar auditoria de uma pontuação daquele torneio, com justificativa obrigatória. O sistema registra solicitante, data, justificativa, torneio e pontuação. O organizador aprova o pedido antes de abrir a votação; o período de avaliação de 48 horas começa na abertura. |
+| RF14 | Os demais usuários elegíveis devem poder votar pela invalidação ou manutenção da pontuação durante o período de avaliação. Os votos são secretos: cada eleitor consulta seu próprio voto, sem exposição da autoria dos outros votos a jogadores ou organizador. O sistema preserva autoria internamente para rastreabilidade e permite consultar o resultado agregado da apuração. |
 | RF15 | Após o período de avaliação, o organizador deve poder apurar e encerrar a votação; havendo maioria pela invalidez, a pontuação deve ser invalidada apenas no torneio que abriu a auditoria. |
 | RF16 | Ao aplicar a decisão de invalidez, o organizador deve escolher entre desconsiderar a pontuação ou aplicar a penalidade do dia, preservando votos, apuração, decisão e punição para consulta histórica. |
 
@@ -98,7 +100,7 @@ Refinamento vigente da Sprint 5 em 03/10/2026: Dono do produto confirmou revisã
 - No recorte entregue, empates no menor positivo recebem zero relativo; envio/correção próprios são limitados ao dia atual em São Paulo, e o bruto aceita inteiros de 0 a 25.000, com zero tratado como ausência. Esses pontos não são pendências do MVP encerrado.
 - Zero e fuso da Sprint 5 definidos em 03/10/2026: zero representa ausência e data/prazo pessoal permanecem em São Paulo, no mesmo fuso fixo de todos os torneios.
 - Aceitação de lançamento tardio permanece futura; ver FB02 na avaliação abaixo.
-- Para a auditoria futura, definir eleitores elegíveis, participação do auditado e do organizador, duração, quórum, base da maioria, empate, ausência de votos, alteração de voto, recurso/reabertura e efeitos provisórios no ranking. Detalhamento em [Auditoria por votação](auditoria-de-pontuacoes.md).
+- Refinamento de auditoria concluído em 11/10/2026: eleitorado, prazo, maioria, sigilo e efeitos definidos pelo Dono do produto; recurso/reabertura excluídos desta sprint. Homologar fluxo completo e restrições técnicas adicionais no remoto. [Auditoria por votação](auditoria-de-pontuacoes.md).
 
 ## Situação S4-02/S4-03 — 27/09/2026
 

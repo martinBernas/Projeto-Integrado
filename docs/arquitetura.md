@@ -1,5 +1,13 @@
 # Arquitetura e implantação
 
+## Incremento local da Sprint 6 — 11/10/2026
+
+Auditoria por votação implementada localmente com quatro tabelas privadas: `score_audits`, `audit_electors`, `audit_votes` e `audit_events`, todas com RLS e sem acesso direto de clientes. Server Actions autenticadas chamam RPCs com autorização explícita. Participante solicita com justificativa; organizador aprova/rejeita; aprovação fixa eleitorado e prazo de 48 horas. Consulta fornece apenas voto próprio e totais finais, preservando segredo inclusive perante o organizador.
+
+Apuração bloqueia o torneio e grava decisão/punição e resultados anteriores/posteriores na mesma transação do recálculo; repetição não duplica efeitos. Decisão vinculada a torneio/pontuação, sem reescrever bruto global. Cálculo canônico e prévias excluem inválidos antes do menor positivo; resultados distinguem `audit_disregarded`/`audit_penalty`, com decisão no snapshot. Penalidade da data auditada fixada na apuração. Tokens de prévia incluem estado das avaliações.
+
+Avaliações pendentes bloqueiam encerramento, revisão de configuração/período e mudança do vínculo do auditado; correção do bruto em avaliação aguarda conclusão. Página dedicada `/dashboard/tournaments/[id]/audits`; encerrados permitem consulta histórica. Sem tarefa automática, notificações ou atualização em tempo real. [ADR-006](decisoes/adr-006-auditoria-por-votacao.md), [diagrama](diagramas/auditoria-votacao.md), [operação](sprints/sprint-6-operacao.md). Migração remota/publicação/homologação pendentes.
+
 Aceite e encerramento em 03/10/2026: Dono do produto declarou explicitamente “está aceita a sprint”. Sprint 5 concluída, incluindo S5-01–S5-05. Aceite considera as evidências e limites registrados: carregamento confirmado na aplicação utilizada; Tentar novamente validado localmente, sem falha observada para homologação remota. Análise de amostras, diagnóstico da demora e eventuais melhorias permanecem acompanhamento posterior. Versão/URL do deployment não informadas; nenhum novo SQL necessário para S5-04/S5-05.
 
 Os estados anteriores abaixo são registros históricos; o aceite acima é a situação vigente.

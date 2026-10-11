@@ -1,5 +1,11 @@
 # Plano de testes
 
+## Sprint 6 — evidências locais de 11/10/2026
+
+`pnpm test`: 82 aprovados, zero falhas/pulados. `pnpm lint` e `pnpm build` aprovados. `git diff --check` sem erros de whitespace. Cobertura nova: pedido justificado e aprovação exclusiva do organizador, sigilo no banco/resposta inclusive ao organizador, voto próprio alterável, prazo de 48 horas, auditado excluído, eleitorado fixo e revogação de acesso, pedidos duplicados enfileirados, empate/nenhum voto/maioria pela manutenção, duas punições, referência relativa recalculada, bruto e outro torneio preservados, penalidade estável após revisão para absoluto, apuração idempotente e rollback integral após falha forçada no recálculo. Captura e comparação S6 exercitadas com dados fictícios; migração preserva dados/histórico/cálculo antes do uso. Ações validam sessão e campos; renderização estática confere pedidos, voto, apuração, histórico e consulta sem formulários em encerrados.
+
+Testes PGlite não equivalem a concorrência real entre conexões Supabase. Sem homologação visual em navegador/mobile, publicação ou execução remota nesta entrega. Roteiro de testes remotos e evidências requeridas em [operação S6](sprints/sprint-6-operacao.md). Contagens das sprints anteriores abaixo são históricas.
+
 Complemento S5 de regra única/período editável: `pnpm test`: 60 aprovados, zero falhas/pulados; `pnpm lint` e `pnpm build` aprovados. Cobertura adicional: migração sem alteração de dados/cálculo, contrato atualizado, regra única nos snapshots, ampliação/redução/restauração, elegibilidade/brutos preservados, exclusões inválidas, token com pontuações de datas acrescentadas, autorização/encerramento, criação e rollback atômico. Scripts 10–12 de captura/exportação/comparação ensaiados localmente. Contagens anteriores abaixo são históricas.
 
 ## Sprint 5 — evidências locais de 03/10/2026

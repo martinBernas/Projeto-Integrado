@@ -1,5 +1,15 @@
 # Histórico da documentação
 
+11/10/2026 — Dono do produto aprovou regras restantes e autorizou continuidade da Sprint 6. Entrega local de S6-01–S6-03: pedidos por participantes com justificativa/aprovação, votos secretos, apuração e punição/recálculo restritos ao torneio, histórico antes/depois e proteções de integridade. Migração incremental e scripts de backup/exportação/comparação preparados. Arquitetura, ADR-006, diagramas, requisitos, documentação funcional e operação atualizados. Verificação final: 82 testes aprovados, zero falhas/pulados; lint/build aprovados. Migração remota, publicação, homologação e aceite pendentes, sem afirmar execução remota. Este registro substitui estados de refinamento/implementação pendente abaixo.
+
+11/10/2026 — Dono do produto confirmou votos secretos na Sprint 6. RF14, documentação funcional da auditoria e planejamento atualizados: voto próprio consultável, autoria dos demais oculta na aplicação inclusive ao organizador, registro interno preservado e resultado agregado da apuração consultável. Atualização documental; sem implementação funcional ou execução remota.
+
+11/10/2026 — Complemento confirmado do fluxo de pedidos S6: somente participantes do torneio podem solicitar auditoria; o organizador aprova antes de abrir a votação de 48 horas. Definição substitui a pendência de alcance/aprovação registrada anteriormente nesta data.
+
+11/10/2026 — Refinamento da Sprint 6: Dono do produto definiu que qualquer jogador pode solicitar auditoria de pontuação com justificativa obrigatória. RF13, fluxo funcional e S6-01 atualizados; iniciativa deixa de ser exclusiva do organizador. Alcance dos solicitantes e aprovação prévia ou abertura automática da votação permanecem em esclarecimento. Nenhuma implementação ou operação remota realizada nesta atualização.
+
+11/10/2026 — Iniciado planejamento da Sprint 6 por solicitação do Dono do produto. Inspecionados contratos atuais de cálculo, prévia de regras e autorização; registradas histórias, estimativas relativas preliminares, critérios, riscos e sequência de execução em `sprints/sprint-6.md`. Regras de votação submetidas ao Dono do produto, ainda sem confirmação. Entrega desta etapa documental; sem implementação funcional ou execução remota.
+
 Aceite e encerramento em 03/10/2026: Dono do produto declarou explicitamente “está aceita a sprint”. Sprint 5 concluída, incluindo S5-01–S5-05. Aceite considera as evidências e limites registrados: carregamento confirmado na aplicação utilizada; Tentar novamente validado localmente, sem falha observada para homologação remota. Análise de amostras, diagnóstico da demora e eventuais melhorias permanecem acompanhamento posterior. Versão/URL do deployment não informadas; nenhum novo SQL necessário para S5-04/S5-05.
 
 Os estados anteriores abaixo são registros históricos; o aceite acima é a situação vigente.

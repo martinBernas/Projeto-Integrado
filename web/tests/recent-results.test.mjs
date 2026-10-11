@@ -37,7 +37,7 @@ test('recent results expands all days and reduces again with accessible control'
 });
 test('tournament keeps full ranking, orders recent dates and keys expansion by selected tournament',async()=>{
  const {deps,RecentResults}=await harness();
- Object.assign(deps,{'./recent-results':{RecentResults},'@/lib/tournament':tournament,'@/lib/rules':rules,
+ Object.assign(deps,{'next/link':{default:({children,...props})=>jsx.jsx('a',{...props,children})},'./recent-results':{RecentResults},'@/lib/tournament':tournament,'@/lib/rules':rules,
  './player-name':{PlayerName:({name})=>jsx.jsx('span',{children:name})},'./tournaments/rule-timeline':{RuleTimeline:()=>null}});
  const {TournamentView}=await load('tournament-view.tsx',deps);
  const data={access:true,today:'2026-10-09',excluded_dates:[],tournament:{id:'first',name:'Test',starts_at:'2026-10-01',ends_at:'2026-10-31',timezone:'America/Sao_Paulo',history_ready:true,rule_version:'test'},

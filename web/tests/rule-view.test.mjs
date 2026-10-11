@@ -14,7 +14,7 @@ test('S5 views show absolute mode, each day snapshot, immutable timezone and exp
  weekly_schedule:'every_day',exclusions:[],version:'s5-2',reason:'Revisão confirmada',created_at:'2026-10-03T12:00:00Z'};
  const pre={token:'a'.repeat(32),proposal:{from:'2026-10-01',to:'2026-10-31',mode:'absolute',penalty:-1000,schedule:rule.weekly_schedule,exclusions:[],reason:'Revisão proposta'},
  retroactive:true,changes:[{player_id:'a',day:'2026-10-01',before:0,after:10000,before_kind:'score',after_kind:'score'}],totals:[{player_id:'a',name:'Ana',before:0,after:10000,delta:10000}]};
- const deps={'react/jsx-runtime':jsx,'react':{...React,useActionState:()=>[{preview:pre},'/disabled',false]},
+ const deps={'next/link':{default:({children,...props})=>jsx.jsx('a',{...props,children})},'react/jsx-runtime':jsx,'react':{...React,useActionState:()=>[{preview:pre},'/disabled',false]},
  '@/lib/rules':rules,'@/lib/tournament':tournament,'./rule-actions':{reviseRules:()=>{}},'./player-name':{PlayerName:({name})=>jsx.jsx('span',{children:name})}};
  async function load(path) {
   const source=await readFile(new URL(`../src/app/dashboard/${path}`,import.meta.url),'utf8');

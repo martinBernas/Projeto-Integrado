@@ -1,5 +1,11 @@
 # Plano de ação
 
+Evolução remota vigente S6 em 11/10/2026: backup capturado/exportado e validado; migração executada pelo Dono do produto; comparação posterior aprovada com `preserved = true` e checksums iguais. Banco preparado para a interface S6. Publicação, homologação e aceite permanecem pendentes. [Evidências](sprints/sprint-6-operacao.md). Estados anteriores de migração pendente são históricos.
+
+Situação vigente em 11/10/2026: regras da Sprint 6 aprovadas pelo Dono do produto; S6-01–S6-03 implementadas localmente, com pedidos justificados, aprovação, votação secreta, apuração e recálculo/histórico isolados por torneio. Verificação local aprovada: 82 testes, lint e build; migração, publicação, homologação e aceite pendentes. [Entrega](sprints/sprint-6.md) e [operação](sprints/sprint-6-operacao.md). O registro de início/refinamento abaixo é histórico e foi substituído por esta evolução. Sprint 5 permanece encerrada.
+
+11/10/2026 — Por solicitação do Dono do produto, iniciado o [planejamento da Sprint 6](sprints/sprint-6.md), próxima entrega após o aceite da Sprint 5. S6-01–S6-03 cobrem abertura/votação, apuração/punição e recálculo/histórico. Estimativas relativas preliminares e sequência técnica registradas; regras de eleitorado, prazo e maioria submetidas ao Dono do produto. Implementação funcional aguarda esse refinamento; nenhuma operação remota realizada.
+
 Aceite e encerramento em 03/10/2026: Dono do produto declarou explicitamente “está aceita a sprint”. Sprint 5 concluída, incluindo S5-01–S5-05. Aceite considera as evidências e limites registrados: carregamento confirmado na aplicação utilizada; Tentar novamente validado localmente, sem falha observada para homologação remota. Análise de amostras, diagnóstico da demora e eventuais melhorias permanecem acompanhamento posterior. Versão/URL do deployment não informadas; nenhum novo SQL necessário para S5-04/S5-05.
 
 Os estados anteriores abaixo são registros históricos; o aceite acima é a situação vigente.

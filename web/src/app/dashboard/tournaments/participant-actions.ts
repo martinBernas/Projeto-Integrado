@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server';
 
 export type ParticipantState = { error?: string; message?: string };
 const errors: Record<string, string> = {
+  audit_pending: 'Este jogador tem uma auditoria pendente. Conclua a avaliação antes de alterar sua participação.',
   tournament_not_allowed: 'Torneio indisponível ou sem permissão para administrar.',
   tournament_closed: 'Este torneio está encerrado. Os participantes não podem ser alterados.',
   invalid_eligibility: 'A data de participação deve estar dentro do período do torneio.',

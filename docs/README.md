@@ -12,6 +12,9 @@ Sprint 3 concluída em 21/09/2026. [Encerramento e evidências](sprints/sprint-3
 
 ## Documentação
 
+- [Sprint 6 — auditoria por votação: escopo e implementação local](sprints/sprint-6.md)
+- [Sprint 6 — backup, migração e homologação](sprints/sprint-6-operacao.md)
+- [ADR-006 — auditoria por votação e sigilo](decisoes/adr-006-auditoria-por-votacao.md)
 - [Plano de ação](plano-de-acao.md)
 - [Sprint 5 — implementação local e planejamento](sprints/sprint-5.md)
 - [Sprint 5 — migração, backup, recuperação e homologação](sprints/sprint-5-operacao.md)

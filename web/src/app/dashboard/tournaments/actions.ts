@@ -7,6 +7,7 @@ import { parseRuleFields } from '@/lib/rules';
 export type TournamentState = { error?: string; message?: string };
 
 const messages: Record<string, string> = {
+  audit_pending: 'Avalie os pedidos e conclua as votações pendentes antes de encerrar ou alterar as regras deste torneio.',
   invalid_name: 'Informe um nome de 3 a 100 caracteres.',
   invalid_period: 'Informe um período válido, com o fim igual ou posterior ao início.',
   period_requires_rule_preview: 'Altere as datas em Configurar período e regras, conferindo o impacto antes de confirmar.',

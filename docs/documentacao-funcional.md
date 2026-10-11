@@ -1,5 +1,13 @@
 # Documentação funcional — GeoGuaras
 
+## Auditoria por votação — Sprint 6 (local em 11/10/2026)
+
+No painel do torneio, “Auditoria de pontuações” abre pedidos e decisões. Participante escolhe uma pontuação positiva e informa justificativa de 3 a 1.000 caracteres. Organizador aprova e inicia 48 horas de votação ou rejeita com motivo. Cada integrante da abertura, exceto o auditado, pode votar e alterar seu voto até o prazo; organizador vota se participante. Os votos são secretos: cada jogador consulta apenas seu próprio voto, e o resultado agregado aparece após a apuração.
+
+Após o prazo, o organizador apura. Maioria simples dos votos recebidos pela invalidez determina a invalidação; empate ou ausência de votos mantém o resultado. Na invalidação, escolhe contribuição zero sem penalidade ou penalidade da data auditada. O dia é recalculado sem essa pontuação como referência relativa; bruto pessoal e outros torneios são preservados. Histórico exibe resultados antes/depois e o painel distingue a punição de uma ausência comum.
+
+Há uma auditoria por pontuação/torneio nesta sprint, inclusive pedido rejeitado; sem recurso/reabertura. Atualizar página para consultar mudanças. Pedido/votação pendente impede encerramento/revisão de regras, mudança do vínculo do auditado e correção do bruto em avaliação. Encerrados permitem consulta. Implementação local testada; migração/publicação/homologação pendentes. [Detalhes e decisões](sprints/sprint-6.md).
+
 Definição vigente S5: organizador edita início/fim e uma única regra para todo o período em “Configurar período e regras”. Prévia mostra impacto no conjunto do torneio; confirmação registra histórico e recalcula. Encerrados são somente consulta. Testes experimentais usam TESTE S5, sem alterar brutos reais. Migração complementar/publicação dessa simplificação ainda pendentes.
 
 ## Evolução vigente — Sprint 5 (local em 03/10/2026)
