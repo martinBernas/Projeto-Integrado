@@ -3,9 +3,11 @@ import { formatDate, formatScore } from '@/lib/tournament';
 import type { ScoreChangesData } from '@/lib/score-changes';
 import { ScoreChangeReview } from './forms';
 
-export function ScoreChangeList({ changes, userId, page, management = false }: { changes: ScoreChangesData; userId: string; page: number; management?: boolean }) {
+export function ScoreChangeList({ changes, userId, page, management = false, paginationParams = {} }: { changes: ScoreChangesData; userId: string; page: number; management?: boolean; paginationParams?: Record<string, string> }) {
   const user = { id: userId };
   const basePath = management ? '/dashboard/notifications' : '/dashboard/requests';
+  const query = Object.entries(paginationParams).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&');
+  const pageHref = (next: number) => `${basePath}?${query ? `${query}&` : ''}page=${next}`;
   const status = { pending: 'Aguardando decisão', approved: 'Aprovada', rejected: 'Recusada' };
   const value = (score: number | null) => score === null ? 'Sem lançamento (ausência)' : `${formatScore(score)} pontos${score === 0 ? ' (ausência)' : ''}`;
   return <>
@@ -27,7 +29,7 @@ export function ScoreChangeList({ changes, userId, page, management = false }: {
               {management && decision.can_review && <ScoreChangeReview decision={decision.id} auditBlocked={decision.audit_blocked} />}
             </div>)}</div>
           </article>)}
-          <nav aria-label="Páginas das solicitações" className="flex justify-between gap-4">{page > 0 && <Link className="font-semibold text-emerald-800" href={`${basePath}?page=${page - 1}`}>Mais recentes</Link>}{changes.has_more && <Link className="font-semibold text-emerald-800" href={`${basePath}?page=${page + 1}`}>Mais antigas</Link>}</nav>
+          <nav aria-label="Páginas das solicitações" className="flex justify-between gap-4">{page > 0 && <Link className="font-semibold text-emerald-800" href={pageHref(page - 1)}>Mais recentes</Link>}{changes.has_more && <Link className="font-semibold text-emerald-800" href={pageHref(page + 1)}>Mais antigas</Link>}</nav>
 
   </>;
 }

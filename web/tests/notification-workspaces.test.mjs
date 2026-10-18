@@ -93,3 +93,31 @@ test('notification backup/export/verification includes all accepted inputs and d
   await assert.rejects(db.exec(backup),/already installed/);await db.exec('rollback');
  }finally{await db.close();}
 });
+
+test('tournament adjustment filter scopes both parents and decisions before pagination and preserves existing data',async()=>{
+ const {db,ids,score}=await setup();try{
+  await login(db,owner);const third=(await db.query("select public.create_tournament('Segundo organizado','2020-01-01','2020-01-02') id")).rows[0].id;
+  await db.exec('reset role');
+  const change=(await db.query('select id from private.retroactive_score_changes limit 1')).rows[0].id;
+  await db.query('insert into private.score_change_decisions(change_id,tournament_id,old_score) values($1,$2,10000)',[change,third]);
+  for(let i=0;i<52;i++){
+   const c=(await db.query("insert into private.retroactive_score_changes(player_id,personal_score_id,played_on,new_score,reason) values($1,$2,'2020-01-01',9000,'Histórico de outro torneio') returning id",[player,score])).rows[0].id;
+   await db.query("insert into private.score_change_decisions(change_id,tournament_id,status,decided_at,decided_by) values($1,$2,'rejected',now(),$3)",[c,third,owner]);
+  }
+  const before=await snapshot(db);
+  // Simulate the reused, complete prior reference without additional business writes.
+  await db.exec((await sql('operations/tournament-adjustment-filter/01-backup-before-install.sql')).replaceAll('before-tournament-adjustments-20261018-v1','before-notifications-20261018-v1'));
+  await db.exec(await sql('migrations/202610180006_tournament_adjustment_filter.sql'));
+  await db.exec(await sql('operations/tournament-adjustment-filter/03-verify-after-install.sql'));
+  assert.deepEqual(await snapshot(db),before);
+  await login(db,owner);
+  const list=async(target,page=0)=>(await db.query('select public.get_tournament_score_changes($1,$2) d',[target,page])).rows[0].d;
+  const first=await list(ids[0]);assert.equal(first.changes.length,1);assert.equal(first.has_more,false);assert.ok(first.changes.every(c=>c.decisions.length===1&&c.decisions[0].tournament_id===ids[0]));
+  const otherPage=await list(third);assert.equal(otherPage.changes.length,50);assert.equal(otherPage.has_more,true);assert.equal(otherPage.changes[0].id,change);assert.equal(otherPage.changes[0].decisions[0].status,'pending');
+  const second=await list(third,1);assert.equal(second.changes.length,3);assert.equal(second.has_more,false);assert.ok(second.changes.every(c=>c.decisions.length===1&&c.decisions[0].tournament_id===third));
+  await assert.rejects(list(ids[1]),/change_not_allowed/);await assert.rejects(list(null),/change_not_allowed/);await assert.rejects(list(ids[0],-1),/invalid_page/);
+  await login(db,player);await assert.rejects(list(ids[0]),/change_not_allowed/);
+  await login(db,other);await assert.rejects(list(ids[0]),/change_not_allowed/);
+  await login(db,null,'anon');await assert.rejects(list(ids[0]),/permission denied/);
+ }finally{await db.close();}
+});

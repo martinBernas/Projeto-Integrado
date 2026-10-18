@@ -1,5 +1,7 @@
 # ADR-012 — Separar pedidos pessoais, gestão e votação
 
+Complemento de 18/10/2026 solicitado pelo Dono do produto: aprovação de ajustes ganha seletor por torneio, com contagem de pendências e botão Consultar ajustes, no mesmo padrão visual das auditorias. Nova RPC get_tournament_score_changes(target,page_number) faz autorização, filtro de solicitações/decisões e prioridade local antes da paginação. Seleção de ajustes usa adjustment_tournament, auditorias mantêm tournament; paginação conserva ambos. Não filtrar apenas a página já carregada, pois isso ocultaria pedidos quando outros torneios ocupassem o limite. Consulta anterior continua compatível. Migração 006 não modifica dados, tabelas ou cálculo; execução remota deste complemento ainda não confirmada. [Roteiro](../sprints/sprint-7-filtro-ajustes-operacao.md).
+
 Data: 18/10/2026. Decisão funcional confirmada pelo Dono do produto; implementação técnica local. Substitui a apresentação conjunta de solicitação e aprovação da ADR-011, preservando seu modelo de dados e transações.
 
 ## Contexto e decisão funcional

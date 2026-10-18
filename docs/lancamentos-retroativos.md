@@ -1,5 +1,7 @@
 # Lançamentos retroativos — S7-01 / FB02
 
+18/10/2026 — Evolução local da gestão: ajustes retroativos passam a ter seletor de torneio, contagem de pendências e botão Consultar ajustes, independente do seletor de auditorias. Somente solicitações e decisões daquele torneio aparecem, com filtro no banco antes de paginar. Dados existentes e regras de aprovação preservados. 120 testes, lint e build com TypeScript aprovados; migração 006/publicação/homologação deste filtro ainda pendentes. [Roteiro atual](sprints/sprint-7-filtro-ajustes-operacao.md).
+
 ## Regras confirmadas em 18/10/2026
 
 O Dono do produto aprovou inclusão na Sprint 7. O jogador pode incluir ou corrigir seu resultado bruto de qualquer data passada, sem limite de dias, com justificativa textual obrigatória. O histórico e as estatísticas pessoais passam a usar imediatamente esse valor. O lançamento de hoje continua no formulário existente, com suas regras e proteção contra alteração durante auditoria.
