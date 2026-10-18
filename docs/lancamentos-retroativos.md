@@ -16,7 +16,7 @@ Pedidos pendentes impedem encerramento. Como proteção técnica de consistênci
 
 ## Interface e acesso
 
-O painel mostra quantos pedidos aguardam decisão do organizador e quantos dias pessoais aguardam os torneios. O link “Alterações retroativas e decisões” abre `/dashboard/score-changes`, com formulário de data/bruto/justificativa e histórico paginado de 50 solicitações. A notificação é uma pendência consultada na renderização do painel, sem e-mail, push ou atualização em tempo real.
+Após correção de organização solicitada em 18/10/2026, o botão “Meus pedidos” abre `/dashboard/requests`: formulário retroativo, histórico somente próprio em páginas de 50 pedidos e abertura/acompanhamento das próprias denúncias por torneio de participação, sem controles administrativos. Somente organizadores recebem quadro no painel e acesso a “Gerenciar notificações dos torneios” (`/dashboard/notifications`), com decisões de ajustes e auditorias dos torneios que organizam. A rota antiga `/dashboard/score-changes` redireciona a Meus pedidos. Avisos de votação aberta são apresentados aos participantes até o prazo, inclusive após votar. Sem e-mail, push ou atualização em tempo real. [ADR-012](decisoes/adr-012-pedidos-e-notificacoes.md).
 
 O jogador consulta suas próprias solicitações e todas as decisões correspondentes. O organizador consulta somente solicitações e decisões dos torneios que organiza, além das próprias como jogador. A página mostra justificativa, bruto anterior pessoal, novo bruto, bruto anterior por torneio, estado, responsável e data da decisão em São Paulo. Nomes seguem a política vigente de nome público, sem usar e-mail como alternativa.
 
@@ -34,4 +34,6 @@ Histórico usa paginação por deslocamento e pode mudar de página se chegarem 
 
 ## Situação
 
-Implementação local concluída em 18/10/2026: 112 testes completos, lint dos arquivos de aplicação alterados e build com TypeScript aprovados. Não há execução remota da migração, publicação ou homologação desta funcionalidade confirmadas. A revisão visual em celular/teclado e a concorrência entre sessões PostgreSQL reais permanecem no roteiro de homologação; testes locais não as comprovam. [Roteiro operacional](sprints/sprint-7-retroativos-operacao.md).
+O fluxo principal foi homologado pelo Dono do produto nos cenários relatados: pessoal imediato, decisões independentes, bloqueio até todas as decisões e correções sucessivas com valores diferentes de 23.000/25.000 por torneio. Migração 004 e comparação remota concluídas; apresentação em aplicação utilizada confirmada, sem identificação formal de URL/versão. Esses registros não comprovam todos os cenários de auditoria/encerramento ou concorrência real.
+
+A separação de telas e avisos da migração 005 está concluída localmente: 119 testes completos, lint dos arquivos de aplicação afetados e build com TypeScript aprovados. Backup novo de 20 seções, migração 005, comparação, publicação e homologação desta correção ainda pendentes; não repetir a 004. [Roteiro atual](sprints/sprint-7-notificacoes-operacao.md). Auditorias de teste somente em torneios isolados, conforme orientação do Dono do produto.

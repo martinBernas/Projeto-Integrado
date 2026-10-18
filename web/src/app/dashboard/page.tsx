@@ -12,20 +12,21 @@ import { RetryLoad } from './retry-load';
 import { createDashboardMetrics } from '@/lib/operational-metrics';
 import { ruleForDate } from '@/lib/rules';
 import type { AuditData } from '@/lib/audits';
-import type { ScoreChangeSummary } from '@/lib/score-changes';
+import type { TournamentNotifications } from '@/lib/notifications';
+import { NotificationCards } from './notification-cards';
 
 export default async function DashboardPage({ searchParams }: { searchParams: Promise<{ tournament?: string | string[] }> }) {
   if (!isSupabaseConfigured) return <main className="mx-auto min-h-screen max-w-2xl px-6 py-20"><h1 className="text-3xl font-bold">Serviço em preparação</h1><p className="mt-4 text-slate-600">O acesso às pontuações estará disponível em breve.</p><Link className="mt-6 inline-block font-semibold text-emerald-700" href="/">Voltar ao início</Link></main>;
   const measureDashboardQuery = createDashboardMetrics();
   const supabase = await createClient(); const { data: { user } } = await measureDashboardQuery('authentication', supabase.auth.getUser()); if (!user) redirect("/auth/login");
   const requested = (await searchParams).tournament;
-  const [{ data: tournaments, error: listError }, { data: history, error: historyError }, { data: profile }, { data: changeSummaryData, error: changeSummaryError }] = await Promise.all([
+  const [{ data: tournaments, error: listError }, { data: history, error: historyError }, { data: profile }, { data: notificationData, error: notificationError }] = await Promise.all([
     measureDashboardQuery('tournaments', supabase.from('tournaments').select('id, name, starts_at, ends_at, closed_at, organizer_id').order('starts_at', { ascending: false }).order('id')),
     measureDashboardQuery('personal_history', supabase.from('personal_scores').select('id, played_on, score, source').eq('player_id', user.id).order('played_on', { ascending: false }).limit(100)),
     measureDashboardQuery('profile', supabase.from('profiles').select('public_name_confirmed').eq('id',user.id).maybeSingle()),
-    supabase.rpc('get_score_change_summary'),
+    supabase.rpc('get_tournament_notifications'),
   ]);
-  const changeSummary = changeSummaryData as ScoreChangeSummary | null;
+  const notifications = notificationData as TournamentNotifications | null;
   const selected = requested === undefined ? tournaments?.find(t => !t.closed_at) ?? tournaments?.[0] : tournaments?.find(t => t.id === requested);
   const [{ data, error }, { data: auditData, error: auditError }] = selected ? await Promise.all([
     measureDashboardQuery('tournament_rpc', supabase.rpc('get_tournament_dashboard', { target: selected.id })),
@@ -46,15 +47,10 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
     <div className="mx-auto max-w-6xl space-y-8">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div><Link href="/" className="text-sm font-bold tracking-wide text-emerald-800">GEOGUARAS</Link><h1 className="mt-2 text-3xl font-bold tracking-tight">Seu painel</h1><p className="mt-1 break-all text-sm text-slate-600">{user.email}</p></div>
-        <div className="flex flex-wrap items-center gap-4"><Link href="/dashboard/profile" className="font-semibold text-emerald-800">Meu perfil</Link><Link href="/dashboard/statistics" className="font-semibold text-emerald-800">Minhas estatísticas</Link><Link href="/dashboard/tournaments" className="font-semibold text-emerald-800">Administrar torneios</Link><form action={signOut}><button className="rounded-lg border border-slate-300 bg-white px-4 py-2 font-semibold">Sair</button></form></div>
+        <div className="flex flex-wrap items-center gap-4"><Link href="/dashboard/profile" className="font-semibold text-emerald-800">Meu perfil</Link><Link href="/dashboard/statistics" className="font-semibold text-emerald-800">Minhas estatísticas</Link><Link href="/dashboard/requests" className="font-semibold text-emerald-800">Meus pedidos</Link><Link href="/dashboard/tournaments" className="font-semibold text-emerald-800">Administrar torneios</Link><form action={signOut}><button className="rounded-lg border border-slate-300 bg-white px-4 py-2 font-semibold">Sair</button></form></div>
       </header>
       {profile && !profile.public_name_confirmed && <aside className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm">Confirme seu nome público para ser identificado nos torneios. <Link href="/dashboard/profile" className="font-semibold underline">Completar meu perfil</Link></aside>}
-      <aside className="rounded-xl border border-slate-200 bg-white p-4">
-        <Link href="/dashboard/score-changes" className="font-semibold text-emerald-800 underline">Alterações retroativas e decisões</Link>
-        {changeSummaryError || !changeSummary ? <p role="alert" className="mt-2 text-sm text-amber-900">Não foi possível conferir os pedidos pendentes. Abra as alterações retroativas para tentar novamente.</p>
-          : <><p className="mt-2 text-sm">{changeSummary.pending_approvals > 0 ? `${changeSummary.pending_approvals} pedido(s) aguardando sua decisão como organizador.` : 'Nenhum pedido aguardando sua decisão como organizador.'}</p>
-            {changeSummary.pending_days > 0 && <p className="mt-1 text-sm text-amber-900">{changeSummary.pending_days} dia(s) do seu histórico aguardando decisão dos torneios. Esses dias ficam bloqueados para nova alteração.</p>}</>}
-      </aside>
+      <NotificationCards data={notifications} failed={!!notificationError || !notifications} isOrganizer={notifications?.is_organizer ?? !!tournaments?.some(t => t.organizer_id === user.id)} />
       <section className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7" aria-labelledby="entry-title">
         <h2 id="entry-title" className="mb-4 text-xl font-bold">Resultado de hoje</h2>
         <ScoreForm today={today} current={ownToday} />

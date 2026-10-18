@@ -8,6 +8,8 @@ import * as react from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import * as tournament from '../src/lib/tournament.ts';
 import * as rules from '../src/lib/rules.ts';
+import * as notifications from '../src/lib/notifications.ts';
+import * as audits from '../src/lib/audits.ts';
 
 test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inválido', async () => {
   let rows = [
@@ -29,6 +31,8 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
     '@/lib/supabase/config': { isSupabaseConfigured: true },
     '@/lib/tournament': tournament,
     '@/lib/rules': rules,
+    '@/lib/notifications': notifications,
+    '@/lib/audits': audits,
     '@/lib/operational-metrics': { createDashboardMetrics: () => async (_, query) => await query },
     './score-form': { ScoreForm: () => null },
     './tournament-view': { TournamentView: ({ data }) => jsx.jsx('p', { children: `Ranking ${data.tournament.name}` }) },
@@ -40,7 +44,7 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
         return query;
       },
       rpc: async (name, { target } = {}) => {
-        if (name === 'get_score_change_summary') return { data: { pending_approvals: 2, pending_days: 1 }, error: null };
+        if (name === 'get_tournament_notifications') return { data: { is_organizer: false, pending_days: 1, managed_tournaments: [], request_tournaments: [], open_votings: [] }, error: null };
         calls.push(target);
         if (name === 'get_score_audits') return { data: { audits: [] }, error: auditReadError };
         return { error: rpcError, data: rpcDataMissing ? null : { access: rpcAccess, today: '2026-09-26', tournament: rows.find(t => t.id === target), excluded_dates: [],
@@ -53,7 +57,7 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
   const recentExports = {};
   vm.runInNewContext(recentCode, { exports: recentExports, require: name => name === 'react' ? react : jsx });
   dependencies['./recent-results'] = recentExports;
-  for (const name of ['tournament-panel','retry-load']) {
+  for (const name of ['tournament-panel','retry-load','notification-cards']) {
     const componentSource = await readFile(new URL('../src/app/dashboard/' + name + '.tsx', import.meta.url), 'utf8');
     const code = ts.transpileModule(componentSource, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
     const componentExports = {};

@@ -10,7 +10,7 @@ flowchart TD
     P -->|Não| B[Preservar bruto aceito em cada torneio elegível]
     B --> H[Atualizar histórico pessoal e registrar solicitação]
     H --> D[Criar decisão pendente por torneio]
-    D --> N[Painel do organizador: contagem e justificativa]
+    D --> N[Gerenciar notificações: contagem e justificativa]
     N --> V[RPC review_score_change]
     V --> T{Torneio aberto e organizador autorizado?}
     T -->|Não| E

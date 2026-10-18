@@ -24,13 +24,21 @@ test('S6 page renders requests, secret own vote, organizer approval, deadline, a
  const deps={'react/jsx-runtime':jsx,'next/link':{default:({children,...props})=>jsx.jsx('a',{...props,children})},'next/navigation':{redirect:()=>{throw Error('redirect');}},
   '@/lib/supabase/server':{createClient:async()=>({auth:{getUser:async()=>({data:{user:{id:'p'}}})},rpc:async name=>({data:name==='get_score_audits'?evaluation:dashboard})})},
   '@/lib/tournament':tournament,'@/lib/audits':audits,'../../audit-form':{AuditResolution:()=>jsx.jsx('button',{children:'Apurar votos'}),AuditForm:({label,children})=>jsx.jsxs('form',{children:[children,jsx.jsx('button',{children:label})]})},'../../../retry-load':{RetryLoad:()=>null}};
+ deps['./tournaments/audit-form']=deps['../../audit-form'];
+ for(const [file,key] of [['audit-history','../../../audit-history'],['audit-request','request-component']]) {
+  const code=ts.transpileModule(await readFile(new URL(`../src/app/dashboard/${file}.tsx`,import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}}).outputText;
+  const component={};vm.runInNewContext(code,{exports:component,Date,Intl,require:n=>{assert.ok(n in deps,n);return deps[n];}});deps[key]=component;
+ }
  const source=await readFile(new URL('../src/app/dashboard/tournaments/[id]/audits/page.tsx',import.meta.url),'utf8');
  const {outputText}=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}});
  const exports={};vm.runInNewContext(outputText,{exports,Date,Intl,require:n=>{assert.ok(n in deps,n);return deps[n];}});
  const render=async()=>renderToStaticMarkup(await exports.default({params:Promise.resolve({id})}));
  const html=await render();
  assert.match(html,/id="audit-open"/);
- for(const text of ['Enviar pedido','Aprovar e iniciar votação','Rejeitar pedido','Alterar meu voto','Seu voto: Manter','Apurar votos','Votos a favor de invalidar a pontuação: 2','Votos contra invalidar (manter a pontuação): 1','Total de votos: 3','Decisão: pontuação invalidada por maioria','Resultados do dia antes e depois']) assert.ok(html.includes(text),text);
+ for(const text of ['Alterar meu voto','Seu voto: Manter','Votos a favor de invalidar a pontuação: 2','Votos contra invalidar (manter a pontuação): 1','Total de votos: 3','Decisão: pontuação invalidada por maioria','Resultados do dia antes e depois']) assert.ok(html.includes(text),text);
+ assert.doesNotMatch(html,/Aprovar e iniciar votação|Rejeitar pedido|Apurar votos|Enviar denúncia/);
+ const management=renderToStaticMarkup(jsx.jsx(deps['../../../audit-history'].AuditHistory,{data:dashboard,evaluation,management:true,allowVoting:false}));
+ assert.match(management,/Aprovar e iniciar votação/);assert.match(management,/Apurar votos/);assert.doesNotMatch(management,/Salvar voto secreto|Alterar meu voto/);
  const expired=html.match(/<article[^>]*id="audit-expired"[\s\S]*?<\/article>/)[0];
  assert.match(expired,/Votação encerrada · Aguardando apuração/);
  assert.match(expired,/Ainda não há resultado apurado/);
@@ -41,7 +49,8 @@ test('S6 page renders requests, secret own vote, organizer approval, deadline, a
   assert.ok(result.includes(`Decisão: pontuação mantida ${reason}.`));
   assert.match(result,/Nenhuma punição aplicada/);
  }
- assert.match(html,/required="" minLength="3" maxLength="1000"/);
+ const request=renderToStaticMarkup(jsx.jsx(deps['request-component'].AuditRequest,{data:dashboard,evaluation}));
+ assert.match(request,/required="" minLength="3" maxLength="1000"/);assert.match(request,/Enviar denúncia/);assert.doesNotMatch(request,/Aprovar e iniciar/);
  evaluation.organizer=false;evaluation.audits[1].can_vote=false;
  const participant=await render();assert.doesNotMatch(participant,/Aprovar e iniciar|Apurar votos|Alterar meu voto/);assert.match(participant,/Aguardando apuração/);
  dashboard.tournament.closed_at='2026-10-11T12:00Z';

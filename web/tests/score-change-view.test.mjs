@@ -37,26 +37,20 @@ test('retroactive actions validate session, calendar, text, score and confirmati
  error={message:'secret database text'};assert.doesNotMatch((await actions.manageScoreChange({},form)).error,/secret/);
 });
 
-test('retroactive screen renders independent states, safe justification, dates, paging, audit block and retry without false empty',async()=>{
- let user={id:'p'},error=null,summaryError=null;
- const data={has_more:true,changes:[{id:'c',player_id:'p',player_name:'Pessoa',played_on:'2020-01-01',old_score:10000,new_score:8000,
-  reason:'<script>texto</script>',requested_at:'2026-10-18T20:00Z',decisions:[
-   {id:'pending',tournament_name:'Primeiro',old_score:10000,status:'pending',can_review:true,audit_blocked:true},
-   {id:'rejected',tournament_name:'Segundo',old_score:null,status:'rejected',can_review:false,decided_at:'2026-10-18T21:00Z',decided_by_name:'Organizador'},
-   {id:'approved',tournament_name:'Terceiro',old_score:0,status:'approved',can_review:false},
-  ]}]};
+test('request history is read-only in personal view and approvals appear only in management',async()=>{
+ const data={has_more:true,changes:[{id:'c',player_id:'p',played_on:'2020-01-01',old_score:10000,new_score:8000,reason:'<script>texto</script>',requested_at:'2026-10-18T20:00Z',decisions:[
+  {id:'pending',tournament_name:'Primeiro',old_score:10000,status:'pending',can_review:true,audit_blocked:true},
+  {id:'rejected',tournament_name:'Segundo',old_score:null,status:'rejected',can_review:false},
+  {id:'approved',tournament_name:'Terceiro',old_score:0,status:'approved',can_review:false},
+ ]}]};
  const forms=await load('app/dashboard/score-changes/forms.tsx',{'react/jsx-runtime':jsx,'react':{useActionState:()=>[{},()=>{},false]},'./actions':{manageScoreChange:()=>{}}});
- const deps={'react/jsx-runtime':jsx,'next/link':{default:({children,...props})=>jsx.jsx('a',{...props,children})},
-  'next/navigation':{redirect:()=>{throw Error('redirect');}},'@/lib/tournament':tournament,'./forms':forms,'../retry-load':{RetryLoad:()=>jsx.jsx('button',{children:'Tentar novamente'})},
-  '@/lib/supabase/server':{createClient:async()=>({auth:{getUser:async()=>({data:{user}})},rpc:async name=>name==='get_score_changes'?{data,error}:{data:{pending_approvals:1,pending_days:1},error:summaryError}})},
- };
- const page=await load('app/dashboard/score-changes/page.tsx',deps);
- const render=async()=>renderToStaticMarkup(await page.default({searchParams:Promise.resolve({page:'1'})}));
- const html=await render();
- for(const text of ['Histórico pessoal','Aguardando decisão','Aprovada','Recusada','Sem lançamento (ausência)','&lt;script&gt;','Mais antigas','Mais recentes','auditoria pendente','name="reason"','name="day"','maxLength="1000"'])assert.ok(html.includes(text),text);
+ const deps={'react/jsx-runtime':jsx,'next/link':{default:({children,...props})=>jsx.jsx('a',{...props,children})},'@/lib/tournament':tournament,'./forms':forms};
+ const list=await load('app/dashboard/score-changes/list.tsx',deps);
+ const render=(management=false)=>renderToStaticMarkup(jsx.jsx(list.ScoreChangeList,{changes:data,userId:'p',page:1,management}));
+ const personal=render();assert.doesNotMatch(personal,/Aprovar e recalcular|Recusar alteração/);assert.match(personal,/\/dashboard\/requests\?page=2/);
+ const html=render(true);
+ for(const text of ['Histórico pessoal','Aguardando decisão','Aprovada','Recusada','Sem lançamento (ausência)','&lt;script&gt;','Mais antigas','Mais recentes','auditoria pendente'])assert.ok(html.includes(text),text);
  assert.doesNotMatch(html,/<script>texto<\/script>/);assert.match(html,/<button[^>]+disabled=""[^>]*>Aprovar e recalcular/);
- error={message:'private details'};const failure=await render();assert.match(failure,/Tentar novamente/);assert.doesNotMatch(failure,/Nenhuma solicitação|private details/);
- error=null;summaryError={message:'bad'};assert.match(await render(),/Não foi possível carregar/);
- summaryError=null;data.changes=[];assert.match(await render(),/Nenhuma solicitação/);
- user=null;await assert.rejects(render(),/redirect/);
+ assert.match(html,/\/dashboard\/notifications\?page=2/);
+ data.changes=[];assert.match(render(),/Nenhuma solicitação/);
 });

@@ -2,7 +2,7 @@ export type AuditResult = { player_id: string; applied_score: number; result_kin
 export type ScoreAudit = {
   id: string; personal_score_id: string; player_id: string; played_on: string; raw_score: number;
   reason: string; status: 'requested' | 'open' | 'rejected' | 'maintained' | 'invalidated';
-  requested_at: string; deadline: string | null; resolved_at: string | null; resolution_reason: string | null;
+  requested_at: string; requested_by_me?: boolean; deadline: string | null; resolved_at: string | null; resolution_reason: string | null;
   punishment: 'disregard' | 'penalty' | null; penalty: number | null;
   invalid_votes: number | null; maintain_votes: number | null; my_vote: 'invalidate' | 'maintain' | null;
   can_vote: boolean; before_results: AuditResult[] | null; after_results: AuditResult[] | null;

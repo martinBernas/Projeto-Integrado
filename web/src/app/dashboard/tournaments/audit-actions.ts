@@ -51,7 +51,7 @@ export async function manageAudit(_: AuditState, form: FormData): Promise<AuditS
   }
   if (result.error) return { error: Object.entries(errors).find(([key]) => result.error.message.includes(key))?.[1]
     ?? 'Não foi possível concluir. Atualize a página e tente novamente.' };
-  revalidatePath('/dashboard');
+  revalidatePath('/dashboard', 'layout');
   revalidatePath(`/dashboard/tournaments/${target}/audits`);
   return { message: operation === 'request' ? 'Pedido enviado ao organizador.' : operation === 'vote' ? 'Seu voto secreto foi salvo.'
     : operation === 'approve' ? 'Votação de 48 horas iniciada.' : operation === 'reject' ? 'Pedido rejeitado.' : 'Apuração concluída. Consulte a decisão e o ranking.' };
