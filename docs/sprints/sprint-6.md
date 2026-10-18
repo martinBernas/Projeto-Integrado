@@ -1,8 +1,16 @@
 # Sprint 6 — Auditoria por votação e estatísticas pessoais
 
+18/10/2026 — Manutenção posterior autorizada: retirada da preparação histórica e do torneio “Teste auditoria Aztecas Outubro” documentadas separadamente em [manutenção após Sprint 6](manutencao-pos-sprint-6.md). A Sprint 6 permanece encerrada; esse novo pedido não altera seu aceite nem comprova migração/exclusão/publicação remotas.
+
+18/10/2026 — Sprint 6 encerrada por encaminhamento do Dono do produto (“podemos encerrar a sprint entao?”), após confirmar clareza da tela e funcionamento dos testes de punição e recálculo. Encerramento baseado nas validações relatadas e nas evidências locais, sem presumir execução de todos os cenários remotos. S6-01–S6-04 entregues; RF21 continua fora do escopo. Migração incremental confirmada; aplicação atualizada exercitada pelo Dono do produto, sem identificação de URL/versão. Casos remotos não detalhados no roteiro, referência do ambiente e novo backup não confirmado ficam como acompanhamento posterior, sem manter a sprint aberta. Permanecem registrados os erros de tipagem do Supabase observados na checagem TypeScript de 18/10; build deste incremento não executado. Última suíte local: 88 testes aprovados; lint dos arquivos alterados aprovado. Este encerramento substitui os registros históricos de sprint em homologação e aceite global pendente. Atualização exclusivamente documental, sem nova execução remota.
+
+18/10/2026 — O Dono do produto confirmou: “os testes de punicao e recalculo funcionaram”. Registrado funcionamento de punição e recálculo nos testes realizados na aplicação, complementando a validação anterior da tela e do fluxo em duas etapas. Este relato substitui a ausência de confirmação geral desses efeitos. Não foram detalhados tipo de punição, modo de cálculo, valores esperados/obtidos, ambiente ou dispositivo; não presumir cobertura individual das duas sanções, cálculo absoluto/relativo, empate/nenhum voto, idempotência, isolamento ou concorrência. Casos específicos ainda sem evidência permanecem no roteiro; não há aceite global da Sprint 6 neste relato. Atualização documental, sem nova operação remota ou teste da aplicação pelo agente.
+
+18/10/2026 — O Dono do produto relatou, após testar o ajuste: “agora testei e faz sentido a tela”. Registrada validação da clareza da tela e do fluxo de apuração em duas etapas na aplicação utilizada. Substitui a pendência de validação geral da apresentação deste incremento. Ambiente/versão, dispositivo e casos executados não informados; o relato não comprova separadamente aplicação das duas punições, recálculo, empate/nenhum voto, concorrência, celular/teclado nem aceite global da Sprint 6. Migração incremental já confirmada pelo retorno anterior; não reaplicar. Atualização exclusivamente documental, sem nova operação remota ou teste da aplicação pelo agente.
+
 18/10/2026 — O Dono do produto informou o retorno “Success. No rows returned” após executar a migração incremental `202610180001_audit_tally.sql`. Execução remota da migração confirmada por esse relato; não reaplicar. Ambiente/identificador e horário exato não informados. Publicação da interface, uso da nova consulta, homologação e aceite deste incremento ainda não confirmados. Novo backup/exportação não confirmado. Este registro substitui as referências anteriores à migração deste incremento como pendente; preserva os demais registros como históricos.
 
-## Situação atual — 11/10/2026
+## Situação em 11/10/2026 — histórico anterior ao encerramento
 
 Sprint em homologação, sem aceite global ou encerramento. S6-01–S6-04 implementadas; testes locais, lint e build aprovados. Backup/exportação, migração e comparação remota concluídos. Deployment pronto relatado pelo Dono do produto; URL/versão não informadas. Fluxos de auditoria exercitados na aplicação e tela de RF20 validada visualmente, sem problemas relatados.
 
@@ -71,7 +79,7 @@ Suíte completa com 86 testes aprovados, zero falhas/pulados; lint e build aprov
 
 Testes de apresentação afetados revalidados após ajustes finais. Build final aprovado após preservar saída .next bloqueada por EPERM em cache ignorado e gerar nova saída, sem alterar configuração. Contagens de 82/83 testes pertencem às etapas anteriores e foram substituídas por 86. Esta atualização documental verificada com git diff --check; sem novos testes da aplicação ou ações remotas.
 
-## Pendências reais para concluir a sprint
+## Incremento final e acompanhamento após encerramento
 
 ### Incremento de 18/10/2026 — apurar antes de escolher punição
 
@@ -83,14 +91,16 @@ Migração incremental necessária: `web/supabase/migrations/202610180001_audit_
 
 Verificação local: suíte completa com **88 testes aprovados**, zero falhas ou pulados. Testes de apresentação, Server Action e PGlite cobrem consulta antes do prazo, restrição de organizador/anônimo, totais sem identidades, repetição sem mutação, ranking preservado na prévia, votos bloqueados após prazo, sanção obrigatória para invalidar e manutenção sem sanção por maioria/empate/nenhum voto. ESLint dos três arquivos alterados aprovado. TypeScript não aprovado devido aos erros do cliente Supabase já observados antes deste incremento em várias rotas (incluindo `getUser`), sem novo erro específico da prévia. Build não executado nesta entrega; validação de compilação integral permanece limitada por esses erros.
 
-Prazo da votação de teste: **13/10/2026 às 11:15, São Paulo**, informado com precisão de minutos (segundos não fornecidos). Após o instante efetivo, atualizar a página e executar a apuração pelo organizador. Nenhuma automação ou apuração realizada por esta atualização.
+### Roteiro remanescente — acompanhamento posterior
+
+Prazo histórico da votação de teste: **13/10/2026 às 11:15, São Paulo**, informado com precisão de minutos. A validação posterior de punição e recálculo substitui a espera genérica pela apuração. Os casos abaixo preservam o roteiro sem confirmação individual; não constituem impedimento ao encerramento solicitado em 18/10/2026.
 
 1. Após o prazo: confirmar recusa de novo voto/alteração e executar apuração; homologar manutenção, empate/nenhum voto e maioria pela invalidez em cenários próprios.
-2. Conferir separadamente desconsideração e penalidade, recálculo absoluto/relativo (incluindo menor positivo), resultados antes/depois e isolamento do bruto pessoal/torneio original.
+2. Punição e recálculo tiveram funcionamento confirmado pelo Dono do produto em 18/10/2026. A confirmação não detalha cobertura individual; registrar, se ainda não exercitados, desconsideração e penalidade, cálculo absoluto/relativo (incluindo menor positivo), resultados antes/depois e isolamento do bruto pessoal/torneio original.
 3. Repetir apuração para verificar idempotência; conferir penalidade preservada após revisão e aviso “Punição aplicada” clicável para o resultado correto.
 4. Demais cenários sem confirmação específica: bloqueio de encerramento e mudança do vínculo/correção do bruto do auditado, conta externa/revogação, apuração antes do prazo, consultas de encerrados e concorrência real entre sessões.
 5. RF20: registrar resultados específicos do roteiro, sobretudo filtros/fronteiras, médias conhecidas, histórico superior a 100, vazio/privacidade e celular/teclado, se ainda não exercitados. A validação visual geral já está registrada.
-6. Registrar referência do ambiente/versão usada e aceite global do Dono do produto após avaliar os resultados e eventuais limitações.
+6. Registrar referência do ambiente/versão quando disponível. Encerramento pelo Dono do produto registrado em 18/10/2026; não há nova solicitação de aceite pendente.
 
 Roteiro detalhado e recuperação em [operação da Sprint 6](sprint-6-operacao.md). Backup, migração, comparação, regras aprovadas, sigilo, aviso aberto e validação visual geral de RF20 não são pendências atuais.
 

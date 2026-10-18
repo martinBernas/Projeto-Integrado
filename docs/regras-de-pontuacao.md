@@ -1,5 +1,7 @@
 # Regras de pontuação
 
+18/10/2026 — Preparação histórica retirada a pedido do Dono do produto. Dias elegíveis encerrados aplicam ausência/zero automaticamente conforme a regra; o dia atual continua provisório. Torneios encerrados não são recalculados. Abertos ainda em preparação passam a aplicar ausências no próximo recálculo após a nova migração. Implementação local, sem execução remota. [Escopo e efeitos](sprints/manutencao-pos-sprint-6.md).
+
 ## Evolução local — Sprint 5, 03/10/2026
 
 Modo, penalidade, calendário e exclusões formam uma única regra para todo o período do torneio aberto. Início/fim e regras mudam com prévia de impacto e confirmação, recalculando o período alcançado. Versões anteriores são histórico, sem vigências simultâneas. Encerrados preservam resultados e rejeitam edição. Brutos/elegibilidade e regras de outros torneios não mudam. Fuso fixo São Paulo; zero bruto é ausência nos dois modos, distinto de zero aplicado válido no relativo. Complemento local; migração/publicação/homologação pendentes. [Sprint 5](sprints/sprint-5.md), [ADR-004](decisoes/adr-004-regra-unica-por-torneio.md).
@@ -16,7 +18,7 @@ Cada pontuação bruta pertence ao jogador, identificada pela data e hora do lan
 
 ## Modos configuráveis
 
-Decisão do Dono do produto em 03/10/2026: zero bruto representa ausência também no modo absoluto. A penalidade só é aplicada no dia elegível encerrado e com preparação histórica concluída. Zero aplicado ao menor positivo no relativo continua sendo resultado válido. Todos os torneios e lançamentos adotam `America/Sao_Paulo`, sem configuração de fuso; substitui a proposta anterior de múltiplos fusos. Implementação local e evidências em [Sprint 5](sprints/sprint-5.md).
+Decisão do Dono do produto em 03/10/2026: zero bruto representa ausência também no modo absoluto. A penalidade é aplicada no dia elegível encerrado; a exigência de preparação histórica foi retirada por decisão do Dono do produto em 18/10/2026, com implementação local e migração remota ainda pendente. Zero aplicado ao menor positivo no relativo continua sendo resultado válido. Todos os torneios e lançamentos adotam `America/Sao_Paulo`, sem configuração de fuso; substitui a proposta anterior de múltiplos fusos. Implementação local e evidências em [Sprint 5](sprints/sprint-5.md).
 
 Cada torneio define um dos seguintes modos:
 
@@ -35,7 +37,7 @@ Exemplo: se as pontuações forem 10.000, 12.000 e 15.500, os pontos aplicados s
 
 ## Ausência e período
 
-Na carga inicial da Sprint 3, o Dono do produto fornecerá um Excel após o cadastro das contas. Enquanto a preparação histórica estiver aberta, dados ausentes ficam pendentes e o ranking é provisório, sem penalidades. Após conferir e concluir a carga diretamente na base, as ausências dos dias elegíveis encerrados passam a gerar −2.500. Ver [procedimento operacional](sprints/sprint-3-operacao.md). A aplicação do resultado relativo aos lançamentos positivos permanece independente dessa faixa de pontuação bruta.
+Registro histórico da Sprint 3, substituído quanto à preparação pela decisão de 18/10/2026: o Dono do produto forneceria um Excel após o cadastro das contas. Enquanto a preparação histórica estiver aberta, dados ausentes ficam pendentes e o ranking é provisório, sem penalidades. Após conferir e concluir a carga diretamente na base, as ausências dos dias elegíveis encerrados passam a gerar −2.500. Ver [procedimento operacional](sprints/sprint-3-operacao.md). A aplicação do resultado relativo aos lançamentos positivos permanece independente dessa faixa de pontuação bruta.
 
 O valor da penalidade por não jogar é uma configuração do torneio. O MVP usa −2.500 no bloco de setembro, mas a aplicação não deve fixar esse número. A ausência só pode ser avaliada dentro do período do torneio e no fuso fixo `America/Sao_Paulo`.
 

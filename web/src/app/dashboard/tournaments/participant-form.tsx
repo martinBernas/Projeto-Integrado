@@ -5,11 +5,11 @@ import { manageParticipant } from './participant-actions';
 
 export function ParticipantForm({ target, player, start, end, eligible, operation }: {
   target: string; player?: string; start: string; end: string; eligible?: string;
-  operation: 'add' | 'update' | 'remove' | 'complete';
+  operation: 'add' | 'update' | 'remove';
 }) {
   const [state, action, pending] = useActionState(manageParticipant, {});
   const dateNeeded = operation === 'add' || operation === 'update';
-  const label = { add: 'Adicionar participante', update: 'Salvar data', remove: 'Remover do torneio', complete: 'Concluir preparação do histórico' }[operation];
+  const label = { add: 'Adicionar participante', update: 'Salvar data', remove: 'Remover do torneio' }[operation];
   return <form action={action} className="mt-4 space-y-3">
     <input type="hidden" name="target" value={target} /><input type="hidden" name="operation" value={operation} />
     {player && <input type="hidden" name="player" value={player} />}
@@ -19,8 +19,7 @@ export function ParticipantForm({ target, player, start, end, eligible, operatio
     </label>}
     <label className="flex items-start gap-2 text-sm text-slate-600"><input name="confirm" type="checkbox" value="yes" required className="mt-1" />
       {operation === 'remove' ? 'Confirmo a remoção e o recálculo do ranking deste torneio.'
-        : operation === 'complete' ? 'Conferi as datas e pontuações dos participantes. Confirmo a aplicação de penalidades por ausência.'
-        : 'Confirmo a data e o recálculo do ranking, incluindo ausências se o histórico estiver pronto.'}
+        : 'Confirmo a data e o recálculo do ranking, incluindo as ausências dos dias elegíveis encerrados.'}
     </label>
     <button disabled={pending} className={`rounded-lg px-4 py-2 font-semibold disabled:opacity-50 ${operation === 'remove' ? 'border border-red-300 text-red-800' : 'bg-emerald-700 text-white hover:bg-emerald-800'}`}>{pending ? 'Salvando…' : label}</button>
     <div aria-live="polite">{state.error && <p role="alert" className="text-sm text-red-700">{state.error}</p>}{state.message && <p className="text-sm text-emerald-800">{state.message}</p>}</div>

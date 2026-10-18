@@ -12,7 +12,6 @@ const errors: Record<string, string> = {
   account_not_found: 'Esta conta não está mais disponível. Atualize a lista de usuários.',
   participant_exists: 'Este jogador já participa do torneio. Atualize a página.',
   participant_not_found: 'Este jogador não participa mais do torneio. Atualize a página.',
-  participants_required: 'Adicione participantes antes de concluir a preparação.',
 };
 const uuid = /^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
 
@@ -23,8 +22,8 @@ export async function manageParticipant(_: ParticipantState, form: FormData): Pr
   const operation = String(form.get('operation') ?? '');
   const target = String(form.get('target') ?? '');
   const player = String(form.get('player') ?? '');
-  if (!uuid.test(target) || !['add', 'update', 'remove', 'complete'].includes(operation)) return { error: 'Operação inválida.' };
-  if (operation !== 'complete' && !uuid.test(player)) return { error: 'Selecione um jogador válido.' };
+  if (!uuid.test(target) || !['add', 'update', 'remove'].includes(operation)) return { error: 'Operação inválida.' };
+  if (!uuid.test(player)) return { error: 'Selecione um jogador válido.' };
   if (form.get('confirm') !== 'yes') return { error: 'Confirme a alteração e seus efeitos no ranking.' };
   let result;
   if (operation === 'add' || operation === 'update') {
@@ -37,9 +36,7 @@ export async function manageParticipant(_: ParticipantState, form: FormData): Pr
       target, player, eligible_day: day,
     });
   } else {
-    result = operation === 'remove'
-      ? await supabase.rpc('remove_tournament_participant', { target, player })
-      : await supabase.rpc('complete_tournament_history', { target });
+    result = await supabase.rpc('remove_tournament_participant', { target, player });
   }
   if (result.error) return { error: Object.entries(errors).find(([key]) => result.error.message.includes(key))?.[1]
     ?? 'Não foi possível concluir a alteração. Atualize a página e tente novamente.' };
@@ -47,6 +44,5 @@ export async function manageParticipant(_: ParticipantState, form: FormData): Pr
   revalidatePath('/dashboard/tournaments');
   revalidatePath(`/dashboard/tournaments/${target}/participants`);
   return { message: operation === 'remove' ? 'Participante removido deste torneio. Pontuações pessoais preservadas.'
-    : operation === 'complete' ? 'Preparação concluída. Ausências dos dias encerrados foram calculadas.'
     : 'Participação salva. Resultados deste torneio recalculados.' };
 }

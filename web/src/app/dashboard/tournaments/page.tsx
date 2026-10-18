@@ -17,7 +17,7 @@ export default async function ManageTournamentsPage() {
       <p className="mt-2 text-slate-600">Crie competições e administre os torneios que você organiza.</p></header>
     {error ? <p role="alert" className="rounded-xl bg-amber-50 p-5">Administração temporariamente indisponível. Tente novamente em instantes.</p> : <>
       <section className="rounded-2xl border border-slate-200 bg-white p-6"><h2 className="mb-3 text-xl font-bold">Novo torneio</h2>
-        <p className="mb-5 text-sm leading-6 text-slate-600">Escolha pontuação, penalidade e calendário. O horário é fixo em São Paulo; zero bruto representa ausência. Novos torneios começam sem participantes e com o histórico em preparação.</p>
+        <p className="mb-5 text-sm leading-6 text-slate-600">Escolha pontuação, penalidade e calendário. O horário é fixo em São Paulo; zero bruto representa ausência. Novos torneios começam sem participantes. Após vinculá-los, as ausências dos dias elegíveis encerrados seguem a regra do torneio.</p>
         <TournamentForm />
       </section>
       <section className="space-y-4"><h2 className="text-xl font-bold">Torneios que organizo</h2>

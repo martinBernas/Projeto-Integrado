@@ -1,5 +1,7 @@
 # Diagrama de classes inicial
 
+18/10/2026 — Após a migração de manutenção, `TorneioAtual.history_ready` permanece como atributo legado para compatibilidade de dados/scripts, sem efeito no cálculo ou encerramento; nenhum controle de preparação na aplicação. Os diagramas anteriores representam a evolução histórica. Ver [ADR-008](../decisoes/adr-008-fim-preparacao-historica.md).
+
 Incremento local S6 de 11/10/2026: [modelo complementar de auditoria](auditoria-votacao.md) e [ADR-006](../decisoes/adr-006-auditoria-por-votacao.md). Avaliação referencia torneio/pontuação pessoal; eleitorado e votos usam avaliação/jogador; decisão e eventos privados preservam bruto global sem estado de invalidez global.
 
 Modelo vigente S5: regra única por torneio aberto, histórico imutável de configurações/períodos e auditoria privada. São Paulo é constante, sem configuração. Resultados identificam regra via snapshot; pontuação pessoal é compartilhada. Migrações aplicadas/verificadas e cenários relatados conferidos pelo Dono do produto. Os diagramas iniciais abaixo são históricos; o complemento S5 está ao final e no [modelo/fluxo de regras](regras-versionadas.md).

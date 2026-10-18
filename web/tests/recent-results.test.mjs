@@ -45,6 +45,7 @@ test('tournament keeps full ranking, orders recent dates and keys expansion by s
  const tree=TournamentView({data,userId:'a'});const widget=tree.props.children.at(-1);assert.equal(widget.key,'first');
  assert.deepEqual(Array.from(widget.props.items.slice(0,5),item=>item.day),['2026-10-08','2026-10-07','2026-10-06','2026-10-05','2026-10-04']);
  const html=renderToStaticMarkup(tree);assert.match(html,/>800<\/td>/);assert.match(html,/Mostrando 5 de 8 dias/);
+ assert.doesNotMatch(renderToStaticMarkup(TournamentView({data:{...data,tournament:{...data.tournament,history_ready:false}},userId:'a'})),/Histórico em preparação|carga histórica/);
  assert.doesNotMatch(html,/>01\/10\/2026 </);assert.match(html,/>08\/10\/2026 </);
  assert.equal(TournamentView({data:{...data,tournament:{...data.tournament,id:'second'}},userId:'a'}).props.children.at(-1).key,'second');
 });

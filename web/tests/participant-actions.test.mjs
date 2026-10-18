@@ -35,6 +35,7 @@ test('ações de participantes validam sessão, seleção, data e confirmação 
   assert.match((await exports.manageParticipant({},form)).message,/preservadas/);
   assert.equal(calls.at(-1)[0],'remove_tournament_participant');
   form.set('operation','complete');form.delete('player');
-  assert.ok((await exports.manageParticipant({},form)).message);
-  assert.equal(calls.at(-1)[0],'complete_tournament_history');
+  const count=calls.length;
+  assert.match((await exports.manageParticipant({},form)).error,/Operação inválida/);
+  assert.equal(calls.length,count);
 });

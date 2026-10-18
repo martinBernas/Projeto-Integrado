@@ -21,7 +21,7 @@ function ParticipantRow({ person, target, start, end, mode, closed }: Omit<GridP
     const operation = button?.value ?? (mode === 'candidates' ? 'add' : 'update');
     const message = operation === 'remove'
       ? `Remover ${person.name} deste torneio e recalcular o ranking? As pontuações pessoais serão preservadas.`
-      : `${operation === 'add' ? 'Adicionar' : 'Atualizar'} ${person.name}, com participação desde ${formatDate(day)}? O ranking será recalculado, incluindo ausências se o histórico estiver pronto.`;
+      : `${operation === 'add' ? 'Adicionar' : 'Atualizar'} ${person.name}, com participação desde ${formatDate(day)}? O ranking será recalculado, incluindo as ausências dos dias elegíveis encerrados.`;
     if (!window.confirm(message)) event.preventDefault();
   }
   return <tr className="border-t border-slate-200 align-top hover:bg-slate-50">

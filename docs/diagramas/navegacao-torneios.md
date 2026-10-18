@@ -1,5 +1,20 @@
 # Navegação entre torneios — S4-03
 
+## Manutenção de 18/10/2026 — fluxo sem preparação histórica
+
+```mermaid
+flowchart LR
+    Criacao[Criar torneio e vincular participantes] --> Painel[Consultar painel autorizado]
+    Painel --> Estado{Torneio encerrado?}
+    Estado -->|Sim| Congelado[Retornar resultados preservados]
+    Estado -->|Não| Calculo[Recalcular com calendário e elegibilidade]
+    Calculo --> Dia{Dia atual?}
+    Dia -->|Sim| Provisorio[Resultado provisório sem ausência definitiva]
+    Dia -->|Não| Encerrado[Positivos ou regra de ausência sem preparação manual]
+```
+
+Auditorias continuam prevalecendo no cálculo e impedindo encerramento enquanto pendentes. Implementação local com migração incremental ainda não aplicada remotamente; [ADR-008](../decisoes/adr-008-fim-preparacao-historica.md). Os fluxos anteriores abaixo preservam seu contexto histórico.
+
 Situação S5 em 03/10/2026: painel retorna a regra única atual do torneio aberto e seu histórico de alterações; resultados diários guardam snapshots, avisos usam o calendário atual. Edição conjunta de período/regra está em /dashboard/tournaments/id/rules, com prévia e confirmação. Migrações aplicadas/verificadas e cenários relatados conferidos pelo Dono do produto; aceite global pendente. [Fluxo de revisão](regras-versionadas.md). O fluxo aceito de S4-03 abaixo permanece como base.
 
 ```mermaid

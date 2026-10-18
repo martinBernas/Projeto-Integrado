@@ -15,7 +15,6 @@ const messages: Record<string, string> = {
   tournament_closed: 'Este torneio está encerrado e não pode ser editado.',
   tournament_not_allowed: 'Torneio indisponível ou sem permissão para administrar.',
   tournament_not_finished: 'Aguarde o fim do último dia do torneio, no horário de São Paulo.',
-  history_not_ready: 'Conclua a conferência do histórico antes de encerrar o torneio.',
   invalid_rule: 'Confira modo, penalidade (−25.000 a 0), calendário, datas excluídas e motivos.',
   invalid_exclusions: 'Confira as datas excluídas: uma por linha, dentro do período e sem repetição, com motivo.',
 };

@@ -3,7 +3,6 @@ import { notFound, redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { isSupabaseConfigured } from '@/lib/supabase/config';
 import { formatDate, type Participant } from '@/lib/tournament';
-import { ParticipantForm } from '../../participant-form';
 import { ParticipantGrid } from '../../participant-grid';
 
 type Candidate = { id: string; name: string; email: string | null };
@@ -18,7 +17,7 @@ export default async function ParticipantsPage({ params, searchParams }: {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/auth/login');
   const { data: tournament, error } = await supabase.from('tournaments')
-    .select('id, name, starts_at, ends_at, closed_at, history_ready').eq('id', id).eq('organizer_id', user.id).maybeSingle();
+    .select('id, name, starts_at, ends_at, closed_at').eq('id', id).eq('organizer_id', user.id).maybeSingle();
   if (error) return <main className="p-8"><Link href="/dashboard/tournaments">Voltar aos torneios</Link><p role="alert">Não foi possível carregar o torneio. Tente novamente.</p></main>;
   if (!tournament) notFound();
   const filters = await searchParams;
@@ -59,12 +58,6 @@ export default async function ParticipantsPage({ params, searchParams }: {
         <nav aria-label="Páginas de usuários" className="flex gap-5 text-sm font-semibold text-emerald-800">
           {page > 0 && <Link href={pageUrl(page - 1)}>Anterior</Link>}{directory?.has_more && <Link href={pageUrl(page + 1)}>Próxima</Link>}
         </nav>
-      </section>
-      <section className="rounded-xl border border-slate-200 bg-white p-5"><h2 className="text-xl font-bold">Preparação do histórico</h2>
-        <p className="mt-2 text-sm leading-6 text-slate-600">{tournament.history_ready
-          ? 'Histórico pronto: ausências em dias encerrados recebem a penalidade, inclusive após adicionar participantes ou alterar datas.'
-          : 'Histórico em preparação: resultados provisórios e sem penalidades de ausência. Confira as datas e as pontuações existentes antes de concluir.'}</p>
-        {!tournament.history_ready && <ParticipantForm {...period} operation="complete" />}
       </section>
     </>}
   </div></main>;

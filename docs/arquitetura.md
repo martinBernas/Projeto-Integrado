@@ -1,5 +1,11 @@
 # Arquitetura e implantação
 
+## Manutenção após Sprint 6 — 18/10/2026
+
+Decisão do Dono do produto: retirar preparação histórica. Interface e Server Actions deixam de oferecer conclusão; `complete_tournament_history` é removida. Cálculo canônico/prévias aplicam ausência nos dias elegíveis encerrados sem `history_ready`; dia atual permanece provisório e auditorias continuam prevalecendo. Encerramento deixa de exigir preparação. Coluna legada e snapshots antigos preservados para compatibilidade, sem efeito no cálculo atual. Criação passa a usar valor legado verdadeiro. Sem mutação de linhas ou recálculo em lote na migração; abertos com marcador falso passam a penalizar ausências no próximo refresh normal. Encerrados permanecem congelados. Migração `202610180002_retire_history_preparation.sql` preparada localmente, sem execução remota. [ADR-008](decisoes/adr-008-fim-preparacao-historica.md).
+
+Retirada pontual do torneio de teste autorizada e preparada separadamente: scripts administrativos capturam/exportam snapshot privado, fixam UUID pelo nome único exato e comparam estado antes/depois na transação. Excluem somente dependências ativas do teste e preservam pontuações pessoais/outros torneios/logs. Auditorias/votos de teste permanecem na captura privada. Infraestrutura operacional `private.maintenance_backups` sob RLS, sem acesso de clientes, e função privada de snapshot sem grants para a aplicação; não integra fluxo público. Execução remota não realizada. [Manutenção e evidências](sprints/manutencao-pos-sprint-6.md).
+
 18/10/2026 — O Dono do produto informou o retorno “Success. No rows returned” após executar a migração incremental `202610180001_audit_tally.sql`. Execução remota da migração confirmada por esse relato; não reaplicar. Ambiente/identificador e horário exato não informados. Publicação da interface, uso da nova consulta, homologação e aceite deste incremento ainda não confirmados. Novo backup/exportação não confirmado. Este registro substitui as referências anteriores à migração deste incremento como pendente; preserva os demais registros como históricos.
 
 ## Apuração em duas etapas — 18/10/2026
@@ -75,8 +81,8 @@ As páginas de servidor também consultam tabelas sob RLS e RPCs de leitura auto
 
 | Elemento | Implementação e efeito |
 | --- | --- |
-| Encerramento | `tournaments.closed_at` registra o encerramento explícito, permitido após o último dia e a conferência histórica quando houver participantes. As operações da aplicação bloqueiam edição e recálculo de torneios encerrados. |
-| Preparação histórica | `history_ready`, existente desde a Sprint 3, controla se ausências podem gerar penalidades. A S4-02 adiciona a conclusão pela interface; alterar participantes preserva esse estado. |
+| Encerramento | `tournaments.closed_at` registra o encerramento explícito após o último dia, sem preparação histórica após a manutenção de 18/10/2026. Auditorias pendentes ainda bloqueiam encerramento. As operações da aplicação bloqueiam edição e recálculo de torneios encerrados. |
+| Preparação histórica (legada) | `history_ready` foi usado nas Sprints 3–6 para suspender penalidades na carga inicial. Após a migração de manutenção, permanece somente por compatibilidade; não controla cálculo/encerramento nem aparece na interface. |
 | Elegibilidade | `tournament_participants.eligible_from`, existente desde a Sprint 3, passa a ser gerenciado pela interface. A chave do vínculo é composta por torneio e jogador. |
 | Pontuação pessoal | Continua pertencendo ao jogador, com unicidade jogador/dia. Adicionar ou remover participação não altera nem exclui essa pontuação. |
 | Resultados | Inclusão, mudança de elegibilidade e remoção recalculam somente o torneio alvo. Mudanças na composição podem alterar a diferença relativa dos demais participantes. Resultados removidos por alteração do vínculo são auditados. |
