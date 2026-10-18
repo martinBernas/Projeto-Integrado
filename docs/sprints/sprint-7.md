@@ -1,5 +1,30 @@
 # Sprint 7 — Estatísticas, métricas e lançamentos retroativos
 
+## Encerramento — 18/10/2026
+
+**Situação: Sprint 7 encerrada**, conforme encaminhamento solicitado pelo Dono do produto após os aceites e verificações relatados. Não há defeito bloqueador relatado nem implementação restante identificada no recorte entregue.
+
+| Entrega | Evidência de conclusão |
+| --- | --- |
+| S7-04 / RF21 — estatísticas do torneio | Médias própria/demais, evolução e contagens implementadas; Dono do produto revisou a tela e confirmou coerência com os requisitos. |
+| S7-05 / RF24 — métricas operacionais | Ingestão remota confirmada: 11 eventos recebidos/aceitos, zero descartes, todos com sucesso; job de expurgo executado com succeeded. |
+| S7-01 / FB02 — retroativos por torneio | Histórico pessoal imediato, bloqueio durante pendências, aprovação/recusa independentes e ciclos sucessivos homologados pela conta de testes; valores distintos de 23.000/25.000 preservados entre torneios. |
+| Organização de pedidos, notificações e filtro | Meus pedidos separado da gestão; quadro exclusivo do organizador, avisos de votação e filtro de ajustes por torneio implementados. Dono do produto aceitou a organização das telas e o filtro; notificações/auditorias adicionais validadas automaticamente, com homologação remota complementar indicada abaixo. |
+
+Validação técnica final já executada: **120 testes completos aprovados**, zero falhas/pulados, lint dos arquivos de aplicação alterados e build com TypeScript aprovados. Migrações 003–006 executadas pelo Dono do produto conforme retornos registrados; preservação de negócio confirmada pelas comparações pertinentes. Backups/exportações privados validados; referência de 005 reutilizada para 006 por decisão explícita e confirmação de ausência de gravações intermediárias. Nenhum conteúdo pessoal, voto ou segredo versionado. Não repetir migrações ou capturas concluídas.
+
+Uso das telas atualizadas e aceite confirmados na aplicação utilizada; identificação formal de URL/versão do deployment não fornecida. Isso não é prova de todos os cenários remotos nem de desempenho/custo sustentados. Encerramento não modifica dados ou regras e não implica encerrar torneios da aplicação.
+
+### Acompanhamentos após a sprint
+
+- RF24: revisar o relatório após aproximadamente uma semana de uso, avaliando volume, latências, falhas, descartes, armazenamento e execuções do expurgo. A amostra inicial não sustenta conclusão estatística. Nenhuma automação de acompanhamento foi criada.
+- Homologação complementar em torneio isolado com contas de teste: avisos/gestão de auditorias e votação, autoraprovação, encerramento com pendência, apresentação em celular/teclado e concorrência entre sessões PostgreSQL reais. Há cobertura local automatizada; não registrar esses cenários como homologados remotamente sem evidência. Conforme orientação do Dono do produto, não abrir auditorias artificiais nos torneios ativos com participantes legítimos.
+- Histórico avançado, restante de RF08 e requisitos futuros RF19/RF22/RF23 permanecem no Product Backlog, sem inclusão automática ou prazo para próxima sprint.
+
+Esses itens permanecem acompanhamento operacional/validação complementar e backlog futuro; não representam implementação declarada concluída sem ter sido realizada. Nenhuma nova execução de testes da aplicação ou operação remota nesta atualização documental; revisão por git diff --check. Os registros cronológicos abaixo são históricos e suas pendências são substituídas somente pelas confirmações posteriores e por esta consolidação.
+
+18/10/2026 — Dono do produto declarou “agora sim as telas fazem mais sentido” após aplicação/comparação de 005/006 e orientação de conferência da interface. Aceite da organização visual das telas de pedidos/gestão e do filtro por torneio registrado. Acesso à apresentação atual na aplicação utilizada confirmado pelo relato, sem URL/versão formal fornecida. Esta evidência resolve a pendência de aceite visual desse recorte; não comprova homologação de todos os cenários remotos de notificações de votação, auditoria, concorrência ou encerramento, nem encerramento global da sprint. Migrações e preservação de dados já confirmadas; não há novo SQL necessário para esse aceite. Nenhuma operação remota realizada pelo agente.
+
 18/10/2026 — Dono do produto confirmou comparação pós-006: business_snapshot=preserved, tournament_adjustment_filter=installed. Preservação integral das 20 seções em relação ao backup reutilizado before-notifications-20261018-v1 e instalação da consulta de filtro confirmadas pelo retorno. Migração e comparação concluídas; não repetir scripts ou nova captura. Pausa nas gravações pode terminar e interface está pronta para o fluxo de publicação do Dono do produto. Deployment efetivo e homologação visual/funcional do filtro ainda aguardam evidências. Nenhuma operação remota realizada pelo agente.
 
 18/10/2026 — Dono do produto informou Success. No rows returned após executar 202610180006_tournament_adjustment_filter.sql. Execução remota da migração 006 confirmada pelo relato; não reaplicar. Conforme decisão anterior, referência reutilizada before-notifications-20261018-v1 já exportada/validada, sem novas gravações de negócio relatadas desde a captura. Próximo passo executar 03-verify-after-install.sql de tournament-adjustment-filter, atualizado para comparar as 20 seções a esse backup. Manter pausa nas gravações até comparação. Preservação pós-006, publicação e homologação do filtro ainda não confirmadas. Nenhuma operação remota realizada pelo agente.
