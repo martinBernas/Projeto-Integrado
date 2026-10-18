@@ -1,5 +1,21 @@
 # Estatísticas pessoais e de torneio — RF20–RF21
 
+18/10/2026 — RF21 autorizado e implementado localmente na Sprint 7. Tela própria destaca média aplicada pessoal e conjunta dos demais, próprias contagens e gráfico/tabela diária, período integral até ontem, conforme decisões refinadas. Usa resultados aplicados completos da RPC autorizada existente; sem migração e sem acesso a indicadores individuais dos demais. 98 testes, lint, TypeScript e build aprovados; diagnóstico anterior de tipos isolado à restrição de links pnpm no sandbox, sem alteração dos contratos. Publicação, homologação autenticada e aceite pendentes. [Entrega](sprints/sprint-7.md) e [operação](sprints/sprint-7-operacao.md). Registros anteriores de implementação não iniciada são históricos.
+
+## RF21 — refinamento vigente de 18/10/2026
+
+Decisões confirmadas pelo Dono do produto: a tela destaca principalmente o desempenho do jogador conectado no torneio selecionado; comparação com a **média conjunta dos demais participantes**, sem médias individuais identificadas de terceiros. Considerar somente dias encerrados em America/Sao_Paulo. As duas médias usam pontos aplicados e incluem ausências. Exemplo aprovado: 12.000 e −2.500 em dois dias elegíveis produzem média própria de 4.750.
+
+Média própria = soma aplicada / próprios dias elegíveis encerrados. Média conjunta dos demais = soma aplicada dos outros / total de participações elegíveis por dia desses outros, excluindo o próprio jogador da soma e do denominador. Elegibilidade diferente exige ponderação por participações-dia, não média simples de médias individuais. As sanções permanecem nos pontos aplicados usados pelas médias. Regras de arredondamento e denominador zero já confirmadas são preservadas.
+
+Contagens de primeiro/último usam pontos aplicados somente de resultados positivos válidos: ausências, bruto zero e invalidações/sanções não participam da classificação. Escolha técnica de interpretação coerente com o relativo: um jogo com bruto positivo válido e aplicação zero continua concorrendo. Todos os empatados contam; um único jogador com resultado válido conta nos dois extremos; dia sem válidos não gera contagens. Isso não exclui ausências das médias: as bases são diferentes e devem estar explicadas na tela.
+
+Gráfico cronológico permanece no escopo. Proposta de apresentação: série diária do próprio resultado aplicado e média diária conjunta dos demais, com tabela equivalente e lacunas sem dados; período integral do torneio até ontem. Filtros adicionais e desenho específico das séries ainda não foram confirmados. Organizador sem participação não recebe métricas próprias fictícias; mantém acesso autorizado ao agregado. Consulta de médias individuais de terceiros permanece fora deste recorte.
+
+Substitui as pendências anteriores de dia atual, agregação e classificação de ausentes/auditorias, bem como a ideia de apenas uma média agregada que inclua o próprio jogador como comparação. Privacidade de RF20 permanece: dados pessoais fora do torneio são só do titular. [Sprint 7](sprints/sprint-7.md) reúne exemplos e aceite. Planejamento/refinamento documental, sem implementação, migração ou nova operação remota.
+
+18/10/2026 — O Dono do produto priorizou RF21 no planejamento da Sprint 7. Objetivo: média aplicada e gráfico do torneio em tela própria, com próprias contagens e privacidade já confirmada. Agregação, inclusão do dia atual e classificação de ausentes/punidos submetidas a decisão; ainda não alterar fórmulas aprovadas ou tratar propostas como confirmação. RF20 entregue/aceito no contexto do encerramento da Sprint 6; estados anteriores de ausência de aceite são históricos. RF22–RF23 seguem no backlog, fora do recorte proposto. [Planejamento vigente](sprints/sprint-7.md).
+
 ## Pedido e situação — 11/10/2026
 
 O Dono do produto solicitou registrar um novo requisito trazido pelos usuários. As métricas e a separação das telas abaixo estão confirmadas como escopo do requisito. RF20 foi posteriormente autorizado e implementado localmente na Sprint 6; veja a entrega S6-04 ao final. RF21 permanece em refinamento futuro. Os registros documentais anteriores são históricos.

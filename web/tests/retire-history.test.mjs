@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { PGlite } from '@electric-sql/pglite';
+import { tournamentStatistics } from '../src/lib/tournament-statistics.ts';
 
 const owner='00000000-0000-4000-8000-000000000001', player='00000000-0000-4000-8000-000000000002';
 const migration='202610180002_retire_history_preparation.sql';
@@ -32,6 +33,25 @@ async function state(db) {
  const result={};for(const table of tables)result[table]=(await db.query(`select coalesce(jsonb_agg(r order by r::text),'[]') rows from (select to_jsonb(t) r from ${table} t) s`)).rows[0].rows;
  return result;
 }
+
+test('RF21 uses the full authorized RPC period and frozen closed results, with revoked and anonymous access denied',async()=>{
+ const db=await setup();try {
+  await db.exec(await sql(`migrations/${migration}`));
+  const id=await create(db,'Statistics full period','2024-01-01');
+  await db.exec('reset role');
+  await db.query(`insert into public.personal_scores(player_id,occurred_at,score)
+   select $1,(d::date+time '12:00') at time zone 'America/Sao_Paulo',15000 from generate_series('2020-01-01'::date,'2024-01-01'::date,'1 day') d`,[owner]);
+  await login(db);await db.query('select public.close_tournament($1)',[id]);
+  const frozen=(await db.query('select public.get_tournament_dashboard($1) d',[id])).rows[0].d;
+  const before=tournamentStatistics(frozen,owner);assert.ok(before.ownDays>1000);assert.ok(before.othersDays>1000);assert.equal(before.ownAverage,0);
+  await db.exec('reset role');await db.query('update public.personal_scores set score=5000 where player_id=$1',[owner]);
+  await login(db);const after=(await db.query('select public.get_tournament_dashboard($1) d',[id])).rows[0].d;
+  assert.deepEqual(tournamentStatistics(after,owner),before);
+  await login(db,null,'anon');await assert.rejects(db.query('select public.get_tournament_dashboard($1)',[id]),/permission denied/);
+  await db.exec('reset role');await db.query('delete from public.tournament_participants where tournament_id=$1 and player_id=$2',[id,player]);
+  await login(db,player);assert.equal((await db.query('select public.get_tournament_dashboard($1) d',[id])).rows[0].d.access,false);
+ }finally{await db.close();}
+});
 test('retiring history preserves stored rows and closed results, applies absences without a gate and retains calendar, eligibility and today semantics',async()=>{
  const db=await setup();try {
   const open=await create(db);const closed=await create(db,'Closed');

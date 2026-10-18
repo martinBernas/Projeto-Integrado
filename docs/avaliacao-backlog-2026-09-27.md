@@ -1,5 +1,11 @@
 # Avaliação do escopo pendente e feedback — 27/09/2026
 
+18/10/2026 — RF21 selecionado, autorizado e implementado localmente na Sprint 7. Médias própria/demais, contagens e gráfico em tela do torneio, sem migração nova; 98 testes/lint/TypeScript/build aprovados. Permanece aguardando publicação e homologação real. RF08/FB02, histórico avançado, RF19 e RF22–RF24 seguem no backlog; não ampliar escopo nesta entrega. [Situação vigente](sprints/sprint-7.md).
+
+18/10/2026 — Refinamento RF21 confirmado: desempenho próprio comparado à média conjunta dos demais no torneio selecionado; somente dias encerrados, médias aplicadas incluindo ausências e contagens somente entre resultados positivos válidos. Mantida privacidade de métricas individuais de terceiros. Fórmulas principais resolvidas; capacidade/datas e desenho final da tela ainda a fechar. [Planejamento atualizado](sprints/sprint-7.md). Nenhuma implementação iniciada.
+
+18/10/2026 — Prioridade atualizada pelo Dono do produto: Sprint 7 focada em RF21 (estatísticas de torneio), substituindo a recomendação histórica de iniciar por moderação/histórico. RF08/FB02, histórico avançado e RF22–RF24 continuam no backlog. RF20, expansão recente e carregamento já entregues não integram novo trabalho. [Plano vigente](sprints/sprint-7.md), ainda em refinamento de fórmulas/capacidade, sem implementação iniciada.
+
 Aceite e encerramento em 03/10/2026: Dono do produto declarou explicitamente “está aceita a sprint”. Sprint 5 concluída, incluindo S5-01–S5-05. Aceite considera as evidências e limites registrados: carregamento confirmado na aplicação utilizada; Tentar novamente validado localmente, sem falha observada para homologação remota. Análise de amostras, diagnóstico da demora e eventuais melhorias permanecem acompanhamento posterior. Versão/URL do deployment não informadas; nenhum novo SQL necessário para S5-04/S5-05.
 
 Os estados anteriores abaixo são registros históricos; o aceite acima é a situação vigente.

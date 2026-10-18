@@ -1,4 +1,90 @@
-# Sprint 7 — Moderação e evolução
+# Sprint 7 — Estatísticas do torneio
+
+## Entrega local vigente — 18/10/2026
+
+O Dono do produto autorizou a implementação (“implemente”). S7-00, S7-04a e S7-04b concluídas localmente; Sprint 7 em homologação, sem publicação/aceite confirmados. Isso substitui as referências abaixo a implementação não iniciada e desenhos ainda apenas propostos. Datas de janela/capacidade não foram acordadas e não são inferidas da execução técnica.
+
+Acesso **Estatísticas do torneio** no painel do torneio selecionado; rota `/dashboard/tournaments/[id]/statistics`. Tela destaca média própria e conjunta dos demais, próprias contagens de primeiro/último e gráfico comparativo diário com tabela expansível. Período completo até ontem, sem filtros adicionais. Somente resultados de dias encerrados, dentro de período/elegibilidade, sem excluídos, pendentes ou provisórios. Médias incluem ausência e sanções; contagens apenas jogos positivos válidos, incluindo zero aplicado relativo. Todos os empatados contam; único válido conta nos dois extremos. Sem denominador ou próprio vínculo, não inventar métricas. Organizador sem participação recebe agregado dos participantes.
+
+Escolha técnica: reutilizar `get_tournament_dashboard` com sessão e UUID validados; cálculo no servidor recebe a identidade autenticada, sem aceitar outro perfil por URL. Consulta retorna resultados completos como JSON; sem limite silencioso de 100/1.000 linhas no período. Encerrados usam resultados armazenados, sem reconstrução por bruto atual. Apenas série/contagens próprias e média/quantidade agregadas dos demais são renderizadas. Sem novo SQL, esquema, grant, dependência ou mudança de cálculo do torneio. RPC de leitura mantém seu refresh/transação existente para abertos. [Arquitetura/decisão](../decisoes/adr-009-estatisticas-do-torneio.md) e [fluxo](../diagramas/estatisticas-torneio.md).
+
+S7-00: diagnóstico reproduziu falha `EPERM` de realpath de links pnpm no sandbox Windows, levando a resolução incompleta dos tipos Supabase. TypeScript e build fora dessa restrição passaram **sem alterar código de autenticação, dependências, casts ou opções de validação**. Não era necessário “corrigir” os contratos do cliente. Essa evidência substitui o entendimento anterior de que havia erro de tipagem confirmado do projeto. Manter registros anteriores como diagnóstico histórico.
+
+Validação: **98 testes aprovados**, zero falhas/pulados, lint dos arquivos alterados, TypeScript e build de produção aprovados. Testes incluem exemplo 4.750/4.167, ponderação/elegibilidade, empates/único válido/sem válidos, zero relativo, ausência/sanções, hoje/futuro, vazio/organizador sem participação e sigilo. PGlite pela RPC: período com mais de mil dias, acesso anônimo/revogado negado e resultados congelados preservados após mudança do bruto. Renderização usa identidade da sessão e não inclui nome/id individual dos demais. Prévia visual com dados fictícios inspecionada no navegador, tabela expandida e largura móvel sem transbordamento horizontal; não equivale a homologação autenticada. Sem consulta/operação no ambiente remoto.
+
+Limites: custo de leitura/memória/gráfico/tabela proporcional ao histórico; sem realtime ou filtros adicionais. Comparação pode ter base diferente por dia conforme elegibilidade; média geral é ponderada e não a média simples dos pontos do gráfico. Recarregar após resultados/decisões. Pendências: publicar interface, registrar versão/ambiente e homologar com dados reais, celular/teclado e aceite do Dono do produto conforme [operação S7](sprint-7-operacao.md). Nenhuma migração ou backup novo necessário/executado nesta entrega.
+
+## Planejamento vigente — 18/10/2026
+
+O Dono do produto escolheu **priorizar estatísticas do torneio**. Sprint 6 encerrada; manutenção posterior removeu a preparação histórica e o torneio de teste, com execução e validação relatadas. A Sprint 7 está em planejamento/refinamento; prioridade confirmada não equivale a autorização de implementação, prazo ou capacidade acordados. Os registros antigos abaixo são históricos e não representam o compromisso atual.
+
+**Objetivo refinado:** permitir que o jogador acompanhe principalmente seu desempenho no torneio selecionado, comparando sua média aplicada com a média conjunta dos demais participantes, além de suas próprias contagens de primeiro/último lugar, em tela separada do painel.
+
+## Escopo e limites
+
+- RF21 em tela própria, acessível a partir do torneio selecionado; identificar nome, período e regra do torneio.
+- Destaque para média aplicada do próprio jogador e comparação com a média conjunta dos demais participantes, excluindo o próprio jogador desse grupo. Médias incluem ausências. Gráfico cronológico e tabela acessível explicam a base de cálculo.
+- Próprias contagens de primeiro e último lugar; não expor métricas individuais dos demais jogadores, conforme privacidade já confirmada em RF21.
+- Respeitar calendário, datas excluídas, elegibilidade, sanções/decisões de auditoria e resultados congelados dos encerrados. Sem etapa de preparação histórica.
+- Médias sem casas decimais, arredondadas somente ao exibir; denominador zero apresenta ausência de dados. Média válida igual a zero continua sendo exibida.
+- Empates contam para todos os empatados; participante único conta em primeiro e último. Definição anterior preservada, sujeita à regra de quem integra a classificação diária.
+- Somente dias encerrados: datas anteriores a hoje em America/Sao_Paulo, dentro do calendário e período do torneio. Hoje e datas futuras não entram em médias, gráfico ou contagens.
+- Primeiro/último considera somente quem tem bruto positivo válido (resultado de jogo, sem invalidação); ausência, bruto zero, contribuição desconsiderada e penalidade por auditoria não concorrem. Zero aplicado válido no relativo permanece na classificação.
+- Proposta de primeira entrega: período completo do torneio até ontem, respeitando início/fim e elegibilidade, sem novos filtros de data.
+
+Fora do escopo proposto: aprovação/correção de lançamentos (antiga S7-01/FB02), histórico avançado (antiga S7-02), consulta de estatísticas individuais de terceiros, texto dos cinco jogos e métricas por país/tempo (RF22–RF23), relatório/e-mail/exclusão automática (RF19), integração GeoGuessr e persistência de métricas operacionais (RF24). Permanecem no backlog, sem descarte e sem nova sprint assumida.
+
+Não reimplementar RF20, resultados recentes/expansão ou feedback de carregamento, já entregues nas Sprints 5/6. O histórico pessoal do painel ainda consulta até 100 registros; a consulta integral de RF20 é separada. Limite do painel não deve truncar nem definir as estatísticas do torneio.
+
+## Histórias candidatas e ordem
+
+Estimativas relativas iniciais são propostas técnicas, não horas, prazo ou capacidade confirmada. Selecionar compromisso após o refinamento e a capacidade; não assumir que a soma cabe em uma sprint.
+
+| Ordem / história | Entrega proposta | Estimativa inicial | Dependência |
+| --- | --- | --- | --- |
+| 1 / S7-00 | Diagnosticar e corrigir erros locais de tipagem do cliente Supabase; obter TypeScript e build aprovados sem dispensar checagens. | 3 pontos, a revisar após diagnóstico | Base de validação; não alterar regras de negócio para contornar os erros. |
+| 2 / S7-04a | Cálculo autorizado de RF21: média própria, média conjunta dos demais, séries diárias e próprias contagens, com exemplos conciliados e consulta integral do período. | 5 pontos, a revisar após desenho técnico | Decisões funcionais abaixo; avaliar necessidade de RPC/migração. |
+| 3 / S7-04b | Tela do torneio, gráfico/tabela, navegação, mensagens de vazio/erro e homologação. | 5 pontos, a revisar após desenho | S7-04a; inclui integração, testes e documentação. |
+
+RF21 recebe S7-04 para preservar o significado das histórias S7-01–S7-03 do planejamento histórico. Não há implementação iniciada. Sem necessidade de novos custos ou serviços assumida. Se capacidade insuficiente, reduzir o compromisso antes da execução, preservando uma entrega funcional e testável.
+
+## Decisões confirmadas em 18/10/2026
+
+O Dono do produto definiu foco principal no desempenho do jogador conectado no torneio selecionado e comparação com a **média conjunta dos demais**, sem médias individuais identificadas de terceiros. Confirmou somente dias encerrados, somente resultados positivos válidos nas contagens de colocação e inclusão de ausências nas duas médias, com pontos aplicados. Exemplo aprovado: 12.000 e −2.500 resultam em média própria de 4.750.
+
+### Fórmulas e exemplos de aceite
+
+- **Média própria:** soma dos pontos aplicados do jogador / quantidade de seus dias elegíveis encerrados no período. Inclui dias de ausência e efeitos de sanções aplicadas, sem reescrever o bruto pessoal.
+- **Média conjunta dos demais:** soma dos pontos aplicados dos outros participantes / quantidade total de participações elegíveis por dia desse grupo. Não incluir o jogador conectado na soma ou no denominador. Não usar média simples de médias individuais quando os participantes têm quantidades diferentes de dias elegíveis.
+- **Gráfico proposto:** por dia encerrado, série do próprio jogador com seu resultado aplicado e série de referência com a média aplicada dos demais naquele dia. Lacuna sem elegibilidade/base não vira zero fictício. Valor próprio diário é resultado aplicado, enquanto a referência é média do grupo; rotular as duas séries com clareza. Esse desenho das séries é proposta de apresentação, não uma nova confirmação específica do Dono do produto.
+- **Primeiro/último:** comparar pontos aplicados apenas entre resultados de jogo com bruto positivo e ainda válidos. Menor positivo relativo com aplicação zero continua válido. Excluir ausência, bruto zero, desconsideração e penalidade por auditoria. Todos os empatados nos extremos recebem contagem; com um único resultado válido, seu jogador conta nas duas; sem válidos, ninguém recebe contagem.
+- **Sem denominador:** não exibir média/gráfico fictício. Sem outros participantes com dias elegíveis, informar que não há base de comparação. Organizador sem participação pode acessar média conjunta dos participantes autorizados, mas não recebe média/contagens próprias inventadas.
+- **Arredondamento:** médias sem casas decimais, somente após a divisão final. Manter dados originais para cálculos e pontos do gráfico.
+
+Exemplos: próprio jogador com 12.000 e −2.500 tem média 4.750. Outros participantes com resultados A = 10.000 e −2.500 e B = 5.000 em um único dia elegível têm média conjunta 12.500 / 3 = 4.167 ao exibir. Não usar 4.375, que seria média simples das duas médias individuais. Em um dia relativo com brutos válidos 10.000 e 12.000, aplicados 0 e 2.000, o primeiro jogador conta em último e o segundo em primeiro. Um terceiro ausente pode entrar nas médias, mas não nessas contagens.
+
+### Pendências para fechar o compromisso
+
+Fórmulas centrais e privacidade refinadas. Fechar disponibilidade/capacidade e período de trabalho antes do compromisso; datas de início/fim não definidas, sem converter pontos em prazo. Período integral sem filtros adicionais e desenho das duas séries são propostas para a primeira entrega. Diagnóstico técnico e escolha de consulta/RPC podem revisar as estimativas; não iniciar implementação automaticamente por esse refinamento.
+
+## Critérios de aceite propostos
+
+1. Consultar RF21 a partir do torneio autorizado e retornar mantendo a seleção; contas externas, revogadas ou anônimas não acessam seus dados.
+2. Conciliar média própria e conjunta dos demais com os exemplos confirmados/refinados, números negativos, zero real, denominador zero e diferentes datas de elegibilidade. Excluir o próprio jogador da comparação e explicar unidade, período e base de cálculo.
+3. Não incluir datas fora do calendário, excluídas ou anteriores à elegibilidade; excluir o dia atual de todos os indicadores de RF21. Não criar pontos fictícios em dias sem base de cálculo.
+4. Conciliar contagens com empate parcial/total, participante único válido e dia sem válidos. Excluir ausências, bruto zero e ambas as sanções das contagens; manter zero aplicado de resultado positivo válido no relativo. Exibir somente as próprias contagens; organizador sem participação não recebe contagens inventadas.
+5. Resultados de auditorias abertas mantêm valores vigentes do ranking; após decisão, usar pontos aplicados atualizados. Encerrados usam resultados preservados, sem recálculo de estatísticas a partir de brutos atuais que altere o estado congelado.
+6. Consulta cobre todo o período autorizado, sem limite silencioso de linhas. Falha intermediária não produz média parcial; mostrar erro e nova tentativa.
+7. Gráfico com ordem cronológica, tabela textual equivalente, uso em celular e teclado; estados vazio, carregamento e erro claros. Evitar transferir indicadores para o painel principal.
+8. TypeScript, lint, build e testes pertinentes aprovados. Se necessário, migração incremental acompanhada de backup, comparação e roteiro; documentação de fórmulas, arquitetura e limites atualizada antes da entrega. Publicação e aceite distinguem evidência local e remota.
+
+## Evidências e situação
+
+Planejamento documental em 18/10/2026. Base da manutenção anterior: 92 testes e lint aprovados; TypeScript com erros de tipagem Supabase já registrados, build não executado naquela entrega. Esses resultados não são execução de testes da Sprint 7. Nesta revisão não houve código, migração, nova operação remota ou teste da aplicação; verificação documental por `git diff --check`. Arquitetura vigente permanece; solução de consulta e necessidade de migração serão definidas na implementação autorizada.
+
+Referências: [estatísticas RF21](../estatisticas.md), [requisitos](../requisitos.md), [backlog](../avaliacao-backlog-2026-09-27.md), [plano de ação](../plano-de-acao.md) e [manutenção posterior à Sprint 6](manutencao-pos-sprint-6.md).
+
+## Histórico de planejamento anterior — substituído pelo foco vigente
 
 ## Pré-planejamento — 03/10/2026
 

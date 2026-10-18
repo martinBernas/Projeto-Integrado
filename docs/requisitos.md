@@ -1,5 +1,11 @@
 # Levantamento de requisitos
 
+18/10/2026 — RF21 implementado localmente após autorização do Dono do produto: média própria aplicada comparada à conjunta dos demais, gráfico/tabela e próprias contagens em tela do torneio, apenas dias encerrados. Sem nova migração; regras/privacidade refinadas preservadas. 98 testes, lint, TypeScript e build aprovados. Publicação/homologação/aceite ainda não confirmados. [Sprint 7](sprints/sprint-7.md).
+
+18/10/2026 — Refinamento vigente de RF21: prioridade ao desempenho próprio no torneio selecionado, comparado à média conjunta dos demais participantes, sem médias individuais de terceiros. Somente dias encerrados; médias sobre pontos aplicados incluindo ausências. Contagens próprias de primeiro/último somente entre resultados positivos válidos (zero aplicado válido do relativo incluído), com empates/participante único preservados. Decisões substituem pendências anteriores correspondentes; fórmulas e limites em [Estatísticas](estatisticas.md#rf21--refinamento-vigente-de-18102026) e [Sprint 7](sprints/sprint-7.md). Implementação não iniciada.
+
+18/10/2026 — Planejamento da Sprint 7 prioriza RF21 por escolha do Dono do produto. Agregação, dia atual e conjunto da classificação seguem em refinamento, sem implementação iniciada. RF08/FB02 e histórico avançado mantidos no backlog; RF20 não será reimplementado. [Escopo e critérios propostos](sprints/sprint-7.md).
+
 18/10/2026 — Decisão do Dono do produto: preparação histórica removida do fluxo normal. Ausência/zero seguem a regra em dias elegíveis encerrados sem conclusão manual; dia atual permanece provisório. Criação/participação e encerramento deixam de exigir preparação. Substitui as regras anteriores que condicionavam penalidades a histórico pronto. Implementação local e migração incremental preparadas, sem execução remota. Retirada pontual do torneio de teste também autorizada. Ver [manutenção após Sprint 6](sprints/manutencao-pos-sprint-6.md).
 
 11/10/2026 — RF13–RF16 implementados localmente após aprovação das regras: pedido por participante, aprovação pelo organizador, votação secreta de 48 horas, apuração manual e punição/recálculo restritos ao torneio. Eleitorado da abertura exclui auditado; maioria dos votos recebidos sem quórum; empate/nenhum voto mantém pontuação. [Sprint 6](sprints/sprint-6.md) e [ADR-006](decisoes/adr-006-auditoria-por-votacao.md). Migração remota, publicação, homologação e aceite pendentes.
@@ -58,7 +64,7 @@ Atualização S5 em 03/10/2026: RF04/RF06/RF09/RF11/RF12 implementados localment
 | RF17 | O jogador deve escolher e editar um nome público único em toda a plataforma, independente do e-mail, exibido aos competidores sem usar o e-mail como alternativa. |
 | RF18 | O jogador deve poder cadastrar, editar e remover a URL opcional do perfil no GeoGuessr, acessível aos participantes e organizadores de torneios em comum. |
 | RF20 | O jogador deve consultar estatísticas pessoais com pontuação bruta média diária, média por jogo e gráfico de desempenho ao longo do tempo, em tela separada do painel principal. |
-| RF21 | Os usuários autorizados a consultar um torneio devem acessar suas estatísticas em tela separada do painel principal, incluindo pontuação média do torneio com gráfico de sua evolução ao longo do tempo e, por participante, quantidade de dias com maior pontuação e quantidade de dias em última colocação. |
+| RF21 | Em tela própria do torneio autorizado, o jogador deve consultar principalmente seu desempenho: média aplicada própria, comparação com média conjunta dos demais, gráfico de evolução e próprias contagens de primeiro/último. Somente dias encerrados; médias incluem ausências, contagens consideram apenas resultados positivos válidos. Não expor médias individuais identificadas de terceiros. |
 
 RF17–RF18 são entregas adicionais remanejáveis da Sprint 4. Ver [Perfil público](perfil-publico.md).
 
