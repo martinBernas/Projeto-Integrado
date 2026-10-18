@@ -6,6 +6,7 @@ import { parseRuleFields, type RulePreview } from '@/lib/rules';
 export type RuleState = { error?: string; message?: string; preview?: RulePreview };
 const invalid = 'Confira período do torneio, modo, penalidade, calendário e exclusões (data | motivo).';
 function message(error: { message: string }) {
+  if (error.message.includes('score_change_pending')) return 'Resolva as alterações retroativas pendentes antes de revisar período, regras ou calendário.';
   if (error.message.includes('audit_pending')) return 'Avalie os pedidos e conclua as votações pendentes antes de revisar as regras.';
   if (error.message.includes('rule_preview_expired')) return 'Os dados mudaram desde a prévia. Gere uma nova prévia antes de confirmar.';
   if (error.message.includes('tournament_closed')) return 'Este torneio está encerrado e não permite revisão.';

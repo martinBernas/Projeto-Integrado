@@ -39,7 +39,8 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
           then: resolve => resolve({ data: table === 'tournaments' ? rows : [], error: table === 'tournaments' ? listError : null }) };
         return query;
       },
-      rpc: async (name, { target }) => {
+      rpc: async (name, { target } = {}) => {
+        if (name === 'get_score_change_summary') return { data: { pending_approvals: 2, pending_days: 1 }, error: null };
         calls.push(target);
         if (name === 'get_score_audits') return { data: { audits: [] }, error: auditReadError };
         return { error: rpcError, data: rpcDataMissing ? null : { access: rpcAccess, today: '2026-09-26', tournament: rows.find(t => t.id === target), excluded_dates: [],

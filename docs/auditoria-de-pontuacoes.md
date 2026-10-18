@@ -1,5 +1,7 @@
 # Auditoria de pontuações por votação
 
+18/10/2026 — Integração local com S7-01: a restrição de correção pessoal sob auditoria continua para o dia atual; dias passados podem ser corrigidos com justificativa porque os torneios mantêm seus valores locais. Auditoria solicitada/aberta bloqueia aprovação retroativa naquele torneio, mas permite recusa. Pedido de auditoria captura o bruto efetivo do torneio, que pode divergir do histórico pessoal. Aprovação posterior não elimina sanção nem permite nova auditoria para a mesma pontuação/torneio. Regras de voto, prazo, eleitorado e sigilo não mudam. Migração incremental/publicação/homologação ainda pendentes. [ADR-011](decisoes/adr-011-lancamentos-retroativos.md).
+
 Situação em 11/10/2026: regras aprovadas pelo Dono do produto e RF13–RF16/RN10–RN13 implementados localmente na Sprint 6. 82 testes, lint e build aprovados; migração remota, publicação, homologação e aceite pendentes. Não integra o aceite histórico da Sprint 3. [Entrega](sprints/sprint-6.md), [operação](sprints/sprint-6-operacao.md) e [ADR-006](decisoes/adr-006-auditoria-por-votacao.md).
 
 ## Fluxo definido
