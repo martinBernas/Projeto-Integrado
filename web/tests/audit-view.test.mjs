@@ -23,17 +23,27 @@ test('S6 page renders requests, secret own vote, organizer approval, deadline, a
  ]};
  const deps={'react/jsx-runtime':jsx,'next/link':{default:({children,...props})=>jsx.jsx('a',{...props,children})},'next/navigation':{redirect:()=>{throw Error('redirect');}},
   '@/lib/supabase/server':{createClient:async()=>({auth:{getUser:async()=>({data:{user:{id:'p'}}})},rpc:async name=>({data:name==='get_score_audits'?evaluation:dashboard})})},
-  '@/lib/tournament':tournament,'@/lib/audits':audits,'../../audit-form':{AuditForm:({label,children})=>jsx.jsxs('form',{children:[children,jsx.jsx('button',{children:label})]})},'../../../retry-load':{RetryLoad:()=>null}};
+  '@/lib/tournament':tournament,'@/lib/audits':audits,'../../audit-form':{AuditResolution:()=>jsx.jsx('button',{children:'Apurar votos'}),AuditForm:({label,children})=>jsx.jsxs('form',{children:[children,jsx.jsx('button',{children:label})]})},'../../../retry-load':{RetryLoad:()=>null}};
  const source=await readFile(new URL('../src/app/dashboard/tournaments/[id]/audits/page.tsx',import.meta.url),'utf8');
  const {outputText}=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}});
  const exports={};vm.runInNewContext(outputText,{exports,Date,Intl,require:n=>{assert.ok(n in deps,n);return deps[n];}});
  const render=async()=>renderToStaticMarkup(await exports.default({params:Promise.resolve({id})}));
  const html=await render();
  assert.match(html,/id="audit-open"/);
- for(const text of ['Enviar pedido','Aprovar e iniciar votação','Rejeitar pedido','Alterar meu voto','Seu voto: Manter','Apurar e encerrar','Apuração: 2 para invalidar','Resultados do dia antes e depois']) assert.ok(html.includes(text),text);
+ for(const text of ['Enviar pedido','Aprovar e iniciar votação','Rejeitar pedido','Alterar meu voto','Seu voto: Manter','Apurar votos','Votos a favor de invalidar a pontuação: 2','Votos contra invalidar (manter a pontuação): 1','Total de votos: 3','Decisão: pontuação invalidada por maioria','Resultados do dia antes e depois']) assert.ok(html.includes(text),text);
+ const expired=html.match(/<article[^>]*id="audit-expired"[\s\S]*?<\/article>/)[0];
+ assert.match(expired,/Votação encerrada · Aguardando apuração/);
+ assert.match(expired,/Ainda não há resultado apurado/);
+ assert.doesNotMatch(expired,/Resultado da apuração|Votos a favor/);
+ for (const [invalid,maintain,reason] of [[0,0,'porque não houve votos'],[2,2,'por empate'],[1,3,'por maioria dos votos']]) {
+  Object.assign(evaluation.audits[3],{status:'maintained',invalid_votes:invalid,maintain_votes:maintain});
+  const result=await render();
+  assert.ok(result.includes(`Decisão: pontuação mantida ${reason}.`));
+  assert.match(result,/Nenhuma punição aplicada/);
+ }
  assert.match(html,/required="" minLength="3" maxLength="1000"/);
  evaluation.organizer=false;evaluation.audits[1].can_vote=false;
- const participant=await render();assert.doesNotMatch(participant,/Aprovar e iniciar|Apurar e encerrar|Alterar meu voto/);assert.match(participant,/Aguardando apuração/);
+ const participant=await render();assert.doesNotMatch(participant,/Aprovar e iniciar|Apurar votos|Alterar meu voto/);assert.match(participant,/Aguardando apuração/);
  dashboard.tournament.closed_at='2026-10-11T12:00Z';
  const closed=await render();assert.doesNotMatch(closed,/<form/);assert.match(closed,/Histórico disponível/);
 });

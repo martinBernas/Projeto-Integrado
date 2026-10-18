@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 
-export type AuditState = { error?: string; message?: string };
+export type AuditState = { error?: string; message?: string; tally?: { invalid_votes: number; maintain_votes: number } };
 const uuid = /^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
 const errors: Record<string, string> = {
   audit_not_allowed: 'Você não tem permissão para esta auditoria.',
@@ -15,7 +15,7 @@ const errors: Record<string, string> = {
   audit_voting_closed: 'A votação está encerrada ou seu prazo terminou.',
   audit_not_eligible: 'Sua conta não pode votar nesta avaliação.',
   audit_not_ready: 'A apuração fica disponível após o prazo de 48 horas.',
-  audit_punishment_required: 'Escolha a punição para o caso de maioria pela invalidez.',
+  audit_punishment_required: 'Escolha a punição para a pontuação invalidada pela votação.',
 };
 
 export async function manageAudit(_: AuditState, form: FormData): Promise<AuditState> {
@@ -26,7 +26,7 @@ export async function manageAudit(_: AuditState, form: FormData): Promise<AuditS
   const target = String(form.get('target') ?? '');
   const audit = String(form.get('audit') ?? '');
   const reason = String(form.get('reason') ?? '').trim();
-  if (!uuid.test(target) || !['request', 'approve', 'reject', 'vote', 'resolve'].includes(operation)
+  if (!uuid.test(target) || !['request', 'approve', 'reject', 'vote', 'preview', 'resolve'].includes(operation)
     || (operation !== 'request' && !uuid.test(audit))) return { error: 'Operação inválida.' };
   if ((operation === 'request' || operation === 'reject') && (reason.length < 3 || reason.length > 1000)) return { error: errors.invalid_audit_reason };
   let result;
@@ -40,11 +40,14 @@ export async function manageAudit(_: AuditState, form: FormData): Promise<AuditS
     const selection = String(form.get('selection') ?? '');
     if (!['invalidate', 'maintain'].includes(selection)) return { error: 'Selecione seu voto.' };
     result = await supabase.rpc('vote_score_audit', { audit, selection });
+  } else if (operation === 'preview') {
+    result = await supabase.rpc('preview_score_audit', { audit });
+    if (!result.error) return { tally: result.data };
   } else {
     const sanction = String(form.get('sanction') ?? '');
-    if (!['disregard', 'penalty'].includes(sanction)) return { error: errors.audit_punishment_required };
+    if (sanction && !['disregard', 'penalty'].includes(sanction)) return { error: errors.audit_punishment_required };
     if (form.get('confirm') !== 'yes') return { error: 'Confirme a apuração e seus efeitos no ranking.' };
-    result = await supabase.rpc('resolve_score_audit', { audit, sanction });
+    result = await supabase.rpc('resolve_score_audit', { audit, sanction: sanction || null });
   }
   if (result.error) return { error: Object.entries(errors).find(([key]) => result.error.message.includes(key))?.[1]
     ?? 'Não foi possível concluir. Atualize a página e tente novamente.' };

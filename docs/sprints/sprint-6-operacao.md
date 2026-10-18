@@ -1,5 +1,21 @@
 # Sprint 6 — Backup, migração e homologação
 
+18/10/2026 — O Dono do produto informou o retorno “Success. No rows returned” após executar a migração incremental `202610180001_audit_tally.sql`. Execução remota da migração confirmada por esse relato; não reaplicar. Ambiente/identificador e horário exato não informados. Publicação da interface, uso da nova consulta, homologação e aceite deste incremento ainda não confirmados. Novo backup/exportação não confirmado. Este registro substitui as referências anteriores à migração deste incremento como pendente; preserva os demais registros como históricos.
+
+## Incremento de 18/10/2026 — consulta antes da punição
+
+Implementação local; os registros de migração/publicação anteriores referem-se à entrega de 11/10 e não comprovam aplicação deste incremento. Nova migração: `web/supabase/migrations/202610180001_audit_tally.sql`. Cria somente função de consulta agregada autorizada, sem alterar dados existentes. Não executar novamente a migração original da Sprint 6.
+
+1. Antes da migração, obter backup/exportação privados atuais pelo procedimento operacional vigente. Preservar as referências históricas existentes; usar identificação nova, sem sobrescrever capturas anteriores. Registrar horário, identificação e validação, sem versionar arquivo de backup, dados pessoais ou credenciais. Nenhum novo backup foi executado nesta entrega.
+2. Aplicar `202610180001_audit_tally.sql` no banco que já recebeu as migrações anteriores, antes de publicar a interface. Registrar retorno e ambiente. A transação cria a função e suas permissões; não recalcula torneios nem altera avaliações em andamento ou decisões históricas.
+3. Publicar a interface atualizada pelo fluxo vigente e registrar referência do ambiente/versão. Validar voto ainda aberto (sem acesso à consulta), prazo vencido (rótulo de espera e “Apurar votos”) e erro de consulta recuperável.
+4. Com organizador após prazo: clicar “Apurar votos”; conferir contagens e resultado, sem alteração do ranking. Recarregar e consultar novamente; nenhuma decisão ou punição deve surgir apenas pela consulta. Participante/anônimo não acessam esta RPC; autoria dos demais votos permanece secreta.
+5. Maioria por invalidar: escolher explicitamente desconsideração ou penalidade, confirmar e encerrar; verificar sanção, recálculo e histórico antes/depois. Sem seleção ou confirmação, operação não conclui. Repetir a confirmação não duplica efeitos.
+6. Empate, nenhum voto e maioria por manter: mostrar resultado e “Manter pontuação e encerrar”, sem campo de punição; confirmação mantém pontuação e não pune.
+7. Homologar computador/celular/teclado e duas sessões (encerramento concorrente, revogação de acesso, consulta após decisão). Registrar resultados e aceite do Dono do produto. Testes locais não comprovam concorrência real no Supabase.
+
+Recuperação: antes de uso, falha da migração reverte sua própria transação. Em rollback da interface, a função adicional pode permanecer instalada; não há reversão de dados necessária para esta migração. Decisões efetivamente confirmadas continuam válidas e não devem ser desfeitas pelo rollback da interface. Escolhas técnicas e limites na [ADR-007](../decisoes/adr-007-apuracao-em-duas-etapas.md).
+
 Situação vigente em 11/10/2026: backup remoto/exportação validados, migração aplicada e comparação aprovada; deployment pronto relatado. Homologação parcial confirmada pelo Dono do produto, inclusive sigilo/troca do voto, bloqueio do auditado, pedido repetido após rejeição, aviso clicável e celular/teclado. URL/versão não informadas. Apuração/punições e demais cenários ainda pendentes; sem aceite global. Os registros abaixo preservam a sequência operacional e evidências anteriores, substituídas quando houver confirmação posterior.
 
 ## Situação consolidada e próximos testes

@@ -1,5 +1,7 @@
 # Sprint 6 — Auditoria por votação e estatísticas pessoais
 
+18/10/2026 — O Dono do produto informou o retorno “Success. No rows returned” após executar a migração incremental `202610180001_audit_tally.sql`. Execução remota da migração confirmada por esse relato; não reaplicar. Ambiente/identificador e horário exato não informados. Publicação da interface, uso da nova consulta, homologação e aceite deste incremento ainda não confirmados. Novo backup/exportação não confirmado. Este registro substitui as referências anteriores à migração deste incremento como pendente; preserva os demais registros como históricos.
+
 ## Situação atual — 11/10/2026
 
 Sprint em homologação, sem aceite global ou encerramento. S6-01–S6-04 implementadas; testes locais, lint e build aprovados. Backup/exportação, migração e comparação remota concluídos. Deployment pronto relatado pelo Dono do produto; URL/versão não informadas. Fluxos de auditoria exercitados na aplicação e tela de RF20 validada visualmente, sem problemas relatados.
@@ -71,6 +73,16 @@ Testes de apresentação afetados revalidados após ajustes finais. Build final 
 
 ## Pendências reais para concluir a sprint
 
+### Incremento de 18/10/2026 — apurar antes de escolher punição
+
+Autorização do Dono do produto: ajustar o projeto para visualizar os votos antes da decisão sobre punição. Implementado localmente `AuditResolution`: “Apurar votos” mostra contagens para invalidar/manter, total e resultado. Consulta não altera ranking nem encerra a auditoria. Só uma maioria por invalidar habilita escolha obrigatória de punição, sem valor inicial, e “Aplicar punição e encerrar”. Maioria por manter, empate e nenhum voto apresentam “Manter pontuação e encerrar”, sem campo de punição. Confirmação explícita necessária nos dois caminhos. Histórico final destaca contagens, motivo da decisão, sanção e os resultados antes/depois existentes.
+
+Escolha técnica: nova RPC `preview_score_audit(uuid)`, autenticada e restrita ao organizador de torneio aberto, apenas após prazo e no estado `open`. Agregados sem autoria; nenhum dado persistido ou evento alterado pela consulta. Reutiliza bloqueios existentes. Prévia vive na tela e pode ser repetida após recarga. Participantes só recebem totais após encerramento. Resolução final reconta no banco e mantém transação, idempotência, sanção e recálculo existentes. Não há novo estado persistido: até confirmar, continuam válidas as proteções de pendência e o ranking original. [ADR-007](../decisoes/adr-007-apuracao-em-duas-etapas.md) detalha limites e compatibilidade da RPC de resolução.
+
+Migração incremental necessária: `web/supabase/migrations/202610180001_audit_tally.sql`, após as existentes e antes de publicar esta interface. Não reaplicar a migração original. Migração remota confirmada pelo retorno relatado acima; publicação deste incremento e novo backup ainda não confirmados. Homologação visual em celular/teclado, concorrência entre sessões e aceite pendentes. A regra anterior de “sem migração” no registro de clareza abaixo descreve apenas a primeira alteração visual, substituída neste incremento quanto ao fluxo e à dependência de banco.
+
+Verificação local: suíte completa com **88 testes aprovados**, zero falhas ou pulados. Testes de apresentação, Server Action e PGlite cobrem consulta antes do prazo, restrição de organizador/anônimo, totais sem identidades, repetição sem mutação, ranking preservado na prévia, votos bloqueados após prazo, sanção obrigatória para invalidar e manutenção sem sanção por maioria/empate/nenhum voto. ESLint dos três arquivos alterados aprovado. TypeScript não aprovado devido aos erros do cliente Supabase já observados antes deste incremento em várias rotas (incluindo `getUser`), sem novo erro específico da prévia. Build não executado nesta entrega; validação de compilação integral permanece limitada por esses erros.
+
 Prazo da votação de teste: **13/10/2026 às 11:15, São Paulo**, informado com precisão de minutos (segundos não fornecidos). Após o instante efetivo, atualizar a página e executar a apuração pelo organizador. Nenhuma automação ou apuração realizada por esta atualização.
 
 1. Após o prazo: confirmar recusa de novo voto/alteração e executar apuração; homologar manutenção, empate/nenhum voto e maioria pela invalidez em cenários próprios.
@@ -83,5 +95,13 @@ Prazo da votação de teste: **13/10/2026 às 11:15, São Paulo**, informado com
 Roteiro detalhado e recuperação em [operação da Sprint 6](sprint-6-operacao.md). Backup, migração, comparação, regras aprovadas, sigilo, aviso aberto e validação visual geral de RF20 não são pendências atuais.
 
 ## Histórico de planejamento
+
+### Clareza da votação e do resultado — 18/10/2026
+
+Relato do Dono do produto: o cartão com prazo vencido e ação “Apurar e encerrar” parecia um resultado, sem explicar a contagem ou o ocorrido. Ajuste local de apresentação: prazo vencido passa a exibir “Votação encerrada · Aguardando apuração”, explica que ainda não existe resultado apurado e que o organizador deve apurar. Durante a votação e a espera, os totais continuam ocultos e a pontuação permanece inalterada.
+
+Após apuração, bloco destacado apresenta votos a favor de invalidar, votos contra invalidar (manter), total e decisão com motivo (maioria, empate ou nenhum voto). Manutenção explicita ausência de punição; invalidação preserva a explicação da sanção e os resultados antes/depois existentes. Escolha técnica de apresentação em resposta ao relato; regras, permissões, sigilo, RPCs e arquitetura preservados, sem migração.
+
+Verificação local: teste de renderização aprovado para espera sem totais, invalidação por maioria, manutenção por maioria, empate e nenhum voto; TypeScript executado, sem aprovação: erros de tipagem do cliente Supabase em múltiplas rotas, inclusive getUser na página de auditoria. ESLint da página iniciado, sem resultado confirmado neste registro. Sem operação remota ou publicação deste ajuste; homologação visual e aceite pelo Dono do produto pendentes. Continua necessária recarga para acompanhar o prazo; não há apuração automática. O relato não comprova execução da apuração remota e não encerra as pendências de homologação anteriores.
 
 Planejamento inicial: S6-01/S6-02/S6-03 estimadas em 5/5/8 pontos; S6-01 reestimada tecnicamente em oito após incluir pedido/aprovação. Estimativas relativas, sem capacidade ou data de conclusão assumida. RF20 acrescentado por autorização posterior do Dono do produto como S6-04, sem estimativa quantitativa confirmada. Propostas funcionais anteriores foram resolvidas por “regras aprovadas”. A sequência de backup, migração, publicação e relatos de homologação é preservada no documento operacional; seu resumo atual prevalece sobre pendências históricas.

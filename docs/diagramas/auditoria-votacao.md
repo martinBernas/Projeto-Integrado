@@ -7,10 +7,11 @@ stateDiagram-v2
     [*] --> Pedido: Participante solicita com justificativa
     Pedido --> Rejeitado: Organizador rejeita com motivo
     Pedido --> Votacao: Organizador aprova e fixa eleitorado e 48h
-    Votacao --> Mantida: Organizador apura após prazo e não há maioria pela invalidez
-    Votacao --> Invalidada: Organizador apura após prazo e há maioria pela invalidez
-    Invalidada --> ContribuicaoZero: Desconsiderar
-    Invalidada --> Penalidade: Substituir pela penalidade do dia
+    Votacao --> Totais: Organizador consulta após prazo, sem alterar ranking
+    Totais --> Mantida: Confirma manutenção sem punição
+    Totais --> Escolha: Maioria pela invalidez
+    Escolha --> ContribuicaoZero: Confirma desconsideração e recálculo
+    Escolha --> Penalidade: Confirma penalidade do dia e recálculo
 ```
 
 ```mermaid
@@ -20,7 +21,10 @@ flowchart LR
     RPC --> Avaliacoes[(Avaliações privadas)]
     RPC --> Eleitores[(Eleitorado da abertura)]
     RPC --> Votos[(Votos secretos e eventos privados)]
-    RPC --> Apuracao[Apuração manual após prazo]
+    RPC --> Previa[preview_score_audit após prazo]
+    Previa --> Totais[Somente totais ao organizador sem mutação]
+    Totais --> Tela
+    RPC --> Apuracao[resolve_score_audit após confirmação]
     Apuracao --> Decisao[(Decisão e resultados antes/depois)]
     Apuracao --> Calculo[Cálculo do torneio e menor positivo sem inválido]
     Calculo --> Resultados[(Resultados e histórico existente)]

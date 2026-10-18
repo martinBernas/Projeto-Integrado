@@ -1,5 +1,13 @@
 # Arquitetura e implantação
 
+18/10/2026 — O Dono do produto informou o retorno “Success. No rows returned” após executar a migração incremental `202610180001_audit_tally.sql`. Execução remota da migração confirmada por esse relato; não reaplicar. Ambiente/identificador e horário exato não informados. Publicação da interface, uso da nova consulta, homologação e aceite deste incremento ainda não confirmados. Novo backup/exportação não confirmado. Este registro substitui as referências anteriores à migração deste incremento como pendente; preserva os demais registros como históricos.
+
+## Apuração em duas etapas — 18/10/2026
+
+Incremento local: `AuditResolution` chama Server Action `preview` e RPC `preview_score_audit(uuid)` para mostrar totais ao organizador após o prazo, antes de escolher punição. A função reutiliza autorização e bloqueios de torneio/avaliação; devolve apenas contagens, sem mutação, recálculo ou identidades. Prévia fica em memória na tela, pode ser repetida e desaparece na recarga. Estado persistido continua `open`, com ranking original e proteções de pendência até confirmação. Participantes continuam sem totais antes do encerramento.
+
+Confirmação chama a resolução transacional existente; o banco reconta votos e valida punição sem confiar na prévia do navegador. Somente maioria por invalidar mostra seleção de punição obrigatória, inicialmente vazia. Manutenção, empate e ausência de votos mostram confirmação de manutenção sem punição. Migração incremental `202610180001_audit_tally.sql` necessária antes de publicar esta interface; não reaplicar a migração original. Sem mudanças de tabelas, cálculo ou RLS. [ADR-007](decisoes/adr-007-apuracao-em-duas-etapas.md) e [diagrama atualizado](diagramas/auditoria-votacao.md). Migração remota, publicação e homologação deste incremento não realizadas.
+
 ## Incremento local da Sprint 6 — 11/10/2026
 
 Complemento dos avisos diários: página de servidor consulta `get_score_audits` em paralelo com o dashboard, usando a sessão e o torneio selecionado; projeta apenas id/referência/estado open/invalidated para `TournamentView`. Links com âncora `audit-<id>` direcionam ao artigo correspondente na página de avaliações. Dados de voto não são renderizados no painel; RPC existente mantém autorização e sigilo. Métrica adicional `audit_status`; falha isolada tem aviso e nova tentativa. Sem alteração de esquema/cálculo ou migração adicional. Publicação/homologação desse complemento pendentes.

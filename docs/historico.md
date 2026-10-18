@@ -1,5 +1,9 @@
 # Histórico da documentação
 
+18/10/2026 — O Dono do produto informou o retorno “Success. No rows returned” após executar a migração incremental `202610180001_audit_tally.sql`. Execução remota da migração confirmada por esse relato; não reaplicar. Ambiente/identificador e horário exato não informados. Publicação da interface, uso da nova consulta, homologação e aceite deste incremento ainda não confirmados. Novo backup/exportação não confirmado. Este registro substitui as referências anteriores à migração deste incremento como pendente; preserva os demais registros como históricos.
+
+18/10/2026 — Dono do produto solicitou ver a contagem da votação antes de escolher punição. Fluxo em duas etapas implementado localmente, com RPC incremental de consulta após prazo restrita ao organizador, sem autoria/mutação; confirmação preserva resolução transacional existente. Requisitos RF15, arquitetura, diagrama, ADR-007, sprint e operação atualizados. 88 testes e lint dos arquivos alterados aprovados; TypeScript com erros de tipagem Supabase já observados antes deste incremento. Migração, publicação e homologação remotas não realizadas. Sem novo backup remoto; procedimento de preservação documentado.
+
 11/10/2026 — Dono do produto homologou preservação de ranking/pontuações durante avaliação, bloqueio de alteração das regras com auditoria aberta e obrigatoriedade de justificativa. Evidências e pendências atualizadas na Sprint 6/operação/plano de testes. Sem alteração de código ou nova execução remota nesta atualização documental; apuração e aceite global pendentes.
 
 11/10/2026 — Homologação parcial S6 ampliada pelo relato do Dono do produto: troca do voto, repetição de pedido rejeitado bloqueada, aviso clicável, uso em celular/teclado e auditado sem direito a voto. Situação vigente da sprint/operação e plano de testes atualizados; apuração/punições e aceite global ainda pendentes. Sem alteração de código ou operação remota nesta atualização documental.

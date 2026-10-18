@@ -42,6 +42,33 @@ async function request(db,id,score) {
  await login(db,voter);
  return (await db.query("select public.request_score_audit($1,$2,'Verificar evidência da partida') id",[id,score])).rows[0].id;
 }
+
+test('two-step tally is organizer-only after deadline, read-only and preserves final adjudication',async()=>{
+ const {db,id,score}=await setup();
+ try {
+  await db.exec(await readFile(new URL('../supabase/migrations/202610180001_audit_tally.sql',import.meta.url),'utf8'));
+  const audit=await request(db,id,score);await open(db,audit);
+  await assert.rejects(db.query('select public.preview_score_audit($1)',[audit]),/audit_not_ready/);
+  await login(db,voter);await db.query("select public.vote_score_audit($1,'invalidate')",[audit]);
+  await expire(db,audit);
+  for(const account of [voter,player,outsider]) {
+   await login(db,account);await assert.rejects(db.query('select public.preview_score_audit($1)',[audit]),/audit_not_allowed/);
+  }
+  await login(db,null,'anon');await assert.rejects(db.query('select public.preview_score_audit($1)',[audit]),/permission denied/);
+  const before=await results(db,id);
+  await login(db,owner);
+  const tally=(await db.query('select public.preview_score_audit($1) tally',[audit])).rows[0].tally;
+  assert.deepEqual(tally,{invalid_votes:1,maintain_votes:0});
+  assert.deepEqual((await db.query('select public.preview_score_audit($1) tally',[audit])).rows[0].tally,tally);
+  const pending=(await data(db,id)).audits[0];assert.equal(pending.status,'open');assert.equal(pending.invalid_votes,null);
+  await assert.rejects(db.query('select public.resolve_score_audit($1)',[audit]),/audit_punishment_required/);
+  await assert.rejects(db.query("select public.vote_score_audit($1,'maintain')",[audit]),/audit_voting_closed/);
+  assert.deepEqual(await results(db,id),before);
+  await login(db,owner);await db.query("select public.resolve_score_audit($1,'disregard')",[audit]);
+  const final=(await data(db,id)).audits[0];assert.equal(final.status,'invalidated');assert.equal(final.invalid_votes,tally.invalid_votes);
+  await assert.rejects(db.query('select public.preview_score_audit($1)',[audit]),/audit_not_ready/);
+ } finally {await db.close();}
+});
 async function open(db,audit) {await login(db,owner);await db.query('select public.review_score_audit($1,true)',[audit]);}
 async function expire(db,audit) {await db.exec('reset role');await db.query("update private.score_audits set deadline=now()-interval '1 second' where id=$1",[audit]);}
 async function data(db,id) {return (await db.query('select public.get_score_audits($1) d',[id])).rows[0].d;}
@@ -148,10 +175,14 @@ for(const sanction of ['disregard','penalty']) test(`S6 ${sanction}: excludes re
 for(const scenario of ['none','tie','maintain']) test(`S6 ${scenario} maintains the score and cannot apply punishment`,async()=>{
  const {db,id,score}=await setup();
  try {
+  await db.exec(await readFile(new URL('../supabase/migrations/202610180001_audit_tally.sql',import.meta.url),'utf8'));
   const before=await results(db,id);const audit=await request(db,id,score);await open(db,audit);
   if(scenario!=='none') {await login(db,voter);await db.query("select public.vote_score_audit($1,'maintain')",[audit]);}
   if(scenario==='tie') {await login(db,owner);await db.query("select public.vote_score_audit($1,'invalidate')",[audit]);}
-  await expire(db,audit);await login(db,owner);await db.query("select public.resolve_score_audit($1,'penalty')",[audit]);
+  await expire(db,audit);await login(db,owner);
+  const tally=(await db.query('select public.preview_score_audit($1) tally',[audit])).rows[0].tally;
+  assert.ok(tally.invalid_votes<=tally.maintain_votes);
+  await db.query('select public.resolve_score_audit($1)',[audit]);
   const a=(await data(db,id)).audits[0];assert.equal(a.status,'maintained');assert.equal(a.punishment,null);
   assert.deepEqual(await results(db,id),before);
  } finally {await db.close();}
