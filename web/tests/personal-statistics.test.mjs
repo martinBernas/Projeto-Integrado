@@ -33,7 +33,7 @@ const alice='00000000-0000-4000-8000-000000000001',bob='00000000-0000-4000-8000-
 test('RF20 real RLS isolates owners, loads >100 and >page-cap records, last5 played dates and last30 boundaries; errors discard partial data',async()=>{
  const db=new PGlite();
  try {
-  await db.exec(`create role anon;create role authenticated;create schema auth;
+  await db.exec(`create role anon;create role authenticated;create role service_role;create schema auth;
    create table auth.users(id uuid primary key,email text,raw_user_meta_data jsonb default '{}');
    create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
    grant usage on schema public,auth to authenticated,anon;`);

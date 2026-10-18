@@ -1,5 +1,9 @@
 # Sprint 7 — Publicação e homologação de RF21
 
+18/10/2026 — A afirmação de ausência de nova migração abaixo refere-se somente a RF21. O recorte adicional RF24 foi implementado localmente depois e exige migração/agenda/segredo/flag antes de persistir métricas. Consultar [operação específica RF24](sprint-7-metricas-operacao.md). A configuração da coleta não altera a tela/fórmulas de RF21 nem presume ativação remota.
+
+18/10/2026 — O Dono do produto confirmou após revisar a tela: “revisei a tela é parece coherente e atende os requisitos”. Registrada validação da apresentação e da aderência funcional de RF21 aos requisitos. Substitui a ausência anterior de validação da tela pelo Dono do produto. O relato não identifica ambiente/versão, dispositivo ou casos executados; não comprova separadamente conciliação de todas as fórmulas, permissões, congelamento ou concorrência em ambiente remoto. Testes locais permanecem como evidência distinta (98 testes, lint, TypeScript e build aprovados). Encerramento global da Sprint 7 não solicitado neste relato. Atualização documental, sem nova execução remota ou teste da aplicação pelo agente.
+
 18/10/2026: implementação local autorizada pelo Dono do produto, sem publicação ou homologação remota desta entrega. **Sem migração nova**: reutiliza `get_tournament_dashboard` e a base já migrada nas entregas anteriores. Não reaplicar SQL antigo. Nenhum backup novo foi executado nesta implementação; não existe mudança de dados/esquema que exija backup de migração. Capturas e exportações históricas continuam privadas/ignoradas.
 
 ## Publicação

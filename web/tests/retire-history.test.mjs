@@ -34,6 +34,22 @@ async function state(db) {
  return result;
 }
 
+test('RF24 pre-install backup preserves business rows, includes votes and rejects overwriting or capture after install',async()=>{
+ const db=await setup();try {
+  await db.exec(await sql(`migrations/${migration}`));await create(db,'Backup reference');await db.exec('reset role');
+  const infrastructure=await sql('rehearsal/sprint6/01-backup.sql');
+  await db.exec(infrastructure.slice(infrastructure.indexOf('create table if not exists private.sprint6_backups'),infrastructure.indexOf('insert into private.sprint6_backups')));
+  const before=await state(db);const capture=await sql('operations/operational-metrics/04-backup-before-install.sql');
+  const result=await db.exec(capture);const summary=result.find(r=>r.rows?.[0]?.id==='before-rf24-20261018-v1').rows[0];
+  assert.equal(summary.tournaments,1);assert.deepEqual(await state(db),before);
+  const backup=(await db.query("select snapshot from private.sprint6_backups where id='before-rf24-20261018-v1'")).rows[0].snapshot;
+  assert.equal(Object.keys(backup).length,17);assert.ok(Array.isArray(backup.votes));assert.ok(Array.isArray(backup.audit_events));
+  await assert.rejects(db.exec(capture),/backup already exists/);await db.exec('rollback');assert.deepEqual(await state(db),before);
+  await db.exec('create role service_role');await db.exec(await sql('migrations/202610180003_operational_metrics.sql'));
+  await assert.rejects(db.exec(capture),/RF24 already installed/);await db.exec('rollback');assert.deepEqual(await state(db),before);
+ }finally{await db.close();}
+});
+
 test('RF21 uses the full authorized RPC period and frozen closed results, with revoked and anonymous access denied',async()=>{
  const db=await setup();try {
   await db.exec(await sql(`migrations/${migration}`));

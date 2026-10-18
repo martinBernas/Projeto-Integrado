@@ -1,5 +1,7 @@
 # Levantamento de requisitos
 
+18/10/2026 — RF24 implementado localmente em S7-05 com coleta mínima no servidor após resposta, retenção de 14 datas UTC e teto de 5.000 eventos por data. Consulta administrativa e expurgo automático exigem implantação/configuração documentadas; sem dados pessoais, UI nova ou contratação paga. 102 testes, lint e TypeScript/build aprovados. Migração/ativação remota e homologação ainda pendentes. [Escopo e limitações](metricas-operacionais.md).
+
 18/10/2026 — RF21 implementado localmente após autorização do Dono do produto: média própria aplicada comparada à conjunta dos demais, gráfico/tabela e próprias contagens em tela do torneio, apenas dias encerrados. Sem nova migração; regras/privacidade refinadas preservadas. 98 testes, lint, TypeScript e build aprovados. Publicação/homologação/aceite ainda não confirmados. [Sprint 7](sprints/sprint-7.md).
 
 18/10/2026 — Refinamento vigente de RF21: prioridade ao desempenho próprio no torneio selecionado, comparado à média conjunta dos demais participantes, sem médias individuais de terceiros. Somente dias encerrados; médias sobre pontos aplicados incluindo ausências. Contagens próprias de primeiro/último somente entre resultados positivos válidos (zero aplicado válido do relativo incluído), com empates/participante único preservados. Decisões substituem pendências anteriores correspondentes; fórmulas e limites em [Estatísticas](estatisticas.md#rf21--refinamento-vigente-de-18102026) e [Sprint 7](sprints/sprint-7.md). Implementação não iniciada.

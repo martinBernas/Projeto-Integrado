@@ -71,7 +71,7 @@ test('proxy measures session validation only on dashboard and retains cookie ref
   const {updateSession}=await load('lib/supabase/proxy.ts',{
     '@supabase/ssr':{createServerClient:(_,__,options)=>{cookieOptions=options.cookies;return {auth:{getClaims:async()=>{claims++;cookieOptions.setAll([{name:'session',value:'refreshed',options:{httpOnly:true}}]);return {data:{claims:{}},error:null};}}};}},
     'next/server':{NextResponse:{next:response}},
-    '@/lib/dashboard-metrics':{measureDashboardQuery:async(stage,query)=>{stages.push(stage);return await query;}},
+    '@/lib/operational-metrics':{createDashboardMetrics:()=>async(stage,query)=>{stages.push(stage);return await query;}},
   },{process:{env:{NEXT_PUBLIC_SUPABASE_URL:'https://example.test',NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:'public-test'}}});
   const request=path=>({nextUrl:{pathname:path},cookies:{getAll:()=>[],set:(...args)=>writes.push(['request',...args])}});
   await updateSession(request('/dashboard'));assert.equal(claims,1);assert.deepEqual(stages,['session_claims']);

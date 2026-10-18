@@ -29,7 +29,7 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
     '@/lib/supabase/config': { isSupabaseConfigured: true },
     '@/lib/tournament': tournament,
     '@/lib/rules': rules,
-    '@/lib/dashboard-metrics': { measureDashboardQuery: async (_, query) => await query },
+    '@/lib/operational-metrics': { createDashboardMetrics: () => async (_, query) => await query },
     './score-form': { ScoreForm: () => null },
     './tournament-view': { TournamentView: ({ data }) => jsx.jsx('p', { children: `Ranking ${data.tournament.name}` }) },
     '@/lib/supabase/server': { createClient: async () => ({

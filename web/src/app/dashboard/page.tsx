@@ -9,12 +9,13 @@ import { TournamentView } from './tournament-view';
 import { RecentResults } from './recent-results';
 import { TournamentPanel } from './tournament-panel';
 import { RetryLoad } from './retry-load';
-import { measureDashboardQuery } from '@/lib/dashboard-metrics';
+import { createDashboardMetrics } from '@/lib/operational-metrics';
 import { ruleForDate } from '@/lib/rules';
 import type { AuditData } from '@/lib/audits';
 
 export default async function DashboardPage({ searchParams }: { searchParams: Promise<{ tournament?: string | string[] }> }) {
   if (!isSupabaseConfigured) return <main className="mx-auto min-h-screen max-w-2xl px-6 py-20"><h1 className="text-3xl font-bold">Serviço em preparação</h1><p className="mt-4 text-slate-600">O acesso às pontuações estará disponível em breve.</p><Link className="mt-6 inline-block font-semibold text-emerald-700" href="/">Voltar ao início</Link></main>;
+  const measureDashboardQuery = createDashboardMetrics();
   const supabase = await createClient(); const { data: { user } } = await measureDashboardQuery('authentication', supabase.auth.getUser()); if (!user) redirect("/auth/login");
   const requested = (await searchParams).tournament;
   const [{ data: tournaments, error: listError }, { data: history, error: historyError }, { data: profile }] = await Promise.all([

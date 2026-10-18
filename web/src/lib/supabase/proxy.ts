@@ -1,6 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { measureDashboardQuery } from '@/lib/dashboard-metrics';
+import { createDashboardMetrics } from '@/lib/operational-metrics';
 
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
@@ -8,7 +8,7 @@ export async function updateSession(request: NextRequest) {
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
   if (!url || !key) return response;
   const supabase = createServerClient(url, key, { cookies: { getAll: () => request.cookies.getAll(), setAll: (items) => { items.forEach(({ name, value }) => request.cookies.set(name, value)); response = NextResponse.next({ request }); items.forEach(({ name, value, options }) => response.cookies.set(name, value, options)); } } });
-  if (request.nextUrl.pathname === '/dashboard') await measureDashboardQuery('session_claims', supabase.auth.getClaims());
+  if (request.nextUrl.pathname === '/dashboard') await createDashboardMetrics()('session_claims', supabase.auth.getClaims());
   else await supabase.auth.getClaims();
   return response;
 }
