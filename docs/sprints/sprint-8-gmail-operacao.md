@@ -6,6 +6,8 @@ Atualização de 24/10/2026. Substitui a configuração Resend/webhook do roteir
 
 ## Situação confirmada
 
+Atualização de publicação em 24/10/2026: Dono do produto confirmou as variáveis cadastradas em Production, flag `false` e deploy pronto. Evidência informada pelo Dono do produto, sem URL/identificador da versão ou validação dos valores secretos. Próxima etapa: ativar a flag em Production, efetuar novo deployment para incorporar a alteração e testar encerramento em torneio isolado com destinatários de teste. Agendas e envio real ainda não confirmados. Esta atualização substitui a pendência de publicação inicial nos registros anteriores.
+
 Atualização remota de 24/10/2026: migração 002 executada e comparação posterior pelo caminho de reutilização retornou `business_snapshot=preserved`, `report_queues=empty`, `gmail_reports=installed`. Backup original reaproveitado com conferências antes/depois; nova captura dispensada neste caminho. Pausa de gravações liberada. Próxima etapa: variáveis da hospedagem e publicação do código pelo fluxo do Dono do produto, mantendo `TOURNAMENT_REPORTS_ENABLED=false` até concluir a configuração. SMTP real, publicação desta versão, agendas e homologação permanecem pendentes. Esta atualização substitui as pendências de migração/comparação nos registros anteriores deste roteiro.
 
 O Dono do produto executou a migração inicial 001 e a comparação retornou `business_snapshot=preserved`, `tournament_reports=installed`. Captura inicial `before-reports-20261024-v1`, exportação privada e seus checksums já foram validados. **Não repetir esses scripts nem a migração 001.** Gravações foram liberadas depois da comparação.
@@ -62,6 +64,8 @@ Se os jobs ainda não existem, habilitar pg_net (disponível 0.20.4 segundo pref
 Se os jobs já existirem, conferir os dois pelo nome e preservar a agenda, em vez de repetir 04; esse script recusa duplicação. Não alterar jobs/extensões de RF24. HTTP 200 do worker não prova envio de todos: conferir contadores por torneio, Enviados do Gmail e PDF recebido nas caixas de teste.
 
 ## 5. Homologação e recuperação
+
+Diagnóstico: publicar a versão que registra `tournament_report_failure` e consultar Messages/Logs da requisição POST ao processar pendências. Cada entrada contém apenas etapa e código filtrado; não copiar segredos nem registrar erros brutos. HTTP 200 da Server Action pode acompanhar erro mostrado no formulário. `server_config` indica configuração do cliente Supabase; `gmail_config` indica validação local do endereço/senha presentes, sem testar autenticação SMTP; nome de RPC identifica erro do banco, `render_pdf` a renderização e `delivery` uma falha de envio/conclusão. Código `unclassified` exige investigação adicional e não prova erro de credencial. Estado remoto atual: teste com PDF pendente, 0/2, causa ainda indeterminada; nova publicação diagnóstica pendente.
 
 - Conferir geração no encerramento, arquivo anexado, conteúdo, gráfico, empates e duplas. Mesma regra de destinatários: participantes presentes no encerramento, uma mensagem por participante.
 - O contador “Envios aceitos pelo Gmail” aumenta apenas após resposta positiva para o destinatário e persistência da conclusão. Não corresponde a entrega/leitura. Todos os envios aceitos + PDF gerado + ausência de lease ativo continuam necessários à retirada.

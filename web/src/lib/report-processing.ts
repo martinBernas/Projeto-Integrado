@@ -1,4 +1,5 @@
 import type { ReportSnapshot } from './tournament-report.ts';
+import { logReportFailure } from './report-diagnostics.ts';
 
 export type ReportJob = { id: string; token: string; snapshot: ReportSnapshot; pdf: string | null;
   deliveries: { id: string; email: string | null; state: string }[] };
@@ -13,7 +14,9 @@ export class SmtpDeliveryFailure extends Error {
 export async function processReport(rpc: Rpc, render: (data: ReportSnapshot) => Promise<Buffer>,
   send: (job: ReportJob, delivery: ReportJob['deliveries'][number], pdf: string) => Promise<string>, target?: string) {
   const call = async (name: string, args?: Record<string, unknown>) => {
-    const result = await rpc(name, args); if (result.error) throw new Error('report_database_failed'); return result.data;
+    const result = await rpc(name, args);
+    if (result.error) { logReportFailure(name, result.error); throw new Error('report_database_failed'); }
+    return result.data;
   };
   const job = await call('claim_tournament_report', { target: target ?? null }) as ReportJob | null;
   if (!job) return { processed: false };
@@ -22,7 +25,8 @@ export async function processReport(rpc: Rpc, render: (data: ReportSnapshot) => 
   try {
     let pdf = job.pdf;
     if (!pdf) {
-      pdf = (await render(job.snapshot)).toString('base64');
+      try { pdf = (await render(job.snapshot)).toString('base64'); }
+      catch (error) { logReportFailure('render_pdf', error); throw error; }
       await call('save_tournament_report', { target: job.id, token: job.token, pdf });
     }
     for (const delivery of job.deliveries.slice(0, 5)) {
@@ -35,6 +39,7 @@ export async function processReport(rpc: Rpc, render: (data: ReportSnapshot) => 
         const provider = await send(job, delivery, pdf);
         await call('complete_gmail_tournament_delivery', { target: job.id, token: job.token, delivery: delivery.id, provider });
       } catch (error) {
+        logReportFailure('delivery', error);
         failed = true;
         if (begun) await call('fail_gmail_tournament_delivery', { target: job.id, token: job.token, delivery: delivery.id,
           retryable: error instanceof SmtpDeliveryFailure && error.retryable });

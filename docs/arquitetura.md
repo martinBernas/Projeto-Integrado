@@ -221,3 +221,7 @@ Validação local: suíte de 86 testes aprovada; RLS real em PGlite, 257 positiv
 Limitações: custo de consultas, memória e renderização proporcional ao histórico; leitura paginada não é snapshot transacional e correções concorrentes podem exigir recarga. Sem atualização em tempo real. A apuração das auditorias mantém seu prazo e roteiro; não há aceite global da Sprint 6.
 
 [Fluxo de estatísticas pessoais](diagramas/estatisticas-pessoais.md).
+# Diagnóstico operacional de relatórios — 24/10/2026
+
+O servidor registra falhas de relatórios como JSON com `event=tournament_report_failure`, `stage` e `code`. As etapas distinguem configuração do cliente/Gmail, RPCs, renderização do PDF e envio; códigos são filtrados por lista/formato permitido, com fallback `unclassified`. Não registrar mensagens brutas, argumentos RPC, snapshots, PDFs, destinatários, tokens ou credenciais. A mensagem pública permanece genérica. O registro não altera transações, permissões ou política de repetição de envios. Implementado localmente após falha remota sem diagnóstico; publicação e identificação da causa remota ainda pendentes.
+
