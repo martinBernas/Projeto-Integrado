@@ -18,7 +18,7 @@ test('ações validam sessão, datas reais e confirmação; usam RPC e invalidam
     }) },
   };
   const exports = {};
-  vm.runInNewContext(outputText, { exports, require: name => {
+  vm.runInNewContext(outputText, { exports, process: { env: {} }, require: name => {
     assert.ok(name in dependencies); return dependencies[name];
   } });
   const form = new FormData();

@@ -55,7 +55,14 @@ export async function manageTournament(_: TournamentState, form: FormData): Prom
     return { error: Object.entries(messages).find(([key]) => result.error.message.includes(key))?.[1]
       ?? 'Não foi possível salvar. Atualize a página e tente novamente.' };
   }
+  if (operation === 'close' && process.env.TOURNAMENT_REPORTS_ENABLED === 'true') {
+    try { const { runTournamentReports } = await import('@/lib/report-server'); await runTournamentReports(target); }
+    catch {
+      revalidatePath('/dashboard'); revalidatePath('/dashboard/tournaments');
+      return { message: 'Torneio encerrado. O relatório aguarda processamento; a retirada está bloqueada até concluir a geração e todos os envios.' };
+    }
+  }
   revalidatePath('/dashboard');
   revalidatePath('/dashboard/tournaments');
-  return { message: operation === 'create' ? 'Torneio criado.' : operation === 'close' ? 'Torneio encerrado. Resultados preservados.' : 'Torneio atualizado.' };
+  return { message: operation === 'create' ? 'Torneio criado.' : operation === 'close' ? 'Torneio encerrado. Resultados preservados. Confira a geração e as entregas do relatório abaixo.' : 'Torneio atualizado.' };
 }

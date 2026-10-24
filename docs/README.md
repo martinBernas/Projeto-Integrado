@@ -1,5 +1,9 @@
 # GeoGuaras — Wiki do Projeto
 
+## Referência atual — 24/10/2026
+
+Sprint 7 encerrada em 18/10/2026; consultar [entregas e evidências](sprints/sprint-7.md). [Sprint 8](sprints/sprint-8.md) implementada localmente: PDF geral, envio aceito pelo Gmail, retirada lógica protegida e Claro/Escuro/Sistema. Migração inicial instalada/comparada; adaptação Gmail local, com incremento/configuração/publicação e homologação ainda pendentes. O Dono do produto não identificou ganho no histórico avançado a partir do uso observado; essa ampliação foi retirada da proposta de prioridade. Relatórios individuais ficam no RF25 futuro; nenhuma retirada ou envio real nesta entrega. RF24 e homologação complementar permanecem acompanhamentos da Sprint 7, sem nova evidência remota nesta atualização. Os estados cronológicos anteriores abaixo são históricos e devem ser lidos à luz dos encerramentos posteriores.
+
 Aceite e encerramento em 03/10/2026: Dono do produto declarou explicitamente “está aceita a sprint”. Sprint 5 concluída, incluindo S5-01–S5-05. Aceite considera as evidências e limites registrados: carregamento confirmado na aplicação utilizada; Tentar novamente validado localmente, sem falha observada para homologação remota. Análise de amostras, diagnóstico da demora e eventuais melhorias permanecem acompanhamento posterior. Versão/URL do deployment não informadas; nenhum novo SQL necessário para S5-04/S5-05.
 
 Os estados anteriores abaixo são registros históricos; o aceite acima é a situação vigente.
@@ -12,6 +16,15 @@ Sprint 3 concluída em 21/09/2026. [Encerramento e evidências](sprints/sprint-3
 
 ## Documentação
 
+- [Roteiro vigente — Gmail gratuito, incremento SMTP](sprints/sprint-8-gmail-operacao.md)
+- [ADR-014 — Gmail existente e sucesso por aceitação SMTP](decisoes/adr-014-relatorios-gmail-sem-custo.md)
+
+- [Sprint 8 — backup, configuração, ativação e recuperação](sprints/sprint-8-operacao.md)
+- [ADR-013 — relatório final e retirada lógica](decisoes/adr-013-relatorios-e-retirada-de-torneios.md)
+- [Diagrama de dados e sequência da Sprint 8](diagramas/relatorios-e-retirada.md)
+
+- [Relatório geral da Sprint 8 e relatórios individuais futuros — RF19/RF25](relatorios-de-torneio.md)
+
 - [Sprint 6 — auditoria por votação: escopo e implementação local](sprints/sprint-6.md)
 - [Sprint 6 — backup, migração e homologação](sprints/sprint-6-operacao.md)
 - [ADR-006 — auditoria por votação e sigilo](decisoes/adr-006-auditoria-por-votacao.md)
@@ -19,7 +32,8 @@ Sprint 3 concluída em 21/09/2026. [Encerramento e evidências](sprints/sprint-3
 - [Sprint 5 — implementação local e planejamento](sprints/sprint-5.md)
 - [Sprint 5 — migração, backup, recuperação e homologação](sprints/sprint-5-operacao.md)
 - [Decisão e modelo de regras versionadas](decisoes/adr-003-regras-versionadas.md)
-- [Sprint 7 — pré-planejamento de usabilidade e carregamento](sprints/sprint-7.md)
+- [Sprint 8 — encerramento definitivo e modo escuro](sprints/sprint-8.md)
+- [Sprint 7 — encerramento, estatísticas, métricas e retroativos](sprints/sprint-7.md)
 - [Avaliação do escopo pendente e feedback — 27/09/2026](avaliacao-backlog-2026-09-27.md)
 - [Sprint 1 — descoberta e documentação](sprints/sprint-1.md)
 - [Sprint 2 — fundação, autenticação e publicação](sprints/sprint-2.md)

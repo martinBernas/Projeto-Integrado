@@ -33,7 +33,7 @@ export function CloseTournamentForm({ id }: { id: string }) {
   const [state, action, pending] = useActionState(manageTournament, {});
   return <form action={action} className="mt-6 space-y-3 border-t border-slate-200 pt-5">
     <input type="hidden" name="operation" value="close" /><input type="hidden" name="target" value={id} />
-    <p className="text-sm text-slate-600">Encerre após o último dia e a conferência do histórico. Os resultados serão congelados e o torneio não poderá mais ser editado.</p>
+    <p className="text-sm text-slate-600">Encerre após o último dia e a conferência do histórico. Os resultados serão congelados e o torneio não poderá mais ser editado. Será gerado um relatório geral em PDF, enviado aos participantes. Após uma semana, o torneio será retirado automaticamente se todos os envios forem aceitos pelo Gmail; o PDF ficará apenas nos e-mails enviados.</p>
     <label className="flex items-start gap-2 text-sm"><input className="mt-1" type="checkbox" name="confirm" value="yes" required />Confirmo que desejo encerrar este torneio.</label>
     <button disabled={pending} className="rounded-lg border border-slate-400 px-4 py-2 font-semibold disabled:opacity-50">{pending ? 'Encerrando…' : 'Encerrar torneio'}</button>
     <div aria-live="polite">{state.error && <p role="alert" className="text-sm text-red-700">{state.error}</p>}{state.message && <p className="text-sm text-emerald-800">{state.message}</p>}</div>

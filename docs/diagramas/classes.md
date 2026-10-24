@@ -1,5 +1,7 @@
 # Diagrama de classes inicial
 
+24/10/2026 — Modelo complementar local da Sprint 8: [fila privada, entregas, eventos e retirada lógica](relatorios-e-retirada.md), conforme [ADR-013](../decisoes/adr-013-relatorios-e-retirada-de-torneios.md). Nenhuma migração remota realizada nesta entrega.
+
 18/10/2026 — Após a migração de manutenção, `TorneioAtual.history_ready` permanece como atributo legado para compatibilidade de dados/scripts, sem efeito no cálculo ou encerramento; nenhum controle de preparação na aplicação. Os diagramas anteriores representam a evolução histórica. Ver [ADR-008](../decisoes/adr-008-fim-preparacao-historica.md).
 
 Incremento local S6 de 11/10/2026: [modelo complementar de auditoria](auditoria-votacao.md) e [ADR-006](../decisoes/adr-006-auditoria-por-votacao.md). Avaliação referencia torneio/pontuação pessoal; eleitorado e votos usam avaliação/jogador; decisão e eventos privados preservam bruto global sem estado de invalidez global.

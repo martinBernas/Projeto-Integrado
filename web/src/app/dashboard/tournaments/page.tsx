@@ -4,6 +4,9 @@ import { createClient } from '@/lib/supabase/server';
 import { isSupabaseConfigured } from '@/lib/supabase/config';
 import { formatDate } from '@/lib/tournament';
 import { CloseTournamentForm, TournamentForm, type ManagedTournament } from './tournament-form';
+import { ReportManagement } from './report-management';
+
+export const maxDuration = 60;
 
 export default async function ManageTournamentsPage() {
   if (!isSupabaseConfigured) return <main className="p-8"><h1 className="text-2xl font-bold">Serviço em preparação</h1><Link href="/dashboard">Voltar ao painel</Link></main>;
@@ -29,7 +32,7 @@ export default async function ManageTournamentsPage() {
           <Link href={`/dashboard?tournament=${tournament.id}`} className="mb-5 mr-5 inline-block font-semibold text-emerald-800">Ver resultados</Link>
           <Link href={`/dashboard/tournaments/${tournament.id}/rules`} className="mb-5 mr-5 inline-block font-semibold text-emerald-800">{tournament.closed_at ? 'Consultar regras' : 'Configurar período e regras'}</Link>
           <Link href={`/dashboard/tournaments/${tournament.id}/participants`} className="mb-5 inline-block font-semibold text-emerald-800">{tournament.closed_at ? 'Consultar participantes' : 'Gerenciar participantes'}</Link>
-          {tournament.closed_at ? <p className="text-sm text-slate-600">Resultados preservados. Edição indisponível após o encerramento.</p>
+          {tournament.closed_at ? <><p className="text-sm text-slate-600">Resultados preservados. Edição indisponível após o encerramento.</p><ReportManagement target={tournament.id} /></>
             : <><TournamentForm tournament={tournament} /><CloseTournamentForm id={tournament.id} /></>}
         </article>)}
       </section>
