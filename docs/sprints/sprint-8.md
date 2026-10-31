@@ -1,5 +1,7 @@
 # Sprint 8 — encerramento definitivo de torneios e modo escuro
 
+31/10/2026 — RF26 ampliado por pedido do Dono do produto: zoom, deslocamento e seleção de jogadores na legenda, com todos/nenhum/somente você. Implementado localmente, 154 testes, build/TypeScript e lint sem erros (aviso preexistente). Interações verificadas no navegador, teclado, temas e celular. Requisitos, arquitetura e decisões atualizados. Publicação e aceite pendentes; sem migração. [Entrega](sprint-8-estatisticas-progressao-nemesis.md).
+
 ## Novo incremento RF26/RF27 — 31/10/2026
 
 Dono do produto solicitou e pediu registro formal do panorama acumulado do PDF nas estatísticas e de Nêmesis pessoal. Implementação local e requisitos registrados, 150 testes/lint/build aprovados, UI revisada com dados sintéticos em claro/escuro e 375/1280 px. Sem migração, publicação ou aceite remoto desta nova tela. [Entrega e decisões](sprint-8-estatisticas-progressao-nemesis.md). Correção/reenvio de PDFs anteriores permanecem concluídos e separados.

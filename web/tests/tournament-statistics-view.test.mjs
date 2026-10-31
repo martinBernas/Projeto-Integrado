@@ -4,12 +4,15 @@ import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 import ts from 'typescript';
 import * as jsx from 'react/jsx-runtime';
+import * as React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import * as tournament from '../src/lib/tournament.ts';
 import * as stats from '../src/lib/tournament-statistics.ts';
 import * as chart from '../src/lib/tournament-report-chart.ts';
+import * as viewport from '../src/lib/tournament-chart-viewport.ts';
 
 async function load(path,deps) {
+ deps['@/lib/tournament-chart-viewport']=viewport;
  const source=await readFile(new URL(`../src/${path}`,import.meta.url),'utf8');
  const {outputText}=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}});
  const exports={};vm.runInNewContext(outputText,{exports,Date,Math,Set,require:n=>{assert.ok(n in deps,n);return deps[n];}});return exports;
@@ -22,10 +25,11 @@ test('RF21 screen uses session identity, authorized target, private aggregates, 
  {player_id:'me',played_on:'2026-10-02',raw_score:null,applied_score:-2500,result_kind:'absence',provisional:false},
  {player_id:'other-secret-id',played_on:'2026-10-01',raw_score:10000,applied_score:10000,result_kind:'score',provisional:false}]};
  const calls=[];
- const deps={'react/jsx-runtime':jsx,'next/link':{default:({children,...props})=>jsx.jsx('a',{...props,children})},'next/navigation':{redirect:()=>{throw Error('redirect');}},
+ const deps={'react/jsx-runtime':jsx,'react':React,'next/link':{default:({children,...props})=>jsx.jsx('a',{...props,children})},'next/navigation':{redirect:()=>{throw Error('redirect');}},
  '@/lib/supabase/config':{isSupabaseConfigured:true},'@/lib/supabase/server':{createClient:async()=>({auth:{getUser:async()=>({data:{user}})},rpc:async(...args)=>{calls.push(args);return {data:access?data:{access:false},error};}})},
  '@/lib/tournament':tournament,'@/lib/tournament-statistics':stats,'@/lib/tournament-report-chart':chart,'../../../retry-load':{RetryLoad:()=>jsx.jsx('button',{children:'Tentar novamente'})}};
  const {ComparisonChart}=await load('app/dashboard/tournaments/[id]/statistics/comparison-chart.tsx',deps);deps['./comparison-chart']={ComparisonChart};
+ deps['./cumulative-plot']=await load('app/dashboard/tournaments/[id]/statistics/cumulative-plot.tsx',deps);
  deps['./cumulative-chart']=await load('app/dashboard/tournaments/[id]/statistics/cumulative-chart.tsx',deps);
  deps['./nemesis']=await load('app/dashboard/tournaments/[id]/statistics/nemesis.tsx',deps);
  const {default:Page}=await load('app/dashboard/tournaments/[id]/statistics/page.tsx',deps);
@@ -47,7 +51,8 @@ test('RF21 screen uses session identity, authorized target, private aggregates, 
 });
 
 test('cumulative chart and Nemesis distinguish no data, one zero date, late entry and nonparticipant',async()=>{
- const deps={'react/jsx-runtime':jsx,'@/lib/tournament':tournament,'@/lib/tournament-statistics':stats,'@/lib/tournament-report-chart':chart};
+ const deps={'react/jsx-runtime':jsx,'react':React,'@/lib/tournament':tournament,'@/lib/tournament-statistics':stats,'@/lib/tournament-report-chart':chart};
+ deps['./cumulative-plot']=await load('app/dashboard/tournaments/[id]/statistics/cumulative-plot.tsx',deps);
  const {CumulativeChart}=await load('app/dashboard/tournaments/[id]/statistics/cumulative-chart.tsx',deps);
  const {Nemesis}=await load('app/dashboard/tournaments/[id]/statistics/nemesis.tsx',deps);
  const data={access:true,today:'2027-02-10',tournament:{id:'t',name:'Outro torneio',starts_at:'2027-02-01',ends_at:'2027-02-09'},excluded_dates:[],

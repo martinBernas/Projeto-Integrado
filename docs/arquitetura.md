@@ -1,5 +1,7 @@
 # Arquitetura e implantação
 
+RF26 interativo (31/10/2026): `CumulativeChart` mantém tabela/consolidação autorizadas no servidor e projeta nomes, indicação de jogador próprio, datas e acumulados elegíveis para `CumulativePlot` no cliente. Zoom/seleção/deslocamento são estado local, sem IDs/brutos, RPC adicional ou escrita; helper puro limita a janela aos dados. Nêmesis permanece no servidor. Publicação/aceite pendentes. [ADR-016](decisoes/adr-016-progressao-acumulada-e-nemesis.md).
+
 ## Estatísticas com progressão acumulada e Nêmesis — 31/10/2026
 
 RF26/RF27 locais: página de servidor autorizada consulta a mesma RPC `get_tournament_dashboard`, filtra o conjunto consolidado em `tournamentStatistics` e usa `tournamentProgression`, núcleo puro compartilhado com o PDF. PDF limita pares globais a cinco; Nêmesis filtra pares do jogador da sessão antes de limitar. SVG e tabela agora apresentam nomes públicos e acumulados de todos os participantes, conforme pedido, mantendo médias individuais dos demais e dados pessoais externos fora da tela. Sessão/UUID/acesso/retirada não mudam. Sem cliente privilegiado, nova RPC/tabela/grant, migração ou efeito sobre fila/envios. Publicação e aceite pendentes. [ADR-016](decisoes/adr-016-progressao-acumulada-e-nemesis.md), [diagrama](diagramas/estatisticas-torneio.md) e [evidências](sprints/sprint-8-estatisticas-progressao-nemesis.md).

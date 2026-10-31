@@ -10,6 +10,7 @@ sequenceDiagram
     participant Banco as RPC get_tournament_dashboard
     participant Calculo as tournamentStatistics
     participant Nucleo as tournamentProgression
+    participant Grafico as CumulativePlot no navegador
     Jogador->>Painel: Selecionar torneio e Estatísticas do torneio
     Painel->>Pagina: Navegar com UUID do torneio
     Pagina->>Pagina: Validar sessão e UUID
@@ -22,7 +23,10 @@ sequenceDiagram
     Nucleo-->>Calculo: Acumulados/posições por data e inversões de todos os pares
     Calculo->>Calculo: Filtrar pares da identidade da sessão; até cinco adversários
     Calculo-->>Pagina: Médias/contagens anteriores, panorama e Nêmesis pessoal
-    Pagina-->>Jogador: Gráfico completo, legenda/tabela e adversários com contagens
+    Pagina-->>Grafico: Somente nomes, próprio, datas e acumulados elegíveis
+    Pagina-->>Jogador: Tabela completa e Nêmesis no servidor
+    Jogador->>Grafico: Selecionar jogadores, zoom e deslocamento
+    Grafico->>Grafico: Ajustar janela e escala localmente; sem consultas/escritas
 ```
 
 Encerrados retornam resultados armazenados, preservando congelamento. A comparação diária de RF21 mantém valor próprio e média agregada dos demais. O novo panorama RF26 mostra nomes públicos e acumulados identificados de todos os jogadores, expressamente solicitados, sem médias individuais ou dados pessoais externos. RF27 usa somente o jogador da sessão; sem seleção de outro perfil por parâmetro. Retirada continua bloqueando acesso pela RPC. Dados pessoais brutos globais de RF20 permanecem em fluxo separado.
@@ -39,4 +43,4 @@ flowchart LR
   Acumulados --> Pessoal[Nêmesis: pares do jogador antes do corte de cinco]
 ```
 
-Nenhuma nova RPC, tabela, grant, migração ou escrita. Núcleo puro compartilha as fórmulas; gráficos/tabelas são componentes de servidor. Custos crescem com participantes/datas e comparações de pares; sem benchmark remoto neste incremento.
+Nenhuma nova RPC, tabela, grant, migração ou escrita. Núcleo puro compartilha as fórmulas; tabela e Nêmesis são componentes de servidor; gráfico interativo é componente de cliente com projeção mínima autorizada. Custos crescem com participantes/datas e comparações de pares; sem benchmark remoto neste incremento.
