@@ -1,5 +1,15 @@
 # Arquitetura e implantação
 
+## Relatórios gerais v5 — regras automáticas, implementação local em 31/10/2026
+
+O worker e o encerramento já convergem em `runTournamentReports` → `processReport` → `renderTournamentPdf`. O renderizador comum passa a usar `tournamentReport` para acumulados/top cinco duplas e `scoreChartPanels` para panorama e blocos de cinco datas pontuadas, com min/max próprios e incorporação de sobra unitária. Um gráfico por página; nomes nos anexos. Sem dados de HCM fixados, alteração de modelo/permissões/transações ou migração. A captura permanece congelada; manutenção de PDF existente conserva fila/envios/prazo conforme ADR-015. Depois da publicação, essas regras valem para novos PDFs de qualquer campeonato; publicação, aceite do PDF real e substituição remota ainda pendentes. [Decisão atual](decisoes/adr-015-correcao-pontos-acumulados.md), [entrega/testes](sprints/sprint-8-correcao-grafico.md). Revisões anteriores abaixo são históricas.
+
+31/10/2026 — Renderização RF19 v4: panorama integral e ampliações por faixa do eixo Y usando clipping das curvas originais, com legenda das séries visíveis. Substitui detalhes por grupos de participantes, conforme esclarecimento do Dono do produto. Sem mudanças no fluxo de dados, permissões, banco ou substituição administrativa. [ADR-015](decisoes/adr-015-correcao-pontos-acumulados.md).
+
+## Correção de evolução por pontos — 31/10/2026
+
+Implementação local usa acumulados da captura congelada, com prévia offline e manutenção administrativa delimitada para PDFs existentes. CLI gera PDF/evidências e SQL; administrador exporta backup validado e executa compare-and-swap após aceite. Locks seguem torneio → fila e recusam lease ativo/retirada; somente `pdf_base64` muda, preservando captura, `generated_at`, prazo e destinatários. Sem nova rota, tabela, grant ou migração; sem reenvio. Revisão no código/rodapé e checksums no procedimento privado. [ADR-015](decisoes/adr-015-correcao-pontos-acumulados.md), [operação](sprints/sprint-8-correcao-grafico-operacao.md) e [diagrama](diagramas/relatorios-e-retirada.md). Publicação/substituição remotas pendentes e prévia HCM aguardando aceite. As evidências operacionais anteriores da Sprint 8 continuam registradas na sprint.
+
 ## Arquitetura vigente — Gmail SMTP sem custo (24/10/2026)
 
 O Dono do produto confirmou sucesso como aceitação do envio pelo Gmail, sem comprovar entrega na caixa/leitura. Conta exclusiva já utilizada no SMTP de recuperação conforme registro de 23/09. Implementação local substitui Resend por Nodemailer em smtp.gmail.com:465 com TLS, verificação de certificado e segredos somente servidor. [ADR-014](decisoes/adr-014-relatorios-gmail-sem-custo.md) e [roteiro vigente](sprints/sprint-8-gmail-operacao.md) substituem transporte, webhook e política de repetição da ADR-013. Migração inicial 001 e preservação já confirmadas; incremento Gmail 002/configuração/publicação/homologação ainda pendentes remotamente. Nenhum envio real realizado nesta adaptação.

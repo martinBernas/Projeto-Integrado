@@ -1,5 +1,32 @@
 # Sprint 8 — relatório final e retirada
 
+31/10/2026 — V5 local: todos os encerramentos e o worker usam o mesmo renderizador. `tournamentReport` calcula acumulados e até cinco duplas; `scoreChartPanels` divide automaticamente em cinco datas pontuadas, unindo sobra unitária e calculando domínios locais. Panorama e cada intervalo ocupam página própria. Sem alteração de schema/fluxo de fila. Publicação, aceite do PDF e substituição remota pendentes; diagramas de captura/envio/manutenção continuam válidos. [ADR-015 atual](../decisoes/adr-015-correcao-pontos-acumulados.md).
+
+31/10/2026 — Evolução por pontos acumulados e substituição administrativa local conforme [ADR-015](../decisoes/adr-015-correcao-pontos-acumulados.md). Sem mudança no modelo de dados. Prévia HCM gerada; aceite, publicação e substituição remota pendentes. O fluxo de manutenção abaixo complementa o fluxo normal; não chama SMTP.
+
+```mermaid
+sequenceDiagram
+  actor D as Dono do produto / administrador
+  participant B as PostgreSQL privado
+  participant L as CLI local offline
+  participant F as Arquivos privados
+  D->>B: Inventário e exportação da captura + hashes (leitura)
+  B-->>D: Captura congelada e checksums do alvo
+  D->>F: Salvar exportação fora do Git
+  F->>L: Captura exportada
+  L->>F: PDF v2, evidência, SQL de backup e substituição
+  D->>F: Validar PDF real do HCM
+  Note over D,B: Somente após aceite e publicação da correção
+  D->>B: Exportar backup completo do alvo (leitura)
+  B-->>F: Fila, PDF original e destinatários
+  D->>F: Validar backup/checksums
+  D->>B: Executar substituição delimitada
+  Note over B: Transação: lock torneio e fila; recusar retirada/lease ativo;<br/>comparar hashes; trocar somente pdf_base64
+  B-->>D: Checksum do PDF corrigido
+  D->>B: Conferir arquivo e preservação dos demais campos
+  Note over B: Sem reenvio, alteração do prazo ou reativação
+```
+
 Versão Gmail local em 24/10/2026, conforme ADR-014. Migração inicial instalada/comparada; incremento SMTP e ativação remota ainda pendentes. A tabela MAIL_EVENTS pertence ao desenho legado Resend, sem novas escritas no fluxo atual. Complementa o [modelo existente](classes.md), sem alterar pontuações pessoais ou fórmulas dos torneios.
 
 ```mermaid

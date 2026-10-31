@@ -1,12 +1,16 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile, readdir, mkdir, writeFile } from 'node:fs/promises';
+import { readFile, readdir, mkdir, writeFile, mkdtemp } from 'node:fs/promises';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { fileURLToPath } from 'node:url';
 import { PGlite } from '@electric-sql/pglite';
 import { tournamentReport } from '../src/lib/tournament-report.ts';
 import { renderTournamentPdf } from '../src/lib/tournament-report-pdf.ts';
 import { processReport } from '../src/lib/report-processing.ts';
 import { verifyReportWebhook } from '../src/lib/report-webhook.ts';
 import { createHmac } from 'node:crypto';
+import { manyPlayersSnapshot } from './fixtures/report-many-players.mjs';
 
 const owner='00000000-0000-4000-8000-000000000001',player='00000000-0000-4000-8000-000000000002',outsider='00000000-0000-4000-8000-000000000003';
 const snapshot={tournament:{id:'test',name:'Torneio de São Paulo — evolução',starts_at:'2020-01-01',ends_at:'2020-01-04',closed_at:'2020-01-05T12:00:00Z'},
@@ -27,11 +31,73 @@ test('RF19 reconstructs cumulative positions, ignores intermediate ties and coun
  const pending=structuredClone(snapshot);pending.results[0].provisional=true;assert.throws(()=>tournamentReport(pending),/not_consolidated/);
 });
 
+test('top five rivalries include lower swap counts and resolve cutoff ties deterministically',()=>{
+ const input=structuredClone(snapshot);
+ input.participants=['A','B','C','D','E','F'].map(id=>({id,name:id,eligible_from:'2020-01-01'}));
+ input.results=[];
+ let previous=[0,0,0,0,0,0];
+ for(const [day,values] of [[6,5,4,3,2,1],[1,2,3,4,5,6],[6,5,4,3,2,1],[6,5,4,1,2,3]].entries()) {
+  values.forEach((value,i)=>input.results.push({...snapshot.results[0],player_id:input.participants[i].id,
+   played_on:`2020-01-0${day+1}`,applied_score:value-previous[i]}));
+  previous=values;
+ }
+ const pairs=data=>tournamentReport(data).rivalries.map(p=>[p.a.id,p.b.id,p.swaps]);
+ const expected=[['D','E',3],['D','F',3],['E','F',3],['A','B',2],['A','C',2]];
+ assert.deepEqual(pairs(input),expected);
+ input.participants.reverse();input.results.reverse();assert.deepEqual(pairs(input),expected);
+});
+
 test('PDF renders all dates, ranking and pair counts without remote resources',async()=>{
  const pdf=await renderTournamentPdf(snapshot);assert.equal(pdf.subarray(0,5).toString(),'%PDF-');assert.ok(pdf.length>5000);
  // Synthetic fixture only, available for visual QA without personal data.
  await mkdir(new URL('../tmp/pdfs/',import.meta.url),{recursive:true});
  await writeFile(new URL('../tmp/pdfs/sprint-8-example.pdf',import.meta.url),pdf);
+});
+
+test('RF19 accumulates accepted points with penalties, zero, ties and late eligibility',()=>{
+ const input=structuredClone(snapshot);
+ input.participants.push({id:'c',name:'Carlos',eligible_from:'2020-01-03'});
+ input.results.push({ ...input.results[0],player_id:'c',played_on:'2020-01-03',applied_score:-50,result_kind:'audit_penalty' });
+ input.results[0].applied_score=-100;
+ const report=tournamentReport(input);
+ assert.deepEqual(report.points.map(p=>[p.totals.a,p.totals.b,p.totals.c]),[[-100,80,0],[-50,170,0],[20,220,-50],[100,280,-50]]);
+ assert.equal(report.points[0].positions.c,undefined);
+ for(const p of report.ranking) assert.equal(report.points.at(-1).totals[p.id],p.total);
+ const zero=structuredClone(snapshot);zero.results.forEach(r=>{r.applied_score=0;});
+ assert.ok(tournamentReport(zero).points.every(p=>p.totals.a===0&&p.totals.b===0));
+});
+
+test('PDF renders 18 synthetic series across the full period including negative totals',async()=>{
+ const input=manyPlayersSnapshot(),report=tournamentReport(input);
+ const original=structuredClone(input);
+ assert.equal(report.points.length,21);
+ assert.equal(report.ranking.length,18);
+ assert.ok(report.ranking.some(p=>p.total<0));
+ for(const p of input.participants) {
+   const sum=input.results.filter(r=>r.player_id===p.id).reduce((n,r)=>n+r.applied_score,0);
+   assert.equal(report.points.at(-1).totals[p.id],sum);
+ }
+ const pdf=await renderTournamentPdf(input);
+ assert.deepEqual(input,original);
+ await mkdir(new URL('../tmp/pdfs/',import.meta.url),{recursive:true});
+ await writeFile(new URL('../tmp/pdfs/cumulative-scores-18-players.pdf',import.meta.url),pdf);
+ assert.equal(pdf.subarray(0,5).toString(),'%PDF-');
+ for(const input of [ {...snapshot,participants:[],results:[]}, {...snapshot,results:[]},
+   {...snapshot,participants:[snapshot.participants[0]],results:[snapshot.results[0]]} ]) {
+   assert.equal((await renderTournamentPdf(input)).subarray(0,5).toString(),'%PDF-');
+ }
+});
+
+test('the shared PDF generator also renders different rosters, long periods, flat scores and legend overflow',async()=>{
+ for(const [playerCount,dayCount,value] of [[2,1,0],[3,6,-100],[24,31,50]]) {
+  const input={tournament:{id:'generic',name:`Campeonato genérico ${playerCount} jogadores`,starts_at:'2027-02-01',
+   ends_at:'2027-04-30',closed_at:'2027-05-01T12:00:00Z'},participants:[],results:[]};
+  input.participants=Array.from({length:playerCount},(_,i)=>({id:`p${i}`,name:`Pessoa ${String(i+1).padStart(2,'0')}`,eligible_from:'2027-02-01'}));
+  for(let i=0;i<dayCount;i++) for(const p of input.participants) input.results.push({...snapshot.results[0],player_id:p.id,
+   played_on:new Date(Date.UTC(2027,1,1+i*2)).toISOString().slice(0,10),applied_score:value});
+  const pdf=await renderTournamentPdf(input);assert.equal(pdf.subarray(0,5).toString(),'%PDF-');
+  await writeFile(new URL(`../tmp/pdfs/generic-${playerCount}-${dayCount}.pdf`,import.meta.url),pdf);
+ }
 });
 
 test('outbox saves PDF before sending, preserves partial success and releases lease on failure',async()=>{
@@ -201,4 +267,45 @@ test('Gmail safely retries explicit rejection but quarantines interrupted SMTP i
   await db.query('select public.release_tournament_report($1,$2)',[target,retry.token]);
   await login(db,owner);await assert.rejects(db.query('select public.withdraw_tournament($1)',[target]),/delivery_pending/);
  }finally{await db.close();}
+});
+
+test('offline preview and administrative replacement preserve deliveries, deadlines and frozen data',async()=>{
+ const {db,ids}=await setup(true),target=ids[0];
+ try {
+  await db.exec('reset role');
+  await db.query("update private.tournament_reports set pdf_base64=$2,generated_at=now(),lease_until=null,lease_token=null where tournament_id=$1",[target,Buffer.alloc(120).toString('base64')]);
+  const exported=(await db.query('select tournament_id,snapshot,md5(snapshot::text) snapshot_database_md5,md5(pdf_base64) previous_pdf_md5 from private.tournament_reports where tournament_id=$1',[target])).rows[0];
+  const temp=await mkdtemp(new URL('../tmp/score-preview-',import.meta.url));
+  const input=`${temp}/source.json`,out=`${temp}/generated`;
+  await writeFile(input,JSON.stringify([exported]));
+  const run=promisify(execFile),script=fileURLToPath(new URL('../scripts/preview-tournament-report.mjs',import.meta.url));
+  await run(process.execPath,[script,input,out,'--prepare-replacement']);
+  const evidence=JSON.parse(await readFile(`${out}/evidence.json`,'utf8'));
+  assert.equal(evidence.tournament_id,target);assert.equal(evidence.revision,'cumulative-scores-v5');
+  const sql=await readFile(`${out}/replace-reviewed-report.sql`,'utf8');
+  const backup=(await db.exec(await readFile(`${out}/backup-before-replacement.sql`,'utf8')))[0].rows[0].backup;
+  assert.equal(backup.report.tournament_id,target);assert.equal(backup.deliveries.length,2);
+  const preserved=async()=>({
+   report:(await db.query('select to_jsonb(r)-\'pdf_base64\' as data from private.tournament_reports r where tournament_id=$1',[target])).rows,
+   deliveries:(await db.query('select * from private.tournament_report_deliveries order by id')).rows,
+   scores:(await db.query('select * from public.tournament_score_results order by tournament_id,player_id,played_on')).rows,
+  });
+  const before=await preserved();
+  await db.query("update private.tournament_reports set lease_token=gen_random_uuid(),lease_until=now()+interval '5 minutes' where tournament_id=$1",[target]);
+  await assert.rejects(db.exec(sql),/report_busy/);await db.exec('rollback');
+  await db.query('update private.tournament_reports set lease_token=null,lease_until=null where tournament_id=$1',[target]);
+  await db.query('update private.tournament_reports set pdf_base64=$2 where tournament_id=$1',[target,'changed']);
+  await assert.rejects(db.exec(sql),/original_pdf_changed/);await db.exec('rollback');
+  await db.query('update private.tournament_reports set pdf_base64=$2 where tournament_id=$1',[target,backup.report.pdf_base64]);
+  await db.exec(sql);await db.exec(sql);
+  assert.deepEqual(await preserved(),before);
+  const corrected=Buffer.from((await db.query('select pdf_base64 from private.tournament_reports where tournament_id=$1',[target])).rows[0].pdf_base64,'base64');
+  assert.equal(corrected.subarray(0,5).toString(),'%PDF-');
+  await db.query('update private.tournament_reports set withdrawn_at=now(),snapshot=null,pdf_base64=null where tournament_id=$1',[target]);
+  await assert.rejects(db.exec(sql),/report_unavailable/);await db.exec('rollback');
+  // A replay cannot overwrite local preview/evidence or revive a withdrawn row.
+  await assert.rejects(run(process.execPath,[script,input,out]),/EEXIST/);
+  await writeFile(input,JSON.stringify([{...exported,withdrawn_at:'2026-10-31T00:00:00Z'}]));
+  await assert.rejects(run(process.execPath,[script,input,`${temp}/withdrawn`]),/Withdrawn tournament/);
+ } finally { await db.close(); }
 });

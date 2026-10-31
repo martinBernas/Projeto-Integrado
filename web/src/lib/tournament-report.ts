@@ -42,6 +42,9 @@ export function tournamentReport(snapshot: ReportSnapshot) {
     if (!i || totals[p.id] !== totals[final[i - 1].id]) position = i + 1;
     return { ...p, total: totals[p.id], position };
   });
-  const maximum = Math.max(0, ...pairs.map(p => p.swaps));
-  return { participants, points, ranking, rivalries: pairs.filter(p => maximum > 0 && p.swaps === maximum) };
+  // Alphabetical order resolves presentation ties, without altering swaps.
+  const rivalries = pairs.filter(p => p.swaps > 0).sort((a, b) => b.swaps - a.swaps
+    || a.a.name.localeCompare(b.a.name, 'pt-BR') || a.b.name.localeCompare(b.b.name, 'pt-BR')
+    || a.a.id.localeCompare(b.a.id) || a.b.id.localeCompare(b.b.id)).slice(0, 5);
+  return { participants, points, ranking, rivalries };
 }

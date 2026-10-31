@@ -1,5 +1,27 @@
 # Sprint 8 — encerramento definitivo de torneios e modo escuro
 
+31/10/2026 — Revisão final local concluída: 145 testes aprovados, lint sem erros (um aviso preexistente em `retroactive-scores.test.mjs`) e build/TypeScript aprovados. Primeiro build encontrou EBUSY transitório em `.next/package.json`; repetição sequencial concluiu normalmente, sem alteração adicional do código. `git diff --check` aprovado. Código, testes, documentação e ferramentas operacionais finalizados para publicação. PDFs HCM/Aztecas gerados e conferidos; publicação e substituição remota ainda não executadas.
+
+31/10/2026 — Relatório Aztecas v5 também gerado/conferido com dados reais, pelo gerador compartilhado aprovado. Dono do produto informou publicação ainda não realizada e que a fará após finalizar os arquivos do repositório. [Entrega e procedimento](sprint-8-correcao-grafico.md). Não há nova pendência de aprovação geral, exportação Aztecas ou desenvolvimento do layout; permanecem publicação, backup completo e substituição/comparação remotas.
+
+31/10/2026 — Aceite explícito recebido para o relatório v5; Dono do produto autorizou avançar com publicação e regeneração de HCM/Aztecas. Resolve a pendência de validação do PDF desta correção. Exportação Aztecas, comprovação de publicação, backup anterior à substituição e execução/comparação remotas ainda pendentes. [Registro do aceite](sprint-8-correcao-grafico.md). Não implica fechamento global da Sprint 8 nem evidência nova da retirada automática do torneio de ensaio.
+
+31/10/2026 — Dono do produto considerou a simulação promissora e autorizou implementar no PDF, reforçando regras automáticas para todos os campeonatos. Implementado gerador compartilhado v5 com um gráfico por página, blocos de cinco datas pontuadas/sobra unitária unida, escala local, cinco duplas e nomes de jogadores no anexo. [Entrega, testes, prévia e limites](sprint-8-correcao-grafico.md). Publicação e substituição remota ainda pendentes; a autorização de implementação não é aceite do PDF final.
+
+31/10/2026 — V4 rejeitada visualmente. Dono do produto esclareceu intervalos temporais de cinco dias com mínimo/máximo locais no eixo Y e pediu imagem antes de outro PDF. [Simulação PNG real HCM](sprint-8-correcao-grafico.md) preparada; cinco dias corridos adotados para validação. Nenhum PDF/renderer alterado nesta rodada. Aguardar avaliação da imagem antes de implementar nova revisão e de qualquer substituição remota.
+
+31/10/2026 — Dono do produto solicitou detalhes por faixas menores do eixo Y, mantendo o panorama. Implementada prévia HCM v4; detalhes não separam jogadores. [Entrega atual e verificações](sprint-8-correcao-grafico.md). Aceite visual e operações remotas ainda pendentes; referências v2/v3 abaixo são históricas.
+
+31/10/2026 — Após rejeição da apresentação da legenda e da classificação final pelo Dono do produto, prévia v3 gerada: legenda lateral em uma coluna e tabela com todos os 18 resultados do HCM na primeira página. [Entrega visual revisada](sprint-8-correcao-grafico.md). Nova prévia aguardando aceite; nenhuma operação remota.
+
+## Correção de RF19 implementada localmente — 31/10/2026
+
+Plano aprovado pelo Dono do produto. Evolução por pontos acumulados implementada, com prévia real do HCM e substituição administrativa preparada. [Entrega, verificações e limitações](sprint-8-correcao-grafico.md) e [inventário/procedimento](sprint-8-correcao-grafico-operacao.md). Aceite da prévia, publicação e substituição remota permanecem pendentes; sem novos envios. O refinamento abaixo registra o planejamento anterior e foi sucedido por esta implementação.
+
+## Refinamento de 31/10/2026 — gráfico do relatório
+
+O Dono do produto esclareceu que RF19 deve apresentar pontuações acumuladas por data, substituindo a interpretação anterior de evolução de posições. O HCM encerrado, com 18 participantes, será o caso real de validação antes da regeneração delimitada dos relatórios na plataforma. [Plano de correção e critérios de aceite](sprint-8-correcao-grafico.md). Esta revisão é documental: nenhum código, PDF corrigido, envio, publicação ou operação remota executados. O aceite anterior do teste isolado não homologa o gráfico rejeitado após uso real. Permanecem separados os acompanhamentos operacionais da retirada automática.
+
 ## Situação consolidada ao encerrar o avanço de 24/10/2026
 
 O Dono do produto confirmou que testou o modo escuro e que está conforme o desejado: homologação e aceite funcional do modo escuro registrados. Esse aceite substitui as pendências gerais de homologação do tema nos registros anteriores, sem presumir evidências detalhadas de cada dispositivo/cenário. Nenhuma alteração de código decorrente desse aceite.
