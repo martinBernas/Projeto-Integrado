@@ -1,5 +1,7 @@
 # Arquitetura e implantação
 
+31/10/2026 — RF26 refinado pelo Dono do produto: navegação direta com mouse implementada localmente. Roda sobre a área de curvas amplia/reduz ancorada no cursor; após ampliar, arrasto com botão esquerdo move datas e pontos, limitado aos dados. Captura de ponteiro mantém o arrasto ao sair do SVG e termina ao soltar/cancelar. Roda fora da área de curvas mantém rolagem normal; botões e seleção continuam disponíveis. Substitui a limitação anterior de navegação somente por botões. Sem pinça em toque, novas consultas, gravações ou migração. Publicação/aceite pendentes.
+
 RF26 interativo (31/10/2026): `CumulativeChart` mantém tabela/consolidação autorizadas no servidor e projeta nomes, indicação de jogador próprio, datas e acumulados elegíveis para `CumulativePlot` no cliente. Zoom/seleção/deslocamento são estado local, sem IDs/brutos, RPC adicional ou escrita; helper puro limita a janela aos dados. Nêmesis permanece no servidor. Publicação/aceite pendentes. [ADR-016](decisoes/adr-016-progressao-acumulada-e-nemesis.md).
 
 ## Estatísticas com progressão acumulada e Nêmesis — 31/10/2026

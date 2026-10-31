@@ -29,6 +29,17 @@ test('panning keeps the viewport inside real data bounds, including at zoom-out 
   assert.deepEqual(panChart(domain, fullChartViewport(domain), -100, 100), fullChartViewport(domain));
 });
 
+test('mouse zoom preserves the value beneath the cursor and clamps edge anchors', () => {
+  const domain = { xMin: 0, xMax: 20, yMin: -100, yMax: 300 };
+  const full = fullChartViewport(domain);
+  const anchor = { x: 0.25, y: 0.75 };
+  const zoomed = zoomChart(domain, full, 2, anchor);
+  assert.equal(zoomed.xMin + anchor.x * (zoomed.xMax - zoomed.xMin), 5);
+  assert.equal(zoomed.yMin + anchor.y * (zoomed.yMax - zoomed.yMin), 200);
+  assert.deepEqual(zoomChart(domain, zoomed, 0.5, anchor), full);
+  assert.deepEqual(zoomChart(domain, full, 2, { x: -2, y: 8 }), { xMin: 0, xMax: 10, yMin: 100, yMax: 300, zoom: 2 });
+});
+
 test('one date and constant scores keep finite bounds; a two-date chart never zooms into an invented date interval', () => {
   for (const domain of [{ xMin: 0, xMax: 0, yMin: 0, yMax: 0 }, { xMin: 0, xMax: 1, yMin: -10, yMax: -10 }]) {
     const view = panChart(domain, zoomChart(domain, fullChartViewport(domain), 8), 5, -5);

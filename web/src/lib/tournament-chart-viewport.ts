@@ -19,10 +19,13 @@ function fitAxis(min: number, max: number, size: number, center: number): [numbe
   return [start, start + span];
 }
 
-export function zoomChart(domain: ChartDomain, current: ChartViewport, factor: number): ChartViewport {
+export function zoomChart(domain: ChartDomain, current: ChartViewport, factor: number, anchor = { x: 0.5, y: 0.5 }): ChartViewport {
   const zoom = Math.min(MAX_CHART_ZOOM, Math.max(1, current.zoom * factor));
-  const [xMin, xMax] = fitAxis(domain.xMin, domain.xMax, Math.max(Math.min(1, domain.xMax - domain.xMin), (domain.xMax - domain.xMin) / zoom), (current.xMin + current.xMax) / 2);
-  const [yMin, yMax] = fitAxis(domain.yMin, domain.yMax, (domain.yMax - domain.yMin) / zoom, (current.yMin + current.yMax) / 2);
+  const xSize = Math.max(Math.min(1, domain.xMax - domain.xMin), (domain.xMax - domain.xMin) / zoom);
+  const ySize = (domain.yMax - domain.yMin) / zoom;
+  const ax = Math.max(0, Math.min(1, anchor.x)), ay = Math.max(0, Math.min(1, anchor.y));
+  const [xMin, xMax] = fitAxis(domain.xMin, domain.xMax, xSize, current.xMin + ax * (current.xMax - current.xMin) + (0.5 - ax) * xSize);
+  const [yMin, yMax] = fitAxis(domain.yMin, domain.yMax, ySize, current.yMin + ay * (current.yMax - current.yMin) + (0.5 - ay) * ySize);
   return { xMin, xMax, yMin, yMax, zoom };
 }
 

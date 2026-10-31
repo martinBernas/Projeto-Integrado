@@ -1,5 +1,7 @@
 # Levantamento de requisitos
 
+31/10/2026 — RF26 refinado pelo Dono do produto: navegação direta com mouse implementada localmente. Roda sobre a área de curvas amplia/reduz ancorada no cursor; após ampliar, arrasto com botão esquerdo move datas e pontos, limitado aos dados. Captura de ponteiro mantém o arrasto ao sair do SVG e termina ao soltar/cancelar. Roda fora da área de curvas mantém rolagem normal; botões e seleção continuam disponíveis. Substitui a limitação anterior de navegação somente por botões. Sem pinça em toque, novas consultas, gravações ou migração. Publicação/aceite pendentes.
+
 31/10/2026 — Refinamento RF26 solicitado pelo Dono do produto: zoom e seleção de jogadores implementados localmente. Todos começam marcados; legenda com caixas individuais, Marcar todos, Desmarcar todos e Somente você quando participante. Seleção reajusta mínimo/máximo aos acumulados escolhidos e restaura visão completa; sem seleção, mensagem orientativa. Zoom de 1× a 8×, botões de deslocamento pelas datas/pontos e Visão completa, acessíveis por teclado e toque. Datas pontuadas e acumulados originais preservados; tabela completa independente do filtro. Sem persistência entre navegações, roda ou pinça. Publicação e aceite pendentes; sem migração ou operação remota. [Entrega e validação](sprints/sprint-8-estatisticas-progressao-nemesis.md).
 
 

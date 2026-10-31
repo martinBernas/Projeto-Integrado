@@ -25,7 +25,7 @@ sequenceDiagram
     Calculo-->>Pagina: Médias/contagens anteriores, panorama e Nêmesis pessoal
     Pagina-->>Grafico: Somente nomes, próprio, datas e acumulados elegíveis
     Pagina-->>Jogador: Tabela completa e Nêmesis no servidor
-    Jogador->>Grafico: Selecionar jogadores, zoom e deslocamento
+    Jogador->>Grafico: Selecionar jogadores; roda no cursor e arrasto ou botões
     Grafico->>Grafico: Ajustar janela e escala localmente; sem consultas/escritas
 ```
 

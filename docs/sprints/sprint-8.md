@@ -1,5 +1,7 @@
 # Sprint 8 — encerramento definitivo de torneios e modo escuro
 
+31/10/2026 — RF26 refinado pelo Dono do produto: navegação direta com mouse implementada localmente. Roda sobre a área de curvas amplia/reduz ancorada no cursor; após ampliar, arrasto com botão esquerdo move datas e pontos, limitado aos dados. Captura de ponteiro mantém o arrasto ao sair do SVG e termina ao soltar/cancelar. Roda fora da área de curvas mantém rolagem normal; botões e seleção continuam disponíveis. Substitui a limitação anterior de navegação somente por botões. Sem pinça em toque, novas consultas, gravações ou migração. Publicação/aceite pendentes.
+
 31/10/2026 — RF26 ampliado por pedido do Dono do produto: zoom, deslocamento e seleção de jogadores na legenda, com todos/nenhum/somente você. Implementado localmente, 154 testes, build/TypeScript e lint sem erros (aviso preexistente). Interações verificadas no navegador, teclado, temas e celular. Requisitos, arquitetura e decisões atualizados. Publicação e aceite pendentes; sem migração. [Entrega](sprint-8-estatisticas-progressao-nemesis.md).
 
 ## Novo incremento RF26/RF27 — 31/10/2026

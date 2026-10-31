@@ -1,6 +1,6 @@
 'use client';
 
-import { useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { formatDate } from '@/lib/tournament';
 import { chartDomain, fullChartViewport, zoomChart, panChart, MAX_CHART_ZOOM, type ChartViewport } from '@/lib/tournament-chart-viewport';
 
@@ -12,6 +12,8 @@ export function CumulativePlot({ players, points }: { players: CumulativePlotPla
   const id = useId().replace(/:/g, '');
   const [selected, setSelected] = useState(() => players.map(() => true));
   const [view, setView] = useState<ChartViewport | null>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const drag = useRef<{ id: number; x: number; y: number } | null>(null);
   const domain = chartDomain(points, selected), viewport = view ?? fullChartViewport(domain);
   const active = selected.some(Boolean), selectedCount = selected.filter(Boolean).length;
   const { xMin, xMax, yMin, yMax } = viewport;
@@ -30,6 +32,24 @@ export function CumulativePlot({ players, points }: { players: CumulativePlotPla
   const pan = (dx: number, dy: number) => setView(previous => panChart(domain, previous ?? fullChartViewport(domain), dx, dy));
   const button = 'rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-40';
   const canZoom = active && (domain.xMax > 1 || domain.yMax > domain.yMin);
+  const { xMin: domainXMin, xMax: domainXMax, yMin: domainYMin, yMax: domainYMax } = domain;
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg || !canZoom) return;
+    const wheel = (event: WheelEvent) => {
+      const rect = svg.getBoundingClientRect();
+      const sx = (event.clientX - rect.left) / rect.width * width;
+      const sy = (event.clientY - rect.top) / rect.height * height;
+      if (sx < left || sx > width - right || sy < top || sy > height - bottom || !event.deltaY) return;
+      event.preventDefault();
+      const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? rect.height : 1);
+      const anchor = { x: (sx - left - 4) / (width - left - right - 8), y: (height - bottom - 4 - sy) / (height - top - bottom - 8) };
+      const bounds = { xMin: domainXMin, xMax: domainXMax, yMin: domainYMin, yMax: domainYMax };
+      setView(previous => zoomChart(bounds, previous ?? fullChartViewport(bounds), Math.exp(-Math.max(-200, Math.min(200, delta)) * 0.003), anchor));
+    };
+    svg.addEventListener('wheel', wheel, { passive: false });
+    return () => svg.removeEventListener('wheel', wheel);
+  }, [canZoom, domainXMin, domainXMax, domainYMin, domainYMax]);
   return <>
     <div className="mt-4 flex flex-wrap items-center gap-2" role="group" aria-label="Zoom do gráfico acumulado">
       <button type="button" className={button} aria-label="Diminuir zoom" disabled={!active || viewport.zoom <= 1} onClick={() => zoom(1 / 1.5)}>−</button>
@@ -46,7 +66,22 @@ export function CumulativePlot({ players, points }: { players: CumulativePlotPla
     {active ? <>
       <p className="mt-3 text-sm text-slate-600">{selectedCount} de {players.length} jogadores selecionados. Escala visível: {formatTick(yMin)} a {formatTick(yMax)} pontos.</p>
       <div className="mt-4 overflow-x-auto" tabIndex={0} role="region" aria-label="Gráfico acumulado com zoom e rolagem horizontal">
-        <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${id}-title ${id}-desc`} className="block w-full min-w-[760px]">
+        <svg ref={svgRef} viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${id}-title ${id}-desc`} className={`block w-full min-w-[760px] ${viewport.zoom > 1 ? 'cursor-grab active:cursor-grabbing' : ''}`}
+          onPointerDown={event => {
+            if (event.pointerType !== 'mouse' || event.button !== 0 || viewport.zoom <= 1) return;
+            drag.current = { id: event.pointerId, x: event.clientX, y: event.clientY };
+            event.currentTarget.setPointerCapture(event.pointerId);
+            event.preventDefault();
+          }}
+          onPointerMove={event => {
+            const start = drag.current;
+            if (!start || start.id !== event.pointerId) return;
+            const rect = event.currentTarget.getBoundingClientRect();
+            pan(-(event.clientX - start.x) / (rect.width * (width - left - right - 8) / width), (event.clientY - start.y) / (rect.height * (height - top - bottom - 8) / height));
+            drag.current = { id: event.pointerId, x: event.clientX, y: event.clientY };
+          }}
+          onPointerUp={event => { drag.current = null;if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId); }}
+          onPointerCancel={() => { drag.current = null; }} onLostPointerCapture={() => { drag.current = null; }}>
           <title id={`${id}-title`}>Pontuação acumulada dos jogadores selecionados</title>
           <desc id={`${id}-desc`}>Datas pontuadas igualmente espaçadas. Ampliação de {Math.round(viewport.zoom * 100)}%. A legenda permite marcar jogadores. Controles de datas e pontos movem a área ampliada. A tabela completa continua disponível abaixo.</desc>
           <defs><clipPath id={`${id}-clip`}><rect x={left} y={top} width={width - left - right} height={height - top - bottom} /></clipPath></defs>
@@ -78,6 +113,6 @@ export function CumulativePlot({ players, points }: { players: CumulativePlotPla
         </label>)}
       </div>
     </fieldset>
-    <p className="mt-3 text-sm text-slate-600">Mudar a seleção ajusta a escala e restaura a visão completa. A tabela mantém todos os jogadores e datas.</p>
+    <p className="mt-3 text-sm text-slate-600">Use a roda do mouse sobre as curvas para ampliar ou reduzir na posição do cursor. Após ampliar, clique e arraste para navegar. Mudar a seleção ajusta a escala e restaura a visão completa. A tabela mantém todos os jogadores e datas.</p>
   </>;
 }
