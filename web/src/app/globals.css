@@ -1,6 +1,12 @@
 @import "tailwindcss";
 
-:root { --background: #ffffff; --foreground: #0f172a; }
+:root {
+  --background: #ffffff; --foreground: #0f172a;
+  --tournament-line-1: #047857; --tournament-line-2: #1d4ed8;
+  --tournament-line-3: #be123c; --tournament-line-4: #7e22ce;
+  --tournament-line-5: #b45309; --tournament-line-6: #0e7490;
+  --tournament-line-7: #4338ca; --tournament-line-8: #a21caf;
+}
 
 @theme inline {
   --color-background: var(--background);
@@ -19,6 +25,10 @@ html[data-theme="dark"] {
   color-scheme: dark;
   --background: #0b1220;
   --foreground: #e2e8f0;
+  --tournament-line-1: #6ee7b7; --tournament-line-2: #60a5fa;
+  --tournament-line-3: #fda4af; --tournament-line-4: #c084fc;
+  --tournament-line-5: #fbbf24; --tournament-line-6: #67e8f9;
+  --tournament-line-7: #a5b4fc; --tournament-line-8: #f0abfc;
   --color-white: #162234;
   --color-slate-50: #0b1220;
   --color-slate-100: #1e293b;

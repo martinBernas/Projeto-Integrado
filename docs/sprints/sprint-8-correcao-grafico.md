@@ -1,5 +1,76 @@
 # Correção do gráfico do relatório geral — plano aprovado e implementação local de 31/10/2026
 
+## Reenvio pontual concluído tecnicamente — 31/10/2026
+
+Dono do produto apresentou o acompanhamento SQL após reativar os envios. Aztecas: 6 destinatários/6 `sent`; HCM: 18 destinatários/18 `sent`. Ambos com `pending=0`, `sending=0`, `failed=0`, `uncertain=0`, `lease_until=null` e `withdrawn_at=null`. Horários originais de geração e prazo de retirada mantidos.
+
+Com a reativação 6/18 pendentes anteriormente apresentada, confirma aceitação SMTP dos 24 novos envios pelo fluxo existente, usando os PDFs corrigidos armazenados e conferidos. Não interpretar `sent` como prova de recebimento/leitura nas caixas. Nenhum novo teste de anexo recebido foi informado. Não repetir a reativação nem reexecutar envios concluídos.
+
+Operação excepcional solicitada pelo Dono do produto atendida, sem nova funcionalidade, schema ou publicação. Correção, substituição de PDFs e reenvio técnico dos dois torneios concluídos. Evidência é o retorno SQL fornecido, sem consulta direta do agente. O primeiro resultado de `06-resend-status.sql` (identificação/contagem do backup operacional) não foi apresentado nesta mensagem; a preservação em `private.sprint8_backups` decorre da mesma transação do script de reativação executado e foi testada localmente, sem alegar nova conferência remota desse registro ou exportação privada adicional. Backups/evidências anteriores permanecem privados e fora do Git.
+
+Não restam ações necessárias para disparar este reenvio. Eventual confirmação de recebimento/leitura e o ensaio independente de retirada automática são evidências distintas, não inferidas nem encerradas por esta consulta. Registros antigos abaixo de reenvio ainda não executado/aceitação pendente são históricos substituídos por esta conclusão. Nesta rodada somente atualização documental e `git diff --check`, sem alteração de código, novo envio ou repetição de testes funcionais.
+
+
+31/10/2026 — Nova solicitação posterior à correção concluída: Dono do produto quer forçar o reenvio de HCM/Aztecas sem implementar funcionalidade. [Operação pontual](sprint-8-reenvio-pontual.md) preparada e testada: arquivar o estado anterior na tabela privada de backups existente, renovar IDs dos 24 envios e voltar a `pending`, preservando relatórios/prazos. Nenhuma alteração de aplicação ou deployment necessário. Execução e aceitação dos novos envios ainda pendentes; não apresentar a manutenção anterior como se já tivesse reenviado anexos.
+
+## Correção v5 e regeneração concluídas — 31/10/2026
+
+O Dono do produto apresentou a conferência final `04-verify-replaced-targets.sql`. Os dois alvos retornaram todos os indicadores verdadeiros: `corrected_pdf_ok`, `snapshot_preserved`, `generated_at_preserved`, `due_at_preserved`, `not_withdrawn_ok` e `delivery_counts_preserved`.
+
+| Torneio | ID | Destinatários | Envios `sent` | Resultado |
+| --- | --- | ---: | ---: | --- |
+| Aztecas Outubro | 34727be9-2447-4e7c-af41-e685b6db290b | 6 | 6 | PDF v5 e preservações confirmados |
+| HCM - Outubro | 93c7e3c5-a676-42d4-83ca-05284cce0fff | 18 | 18 | PDF v5 e preservações confirmados |
+
+Aceite explícito da v5, publicação Vercel informada pelo Dono do produto, backup completo validado e retornos individuais de substituição já registrados. A leitura final resolve a última pendência de comparação conjunta. Correção e substituição desses dois relatórios na plataforma concluídas, sem reabrir torneios, reiniciar geração/prazo ou reenviar e-mails. Contadores `sent` confirmam preservação dos registros de aceitação SMTP, sem nova comprovação de recebimento/leitura das mensagens. Anexos enviados anteriormente continuam sendo os originais; esta manutenção atualizou os PDFs armazenados na plataforma, conforme escopo autorizado.
+
+Evidência final é o resultado SQL apresentado pelo Dono do produto, não consulta remota independente do agente. Comprova hashes dos PDFs/capturas, horários e contadores esperados; não alegar comparação remota de cada campo dos registros de destinatários além dos indicadores apresentados. Os scripts atualizam somente `pdf_base64` e a preservação integral dos demais registros está coberta pelos testes locais e pelo backup. Não repetir as substituições já concluídas.
+
+A implementação permanece no gerador compartilhado publicado e aplica automaticamente as regras aos novos PDFs de qualquer torneio: panorama, blocos de cinco datas pontuadas, sobra unitária unida, mínimo/máximo locais, um gráfico por página, até cinco duplas e nomes no anexo. Sem migração adicional. PDFs entregues e backups/evidências privadas continuam nos caminhos registrados, ignorados pelo Git. Nenhuma credencial, endereço ou arquivo de backup adicionado à documentação versionável.
+
+Não restam pendências desta correção/refinamento/regeneração HCM/Aztecas. Registros anteriores abaixo são históricos, substituídos por esta conclusão. O ensaio de retirada automática e demais acompanhamentos independentes da Sprint 8 não foram comprovados por esta consulta e não são encerrados aqui. Validação local final do incremento: 145 testes, build/TypeScript e lint sem erros (um aviso preexistente), conforme registro anterior. Nesta rodada somente atualização documental e `git diff --check`, sem nova alteração funcional, envio ou escrita remota pelo agente.
+
+
+## Ambos os PDFs substituídos — conferência final conjunta pendente
+
+31/10/2026 — Dono do produto apresentou retorno da substituição Aztecas `34727be9-2447-4e7c-af41-e685b6db290b`: `corrected_pdf_md5=359473d39308e759d7b6c0a2f2b9479b`, correspondente ao PDF v5 gerado pelo código aprovado. `generated_at=2026-10-31 03:21:13.879956+00`, `due_at=2026-11-07 03:21:12.691942+00` e `withdrawn_at=null`, iguais ao estado anterior.
+
+Junto do retorno HCM já conferido, confirma armazenamento dos dois PDFs corrigidos e preservação desses horários. Não repetir as escritas. Resta executar somente a leitura `web/supabase/operations/report-score-correction/04-verify-replaced-targets.sql` e receber as duas linhas com todos os indicadores verdadeiros, snapshot preservado e contadores HCM 18/18 e Aztecas 6/6. Os resultados individuais ainda não demonstram esses dois critérios finais; manutenção aguarda essa comparação para encerramento.
+
+Publicação, aceite v5 e backup validado permanecem registrados. Evidência remota fornecida pelo Dono do produto; sem consulta direta do agente ou reenvio de e-mails. Atualização exclusivamente documental com `git diff --check`; nenhuma alteração de código ou repetição de testes funcionais. Pendências antigas de execução Aztecas abaixo estão resolvidas por este retorno.
+
+
+## HCM substituído — Aztecas e conferência conjunta pendentes
+
+31/10/2026 — Retorno SQL fornecido pelo Dono do produto confirma a substituição do HCM `93c7e3c5-a676-42d4-83ca-05284cce0fff`. `corrected_pdf_md5=df9f8c21ab263beb92bb942d2b783a04`, igual ao manifesto do PDF aprovado. Geração preservada em `2026-10-31 03:22:45.052714+00`; retirada prevista preservada em `2026-11-07 03:22:43.681343+00`; `withdrawn_at=null`. Não reiniciou geração/prazo nem retirou o torneio. Evidência é o resultado remoto apresentado pelo Dono do produto, não uma consulta direta do agente.
+
+Não repetir a escrita do HCM para obter essa mesma evidência. Faltam o retorno de `aztecas-preview-v5/replace-reviewed-report.sql` e a conferência somente leitura `04-verify-replaced-targets.sql`, que deve apresentar ambos os alvos com todos os indicadores verdadeiros, incluindo preservação de snapshot e contadores 18/18 e 6/6. Resultado de escrita HCM isolado não comprova execução Aztecas nem igualdade de destinatários/snapshot. Não registrar manutenção dos dois torneios como concluída até receber a comparação.
+
+Backup completo validado e publicação previamente confirmados permanecem como evidência válida. Nenhum envio novo solicitado/executado. Atualização documental, sem alteração de código; `git diff --check` aprovado. As pendências anteriores de execução HCM abaixo foram resolvidas por este retorno; as de Aztecas e validação final permanecem atuais.
+
+
+## Backup validado — substituição pronta para execução
+
+31/10/2026 — Dono do produto forneceu o resultado da exportação completa de backup dos dois alvos. Conteúdo recebido como tabela, extraído sem alterar valores e salvo em `backups/report-score-correction/before-replacement-v5.json`; original colado preservado privadamente em `before-replacement-v5-pasted-original.txt`. SHA-256 do original recebido: `8e43cc5f78e708eb6701efca556040ba5dca5d42df12195012def4388897bb96`. SHA-256 do JSON extraído: `781b6e1037e3fd1b08cc6d8326ec2aef380f923d33bd39a0b27cd24344471bcb`. Arquivos contêm endereços/PDFs e permanecem ignorados pelo Git; somente hashes/estado registrados nesta documentação.
+
+CLI `verify-report-replacement-backup.mjs` retornou `verified=true` para HCM e Aztecas, com 18/18 e 6/6 destinatários `sent`. Capturas estruturalmente iguais às referências, IDs de destinatários correspondentes aos participantes, sem duplicidades, hashes dos PDFs originais iguais às referências, geração/prazo válidos e sem retirada ou lease ativo. Evidência privada em `before-replacement-v5.json.verified.json`. Leitura independente dos dois PDFs originais por pypdf também válida. Resolvida a pendência de obter/validar backup completo imediatamente anterior à substituição nesta etapa; se a execução for adiada ou o estado mudar, reconsultar e preservar nova evidência conforme necessário.
+
+Scripts privados `hcm-preview-v5-final/replace-reviewed-report.sql` e `aztecas-preview-v5/replace-reviewed-report.sql` conferidos: conteúdo base64 exatamente igual a cada PDF v5 aprovado/preparado, IDs e hashes de captura/PDF original esperados, recusa de fila ocupada/retirada e uma única atualização de `pdf_base64`, sem alteração de destinatários. Manifesto privado `replacement-ready-v5.json` registra os checksums dos scripts e dos PDFs. Nenhum SQL de substituição executado pelo agente, sem acesso administrativo remoto disponível nesta sessão.
+
+Próxima ação operacional: executar os dois scripts de substituição no SQL Editor (autorização geral já concedida), registrar retorno por alvo e executar `web/supabase/operations/report-score-correction/04-verify-replaced-targets.sql`. Esperado: HCM e Aztecas com todos os indicadores verdadeiros e contadores 18/18 e 6/6. Somente depois registrar regeneração concluída. Esta conferência não altera prazo/estado de envios nem reenviará anexos já enviados. Publicação do código já foi confirmada pelo Dono do produto; pendência atual é execução e comparação da substituição remota. Registros anteriores de backup ainda não recebido são históricos substituídos.
+
+Atualização de documentação/evidência, sem alteração de código funcional ou nova geração de PDF. `git diff --check` aprovado; suíte, lint e build finais anteriores continuam válidos e não foram repetidos sem mudança de código.
+
+
+## Publicação confirmada — próxima etapa: backup dos dois relatórios
+
+31/10/2026 — Dono do produto informou que o deploy na Vercel está pronto com o último commit. HEAD local `af2fa7e` (`S8: correcoes aos pdfs`) conferido e árvore limpa antes desta atualização documental. Registrar publicação por confirmação do Dono do produto, sem alegar inspeção independente do deployment/logs. Resolvida a pendência de publicação registrada abaixo; referências anteriores à publicação ainda não realizada são históricas.
+
+Avançar com `web/supabase/operations/report-score-correction/03-backup-approved-targets.sql`, somente leitura, imediatamente antes da manutenção. Exportar exatamente duas linhas como JSON privado e informar o caminho local para validar com `verify-report-replacement-backup.mjs`. Contém endereços e PDFs antigos: manter o arquivo fora da conversa e do Git. O backup ainda não foi recebido/executado nesta etapa. A autorização para regenerar HCM e Aztecas já está confirmada; não solicitar novamente aprovação geral.
+
+Depois do backup validado, executar os scripts privados dos dois PDFs e conferir `04-verify-replaced-targets.sql`, preservando captura, geração, prazo e envios. Publicação do código não substitui os PDFs já armazenados. Ainda não houve substituição remota, novo envio ou comprovação de backup de manutenção. Nesta atualização somente registro documental e `git diff --check`; testes funcionais/build anteriores permanecem válidos, sem alteração de código.
+
+
 31/10/2026 — Revisão final local concluída: 145 testes aprovados, lint sem erros (um aviso preexistente em `retroactive-scores.test.mjs`) e build/TypeScript aprovados. Primeiro build encontrou EBUSY transitório em `.next/package.json`; repetição sequencial concluiu normalmente, sem alteração adicional do código. `git diff --check` aprovado. Código, testes, documentação e ferramentas operacionais finalizados para publicação. PDFs HCM/Aztecas gerados e conferidos; publicação e substituição remota ainda não executadas.
 
 ## Situação atual — arquivos preparados para publicação e dois PDFs gerados

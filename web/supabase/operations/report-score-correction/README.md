@@ -1,5 +1,7 @@
 # Correção do gráfico de relatórios
 
+Reenvio pontual posterior à substituição: `05-force-resend-approved.sql` (uma única execução, reativa 24 envios e pode disparar o worker após commit), com backup dos registros anteriores na tabela privada já existente. `06-resend-status.sql` acompanha os estados sem endereços. Não exige nova publicação nem implementa funcionalidade. [Procedimento/testes](../../../../docs/sprints/sprint-8-reenvio-pontual.md). A substituição dos PDFs v5 já foi concluída; não repetir os scripts anteriores para reenviar.
+
 Estado atual: v5 aprovada, PDFs HCM e Aztecas preparados/conferidos; publicação ainda não realizada segundo o Dono do produto. Próxima etapa remota após publicar:
 
 - `03-backup-approved-targets.sql`: somente leitura; exportar as duas linhas como JSON privado em `backups/`, sem colar endereços na conversa.

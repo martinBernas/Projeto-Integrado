@@ -1,0 +1,21 @@
+# ADR-016 — progressão acumulada e Nêmesis nas estatísticas
+
+Data: 31/10/2026. Situação: implementada e testada localmente por solicitação do Dono do produto; publicação e aceite ainda pendentes. Requisitos RF26 e RF27 registrados em `docs/requisitos.md`.
+
+## Contexto e decisão
+
+O Dono do produto pediu o panorama completo da pontuação acumulada do PDF na tela de estatísticas do torneio e a estatística pessoal “Nêmesis”: adversários com quem o jogador mais trocou posições. A comparação diária de RF21 e suas médias permanecem. O pedido autoriza nomes públicos e acumulados identificados nesse novo gráfico e adversários pessoais; não autoriza médias individuais de terceiros ou dados pessoais fora do torneio. Complementa a ADR-009; a restrição anterior a gráfico apenas próprio/agregado permanece para a comparação diária, não para o panorama solicitado agora.
+
+Extrair `tournamentProgression` como núcleo puro compartilhado entre PDF e estatísticas, com acumulados/posições por data e inversões de todos os pares. `tournamentReport` mantém o contrato e o corte das cinco duplas globais do PDF. `tournamentStatistics` aplica os mesmos filtros de RF21 (período, anterior a hoje de São Paulo, elegibilidade, exclusões, sem provisório/pendente) e usa o núcleo no conjunto consolidado. Nenhum calendário inventado, soma de outro torneio ou acesso a brutos pessoais atuais.
+
+RF26 renderiza o panorama completo de todos os jogadores, com eixo X ordinal somente nas datas pontuadas, limites Y reais do período, negativos e domínio constante tratados, legenda por nome/cor/traço, linha do próprio jogador mais espessa e tabela numérica equivalente. Não incorpora os detalhes de cinco dias do PDF. SVG/tabela são renderizados no servidor; somente valores públicos cumulativos e nomes são apresentados, sem serializar registros de resultados brutos, endereços, votos ou IDs nos atributos visíveis. Tema usa cores próprias para claro/escuro. Em celular, rolagem horizontal se limita à região do gráfico/tabela.
+
+RF27 filtra todos os pares positivos que contêm o ID da sessão antes de limitar a apresentação. Não usar só as cinco duplas globais: elas podem excluir todos os adversários pessoais. Contagem é a mesma do PDF: primeira liderança estabelece referência, empate conserva última ordem estrita, A > empate > B conta uma troca e A > empate > A não conta; comparar apenas após elegibilidade dos dois. Escolha técnica de apresentação: até cinco adversários, por contagem decrescente, nome/ID em empates. Todos os líderes pessoais empatados que aparecem na lista recebem o mesmo destaque, sem inventar vantagem. Não participante não recebe Nêmesis fictício; ausência de inversões tem mensagem própria.
+
+## Componentes, permissões e consequências
+
+Reutilizar a página de servidor `/dashboard/tournaments/[id]/statistics` e a RPC autenticada `get_tournament_dashboard`. Sessão/UUID/acesso são verificados antes de calcular/renderizar; sem parâmetro para consultar Nêmesis de outra conta. Organizador autorizado pode ver o panorama mesmo sem participar como jogador. Torneios retirados continuam bloqueados pela autorização existente. Sem nova RPC, tabela, grant, dependência ou migração; sem efeito sobre worker, fila de e-mails ou retirada.
+
+Cálculo e DOM crescem com participantes e dias, como o relatório compartilhado; comparações entre pares crescem quadraticamente no tamanho do elenco. Não houve benchmark remoto e não há atualização em tempo real. Pontos/nomes autorizados de todos os participantes são parte explícita do novo panorama, sem ampliar as médias individuais. As escolhas locais de limite de cinco adversários e apresentação aguardam homologação do Dono do produto, sem mudar o requisito confirmado.
+
+Regressão real: PDFs HCM e Aztecas permanecem byte a byte iguais aos arquivos v5 aprovados após a extração do núcleo. Testes e evidências da UI em `docs/sprints/sprint-8-estatisticas-progressao-nemesis.md`. A aprovação anterior do PDF não homologa automaticamente esta nova tela.

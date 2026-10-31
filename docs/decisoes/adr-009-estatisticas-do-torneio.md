@@ -1,5 +1,7 @@
 # ADR-009 — Estatísticas do torneio a partir dos resultados aplicados
 
+31/10/2026 — Complementada pela [ADR-016](adr-016-progressao-acumulada-e-nemesis.md) após pedido de RF26/RF27: panorama completo com nomes/acumulados dos participantes e Nêmesis pessoal, mantendo a comparação diária e médias agregadas anteriores. Restrições abaixo a gráfico somente próprio/agregado descrevem o recorte original de RF21, não o novo panorama expressamente solicitado. Implementação nova local; publicação/aceite pendentes.
+
 Data: 18/10/2026. Situação: escolha técnica implementada localmente na Sprint 7, após o Dono do produto solicitar “implemente”. Regras de RF21 confirmadas no refinamento; publicação e aceite pendentes.
 
 ## Contexto e decisão

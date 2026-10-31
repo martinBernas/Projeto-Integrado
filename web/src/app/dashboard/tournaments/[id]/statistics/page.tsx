@@ -6,6 +6,8 @@ import { formatDate, type TournamentData } from '@/lib/tournament';
 import { tournamentStatistics, statisticsScore } from '@/lib/tournament-statistics';
 import { RetryLoad } from '../../../retry-load';
 import { ComparisonChart } from './comparison-chart';
+import { CumulativeChart } from './cumulative-chart';
+import { Nemesis } from './nemesis';
 
 export default async function TournamentStatisticsPage({ params }: { params: Promise<{ id: string }> }) {
   if (!isSupabaseConfigured) return <main className="p-8">Serviço em preparação.</main>;
@@ -18,7 +20,7 @@ export default async function TournamentStatisticsPage({ params }: { params: Pro
   if (error) return <main className="p-8"><p role="alert">Não foi possível carregar as estatísticas ou sua conta não tem acesso.</p><RetryLoad /><Link href="/dashboard" className="underline">Voltar ao painel</Link></main>;
   if (!result?.access) return <main className="p-8">Torneio indisponível.</main>;
   const data = result as TournamentData, stats = tournamentStatistics(data, user.id);
-  return <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6"><div className="mx-auto max-w-4xl space-y-6">
+  return <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6"><div className="mx-auto max-w-6xl space-y-6">
     <header><Link href={`/dashboard?tournament=${id}`} className="font-semibold text-emerald-800">← Voltar ao torneio</Link>
       <h1 className="mt-4 text-3xl font-bold">Seu desempenho no torneio</h1><p className="mt-2 text-lg font-semibold">{data.tournament.name}</p>
       <p className="mt-1 text-sm text-slate-600">{formatDate(data.tournament.starts_at)} a {formatDate(data.tournament.ends_at)} · Somente dias encerrados, anteriores a {formatDate(data.today)} (São Paulo).</p>
@@ -34,6 +36,8 @@ export default async function TournamentStatisticsPage({ params }: { params: Pro
         <article className="rounded-2xl border bg-white p-5"><h2 className="font-semibold">Seus dias em primeiro lugar</h2><p className="mt-2 text-3xl font-bold">{stats.first}</p></article>
         <article className="rounded-2xl border bg-white p-5"><h2 className="font-semibold">Seus dias em último lugar</h2><p className="mt-2 text-3xl font-bold">{stats.last}</p></article>
       </section>}
+      <CumulativeChart progression={stats.progression} playerId={user.id} />
+      <Nemesis participant={stats.participant} rivals={stats.nemeses} />
       <ComparisonChart points={stats.points} />
     </>}
     <p className="text-sm text-slate-600">Colocações consideram somente jogos com bruto positivo válido, comparados pelos pontos aplicados. Zero aplicado válido no relativo conta; ausências e pontuações invalidadas não contam. Todos os empatados recebem a contagem; um único resultado válido conta em primeiro e último.</p>

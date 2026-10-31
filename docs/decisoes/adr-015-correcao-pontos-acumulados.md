@@ -1,6 +1,8 @@
 # ADR-015 — evolução por pontos e substituição administrativa de PDF
 
-Data: 31/10/2026. Situação: v5 implementada/testada localmente e aprovada pelo Dono do produto em 31/10/2026; avanço com publicação/regeneração HCM e Aztecas autorizado. Publicação e substituição remota ainda sem evidência.
+31/10/2026 — Esclarecimento operacional posterior à correção concluída: o Dono do produto autorizou reenvio forçado pontual HCM/Aztecas e rejeitou implementar funcionalidade. Preparado procedimento com backup dos registros anteriores na tabela privada existente e reativação de 24 destinatários no worker atual, com novos UUIDs de entrega para novos Message-IDs; sem schema/API/template novo. [Procedimento](../sprints/sprint-8-reenvio-pontual.md). Referências abaixo à ausência de reenvio descrevem corretamente a etapa de substituição anterior; o novo reenvio ainda aguarda execução.
+
+Data: 31/10/2026. Situação: v5 implementada/testada e aprovada pelo Dono do produto; publicação Vercel confirmada e PDFs HCM/Aztecas substituídos após backup validado. Conferência final dos dois alvos fornecida pelo Dono do produto com todos os indicadores verdadeiros, incluindo capturas, horários e contadores de envio preservados.
 
 ## Contexto
 
@@ -22,4 +24,4 @@ Prévia por CLI offline, a partir da exportação privada. O mesmo CLI prepara, 
 
 O código publicado atenderá novos relatórios; os existentes exigem substituição explícita depois do aceite da prévia e de backup privado validado. Reenvio não faz parte da operação: anexos anteriores permanecem nas caixas. Torneios retirados ou sem captura não são reativados. Backup/exportação e evidência ficam em `backups/`, ignorado pelo Git. O rodapé identifica a revisão sem introduzir coluna de versão na fila; o histórico de manutenção é documental e por evidência privada, não uma nova trilha de auditoria no banco. A ausência de captura continua exigindo análise própria.
 
-Aceite do PDF v5 e alvos HCM/Aztecas confirmados. Exportação Aztecas, comprovação de publicação, backup imediatamente anterior à substituição e execução/comparação remotas ainda pendentes. Não confundir teste SQL em PGlite com homologação da concorrência no PostgreSQL remoto.
+Aceite, publicação, backup e substituição/comparação HCM/Aztecas concluídos conforme evidências operacionais. Não restam pendências desta correção; acompanhamentos independentes de retirada automática permanecem separados. Não confundir teste SQL em PGlite com homologação da concorrência no PostgreSQL remoto.
