@@ -69,6 +69,25 @@ html[data-theme="dark"] svg [fill="#1d4ed8"] { fill: #60a5fa; }
 html[data-theme="dark"] :focus-visible { outline-color: #6ee7b7; }
 
 /* GeoGuaras visual system. Data/chart colors retain their semantic palette. */
+.medal-collection { padding: 1.15rem; border: 1px solid var(--line); border-radius: 1.25rem; background: var(--surface); }
+.medal-shelf { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .6rem; padding: .65rem; margin-top: .8rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--surface-soft); list-style: none; }
+.medal-counter { display: flex; align-items: center; justify-content: center; gap: .65rem; min-width: 0; padding: .45rem .5rem; border-radius: .75rem; background: var(--surface); box-shadow: 0 2px 5px rgb(0 0 0 / 4%); }
+.medal-icon { width: 36px; height: 44px; flex-shrink: 0; filter: drop-shadow(0 2px 2px rgb(0 0 0 / 16%)); }
+.medal-counter-copy { display: flex; flex-direction: column; min-width: 0; }
+.medal-count { font-size: 1.5rem; font-weight: 900; font-style: italic; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.medal-name { color: var(--muted); font-size: .875rem; margin-top: .2rem; }
+.medal-bronze { --medal-fill: #d68a55; --medal-edge: #9b512e; --medal-shine: #ffd4a3; --medal-ribbon: #7640b5; --medal-ribbon-light: #af81e3; }
+.medal-silver { --medal-fill: #bbc5da; --medal-edge: #727e9d; --medal-shine: #f1f4ff; --medal-ribbon: #7760ba; --medal-ribbon-light: #bea8e8; }
+.medal-gold { --medal-fill: #f5c449; --medal-edge: #b8791c; --medal-shine: #fff1a4; --medal-ribbon: #7042b6; --medal-ribbon-light: #c791f0; }
+.medal-platinum { --medal-fill: #73d9d2; --medal-edge: #378987; --medal-shine: #e0fffc; --medal-ribbon: #6282c4; --medal-ribbon-light: #ad97f5; }
+@media (max-width: 480px) {
+  .medal-collection { padding: 1rem .75rem; }
+  .medal-shelf { gap: .35rem; padding: .4rem; }
+  .medal-counter { flex-direction: column; gap: .35rem; padding: .6rem .1rem; }
+  .medal-counter-copy { align-items: center; }
+  .medal-count { font-size: 1.3rem; }
+  .medal-name { font-size: .8125rem; }
+}
 .info-tip { display: inline; margin-inline: .3rem; font-size: 1rem; font-style: normal; vertical-align: middle; }
 .info-tip-trigger { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; padding: .2rem; border: 0; background: transparent; color: var(--accent); vertical-align: middle; flex-shrink: 0; box-shadow: none; border-radius: 50%; }
 .info-tip-trigger > span { display: flex; align-items: center; justify-content: center; width: 1.25rem; height: 1.25rem; border: 1.5px solid currentColor; border-radius: 50%; font-family: Georgia, serif; font-size: .9rem; font-style: italic; font-weight: 700; line-height: 1; }

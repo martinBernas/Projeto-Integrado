@@ -1,5 +1,7 @@
 # GeoGuaras — Aplicação web
 
+Medalhas (RF28): faixas e consultas em `src/lib/medals.ts`, SVGs/contadores em `dashboard/medal-collection.tsx`. Coleção por torneio usa bruto válido da RPC; pessoal usa quatro HEAD counts exatos de todo o histórico, filtrados por conta/data, sem migração. Falha não vira zero/parcial. A prévia local contém exemplos das quatro categorias e registros fora do torneio. [Entrega, testes e publicação](../docs/sprints/sprint-9-medalhas.md).
+
 Ajuda contextual: `src/app/info-tip.tsx` renderiza o botão “i” e sua descrição; `InfoTipController` no layout inicializa `src/lib/info-tips.ts`, também usado pela prévia local. Use `InfoTip` com `label` contextual para explicações complementares; não coloque botões dentro de `<label>` nem recolha alertas/checkboxes de confirmação. Um `id` explícito é opcional para associar campos por `aria-describedby` e deve ser único. [Comportamento, testes e limites](../docs/sprints/sprint-9-ajuda-contextual.md).
 
 Posicionamento confirmado pelo Dono do produto: ícone à direita do título, rótulo ou controle explicado, na mesma linha visual. Use `info-heading` ou `info-label` para agrupar texto e ajuda, sem deixar o ícone solto abaixo do campo. Em campos repetidos, gere IDs próprios com `useId`.

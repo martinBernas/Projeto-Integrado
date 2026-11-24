@@ -1,5 +1,7 @@
 # Plano de ação
 
+24/11/2026 — RF28, duas coleções de medalhas por bruto implementadas localmente e incorporadas à prévia sintética. Próximos passos: aceite visual e homologação das faixas, histórico completo, elegibilidade/calendário, correções/auditorias e torneios encerrados, em conta real; publicar aplicação. Sem operação SQL ou ajuste de Supabase. [Entrega e limites](sprints/sprint-9-medalhas.md).
+
 24/11/2026 — Ajuda contextual em ícones implementada localmente e incorporada à simulação em `127.0.0.1:3100`. Próximos passos: revisão do Dono do produto e homologação em computador, smartphone físico e leitor de tela; publicação pelo fluxo existente. Sem migração/ajuste de Supabase. [Testes e limites de build local](sprints/sprint-9-ajuda-contextual.md).
 
 24/11/2026 — Renovação visual geral autorizada e implementada localmente: início/login, cabeçalho compartilhado e estilos do painel/subpáginas. Validar visualmente páginas autenticadas nos dois temas e em celular/computador, publicar pelo fluxo existente e obter aceite do Dono do produto. Sem operação SQL ou mudança de Supabase. [Entrega, testes e limites](sprints/sprint-9-layout-geoguaras.md).

@@ -1,5 +1,7 @@
 # Levantamento de requisitos
 
+24/11/2026 — **RF28 — Medalhas por pontuação absoluta**, solicitado pelo Dono do produto e implementado localmente: bronze 5.000–14.999, prata 15.000–22.499, ouro 22.500–24.999, platina 25.000. Uma categoria por resultado; abaixo de 5.000 sem medalha. Duas coleções: resultados próprios válidos de cada torneio e todo o histórico pessoal, sem duplicar dias por participação em vários torneios. Estética sem efeito no ranking. [Critérios complementares, testes e homologação](sprints/sprint-9-medalhas.md). Publicação e aceite pendentes.
+
 24/11/2026 — Dono do produto solicitou recolher explicações em ícones “i”: aproximação do mouse exibe balão próximo ao ponteiro; toque/clique abre no celular; teclado também permite consultar e fechar. Implementação local em painel, perfil, regras, gráficos, estatísticas e formulários. Mantidos avisos, prazos e confirmações essenciais na tela. [Escopo, limites e aceite pendente](sprints/sprint-9-ajuda-contextual.md).
 
 24/11/2026 — Dono do produto confirmou renovação do layout em toda a aplicação, com referência visual no GeoGuessr. Implementação local mantém identidade GeoGuaras, temas claro/escuro/sistema, navegação compartilhada, formulário de recuperação por código e funções existentes. Página pública deixa de se limitar à competição de setembro. [Escopo e homologação pendente](sprints/sprint-9-layout-geoguaras.md).

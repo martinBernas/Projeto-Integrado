@@ -5,12 +5,15 @@ import { PlayerName } from './player-name';
 import { eligibleResults, sortDailyResults, formatDate, formatScore, ranking, type TournamentData } from '@/lib/tournament';
 import { modeLabel, scheduleLabel } from '@/lib/rules';
 import { RuleTimeline } from './tournaments/rule-timeline';
+import { tournamentMedals } from '@/lib/medals';
+import { MedalCollection } from './medal-collection';
 
 export function TournamentView({ data, userId }: { data: TournamentData; userId: string }) {
   const results = eligibleResults(data.participants, data.results);
   const standings = ranking(data.participants, results);
   const days = [...new Set(results.map(r => r.played_on))].sort().reverse();
   const rule = data.current_rule;
+  const medals = tournamentMedals(data, userId);
   const auditByScore = new Map((data.score_audits ?? []).map(a => [a.personal_score_id, a]));
   return <>
     <section className="tournament-banner rounded-b-xl bg-slate-900 p-6 text-white sm:p-8">
@@ -22,6 +25,7 @@ export function TournamentView({ data, userId }: { data: TournamentData; userId:
       {data.tournament.closed_at && <p className="mt-2 font-semibold text-emerald-300">Torneio encerrado · Resultados finais preservados</p>}
       <p className="mt-3 text-slate-300">{formatDate(data.tournament.starts_at)} a {formatDate(data.tournament.ends_at)} · {scheduleLabel(rule?.weekly_schedule ?? 'monday_to_friday')}</p>
     </section>
+    <MedalCollection scope="tournament" counts={medals?.counts ?? null} provisional={medals?.provisional} notParticipant={!medals} />
     {data.rule_versions && <RuleTimeline versions={data.rule_versions} />}
     <Link href={`/dashboard/tournaments/${data.tournament.id}/audits`} className="inline-block rounded-lg border border-emerald-800 px-4 py-2 font-semibold text-emerald-800">Auditoria de pontuações</Link>
     <Link href={`/dashboard/tournaments/${data.tournament.id}/statistics`} className="ml-3 inline-block rounded-lg border border-emerald-800 px-4 py-2 font-semibold text-emerald-800">Estatísticas do torneio</Link>

@@ -1,5 +1,7 @@
 # Plano de testes
 
+24/11/2026 — RF28: seis testes específicos de medalhas e suíte completa 171/171 aprovados; lint sem erros (um aviso preexistente), build com Webpack/TypeScript e prévia de 14 rotas aprovados. Cobertura de limites exclusivos, bruto/aplicado, identidade, período/elegibilidade/calendário, invalidações/provisórios e contagem pessoal acima de mil registros sem parcial em erro. Homologação remota pendente. [Evidências](sprints/sprint-9-medalhas.md).
+
 24/11/2026 — Ajuda contextual: suíte 165/165, cinco testes específicos de mouse/toque/foco/Escape/posicionamento/limpeza e verificação de 14 rotas da prévia. Validar aproximação do mouse, entrada no balão, clique/toque repetido e fora, teclado/leitor de tela, bordas, zoom, rolagem e telas pequenas. Confirmações/alertas não podem depender de abrir ajuda. Build com Webpack aprovado; Turbopack encontrou falha de processo local. [Evidências e pendências](sprints/sprint-9-ajuda-contextual.md).
 
 24/11/2026 — Prévia interna: `node scripts/preview-layout.mjs --check` renderizou 14 rotas com dados sintéticos; lint dirigido sem avisos/erros. Navegador confirmou navegação, persistência do tema entre telas, gráficos/ranking e aviso sem gravação ao salvar perfil. Complementa a inspeção pública anterior; homologação com contas reais e controles React funcionais continua pendente. [Evidências](sprints/sprint-9-layout-geoguaras.md).

@@ -5,7 +5,7 @@ import { useId, useState, type ReactNode } from 'react';
 
 const recentDayLimit = 5;
 
-export function RecentResults({ items, personal = false }: { items: { day: string; content: ReactNode }[]; personal?: boolean }) {
+export function RecentResults({ items, personal = false, medals }: { items: { day: string; content: ReactNode }[]; personal?: boolean; medals?: ReactNode }) {
   const [expanded, setExpanded] = useState(false);
   const listId = useId();
   const canExpand = items.length > recentDayLimit;
@@ -13,6 +13,7 @@ export function RecentResults({ items, personal = false }: { items: { day: strin
 
   return <section className={personal ? 'space-y-3 rounded-2xl border border-slate-200 bg-white p-6' : 'space-y-3'}>
     <div className="info-heading"><h2 className="text-xl font-bold">{personal ? 'Meu histórico pessoal' : 'Resultados por dia'}</h2>{personal && <InfoTip label="Histórico pessoal">Até 100 lançamentos recentes, incluindo dias que não contam no torneio. Ver todos apresenta os lançamentos carregados.</InfoTip>}</div>
+    {personal && medals}
     {!items.length ? <p className="text-slate-600">{personal ? 'Seu primeiro lançamento aparecerá aqui.' : 'Ainda não há dias de jogo a apresentar.'}</p>
       : <p role="status" aria-live="polite" className="text-sm text-slate-600">Mostrando {visible.length} de {items.length} {personal ? 'lançamentos' : 'dias'}, do mais recente ao mais antigo.</p>}
     <div id={listId} className="space-y-3">{visible.map(item => <div key={item.day}>{item.content}</div>)}</div>

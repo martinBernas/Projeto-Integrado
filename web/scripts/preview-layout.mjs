@@ -22,21 +22,32 @@ const tournaments = [
   { id: secondId, name: 'Desafio dos Meridianos · demonstração', starts_at: '2026-11-01', ends_at: '2026-11-30', closed_at: null, organizer_id: user.id },
 ];
 const days = ['2026-11-16', '2026-11-17', '2026-11-18', '2026-11-19', '2026-11-20', '2026-11-23'];
-const results = days.flatMap((day, d) => participants.map((p, i) => ({ player_id: p.id, played_on: day, raw_score: 18500 + ((d * 1301 + i * 997) % 6000), applied_score: ((d * 1301 + i * 997) % 6000), result_kind: 'score', provisional: false, personal_score_id: `score-${d}-${i}`, applied_rule_snapshot: { version: '1', minimum_positive: 18500, mode: 'relative_to_lowest' } })));
+const medalExamples = [7000, 16000, 23000, 24999, 25000, 14500];
+const results = days.flatMap((day, d) => {
+  const rows = participants.map((p, i) => ({ player_id: p.id, played_on: day, raw_score: p.id === user.id ? medalExamples[d] : 18500 + ((d * 1301 + i * 997) % 6000), result_kind: 'score', provisional: false, personal_score_id: `score-${d}-${i}` }));
+  const minimum = Math.min(...rows.map(row => row.raw_score));
+  return rows.map(row => ({ ...row, applied_score: row.raw_score - minimum, applied_rule_snapshot: { version: '1', minimum_positive: minimum, mode: 'relative_to_lowest' } }));
+});
 const rule = { id: 1, effective_from: '2026-11-01', effective_to: '2026-11-30', scoring_mode: 'relative_to_lowest', absence_penalty: -2500, weekly_schedule: 'monday_to_friday', exclusions: [], version: '1', reason: 'Configuração fictícia para revisão visual.', created_at: '2026-11-01T15:00:00Z' };
 const dashboard = id => ({ access: true, today, tournament: { ...(tournaments.find(t => t.id === id) ?? tournaments[0]), timezone: 'America/Sao_Paulo', rule_version: '1' }, participants, results, excluded_dates: [], current_rule: rule, rule_versions: [rule] });
-const history = results.filter(r => r.player_id === user.id).map(r => ({ id: r.personal_score_id, played_on: r.played_on, score: r.raw_score, source: 'manual' })).reverse();
+const history = [...results.filter(r => r.player_id === user.id).map(r => ({ id: r.personal_score_id, played_on: r.played_on, score: r.raw_score, source: 'manual' })),
+  { id: 'outside-period-1', played_on: '2026-10-12', score: 25000, source: 'manual_history' },
+  { id: 'outside-period-2', played_on: '2026-10-11', score: 9000, source: 'manual_history' },
+].sort((a, b) => b.played_on.localeCompare(a.played_on));
 const notifications = { server_now: `${today}T15:00:00Z`, is_organizer: true, pending_days: 1, request_tournaments: tournaments, managed_tournaments: tournaments.map((t, i) => ({ ...t, corrections_pending: i === 0 ? 1 : 0, audits_requested: 0, audits_open: 0, audits_ready: 0 })), open_votings: [] };
 const changes = { has_more: false, changes: [{ id: 'preview-change', player_id: user.id, player_name: 'Jogador Horizonte', played_on: '2026-11-19', old_score: 19350, new_score: 22100, reason: 'Exemplo fictício: correção de digitação no resultado.', requested_at: '2026-11-23T15:00:00Z', decisions: [{ id: 'preview-decision', tournament_name: tournaments[0].name, status: 'pending', old_score: 19350, can_review: true, audit_blocked: false, decided_at: null }] }] };
 
 function query(table) {
   if (!['tournaments', 'personal_scores', 'profiles'].includes(table)) throw Error(`Unsupported preview table: ${table}`);
   let data = table === 'profiles' ? { display_name: 'Jogador Horizonte', public_name_confirmed: true, geoguessr_url: '' } : table === 'tournaments' ? tournaments : [...history];
-  const q = { select: () => q, eq: (column, value) => { if (table === 'tournaments' && column === 'id') data = data.filter(row => row.id === value); return q; }, order: () => q, gt: () => q, gte: () => q, lte: () => q,
+  let head = false;
+  const q = { select: (_columns, options) => { head = options?.head ?? false; return q; }, eq: (column, value) => { if (table === 'tournaments' && column === 'id') data = data.filter(row => row.id === value); return q; }, order: () => q, gt: () => q,
+    gte: (column, value) => { data = data.filter(row => row[column] >= value); return q; },
+    lte: (column, value) => { data = data.filter(row => row[column] <= value); return q; },
     lt: (column, value) => { data = data.filter(row => row[column] < value); return q; },
     limit: n => { data = data.slice(0, n); return q; },
     maybeSingle: () => Promise.resolve({ data: Array.isArray(data) ? data[0] : data, error: null }), single: () => Promise.resolve({ data: Array.isArray(data) ? data[0] : data, error: null }),
-    then: (resolve, reject) => Promise.resolve({ data, error: null }).then(resolve, reject) };
+    then: (resolve, reject) => Promise.resolve({ data: head ? null : data, count: head ? data.length : null, error: null }).then(resolve, reject) };
   return q;
 }
 const client = { auth: { getUser: async () => ({ data: { user }, error: null }) }, from: query, rpc: async (name, args) => {

@@ -17,6 +17,7 @@ test('S5 views show absolute mode, each day snapshot, immutable timezone and exp
  const deps={'next/link':{default:({children,...props})=>jsx.jsx('a',{...props,children})},'react/jsx-runtime':jsx,'react':{...React,useActionState:()=>[{preview:pre},'/disabled',false]},
  '@/lib/rules':rules,'@/lib/tournament':tournament,'./rule-actions':{reviseRules:()=>{}},'./player-name':{PlayerName:({name})=>jsx.jsx('span',{children:name})}};
  async function load(path) {
+  deps['@/lib/medals']={tournamentMedals:()=>null};deps['./medal-collection']={MedalCollection:()=>null};
   const source=await readFile(new URL(`../src/app/dashboard/${path}`,import.meta.url),'utf8');
   const {outputText}=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}});
   const exports={};vm.runInNewContext(outputText,{exports,Intl,Date,require:n=>{if(n==='@/app/info-tip')return {InfoTip:({children})=>children};assert.ok(n in deps,n);return deps[n];}});return exports;

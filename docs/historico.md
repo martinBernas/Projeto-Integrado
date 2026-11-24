@@ -1,5 +1,9 @@
 # Histórico da documentação
 
+24/11/2026 — Dono do produto aprovou visualmente as medalhas RF28 nas coleções de torneio e histórico pessoal, respondendo “perfeito” após a entrega e a prévia. Publicação e homologação funcional com contas reais permanecem sem evidência. [Aceite e limites](sprints/sprint-9-medalhas.md).
+
+24/11/2026 — RF28 implementado por solicitação do Dono do produto: medalhas bronze/prata/ouro/platina pelo bruto, com coleção própria por torneio e coleção completa no histórico pessoal. Contagens derivadas sem mudança do ranking ou migração. Registrados critérios, consulta, testes e ADR-020. [Entrega](sprints/sprint-9-medalhas.md). Sem publicação ou aceite presumidos.
+
 24/11/2026 — Dono do produto aprovou visualmente o refinamento dos ícones de informação alinhados à direita dos títulos/rótulos, respondendo “perfeito” após a prévia. Aceite restrito à apresentação demonstrada; não comprova publicação nem homologação funcional em produção. [Registro vigente](sprints/sprint-9-ajuda-contextual.md).
 
 24/11/2026 — Refinamento da ajuda pelo Dono do produto: ícones reposicionados à direita dos títulos/rótulos/controles, incluindo os três exemplos do perfil. Prévia atualizada e posição conferida em computador e viewport reduzido, com balões contidos na tela. Vinte testes dirigidos, lint dirigido e build com Webpack aprovados. [Evidências](sprints/sprint-9-ajuda-contextual.md). Publicação e aceite final continuam sem evidência.

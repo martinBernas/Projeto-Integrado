@@ -33,6 +33,8 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
     '@/lib/rules': rules,
     '@/lib/notifications': notifications,
     '@/lib/audits': audits,
+    '@/lib/medals': { loadPersonalMedals: async () => ({ bronze:0,silver:0,gold:0,platinum:0 }) },
+    './medal-collection': { MedalCollection: () => null },
     '@/lib/operational-metrics': { createDashboardMetrics: () => async (_, query) => await query },
     './score-form': { ScoreForm: () => null },
     './tournament-view': { TournamentView: ({ data }) => jsx.jsx('p', { children: `Ranking ${data.tournament.name}` }) },

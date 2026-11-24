@@ -1,5 +1,9 @@
 # Sprint 9 — escopo encaminhado para planejamento
 
+24/11/2026 — RF28: aceite visual do Dono do produto para as duas coleções de medalhas. Substitui a pendência visual desse item; publicação e homologação funcional com contas reais continuam sem evidência. [Registro vigente](sprint-9-medalhas.md).
+
+24/11/2026 — RF28 autorizado: medalhas estéticas por pontuação absoluta, com faixas definidas pelo Dono do produto, no torneio e em todo o histórico pessoal. Implementação local e prévia atualizadas; 171 testes e build com Webpack aprovados. Não inicia os demais requisitos em planejamento. [Escopo, critérios e aceite pendente](sprint-9-medalhas.md).
+
 24/11/2026 — Aceite visual do Dono do produto para o refinamento de ajuda contextual com ícones à direita dos títulos/rótulos. Substitui a pendência de aceite visual desse item, sem confirmar publicação ou homologação funcional em produção. [Evidência e limites](sprint-9-ajuda-contextual.md).
 
 24/11/2026 — Refinamento visual autorizado: explicações complementares em ícones “i”, com balão ao aproximar o mouse e abertura por toque no celular. Implementação local e simulação atualizadas; dados, regras e confirmações preservados. [Escopo, testes e homologação](sprint-9-ajuda-contextual.md).
