@@ -9,6 +9,6 @@ export default async function ResetPasswordPage() {
   return <main className="min-h-screen bg-slate-50 px-6 py-16"><div className="mx-auto max-w-md space-y-6">
     <h1 className="text-3xl font-bold">Definir nova senha</h1>
     <p className="text-slate-600">Escolha uma senha com pelo menos 6 caracteres.</p>
-    <PasswordForm reset />
+    <PasswordForm />
   </div></main>;
 }

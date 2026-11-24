@@ -17,7 +17,7 @@ async function load(relative, dependencies, env = {}) {
   return exports;
 }
 
-test('recuperacao valida email, configura callback e nao revela existencia de conta', async () => {
+test('recuperacao solicita codigo com email valido sem revelar existencia de conta', async () => {
   const calls = [];
   const auth = { resetPasswordForEmail: async (...args) => { calls.push(args); return {}; } };
   const actions = await load('../src/app/auth/actions.ts', {
@@ -33,6 +33,63 @@ test('recuperacao valida email, configura callback e nao revela existencia de co
   assert.equal(calls[0][1].redirectTo, 'https://geoguaras.example/auth/callback?next=/auth/reset-password');
   auth.resetPasswordForEmail = async () => ({ error: { message: 'internal detail' } });
   assert.doesNotMatch((await actions.requestPasswordReset({}, form)).error, /internal detail/);
+});
+
+test('codigo de recuperacao valida entrada e autoriza somente apos OTP recovery com sessao', async () => {
+  const calls = [];
+  const consumed = new Set();
+  const actions = await load('../src/app/auth/actions.ts', {
+    'next/navigation': { redirect: (path) => { throw new Error(`redirect:${path}`); } },
+    '@/lib/supabase/server': { createClient: async () => ({ auth: {
+      verifyOtp: async (params) => {
+        calls.push(params);
+        const valid = params.email === 'player@example.test' && params.token === '012345' && !consumed.has(params.token);
+        if (!valid) return { data: { session: null, user: null }, error: { message: 'private auth error' } };
+        consumed.add(params.token);
+        return { data: { session: { access_token: 'test' }, user: { id: 'same-account' } }, error: null };
+      },
+    } }) },
+  });
+  const form = new FormData();
+  form.set('email', 'invalid'); form.set('code', '012345');
+  assert.match((await actions.verifyPasswordResetCode({}, form)).error, /e-mail válido/);
+  form.set('email', 'player@example.test');
+  for (const code of ['', '12345', '12345678901', 'abcdef', '12 3456']) {
+    form.set('code', code);
+    assert.match((await actions.verifyPasswordResetCode({}, form)).error, /código numérico/);
+  }
+  assert.equal(calls.length, 0);
+  for (const [email, code] of [['other@example.test', '012345'], ['player@example.test', '999999']]) {
+    form.set('email', email); form.set('code', code);
+    const result = await actions.verifyPasswordResetCode({}, form);
+    assert.match(result.error, /Não foi possível validar/);
+    assert.doesNotMatch(result.error, /private auth error/);
+  }
+  form.set('email', ' player@example.test '); form.set('code', ' 012345 ');
+  await assert.rejects(actions.verifyPasswordResetCode({}, form), /redirect:\/auth\/reset-password/);
+  assert.deepEqual(JSON.parse(JSON.stringify(calls.at(-1))), { email: 'player@example.test', token: '012345', type: 'recovery' });
+  assert.match((await actions.verifyPasswordResetCode({}, form)).error, /já ter sido usado/);
+});
+
+test('codigo sem sessao ou com erro nao autoriza recuperacao mesmo com sessao anterior', async () => {
+  for (const result of [
+    { data: { session: null, user: { id: 'existing' } }, error: null },
+    { data: { session: {}, user: null }, error: null },
+    { data: { session: {}, user: { id: 'existing' } }, error: { message: 'expired' } },
+  ]) {
+    const actions = await load('../src/app/auth/actions.ts', {
+      'next/navigation': { redirect: () => assert.fail('must not redirect') },
+      '@/lib/supabase/server': { createClient: async () => ({ auth: { verifyOtp: async () => result } }) },
+    });
+    const form = new FormData(); form.set('email', 'player@example.test'); form.set('code', '12345678');
+    assert.match((await actions.verifyPasswordResetCode({}, form)).error, /Não foi possível validar/);
+  }
+});
+
+test('template de recuperacao envia codigo sem URL que scanner possa consumir', async () => {
+  const template = await readFile(new URL('../supabase/templates/recovery.html', import.meta.url), 'utf8');
+  assert.match(template, /\{\{ \.Token \}\}/);
+  assert.doesNotMatch(template, /href|ConfirmationURL|TokenHash|https?:/i);
 });
 
 test('nova senha exige confirmacao e usuario autenticado antes de atualizar', async () => {

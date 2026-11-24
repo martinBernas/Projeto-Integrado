@@ -15,8 +15,20 @@ export async function requestPasswordReset(_: AuthState, formData: FormData): Pr
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: `${siteUrl}/auth/callback?next=/auth/reset-password`,
   });
-  if (error) return { error: "Não foi possível solicitar o link agora. Aguarde alguns minutos e tente novamente." };
-  return { message: "Se houver uma conta com esse e-mail, você receberá um link para redefinir a senha. Confira também o spam e use o e-mail mais recente." };
+  if (error) return { error: "Não foi possível solicitar o código agora. Aguarde alguns minutos e tente novamente." };
+  return { message: "Se houver uma conta com esse e-mail, você receberá um código para redefinir a senha. Confira também o spam e use o código do e-mail mais recente." };
+}
+
+export async function verifyPasswordResetCode(_: AuthState, formData: FormData): Promise<AuthState> {
+  const email = String(formData.get("email") ?? "").trim();
+  const token = String(formData.get("code") ?? "").trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { error: "Informe um e-mail válido." };
+  if (!/^[0-9]{6,10}$/.test(token)) return { error: "Informe o código numérico completo recebido por e-mail." };
+  const supabase = await createClient();
+  // Recovery only: a signup/login code must never authorize this flow.
+  const { data, error } = await supabase.auth.verifyOtp({ email, token, type: "recovery" });
+  if (error || !data?.session || !data.user) return { error: "Não foi possível validar o código. Confira o e-mail e o código mais recente; ele pode ter expirado ou já ter sido usado. Se necessário, solicite outro e aguarde alguns minutos antes de tentar novamente." };
+  redirect("/auth/reset-password");
 }
 
 export async function resetPassword(_: AuthState, formData: FormData): Promise<AuthState> {
@@ -25,9 +37,9 @@ export async function resetPassword(_: AuthState, formData: FormData): Promise<A
   if (password !== String(formData.get("confirmation") ?? "")) return { error: "As senhas não coincidem." };
   const supabase = await createClient();
   const { data: { user }, error: authError } = await supabase.auth.getUser();
-  if (authError || !user) return { error: "Seu acesso expirou. Solicite um novo link de recuperação." };
+  if (authError || !user) return { error: "Seu acesso expirou. Solicite um novo código de recuperação." };
   const { error } = await supabase.auth.updateUser({ password });
-  if (error) return { error: "Não foi possível alterar a senha. Use uma senha diferente, com pelo menos 6 caracteres, ou solicite um novo link." };
+  if (error) return { error: "Não foi possível alterar a senha. Use uma senha diferente, com pelo menos 6 caracteres, ou solicite um novo código." };
   return { message: "Senha atualizada. Você já pode acessar o painel." };
 }
 

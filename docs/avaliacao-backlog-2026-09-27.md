@@ -1,5 +1,16 @@
 # Avaliação do escopo pendente e feedback — 27/09/2026
 
+31/10/2026 — Dono do produto encaminhou os itens pendentes para a próxima sprint: RF22/RF23, RF25, integração GeoGuessr, histórico avançado/restante da moderação e acompanhamento de desempenho. [Sprint 9 em planejamento](sprints/sprint-9.md); prioridades, capacidade, prazo e critérios detalhados ainda a definir. Implementação não iniciada. Substitui a situação anterior desses itens sem sprint indicada; Sprint 8 permanece encerrada.
+
+## Situação consolidada após a Sprint 8 — 31/10/2026
+
+Sprint 8 encerrada e aceita, publicação testada `ec3afb5` e retirada do torneio de ensaio confirmada nas telas de gestão. RF19, modo escuro e RF26/RF27 entregues; registros anteriores de implementação/publicação pendentes são históricos.
+
+Backlog futuro, sem sprint/prazo assumidos: RF22 (detalhes dos cinco jogos), RF23 (países/tempo a partir desses detalhes), RF25 (relatórios individuais por participante), integração GeoGuessr/FB04, histórico avançado/ampliação de RF09 e restante da moderação RF08 além dos fluxos já entregues. Refinar escopo antes de implementar.
+
+Acompanhamento operacional: análise semanal de métricas RF24 e desempenho/FB06; testes remotos complementares não relatados (concorrência real e demais cenários detalhados) não são defeitos confirmados nem reabrem as sprints aceitas. Nenhuma implementação da próxima sprint iniciada por este registro.
+
+
 24/10/2026 — Dono do produto confirmou para RF19 o critério de sucesso como aceitação de todos os envios pelo Gmail para encaminhamento, sem comprovar entrega/leitura. Implementada adaptação local para a conta Gmail existente via SMTP/TLS e Nodemailer, sem Resend/domínio pago; erros e resultados incertos mantêm bloqueio de retirada, sem reenvio automático de tentativas ambíguas. Migração inicial 001 e comparação já confirmadas permanecem válidas. Novo incremento 202610240002 exige captura/exportação/validação e comparação próprias de 24 seções antes de ativar. SMTP de recuperação de senha preservado, sem acesso a credenciais e sem envio real. [ADR-014](decisoes/adr-014-relatorios-gmail-sem-custo.md), [roteiro Gmail](sprints/sprint-8-gmail-operacao.md). Verificação final: 134 testes, lint e build/TypeScript aprovados; nenhuma execução remota do incremento.
 
 24/10/2026 — Sprint 8 implementada localmente após autorização do Dono do produto: RF19 com captura final atômica, PDF geral (classificação, evolução acumulada e duplas), fila privada, e-mails individuais via Resend e confirmação assinada de entrega; retirada lógica antecipada/automática após 168 horas, bloqueada por geração/envios pendentes, com limpeza do PDF/captura/endereços. Claro/Escuro/Sistema persistido no navegador, em telas e gráficos. RF25 continua futuro. Migração nova 202610240001, configuração de remetente/segredos/webhook/agendas, publicação e homologação ainda pendentes; nenhuma operação remota ou envio real realizado. [Entrega e limites](sprints/sprint-8.md), [arquitetura e decisão](decisoes/adr-013-relatorios-e-retirada-de-torneios.md), [operação](sprints/sprint-8-operacao.md). Esta situação substitui os registros históricos anteriores de implementação não iniciada.

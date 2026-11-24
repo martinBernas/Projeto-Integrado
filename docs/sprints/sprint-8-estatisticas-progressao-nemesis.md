@@ -1,5 +1,7 @@
 # RF26/RF27 — progressão acumulada e Nêmesis nas estatísticas
 
+**Situação vigente — 31/10/2026: Sprint 8 encerrada e aceita pelo Dono do produto**, incluindo RF26/RF27, seleção de jogadores e navegação com mouse. Substitui os registros anteriores de sprint aberta/aceite pendente preservados abaixo como histórico. Publicação e teste em produção da última revisão confirmados pelo Dono do produto: Vercel Ready, branch `main`, commit `ec3afb5` (S8: Navegacao pelo grafico com o mouse). Retirada do torneio de ensaio confirmada pelo Dono do produto: deixou de aparecer nas suas telas de gestão; acompanhamento encerrado nesse cenário observado. [Encerramento, entregas e limites](sprint-8-encerramento.md).
+
 31/10/2026. Implementação local por solicitação do Dono do produto. Requisitos formalmente registrados antes da entrega, conforme pedido adicional. Publicação e homologação/aceite desta tela ainda pendentes. Incremento separado da correção e do reenvio de PDFs já concluídos.
 
 ## Requisitos e comportamento
@@ -51,3 +53,7 @@ Verificação final: lint sem erros, com o aviso preexistente de variável não 
 31/10/2026 — RF26 refinado pelo Dono do produto: navegação direta com mouse implementada localmente. Roda sobre a área de curvas amplia/reduz ancorada no cursor; após ampliar, arrasto com botão esquerdo move datas e pontos, limitado aos dados. Captura de ponteiro mantém o arrasto ao sair do SVG e termina ao soltar/cancelar. Roda fora da área de curvas mantém rolagem normal; botões e seleção continuam disponíveis. Substitui a limitação anterior de navegação somente por botões. Sem pinça em toque, novas consultas, gravações ou migração. Publicação/aceite pendentes.
 
 Validação deste incremento: sete testes de viewport/interface aprovados, incluindo novo teste de ancoragem no cursor e limites; build/TypeScript e lint específico sem erros/avisos. Browser Edge com componente real/dados fictícios verificou roda in/out, arrasto, soltura, reset e nova interação após selecionar jogador, sem erros JavaScript. A primeira execução do roteiro deixou o cursor sobre a caixa após clicar, fora do gráfico; roteiro corrigido para retornar o mouse à área de curvas e aprovado. Não é homologação remota. Suíte completa de 154 testes pertence ao incremento anterior; não foi repetida integralmente nesta alteração. Sem mudança em cálculos, PDF, banco ou permissões. Sem migração/backup de banco; artefatos auxiliares locais de compilação removidos. Publicação e aceite pendentes.
+
+## Evidência de produção e aceite — 31/10/2026
+
+Dono do produto confirmou que o teste aceito foi no deployment Vercel Production / Ready `ec3afb5`, branch `main`, “S8: Navegacao pelo grafico com o mouse”, exibido na captura apresentada. Publicação e aceite do incremento confirmados. Substitui as pendências anteriores correspondentes; não é nova execução de testes pelo agente nem comprova todos os cenários remotos individualmente. Sprint encerrada conforme registro consolidado.

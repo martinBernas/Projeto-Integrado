@@ -1,5 +1,7 @@
 # ADR-016 — progressão acumulada e Nêmesis nas estatísticas
 
+**Situação vigente — 31/10/2026: Sprint 8 encerrada e aceita pelo Dono do produto**, incluindo RF26/RF27, seleção de jogadores e navegação com mouse. Substitui os registros anteriores de sprint aberta/aceite pendente preservados abaixo como histórico. Publicação e teste em produção da última revisão confirmados pelo Dono do produto: Vercel Ready, branch `main`, commit `ec3afb5` (S8: Navegacao pelo grafico com o mouse). Retirada do torneio de ensaio confirmada pelo Dono do produto: deixou de aparecer nas suas telas de gestão; acompanhamento encerrado nesse cenário observado. [Encerramento, entregas e limites](../sprints/sprint-8-encerramento.md).
+
 Data: 31/10/2026. Situação: implementada e testada localmente por solicitação do Dono do produto; publicação e aceite ainda pendentes. Requisitos RF26 e RF27 registrados em `docs/requisitos.md`.
 
 ## Contexto e decisão
