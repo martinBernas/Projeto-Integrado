@@ -1,4 +1,5 @@
 "use client";
+import { InfoTip } from '@/app/info-tip';
 import { useActionState, useState } from 'react';
 import { formatDate, formatScore } from '@/lib/tournament';
 import { modeLabel, scheduleLabel, type RuleVersion } from '@/lib/rules';
@@ -14,7 +15,7 @@ export function RuleForm({ id, start, end, rule }: { id: string; start: string; 
   return <div className="space-y-6">
     <form action={action} onChange={() => setDirty(true)} onSubmit={() => setDirty(false)} className="space-y-4">
       <input type="hidden" name="target" value={id} /><input type="hidden" name="operation" value="preview" />
-      <p className="text-sm text-slate-600">Uma única regra vale para todo o torneio. Altere o período e a configuração, confira o impacto e confirme. O histórico registra as configurações anteriores.</p>
+      <div className="info-heading"><h3 className="font-semibold">Revisão das regras</h3><InfoTip label="Revisão das regras">Uma única regra vale para todo o torneio. Altere o período e a configuração, confira o impacto e confirme. O histórico registra as configurações anteriores.</InfoTip></div>
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block text-sm font-medium">Início do torneio<input className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" name="rule_from" type="date" min="0001-01-01" max="9999-12-31" defaultValue={start} required /></label>
         <label className="block text-sm font-medium">Fim do torneio<input className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" name="rule_to" type="date" min="0001-01-01" max="9999-12-31" defaultValue={end} required /></label>

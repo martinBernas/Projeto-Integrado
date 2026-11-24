@@ -45,13 +45,13 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       : ![0, 6].includes(new Date(`${today}T12:00:00Z`).getUTCDay()));
   return <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 sm:py-12">
     <div className="mx-auto max-w-6xl space-y-8">
-      <header className="flex flex-wrap items-center justify-between gap-4">
+      <header className="dashboard-welcome flex flex-wrap items-center justify-between gap-4">
         <div><Link href="/" className="text-sm font-bold tracking-wide text-emerald-800">GEOGUARAS</Link><h1 className="mt-2 text-3xl font-bold tracking-tight">Seu painel</h1><p className="mt-1 break-all text-sm text-slate-600">{user.email}</p></div>
-        <div className="flex flex-wrap items-center gap-4"><Link href="/dashboard/profile" className="font-semibold text-emerald-800">Meu perfil</Link><Link href="/dashboard/statistics" className="font-semibold text-emerald-800">Minhas estatísticas</Link><Link href="/dashboard/requests" className="font-semibold text-emerald-800">Meus pedidos</Link><Link href="/dashboard/tournaments" className="font-semibold text-emerald-800">Administrar torneios</Link><form action={signOut}><button className="rounded-lg border border-slate-300 bg-white px-4 py-2 font-semibold">Sair</button></form></div>
+        <form action={signOut}><button className="rounded-lg border border-slate-300 bg-white px-4 py-2 font-semibold">Sair</button></form>
       </header>
       {profile && !profile.public_name_confirmed && <aside className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm">Confirme seu nome público para ser identificado nos torneios. <Link href="/dashboard/profile" className="font-semibold underline">Completar meu perfil</Link></aside>}
       <NotificationCards data={notifications} failed={!!notificationError || !notifications} isOrganizer={notifications?.is_organizer ?? !!tournaments?.some(t => t.organizer_id === user.id)} />
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7" aria-labelledby="entry-title">
+      <section className="score-entry rounded-2xl border border-slate-200 bg-white p-5 sm:p-7" aria-labelledby="entry-title">
         <h2 id="entry-title" className="mb-4 text-xl font-bold">Resultado de hoje</h2>
         <ScoreForm today={today} current={ownToday} />
         {tournament && (!todayIsGame || tournament.tournament.closed_at) && <p className="mt-4 rounded-lg bg-slate-100 p-3 text-sm">Este lançamento não conta no torneio selecionado. Sua pontuação pessoal pode contar em outros torneios elegíveis.</p>}

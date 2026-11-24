@@ -1,5 +1,13 @@
 # Sprint 9 — escopo encaminhado para planejamento
 
+24/11/2026 — Aceite visual do Dono do produto para o refinamento de ajuda contextual com ícones à direita dos títulos/rótulos. Substitui a pendência de aceite visual desse item, sem confirmar publicação ou homologação funcional em produção. [Evidência e limites](sprint-9-ajuda-contextual.md).
+
+24/11/2026 — Refinamento visual autorizado: explicações complementares em ícones “i”, com balão ao aproximar o mouse e abertura por toque no celular. Implementação local e simulação atualizadas; dados, regras e confirmações preservados. [Escopo, testes e homologação](sprint-9-ajuda-contextual.md).
+
+24/11/2026 — Novo item autorizado pelo Dono do produto: renovação visual em toda a aplicação com referência no GeoGuessr, implementada localmente. Não altera o planejamento funcional dos demais itens. Publicação e aceite visual pendentes. [Escopo, testes e homologação](sprint-9-layout-geoguaras.md).
+
+24/11/2026 — Validação posterior informada pelo Dono do produto: recuperação por código funcionou com uma conta não corporativa. Evidência de funcionamento no ambiente testado; não foram informados URL/versão, teste entre aparelhos ou resultados individuais dos casos negativos. Substitui a ausência de teste real para esse cenário. Teste com a conta corporativa afetada e aceite específico da resolução original continuam pendentes; não presumir publicação ou configuração remota verificadas pelo agente. [Registro detalhado](sprint-9-recuperacao-por-codigo.md).
+
 24/11/2026 — Exceção posterior ao planejamento abaixo: o Dono do produto autorizou implementar a recuperação por código de e-mail para corrigir falhas relatadas em contas corporativas. Este item está implementado localmente; publicação, template remoto e aceite pendentes. Os demais itens continuam em planejamento. [Escopo, validação e ativação](sprint-9-recuperacao-por-codigo.md).
 
 31/10/2026 — Após o encerramento da Sprint 8, o Dono do produto determinou que os itens pendentes apresentados ficam para a próxima sprint. Encaminhamento confirmado; implementação ainda não iniciada. Ordem, capacidade, prazo e critérios detalhados serão definidos no planejamento, sem presumir que todos caibam na mesma entrega.

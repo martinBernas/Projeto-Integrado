@@ -1,5 +1,11 @@
 # Levantamento de requisitos
 
+24/11/2026 — Dono do produto solicitou recolher explicações em ícones “i”: aproximação do mouse exibe balão próximo ao ponteiro; toque/clique abre no celular; teclado também permite consultar e fechar. Implementação local em painel, perfil, regras, gráficos, estatísticas e formulários. Mantidos avisos, prazos e confirmações essenciais na tela. [Escopo, limites e aceite pendente](sprints/sprint-9-ajuda-contextual.md).
+
+24/11/2026 — Dono do produto confirmou renovação do layout em toda a aplicação, com referência visual no GeoGuessr. Implementação local mantém identidade GeoGuaras, temas claro/escuro/sistema, navegação compartilhada, formulário de recuperação por código e funções existentes. Página pública deixa de se limitar à competição de setembro. [Escopo e homologação pendente](sprints/sprint-9-layout-geoguaras.md).
+
+24/11/2026 — Recuperação por código validada pelo Dono do produto com conta não corporativa. Aceite específico da resolução em conta corporativa ainda pendente; ambiente e versão não informados. [Evidência e limites](sprints/sprint-9-recuperacao-por-codigo.md).
+
 24/11/2026 — Dono do produto confirmou recuperação de senha por código de e-mail, implementada localmente: solicitar código, validar e-mail/código no site e definir nova senha na mesma conta, preservando pontuações. Novos e-mails sem link de verificação; erros genéricos, expiração/uso único e limites controlados pelo Supabase. Substitui a orientação de recuperação por link após ativação do novo template. Publicação, template remoto e homologação pendentes. [Escopo e critérios](sprints/sprint-9-recuperacao-por-codigo.md).
 
 **Situação vigente — 31/10/2026: Sprint 8 encerrada e aceita pelo Dono do produto**, incluindo RF26/RF27, seleção de jogadores e navegação com mouse. Substitui os registros anteriores de sprint aberta/aceite pendente preservados abaixo como histórico. Publicação e teste em produção da última revisão confirmados pelo Dono do produto: Vercel Ready, branch `main`, commit `ec3afb5` (S8: Navegacao pelo grafico com o mouse). Retirada do torneio de ensaio confirmada pelo Dono do produto: deixou de aparecer nas suas telas de gestão; acompanhamento encerrado nesse cenário observado. [Encerramento, entregas e limites](sprints/sprint-8-encerramento.md).

@@ -1,3 +1,4 @@
+import { InfoTip } from '@/app/info-tip';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
@@ -21,12 +22,12 @@ export default async function AuditsPage({ params }: { params: Promise<{ id: str
   const closed = !!data.tournament.closed_at;
   return <main className="min-h-screen bg-slate-50 px-4 py-8"><div className="mx-auto max-w-3xl space-y-6">
     <Link href={`/dashboard?tournament=${id}`} className="font-semibold text-emerald-800">Voltar ao torneio</Link>
-    <header><h1 className="text-3xl font-bold">Votações e histórico de auditorias</h1><p className="mt-2 text-slate-600">{data.tournament.name}</p></header>
-    <p className="rounded-xl bg-white p-4 text-sm">O organizador aprova os pedidos antes de iniciar a votação de 48 horas. Os votos são secretos e podem ser alterados até o prazo. Empate ou nenhum voto mantém a pontuação. Alterações retroativas não mudam o valor em avaliação antes da decisão do torneio.</p>
+    <header><div className="info-heading"><h1 className="text-3xl font-bold">Votações e histórico de auditorias</h1><InfoTip label="Regras de votação">O organizador aprova os pedidos antes de iniciar a votação de 48 horas. Os votos são secretos e podem ser alterados até o prazo. Empate ou nenhum voto mantém a pontuação. Alterações retroativas não mudam o valor em avaliação antes da decisão do torneio. Atualize a página para consultar novos votos próprios, aprovações e o término do prazo. A autoria dos demais votos permanece secreta.</InfoTip></div><p className="mt-2 text-slate-600">{data.tournament.name}</p></header>
+
     {evaluation.organizer && <Link href={`/dashboard/notifications?tournament=${id}`} className="font-semibold text-emerald-800 underline">Gerenciar notificações dos torneios</Link>}
     <Link href={`/dashboard/requests?tournament=${id}`} className="font-semibold text-emerald-800 underline">Abrir uma denúncia em Meus pedidos</Link>
     {closed && <p className="rounded-xl bg-slate-200 p-4">Torneio encerrado. Histórico disponível para consulta.</p>}
     <AuditHistory data={data} evaluation={evaluation} />
-    <p className="text-sm text-slate-600">Atualize a página para consultar novos votos próprios, aprovações e o término do prazo. A autoria dos demais votos permanece secreta.</p>
+
   </div></main>;
 }

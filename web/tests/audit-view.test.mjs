@@ -27,11 +27,11 @@ test('S6 page renders requests, secret own vote, organizer approval, deadline, a
  deps['./tournaments/audit-form']=deps['../../audit-form'];
  for(const [file,key] of [['audit-history','../../../audit-history'],['audit-request','request-component']]) {
   const code=ts.transpileModule(await readFile(new URL(`../src/app/dashboard/${file}.tsx`,import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}}).outputText;
-  const component={};vm.runInNewContext(code,{exports:component,Date,Intl,require:n=>{assert.ok(n in deps,n);return deps[n];}});deps[key]=component;
+  const component={};vm.runInNewContext(code,{exports:component,Date,Intl,require:n=>{if(n==='@/app/info-tip')return {InfoTip:({children})=>children};assert.ok(n in deps,n);return deps[n];}});deps[key]=component;
  }
  const source=await readFile(new URL('../src/app/dashboard/tournaments/[id]/audits/page.tsx',import.meta.url),'utf8');
  const {outputText}=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}});
- const exports={};vm.runInNewContext(outputText,{exports,Date,Intl,require:n=>{assert.ok(n in deps,n);return deps[n];}});
+ const exports={};vm.runInNewContext(outputText,{exports,Date,Intl,require:n=>{if(n==='@/app/info-tip')return {InfoTip:({children})=>children};assert.ok(n in deps,n);return deps[n];}});
  const render=async()=>renderToStaticMarkup(await exports.default({params:Promise.resolve({id})}));
  const html=await render();
  assert.match(html,/id="audit-open"/);

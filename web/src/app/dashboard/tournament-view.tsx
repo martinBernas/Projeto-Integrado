@@ -1,3 +1,4 @@
+import { InfoTip } from '@/app/info-tip';
 import { RecentResults } from './recent-results';
 import Link from 'next/link';
 import { PlayerName } from './player-name';
@@ -12,23 +13,20 @@ export function TournamentView({ data, userId }: { data: TournamentData; userId:
   const rule = data.current_rule;
   const auditByScore = new Map((data.score_audits ?? []).map(a => [a.personal_score_id, a]));
   return <>
-    <section className="rounded-b-xl bg-slate-900 p-6 text-white sm:p-8">
-      <h2 className="text-sm font-semibold text-emerald-300">Regras<span className="sr-only"> de {data.tournament.name}</span></h2>
+    <section className="tournament-banner rounded-b-xl bg-slate-900 p-6 text-white sm:p-8">
+      <div className="flex flex-wrap items-center gap-2"><h2 className="text-xl font-bold">{data.tournament.name}</h2><InfoTip label="Regras do torneio">
+        {modeLabel(rule?.scoring_mode ?? 'relative_to_lowest')}: {rule?.scoring_mode === 'absolute' ? 'Resultado bruto positivo' : 'Resultado bruto − menor positivo'}. Ausência após o fim do dia: {formatScore(rule?.absence_penalty ?? -2500)} pontos. Fuso do torneio: {data.tournament.timezone}.
+        {rule && <> Regra do torneio · {rule.version}. A mesma configuração vale para todo o período.</>}
+        {data.excluded_dates.length > 0 && <> Datas excluídas: {data.excluded_dates.map(formatDate).join(', ')}.</>}
+      </InfoTip></div>
       {data.tournament.closed_at && <p className="mt-2 font-semibold text-emerald-300">Torneio encerrado · Resultados finais preservados</p>}
       <p className="mt-3 text-slate-300">{formatDate(data.tournament.starts_at)} a {formatDate(data.tournament.ends_at)} · {scheduleLabel(rule?.weekly_schedule ?? 'monday_to_friday')}</p>
-      {rule && <p className="mt-2 text-sm text-slate-300">Regra do torneio · {rule.version}. A mesma configuração vale para todo o período.</p>}
-      {data.excluded_dates.length > 0 && <p className="mt-2 text-sm text-slate-300">Datas excluídas: {data.excluded_dates.map(formatDate).join(', ')}</p>}
-      <div className="mt-5 grid gap-4 sm:grid-cols-3">
-        <div><p className="text-sm text-slate-300">{modeLabel(rule?.scoring_mode ?? 'relative_to_lowest')}</p><p className="mt-1 font-semibold">{rule?.scoring_mode === 'absolute' ? 'Resultado bruto positivo' : 'Resultado bruto − menor positivo'}</p></div>
-        <div><p className="text-sm text-slate-300">Ausência após o fim do dia</p><p className="mt-1 font-semibold">{formatScore(rule?.absence_penalty ?? -2500)} pontos</p></div>
-        <div><p className="text-sm text-slate-300">Fuso do torneio</p><p className="mt-1 font-semibold">{data.tournament.timezone}</p></div>
-      </div>
     </section>
     {data.rule_versions && <RuleTimeline versions={data.rule_versions} />}
     <Link href={`/dashboard/tournaments/${data.tournament.id}/audits`} className="inline-block rounded-lg border border-emerald-800 px-4 py-2 font-semibold text-emerald-800">Auditoria de pontuações</Link>
     <Link href={`/dashboard/tournaments/${data.tournament.id}/statistics`} className="ml-3 inline-block rounded-lg border border-emerald-800 px-4 py-2 font-semibold text-emerald-800">Estatísticas do torneio</Link>
-    <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-      <div className="p-6"><h2 className="text-xl font-bold">Ranking acumulado</h2><p className="mt-1 text-sm text-slate-600">{data.participants.length} participantes · Resultados do dia atual são provisórios. Empates compartilham a posição.</p></div>
+    <section className="ranking-card overflow-hidden rounded-2xl border border-slate-200 bg-white">
+      <div className="p-6"><div className="flex items-center gap-1"><h2 className="text-xl font-bold">Ranking acumulado</h2><InfoTip label="Classificação acumulada">Resultados do dia atual são provisórios. Empates compartilham a posição.</InfoTip></div><p className="mt-1 text-sm text-slate-600">{data.participants.length} participantes</p></div>
       {standings.length === 0 ? <p className="px-6 pb-6 text-slate-600">Nenhum participante vinculado ainda.</p> : <div className="overflow-x-auto"><table className="w-full text-left text-sm"><caption className="sr-only">Classificação acumulada de {data.tournament.name}</caption><thead className="bg-slate-100 text-slate-600"><tr><th className="px-6 py-3">Posição</th><th className="px-6 py-3">Jogador</th><th className="px-6 py-3 text-right">Pontos</th></tr></thead><tbody>{standings.map(p => <tr key={p.id} className={`border-t border-slate-100 ${p.id === userId ? 'bg-emerald-50' : ''}`}><td className="px-6 py-4 font-semibold">{p.position}º</td><th scope="row" className="px-6 py-4 font-medium"><PlayerName name={p.name} url={p.geoguessr_url} />{p.id === userId && <span className="ml-2 text-xs text-emerald-800">você</span>}</th><td className="px-6 py-4 text-right font-bold tabular-nums">{formatScore(p.total)}</td></tr>)}</tbody></table></div>}
     </section>
     <RecentResults key={data.tournament.id} items={days.map(day => {

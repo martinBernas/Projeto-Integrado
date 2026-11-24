@@ -1,6 +1,14 @@
 # GeoGuaras — Aplicação web
 
+Ajuda contextual: `src/app/info-tip.tsx` renderiza o botão “i” e sua descrição; `InfoTipController` no layout inicializa `src/lib/info-tips.ts`, também usado pela prévia local. Use `InfoTip` com `label` contextual para explicações complementares; não coloque botões dentro de `<label>` nem recolha alertas/checkboxes de confirmação. Um `id` explícito é opcional para associar campos por `aria-describedby` e deve ser único. [Comportamento, testes e limites](../docs/sprints/sprint-9-ajuda-contextual.md).
+
+Posicionamento confirmado pelo Dono do produto: ícone à direita do título, rótulo ou controle explicado, na mesma linha visual. Use `info-heading` ou `info-label` para agrupar texto e ajuda, sem deixar o ícone solto abaixo do campo. Em campos repetidos, gere IDs próprios com `useId`.
+
+Layout geral de 24/11/2026: cabeçalho e navegação em `src/app/app-header.tsx`, composição em `layout.tsx` e tokens/regras visuais em `globals.css`. Temas claro/escuro/sistema preservados; sem dependência ou mídia externa nova. Publicação pelo fluxo existente, sem migração ou ajuste de Supabase. [Escopo, validação e homologação](../docs/sprints/sprint-9-layout-geoguaras.md).
+
 ## Executar localmente
+
+Para revisar telas internas sem conta real, após `pnpm build` execute `node scripts/preview-layout.mjs` nesta pasta e abra `http://127.0.0.1:3100/dashboard`. São 14 rotas com componentes reais e dados fictícios, em servidor separado, sem acesso ao Supabase. Menu, temas e detalhes das tabelas funcionam; formulários e controles de gráficos são demonstrativos e não gravam dados. `node scripts/preview-layout.mjs --check` valida a renderização sem abrir servidor. Encerre com `Ctrl+C`; após mudar CSS, gere novo build e reinicie. [Escopo e limites](../docs/sprints/sprint-9-layout-geoguaras.md#simulação-navegável-solicitada-posteriormente--24112026).
 
 1. Copie `.env.local.example` para `.env.local`.
 2. Crie um projeto no Supabase e preencha URL e chave pública.

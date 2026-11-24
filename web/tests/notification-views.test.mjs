@@ -11,7 +11,7 @@ import * as notifications from '../src/lib/notifications.ts';
 async function load(file,deps){
  const source=await readFile(new URL(`../src/app/dashboard/${file}.tsx`,import.meta.url),'utf8');
  const code=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}}).outputText;
- const exports={};vm.runInNewContext(code,{exports,Date,Intl,require:n=>{assert.ok(n in deps,n);return deps[n];}});return exports;
+ const exports={};vm.runInNewContext(code,{exports,Date,Intl,require:n=>{if(n==='@/app/info-tip')return {InfoTip:({children})=>children};assert.ok(n in deps,n);return deps[n];}});return exports;
 }
 const common={'react/jsx-runtime':jsx,'next/link':{default:({children,...props})=>{const a={...props};delete a.prefetch;return jsx.jsx('a',{...a,children});}},
  '@/lib/tournament':tournament,'@/lib/audits':audits,'@/lib/notifications':notifications,

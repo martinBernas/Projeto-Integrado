@@ -1,3 +1,4 @@
+import { InfoTip } from '@/app/info-tip';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
@@ -47,8 +48,8 @@ export default async function ParticipantsPage({ params, searchParams }: {
         : <ParticipantGrid {...period} people={people} mode="members" closed={Boolean(tournament.closed_at)} />}
     </section>
     {!tournament.closed_at && <>
-      <section className="space-y-4"><h2 className="text-xl font-bold">Adicionar usuários cadastrados</h2>
-        <p className="text-sm text-slate-600">Selecione pelo nome e e-mail. Contas já vinculadas não aparecem nesta lista.</p>
+      <section className="space-y-4"><div className="info-heading"><h2 className="text-xl font-bold">Adicionar usuários cadastrados</h2><InfoTip label="Inclusão de participantes">Selecione pelo nome e e-mail. Contas já vinculadas não aparecem nesta lista.</InfoTip></div>
+
         <form method="get" className="flex flex-wrap items-end gap-3"><label className="min-w-0 flex-1 text-sm font-medium">Buscar nome ou e-mail
           <input name="q" maxLength={254} defaultValue={query} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2" /></label>
           <button className="rounded-lg bg-slate-800 px-4 py-2 font-semibold text-white">Buscar</button></form>

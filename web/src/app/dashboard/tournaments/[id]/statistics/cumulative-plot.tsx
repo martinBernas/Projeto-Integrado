@@ -1,5 +1,6 @@
 'use client';
 
+import { InfoTip } from '@/app/info-tip';
 import { useEffect, useId, useRef, useState } from 'react';
 import { formatDate } from '@/lib/tournament';
 import { chartDomain, fullChartViewport, zoomChart, panChart, MAX_CHART_ZOOM, type ChartViewport } from '@/lib/tournament-chart-viewport';
@@ -56,6 +57,7 @@ export function CumulativePlot({ players, points }: { players: CumulativePlotPla
       <span className="min-w-14 text-center text-sm tabular-nums" role="status" aria-live="polite">{Math.round(viewport.zoom * 100)}%</span>
       <button type="button" className={button} aria-label="Aumentar zoom" disabled={!canZoom || viewport.zoom >= MAX_CHART_ZOOM} onClick={() => zoom(1.5)}>+</button>
       <button type="button" className={button} disabled={viewport.zoom === 1} onClick={() => setView(null)}>Visão completa</button>
+      <InfoTip label="Controles do gráfico">Use a roda do mouse sobre as curvas para ampliar ou reduzir na posição do cursor. Após ampliar, clique e arraste para navegar. Mudar a seleção ajusta a escala e restaura a visão completa. A tabela mantém todos os jogadores e datas.</InfoTip>
     </div>
     {viewport.zoom > 1 && active && <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="Mover área ampliada">
       <button type="button" className={button} aria-label="Ver datas anteriores" disabled={xMin <= domain.xMin} onClick={() => pan(-0.35, 0)}>← Datas</button>
@@ -113,6 +115,5 @@ export function CumulativePlot({ players, points }: { players: CumulativePlotPla
         </label>)}
       </div>
     </fieldset>
-    <p className="mt-3 text-sm text-slate-600">Use a roda do mouse sobre as curvas para ampliar ou reduzir na posição do cursor. Após ampliar, clique e arraste para navegar. Mudar a seleção ajusta a escala e restaura a visão completa. A tabela mantém todos os jogadores e datas.</p>
   </>;
 }

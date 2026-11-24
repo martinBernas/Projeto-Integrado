@@ -1,5 +1,17 @@
 # Histórico da documentação
 
+24/11/2026 — Dono do produto aprovou visualmente o refinamento dos ícones de informação alinhados à direita dos títulos/rótulos, respondendo “perfeito” após a prévia. Aceite restrito à apresentação demonstrada; não comprova publicação nem homologação funcional em produção. [Registro vigente](sprints/sprint-9-ajuda-contextual.md).
+
+24/11/2026 — Refinamento da ajuda pelo Dono do produto: ícones reposicionados à direita dos títulos/rótulos/controles, incluindo os três exemplos do perfil. Prévia atualizada e posição conferida em computador e viewport reduzido, com balões contidos na tela. Vinte testes dirigidos, lint dirigido e build com Webpack aprovados. [Evidências](sprints/sprint-9-ajuda-contextual.md). Publicação e aceite final continuam sem evidência.
+
+24/11/2026 — Dono do produto gostou do layout e solicitou menos explicações expostas. Criados ícones de informação com balões por mouse, toque e teclado, preservando regras/textos e decisões essenciais. Prévia local atualizada, sem dados reais. [Entrega e evidências](sprints/sprint-9-ajuda-contextual.md), [ADR-019](decisoes/adr-019-ajuda-contextual.md). Não presume publicação ou aceite final.
+
+24/11/2026 — Dono do produto solicitou visualizar telas internas sem login real. Entregue simulação HTTP local isolada com 14 rotas, dados fictícios e componentes reais; painel/ranking, estatísticas e perfil revisados no navegador. Formulários sem gravação, controles React demonstrativos. Não equivale a publicação ou homologação autenticada. [Procedimento e limites](sprints/sprint-9-layout-geoguaras.md).
+
+24/11/2026 — Implementação local do layout geral inspirado no GeoGuessr, com identidade GeoGuaras, nova página inicial, navegação/tema compartilhados e base visual de páginas internas. Registrados escopo, decisões, diagrama, testes e limites na [entrega](sprints/sprint-9-layout-geoguaras.md) e ADR-018. Publicação e aceite visual pendentes.
+
+24/11/2026 — Validação posterior informada pelo Dono do produto: recuperação por código funcionou com uma conta não corporativa. Evidência de funcionamento no ambiente testado; não foram informados URL/versão, teste entre aparelhos ou resultados individuais dos casos negativos. Substitui a ausência de teste real para esse cenário. Teste com a conta corporativa afetada e aceite específico da resolução original continuam pendentes; não presumir publicação ou configuração remota verificadas pelo agente. [Evidência](sprints/sprint-9-recuperacao-por-codigo.md).
+
 24/11/2026 — Registrada decisão do Dono do produto e implementação local da recuperação por código de e-mail. Atualizados formulários, template Reset Password, testes, operação, requisitos, arquitetura e ADR-017 com diagrama. Hipótese de consumo de links por proteção corporativa ainda sem confirmação remota. Sem alteração de contas/dados, publicação ou homologação. [Entrega](sprints/sprint-9-recuperacao-por-codigo.md).
 
 31/10/2026 — Dono do produto encaminhou os itens pendentes para a próxima sprint: RF22/RF23, RF25, integração GeoGuessr, histórico avançado/restante da moderação e acompanhamento de desempenho. [Sprint 9 em planejamento](sprints/sprint-9.md); prioridades, capacidade, prazo e critérios detalhados ainda a definir. Implementação não iniciada. Substitui a situação anterior desses itens sem sprint indicada; Sprint 8 permanece encerrada.

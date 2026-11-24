@@ -1,3 +1,4 @@
+import { InfoTip } from '@/app/info-tip';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
@@ -31,7 +32,7 @@ export default async function NotificationsPage({ searchParams }: { searchParams
   const changes = data as ScoreChangesData | null;
   const totals = notificationTotals(notifications);
   return <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6"><div className="mx-auto max-w-4xl space-y-6">
-    <header><Link href="/dashboard" className="font-semibold text-emerald-800">Voltar ao painel</Link><h1 className="mt-4 text-3xl font-bold">Gerenciar notificações dos torneios</h1><p className="mt-2 text-slate-600">Decida ajustes retroativos, avalie denúncias e apure as auditorias dos torneios que organiza.</p></header>
+    <header><Link href="/dashboard" className="font-semibold text-emerald-800">Voltar ao painel</Link><div className="info-heading"><h1 className="mt-4 text-3xl font-bold">Gerenciar notificações dos torneios</h1><InfoTip label="Gestão de notificações">Decida ajustes retroativos, avalie denúncias e apure as auditorias dos torneios que organiza. As pendências permanecem até a decisão. Votações em andamento ficam indicadas até o prazo; depois passam a aguardar apuração. Atualize a página para consultar mudanças.</InfoTip></div></header>
     <aside className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm">{totals.corrections} ajuste(s) para decidir · {totals.requests} denúncia(s) para avaliar · {totals.voting} auditoria(s) em votação · {totals.ready} apuração(ões) pendente(s).</aside>
     <section className="space-y-4" aria-labelledby="adjustment-decisions"><h2 id="adjustment-decisions" className="text-xl font-bold">Ajustes retroativos dos seus torneios</h2>
       <form action="/dashboard/notifications" className="flex flex-wrap items-end gap-3">
@@ -55,6 +56,6 @@ export default async function NotificationsPage({ searchParams }: { searchParams
           : <><h3 className="font-bold">{selected.name}</h3><AuditHistory data={dashboard as TournamentData} evaluation={evaluation as AuditData} management allowVoting={false} />
             <p className="text-sm text-slate-600">Para votar como participante, abra <Link href={`/dashboard/tournaments/${selected.id}/audits`} className="font-semibold underline">Votações e histórico de auditorias</Link>. Aprovação, apuração e punição ficam nesta gestão.</p></>}
     </section>
-    <p className="text-sm text-slate-600">As pendências permanecem até a decisão. Votações em andamento ficam indicadas até o prazo; depois passam a aguardar apuração. Atualize a página para consultar mudanças.</p>
+
   </div></main>;
 }

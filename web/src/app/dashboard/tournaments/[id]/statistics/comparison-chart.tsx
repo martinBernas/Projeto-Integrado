@@ -1,3 +1,4 @@
+import { InfoTip } from '@/app/info-tip';
 import { formatDate } from '@/lib/tournament';
 import { statisticsScore, type TournamentPoint } from '@/lib/tournament-statistics';
 
@@ -13,8 +14,8 @@ export function ComparisonChart({ points }: { points: TournamentPoint[] }) {
   const series = [{ key: 'own', color: '#047857', label: 'Seu resultado aplicado' },
     { key: 'others', color: '#1d4ed8', label: 'Média dos demais' }] as const;
   return <figure className="rounded-2xl border border-slate-200 bg-white p-5" aria-labelledby="comparison-heading">
-    <h2 id="comparison-heading" className="text-xl font-bold">Sua evolução no torneio</h2>
-    <p className="mt-2 text-sm text-slate-600">Seu resultado aplicado em cada dia encerrado e a média dos demais naquele dia. A média do período usa todas as participações elegíveis, não a média simples dos pontos do gráfico.</p>
+    <h2 id="comparison-heading" className="text-xl font-bold">Sua evolução no torneio <InfoTip label="Comparação com os demais">Seu resultado aplicado em cada dia encerrado e a média dos demais naquele dia. A média do período usa todas as participações elegíveis, não a média simples dos pontos do gráfico. Ausências e punições entram nos valores aplicados. Sem base de cálculo, o valor fica ausente. Intervalos entre datas são proporcionais.</InfoTip></h2>
+
     <p className="mt-3 text-sm"><span className="font-semibold text-emerald-800">● Seu resultado aplicado</span><span className="ml-4 font-semibold text-blue-800">◆ Média dos demais</span></p>
     <div className="mt-4 overflow-x-auto" tabIndex={0} role="region" aria-label="Gráfico comparativo com rolagem horizontal">
       <svg viewBox={`0 0 ${width} ${height}`} className="block w-full min-w-[640px]" role="img" aria-labelledby="comparison-title comparison-desc">
@@ -32,7 +33,7 @@ export function ComparisonChart({ points }: { points: TournamentPoint[] }) {
         {first !== last && <text x={width - right} y={height - 12} textAnchor="end" fontSize="12" fill="#475569">{formatDate(points.at(-1)!.day)}</text>}
       </svg>
     </div>
-    <figcaption className="mt-2 text-sm text-slate-600">Ausências e punições entram nos valores aplicados. Sem base de cálculo, o valor fica ausente. Intervalos entre datas são proporcionais.</figcaption>
+
     <details className="mt-4"><summary className="cursor-pointer font-semibold text-emerald-800">Ver valores e base de cálculo ({points.length} dias)</summary>
       <div className="mt-3 max-h-96 overflow-auto"><table className="w-full text-left text-sm"><caption className="sr-only">Valores do gráfico comparativo</caption>
         <thead><tr><th className="p-2">Dia</th><th className="p-2 text-right">Seu resultado</th><th className="p-2 text-right">Média dos demais</th><th className="p-2 text-right">Participantes na comparação</th></tr></thead>

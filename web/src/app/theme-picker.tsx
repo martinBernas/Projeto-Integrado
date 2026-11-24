@@ -25,7 +25,7 @@ export function ThemePicker() {
     media.addEventListener('change', apply); window.addEventListener('storage', sync);
     return () => { media.removeEventListener('change', apply); window.removeEventListener('storage', sync); };
   }, []);
-  return <div className="theme-toolbar border-b border-slate-200 bg-white px-4 py-2 text-right text-sm">
+  return <div className="theme-toolbar text-sm">
     <label className="inline-flex items-center gap-2">Tema
       <select aria-label="Tema da aplicação" value={theme} className="rounded border border-slate-300 bg-white px-2 py-1" onChange={event => {
         const next = event.target.value;

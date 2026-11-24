@@ -10,7 +10,7 @@ import * as rules from '../src/lib/rules.ts';
 async function load(path,deps) {
  const source=await readFile(new URL(`../src/app/dashboard/${path}`,import.meta.url),'utf8');
  const {outputText}=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}});
- const exports={};vm.runInNewContext(outputText,{exports,require:name=>{assert.ok(name in deps,name);return deps[name];}});return exports;
+ const exports={};vm.runInNewContext(outputText,{exports,require:name=>{if(name==='@/app/info-tip')return {InfoTip:({children})=>children};assert.ok(name in deps,name);return deps[name];}});return exports;
 }
 async function harness() {
  let expanded=false;

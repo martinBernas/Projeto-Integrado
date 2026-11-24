@@ -55,13 +55,13 @@ test('abas preservam seleção por URL e tratam lista vazia, falhas e acesso inv
   const recentSource = await readFile(new URL('../src/app/dashboard/recent-results.tsx', import.meta.url), 'utf8');
   const recentCode = ts.transpileModule(recentSource, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
   const recentExports = {};
-  vm.runInNewContext(recentCode, { exports: recentExports, require: name => name === 'react' ? react : jsx });
+  vm.runInNewContext(recentCode, { exports: recentExports, require: name => name === '@/app/info-tip' ? { InfoTip: ({ children }) => children } : name === 'react' ? react : jsx });
   dependencies['./recent-results'] = recentExports;
   for (const name of ['tournament-panel','retry-load','notification-cards']) {
     const componentSource = await readFile(new URL('../src/app/dashboard/' + name + '.tsx', import.meta.url), 'utf8');
     const code = ts.transpileModule(componentSource, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
     const componentExports = {};
-    vm.runInNewContext(code, { exports: componentExports, require: dependency => dependency === 'react' ? react : dependencies[dependency] });
+    vm.runInNewContext(code, { exports: componentExports, require: dependency => dependency === '@/app/info-tip' ? { InfoTip: ({ children }) => children } : dependency === 'react' ? react : dependencies[dependency] });
     dependencies['./' + name] = componentExports;
   }
   const source = await readFile(new URL('../src/app/dashboard/page.tsx', import.meta.url), 'utf8');

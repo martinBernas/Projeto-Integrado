@@ -1,3 +1,4 @@
+import { InfoTip } from '@/app/info-tip';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
@@ -29,7 +30,7 @@ export default async function RequestsPage({ searchParams }: { searchParams: Pro
   const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
   const previousDay = new Date(`${today}T12:00:00Z`); previousDay.setUTCDate(previousDay.getUTCDate() - 1);
   return <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6"><div className="mx-auto max-w-4xl space-y-6">
-    <header><Link href="/dashboard" className="font-semibold text-emerald-800">Voltar ao painel</Link><h1 className="mt-4 text-3xl font-bold">Meus pedidos</h1><p className="mt-2 text-slate-600">Solicite ajustes de pontuação e abra denúncias nos torneios de que participa.</p></header>
+    <header><Link href="/dashboard" className="font-semibold text-emerald-800">Voltar ao painel</Link><div className="info-heading"><h1 className="mt-4 text-3xl font-bold">Meus pedidos</h1><InfoTip label="Pedidos de ajuste e denúncia">Solicite ajustes de pontuação e abra denúncias nos torneios de que participa.</InfoTip></div></header>
     <section className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7"><h2 className="mb-4 text-xl font-bold">Ajustar pontuação retroativa</h2><RetroactiveScoreForm yesterday={previousDay.toISOString().slice(0, 10)} /></section>
     <section className="space-y-4" aria-labelledby="my-adjustments"><h2 id="my-adjustments" className="text-xl font-bold">Meus ajustes e suas decisões</h2>
       {notifications && !notificationsError && <p className="text-sm text-slate-600">{notifications.pending_days} dia(s) aguardando decisão dos torneios. Dias pendentes ficam bloqueados para nova alteração.</p>}

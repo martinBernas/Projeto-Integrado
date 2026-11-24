@@ -1,5 +1,11 @@
 # Plano de ação
 
+24/11/2026 — Ajuda contextual em ícones implementada localmente e incorporada à simulação em `127.0.0.1:3100`. Próximos passos: revisão do Dono do produto e homologação em computador, smartphone físico e leitor de tela; publicação pelo fluxo existente. Sem migração/ajuste de Supabase. [Testes e limites de build local](sprints/sprint-9-ajuda-contextual.md).
+
+24/11/2026 — Renovação visual geral autorizada e implementada localmente: início/login, cabeçalho compartilhado e estilos do painel/subpáginas. Validar visualmente páginas autenticadas nos dois temas e em celular/computador, publicar pelo fluxo existente e obter aceite do Dono do produto. Sem operação SQL ou mudança de Supabase. [Entrega, testes e limites](sprints/sprint-9-layout-geoguaras.md).
+
+24/11/2026 — Teste real de recuperação por código em conta não corporativa confirmado pelo Dono do produto. Próxima validação do problema original: solicitar código novo e concluir a recuperação na conta corporativa afetada. Não repetir como pendência o teste básico da conta não corporativa já confirmado; testes complementares e identificação do ambiente/versão permanecem sem evidência. [Registro](sprints/sprint-9-recuperacao-por-codigo.md).
+
 24/11/2026 — Correção de recuperação por código autorizada e implementada localmente como item específico da Sprint 9; não inicia os demais itens planejados. Próximos passos deste item: publicar aplicação, preservar privadamente e substituir template Reset Password no Supabase, homologar com conta corporativa e pessoal e confirmar preservação do histórico. Sem migração de banco ou contas. [Roteiro e limites](sprints/sprint-9-recuperacao-por-codigo.md).
 
 31/10/2026 — Dono do produto encaminhou os itens pendentes para a próxima sprint: RF22/RF23, RF25, integração GeoGuessr, histórico avançado/restante da moderação e acompanhamento de desempenho. [Sprint 9 em planejamento](sprints/sprint-9.md); prioridades, capacidade, prazo e critérios detalhados ainda a definir. Implementação não iniciada. Substitui a situação anterior desses itens sem sprint indicada; Sprint 8 permanece encerrada.

@@ -15,7 +15,7 @@ async function load(path,deps) {
  deps['@/lib/tournament-chart-viewport']=viewport;
  const source=await readFile(new URL(`../src/${path}`,import.meta.url),'utf8');
  const {outputText}=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}});
- const exports={};vm.runInNewContext(outputText,{exports,Date,Math,Set,require:n=>{assert.ok(n in deps,n);return deps[n];}});return exports;
+ const exports={};vm.runInNewContext(outputText,{exports,Date,Math,Set,require:n=>{if(n==='@/app/info-tip')return {InfoTip:({children})=>children};assert.ok(n in deps,n);return deps[n];}});return exports;
 }
 test('RF21 screen uses session identity, authorized target, private aggregates, graph/table and explicit empty/error states',async()=>{
  const id='00000000-0000-4000-8000-000000000001';let user={id:'me'},error=null,access=true;

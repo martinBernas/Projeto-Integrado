@@ -1,5 +1,7 @@
 # Sprint 9 — Correção de recuperação de senha por código
 
+24/11/2026 — Validação posterior informada pelo Dono do produto: recuperação por código funcionou com uma conta não corporativa. Evidência de funcionamento no ambiente testado; não foram informados URL/versão, teste entre aparelhos ou resultados individuais dos casos negativos. Substitui a ausência de teste real para esse cenário. Teste com a conta corporativa afetada e aceite específico da resolução original continuam pendentes; não presumir publicação ou configuração remota verificadas pelo agente.
+
 24/11/2026 — Dono do produto confirmou a adoção de código por e-mail após relato de links já utilizados em contas corporativas. Implementação local autorizada para este item; demais itens do planejamento da Sprint 9 não são iniciados por esta decisão.
 
 ## Escopo implementado

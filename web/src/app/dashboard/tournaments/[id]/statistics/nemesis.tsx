@@ -1,9 +1,10 @@
+import { InfoTip } from '@/app/info-tip';
 import type { TournamentStatistics } from '@/lib/tournament-statistics';
 
 export function Nemesis({ participant, rivals }: { participant: boolean; rivals: TournamentStatistics['nemeses'] }) {
   return <section aria-labelledby="nemesis-heading" className="rounded-2xl border border-slate-200 bg-white p-5">
-    <h2 id="nemesis-heading" className="text-xl font-bold">Nêmesis: suas maiores disputas</h2>
-    <p className="mt-2 text-sm text-slate-600">Adversários com quem você mais trocou a liderança na pontuação acumulada. Cada inversão da ordem entre vocês conta uma troca.</p>
+    <h2 id="nemesis-heading" className="text-xl font-bold">Nêmesis: suas maiores disputas <InfoTip label="Nêmesis">Adversários com quem você mais trocou a liderança na pontuação acumulada. Cada inversão da ordem entre vocês conta uma troca. Empate não soma troca e preserva a última liderança: ficar à frente, empatar e depois ficar atrás conta uma troca. A comparação começa quando ambos são elegíveis. Até cinco adversários; empates na contagem são apresentados em ordem alfabética.</InfoTip></h2>
+
     {!participant ? <p className="mt-4">Você não participa como jogador deste torneio; não há Nêmesis pessoal.</p>
       : !rivals.length ? <p className="mt-4">Ainda não houve trocas de liderança entre você e outro jogador nos dias encerrados.</p>
         : <div className="mt-4 overflow-x-auto"><table className="w-full text-left text-sm">
@@ -14,6 +15,6 @@ export function Nemesis({ participant, rivals }: { participant: boolean; rivals:
             <td className="p-3 text-right font-bold tabular-nums">{rival.swaps}</td>
           </tr>)}</tbody>
         </table></div>}
-    <p className="mt-3 text-sm text-slate-600">Empate não soma troca e preserva a última liderança: ficar à frente, empatar e depois ficar atrás conta uma troca. A comparação começa quando ambos são elegíveis. Até cinco adversários; empates na contagem são apresentados em ordem alfabética.</p>
+
   </section>;
 }

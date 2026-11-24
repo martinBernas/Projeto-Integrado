@@ -11,7 +11,7 @@ import * as changes from '../src/lib/score-changes.ts';
 async function load(file,deps) {
  const source=await readFile(new URL(`../src/${file}`,import.meta.url),'utf8');
  const {outputText}=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}});
- const exports={}; vm.runInNewContext(outputText,{exports,Date,Intl,require:name=>{assert.ok(name in deps,name);return deps[name];}}); return exports;
+ const exports={}; vm.runInNewContext(outputText,{exports,Date,Intl,require:name=>{if(name==='@/app/info-tip')return {InfoTip:({children})=>children};assert.ok(name in deps,name);return deps[name];}}); return exports;
 }
 test('retroactive actions validate session, calendar, text, score and confirmation; use authorized RPCs and safe messages',async()=>{
  let user=null,error=null;const calls=[],paths=[];

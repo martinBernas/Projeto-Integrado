@@ -1,5 +1,6 @@
 'use client';
 
+import { InfoTip } from '@/app/info-tip';
 import { useActionState } from 'react';
 import { manageScoreChange } from './actions';
 
@@ -7,7 +8,7 @@ export function RetroactiveScoreForm({ yesterday }: { yesterday: string }) {
   const [state, action, pending] = useActionState(manageScoreChange, {});
   return <form action={action} className="space-y-4">
     <input type="hidden" name="operation" value="submit" />
-    <p className="text-sm leading-6 text-slate-600">Atualize um dia passado com uma justificativa. Seu histórico pessoal muda imediatamente. Cada torneio aberto mantém o valor anterior ou a ausência até seu organizador aprovar. Torneios encerrados permanecem congelados.</p>
+    <div className="info-heading"><h3 className="font-semibold">Ajuste retroativo</h3><InfoTip label="Ajuste retroativo">Atualize um dia passado com uma justificativa. Seu histórico pessoal muda imediatamente. Cada torneio aberto mantém o valor anterior ou a ausência até seu organizador aprovar. Torneios encerrados permanecem congelados.</InfoTip></div>
     <div className="grid gap-4 sm:grid-cols-2">
       <label className="block font-medium">Data do jogo<input name="day" type="date" min="0001-01-01" max={yesterday} required className="mt-2 block w-full rounded-lg border border-slate-300 bg-white p-3" /></label>
       <label className="block font-medium">Nova pontuação bruta<input name="score" type="number" inputMode="numeric" min={0} max={25000} step={1} required placeholder="0 a 25.000" className="mt-2 block w-full rounded-lg border border-slate-300 bg-white p-3" /></label>

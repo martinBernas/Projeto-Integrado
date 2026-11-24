@@ -1,3 +1,4 @@
+import { InfoTip } from '@/app/info-tip';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
@@ -18,7 +19,7 @@ export default async function PersonalStatisticsPage({ searchParams }: { searchP
   // otherwise expand recursively when checked against a fluent query interface.
   try { stats = await loadPersonalStatistics(client as unknown as Parameters<typeof loadPersonalStatistics>[0], user.id, period, today); } catch { /* Render an error, never partial metrics. */ }
   return <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6"><div className="mx-auto max-w-4xl space-y-6">
-    <header><Link href="/dashboard" className="font-semibold text-emerald-800">← Voltar ao painel</Link><h1 className="mt-4 text-3xl font-bold">Minhas estatísticas</h1><p className="mt-2 text-slate-600">Seu desempenho pessoal com base nas pontuações brutas. Auditorias e penalidades de torneios não alteram estas médias.</p></header>
+    <header><Link href="/dashboard" className="font-semibold text-emerald-800">← Voltar ao painel</Link><div className="info-heading"><h1 className="mt-4 text-3xl font-bold">Minhas estatísticas</h1><InfoTip label="Estatísticas pessoais">Seu desempenho pessoal com base nas pontuações brutas. Auditorias e penalidades de torneios não alteram estas médias. Médias arredondadas sem casas decimais, somente após o cálculo. Pontuações zero e dias sem lançamento não entram no número de dias jogados.</InfoTip></div></header>
     <section className="rounded-2xl border border-slate-200 bg-white p-5">
       <form method="get" action="/dashboard/statistics" className="flex flex-wrap items-end gap-3">
         <label className="font-semibold">Período<select name="period" defaultValue={period} className="mt-1 block w-full rounded-lg border border-slate-300 bg-white p-2">{Object.entries(periodLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
@@ -32,6 +33,6 @@ export default async function PersonalStatisticsPage({ searchParams }: { searchP
         <article className="rounded-2xl border border-slate-200 bg-white p-6"><h2 className="font-semibold text-slate-600">Média bruta diária</h2><p className="mt-2 text-3xl font-bold tabular-nums">{formatScore(stats.dailyAverage!)} <span className="text-sm font-normal">pontos</span></p><p className="mt-2 text-sm text-slate-600">{stats.days} dias jogados · até 25.000 pontos por dia</p></article>
         <article className="rounded-2xl border border-slate-200 bg-white p-6"><h2 className="font-semibold text-slate-600">Média por jogo</h2><p className="mt-2 text-3xl font-bold tabular-nums">{formatScore(stats.gameAverage!)} <span className="text-sm font-normal">pontos</span></p><p className="mt-2 text-sm text-slate-600">{stats.days * 5} jogos · cinco por dia · até 5.000 pontos por jogo</p></article>
       </section><ScoreChart points={stats.points} /></>}
-    <p className="text-sm text-slate-600">Médias arredondadas sem casas decimais, somente após o cálculo. Pontuações zero e dias sem lançamento não entram no número de dias jogados.</p>
+
   </div></main>;
 }
